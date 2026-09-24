@@ -1,0 +1,86 @@
+{
+  "token_greedy_elvis": {
+    "stop": "repetition",
+    "steps": 37,
+    "in_tokens": 599689,
+    "wall_s": 29.8,
+    "text": "A Cosmic Galactic Rabbit  tle Thetale   Tale Once otThere    Here  oneine Once That Long  . \noncewas   \nTheWas                       \n\n\n\n\n"
+  },
+  "token_sample_elvis": {
+    "stop": "end_token",
+    "steps": 19,
+    "in_tokens": 310227,
+    "wall_s": 14.5,
+    "text": "A spac rabbits encountered landed spacecraft met Elvis s king were met King . was AThe"
+  },
+  "word_greedy_elvis": {
+    "stop": "provider_failure",
+    "steps": 159,
+    "in_tokens": 1588192,
+    "wall_s": 68.0,
+    "text": "They areas s aren'ts area aren't arenas are s "
+  },
+  "word_sample_elvis": {
+    "stop": "end_token",
+    "steps": 62,
+    "in_tokens": 549512,
+    "wall_s": 25.1,
+    "text": "They s really aren'ts aren't st areas areals areas storylines they're she"
+  },
+  "char_greedy_elvis": {
+    "stop": "repetition",
+    "steps": 54,
+    "in_tokens": 122558,
+    "wall_s": 17.7,
+    "text": "  a  b c \n\n \n \n\n  \na\n\n \n \n\n  \na\n \n\n \n \na\n\n \n \n\na\n\na\n\na"
+  },
+  "char_sample_elvis": {
+    "stop": "end_token",
+    "steps": 67,
+    "in_tokens": 152474,
+    "wall_s": 20.6,
+    "text": "Aa a a  B  aaB  \nB  B\nB\n\n \nA\n  \n\n \n A \n \n\nBA\n  aa\nB\n A\n \nAA a\n  aa"
+  },
+  "token_greedy_self": {
+    "stop": "end_token",
+    "steps": 27,
+    "in_tokens": 438859,
+    "wall_s": 20.4,
+    "text": "Iam an Assistant    isArtificial  My  AI  assistant  .re  \n  Jeam  Jean \n"
+  },
+  "token_sample_self": {
+    "stop": "end_token",
+    "steps": 36,
+    "in_tokens": 583448,
+    "wall_s": 27.4,
+    "text": "I beis am i I    As assistantIm iam  am    \u673a\u5668\u5668  machiAs Assistant\nisHi IAMMyAssistant\u662f\u4e00\u4e2a\u4e00\u4e2a \u662f \u6700\u4e2a\u7c7b\u662f\u4e00\u4e2a"
+  },
+  "word_greedy_self": {
+    "stop": "end_token",
+    "steps": 25,
+    "in_tokens": 233904,
+    "wall_s": 10.3,
+    "text": "My americana s someones isn'ta someone's s"
+  },
+  "word_sample_self": {
+    "stop": "end_token",
+    "steps": 22,
+    "in_tokens": 223900,
+    "wall_s": 8.8,
+    "text": "My assistants she isn't she's sh"
+  },
+  "char_greedy_self": {
+    "stop": "end_token",
+    "steps": 15,
+    "in_tokens": 33673,
+    "wall_s": 4.7,
+    "text": "I  a  I  aa  a"
+  },
+  "char_sample_self": {
+    "stop": "end_token",
+    "steps": 23,
+    "in_tokens": 51914,
+    "wall_s": 7.4,
+    "text": "I  a  eaa aeae  s\neIe\n"
+  }
+}

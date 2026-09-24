@@ -1,0 +1,717 @@
+{
+ "retrieved": "2026-09-20/21",
+ "purpose": "Published reference scores to locate Jev (direct-answer, no CoT, no tools, pass@1) among other models. NO model was re-benchmarked by us: every value is fetched from the cited public source, with source type and protocol label. All values are historical_contextual relative to Jev's native protocol unless stated otherwise.",
+ "protocol_labels": {
+  "direct": "single-shot answer, no chain-of-thought, no tools (Jev's native condition; also some published rows)",
+  "cot_5shot": "5-shot chain-of-thought (Vals MMLU-Pro methodology)",
+  "reasoning": "reasoning-enabled / thinking mode (effort varies by row)",
+  "tools": "tools allowed (HLE with-tools rows)",
+  "self_reported": "vendor-reported, not independently verified",
+  "aggregator": "aggregator-imported value (secondary source; treat with care)"
+ },
+ "jev_scores": {
+  "mmlu_pro": {
+   "greedy": 0.8282,
+   "weighted_mean_p_gold": 0.7405,
+   "n": 12032,
+   "protocol": "direct"
+  },
+  "arc_challenge": {
+   "greedy": 0.9787,
+   "weighted_mean_p_gold": 0.9685,
+   "n": 1172,
+   "protocol": "direct"
+  },
+  "math500_mcq_adapted": {
+   "greedy": 0.8314,
+   "weighted_mean_p_gold": 0.6949,
+   "n": 261,
+   "protocol": "direct, 4-option MCQ conversion of exact-match items"
+  },
+  "math500_digit_readout": {
+   "greedy": 0.1355,
+   "n": 273,
+   "protocol": "direct, per-digit score primitive"
+  },
+  "arc_agi2_public_eval": {
+   "cell_accuracy_choice": 0.5351,
+   "cell_accuracy_score": 0.5143,
+   "cell_accuracy_whole_task": 0.6189,
+   "exact_grid": 0,
+   "n_tasks": 120,
+   "protocol": "direct, decomposed grid encoding"
+  },
+  "gpqa_diamond": {
+   "greedy": 0.7653,
+   "weighted_mean_p_gold": 0.6298,
+   "n": 196,
+   "protocol": "direct, seeded option shuffle"
+  },
+  "hle_text_only_mc": {
+   "greedy": 0.2186,
+   "weighted_mean_p_gold": 0.2124,
+   "n": 494,
+   "protocol": "direct, MC sub-track only"
+  }
+ },
+ "benchmarks": {
+  "mmlu_pro": {
+   "jev_context": "Jev 82.8% sits between Claude 3.7 Sonnet (no-thinking, 80.7) and Qwen 3.5 9B (82.5); below every de-minimis model that has a published row",
+   "rows": [
+    {
+     "model": "GPT-6 Astra",
+     "score": null,
+     "status": "not_found",
+     "note": "absent from Vals MMLU-Pro page and no vendor MMLU row (canonical absence, verified 2026-09-19 and re-checked 2026-09-21)"
+    },
+    {
+     "model": "GPT-5.6 Sol",
+     "score": 0.891,
+     "source": "https://www.vals.ai/benchmarks/mmlu_pro",
+     "source_type": "canonical",
+     "protocol": "cot_5shot"
+    },
+    {
+     "model": "Claude Fable 5.1",
+     "score": 0.9238,
+     "source": "https://www.vals.ai/benchmarks/mmlu_pro",
+     "source_type": "canonical",
+     "protocol": "cot_5shot",
+     "note": "Mythos 5.1 (Sept 1 twin launch) has no published knowledge-benchmark rows; Fable 5.1 used instead per parent"
+    },
+    {
+     "model": "Claude Opus 5",
+     "score": 0.9159,
+     "source": "https://www.vals.ai/benchmarks/mmlu_pro",
+     "source_type": "canonical",
+     "protocol": "cot_5shot"
+    },
+    {
+     "model": "GLM-5.3",
+     "score": 0.8677,
+     "source": "https://www.vals.ai/benchmarks/mmlu_pro",
+     "source_type": "canonical",
+     "protocol": "cot_5shot"
+    },
+    {
+     "model": "Qwen3.8 Max",
+     "score": 0.886,
+     "source": "https://www.vals.ai/benchmarks/mmlu_pro",
+     "source_type": "canonical",
+     "protocol": "cot_5shot"
+    },
+    {
+     "model": "GLM-5.3 Flash",
+     "score": 0.8606,
+     "source": "https://www.vals.ai/benchmarks/mmlu_pro",
+     "source_type": "canonical",
+     "protocol": "cot_5shot"
+    },
+    {
+     "model": "DeepSeek V4 Flash 0731",
+     "score": 0.862,
+     "source": "https://www.vals.ai/benchmarks/mmlu_pro",
+     "source_type": "canonical",
+     "protocol": "cot_5shot"
+    },
+    {
+     "model": "Qwen3.8 Flash",
+     "score": null,
+     "status": "not_found",
+     "note": "no MMLU-Pro row for plain Flash; Qwen3.8-FLASH-NEXT (different variant) self-reports 73.23 (vendor, datacamp.com/blog/qwen3-8-flash-next)"
+    },
+    {
+     "model": "Qwen3.8-27B",
+     "score": 0.843,
+     "source": "https://benchlm.ai/models/qwen3-8-27b",
+     "source_type": "aggregator",
+     "protocol": "cot_5shot",
+     "note": "aggregator-imported Vals row; independent quant-harness measurement 76.7 (oracomputing/Qwen3.8-27B-OQ3-GGUF)"
+    },
+    {
+     "model": "Qwen 3.5 9B",
+     "score": 0.825,
+     "source": "https://llmrun.dev/benchmark/mmlu-pro",
+     "source_type": "aggregator",
+     "protocol": "reasoning"
+    },
+    {
+     "model": "Claude 3.7 Sonnet (no thinking)",
+     "score": 0.807,
+     "source": "https://www.benchleader.com/models/claude-3-7-sonnet",
+     "source_type": "canonical",
+     "protocol": "direct",
+     "note": "Vals no-reasoning row; thinking 82.7"
+    },
+    {
+     "model": "DeepSeek-V3 (2024-12)",
+     "score": 0.759,
+     "source": "https://codeswap.net/benchmark/mmlu-pro/",
+     "source_type": "aggregator",
+     "protocol": "reasoning"
+    },
+    {
+     "model": "GPT-4o (2024-08-06)",
+     "score": 0.747,
+     "source": "https://ai-stats.phaseo.app/benchmarks/mmlu-pro",
+     "source_type": "aggregator",
+     "protocol": "cot_5shot"
+    },
+    {
+     "model": "GPT-4o (2024-05-13, TIGER-Lab official)",
+     "score": 0.7255,
+     "source": "https://github.com/TIGER-AI-Lab/MMLU-Pro",
+     "source_type": "canonical",
+     "protocol": "cot_5shot"
+    },
+    {
+     "model": "Gemma 4 E4B",
+     "score": 0.694,
+     "source": "https://www.reddit.com/r/LocalLLaMA/comments/1sbp8ny/gemma_4_vs_qwen_35_benchmark_comparison/",
+     "source_type": "self_reported",
+     "protocol": "reasoning",
+     "note": "vendor comparison table (Qwen3.5 vs Gemma 4 rows)"
+    },
+    {
+     "model": "Llama 3.1 8B",
+     "score": 0.483,
+     "source": "https://modelbeats.com/models/llama-3-1-8b",
+     "source_type": "aggregator",
+     "protocol": "cot_5shot",
+     "note": "Meta official 5-shot CoT micro: 47.0 post-trained (meta-llama/llama-models eval_details.md)"
+    }
+   ]
+  },
+  "gpqa_diamond": {
+   "jev_context": "Jev 76.5% is statistically at Claude 3.7 Sonnet no-thinking (76.8) and just under Qwen 3.5 9B (77.6); far above GPT-4o (54.3), Gemma 4 E4B (58.6), Llama 3.1 8B (~27-31); far below the de-minimis nine (88-96)",
+   "rows": [
+    {
+     "model": "GPT-6 Astra",
+     "score": 0.9626,
+     "source": "https://artificialanalysis.ai/evaluations/gpqa-diamond",
+     "source_type": "canonical",
+     "protocol": "reasoning",
+     "note": "vendor launch 96.0 (openai.com/index/gpt-6-astra/); AA xhigh 96.26 / max 96.06"
+    },
+    {
+     "model": "GPT-5.6 Sol",
+     "score": 0.952,
+     "source": "https://www.vals.ai/benchmarks/gpqa",
+     "source_type": "canonical",
+     "protocol": "reasoning",
+     "note": "AA 94.9; vendor 94.6"
+    },
+    {
+     "model": "Claude Fable 5.1",
+     "score": 0.9374,
+     "source": "https://artificialanalysis.ai/evaluations/gpqa-diamond",
+     "source_type": "canonical",
+     "protocol": "reasoning",
+     "note": "Mythos 5.1 not separately published; Fable 5.1 used per parent"
+    },
+    {
+     "model": "Claude Opus 5",
+     "score": 0.9323,
+     "source": "https://artificialanalysis.ai/evaluations/gpqa-diamond",
+     "source_type": "canonical",
+     "protocol": "reasoning"
+    },
+    {
+     "model": "Qwen3.8 Max",
+     "score": 0.9283,
+     "source": "https://artificialanalysis.ai/evaluations/gpqa-diamond",
+     "source_type": "canonical",
+     "protocol": "reasoning",
+     "note": "Vals 93.69"
+    },
+    {
+     "model": "GLM-5.3",
+     "score": 0.9172,
+     "source": "https://artificialanalysis.ai/evaluations/gpqa-diamond",
+     "source_type": "canonical",
+     "protocol": "reasoning",
+     "note": "Vals 88.13"
+    },
+    {
+     "model": "GLM-5.3 Flash",
+     "score": 0.9121,
+     "source": "https://artificialanalysis.ai/evaluations/gpqa-diamond",
+     "source_type": "canonical",
+     "protocol": "reasoning",
+     "note": "Vals 86.36; vendor 91.0"
+    },
+    {
+     "model": "DeepSeek V4 Flash 0731",
+     "score": 0.881,
+     "source": "https://local-ai-zone.github.io/blog/flash-tier-ai-models-comparative-analysis.html",
+     "source_type": "canonical",
+     "protocol": "reasoning",
+     "note": "vendor GPQA Diamond Pass@1 88.1; Vals 89.9"
+    },
+    {
+     "model": "Qwen3.8 Flash",
+     "score": null,
+     "status": "not_found",
+     "note": "no GPQA row for plain Flash; Qwen3.8-Flash-Next (different variant) 91.7 vendor"
+    },
+    {
+     "model": "Qwen3.8-27B",
+     "score": 0.822,
+     "source": "https://openrouter.ai/benchmarks/gpqa-diamond",
+     "source_type": "canonical",
+     "protocol": "reasoning",
+     "note": "AA-run via OpenRouter, ±1.4pp; aggregator benchlm lists 90.5 (discrepancy recorded)"
+    },
+    {
+     "model": "Qwen 3.5 9B",
+     "score": 0.776,
+     "source": "https://openrouter.ai/benchmarks/gpqa-diamond",
+     "source_type": "canonical",
+     "protocol": "reasoning",
+     "note": "AA-run ±2.6pp; HF model-card self-report 81.7"
+    },
+    {
+     "model": "Claude 3.7 Sonnet (no thinking)",
+     "score": 0.768,
+     "source": "https://modelbenchmark.io/benchmarks/gpqa-diamond",
+     "source_type": "aggregator",
+     "protocol": "direct"
+    },
+    {
+     "model": "Gemma 4 E4B",
+     "score": 0.586,
+     "source": "https://www.reddit.com/r/LocalLLaMA/comments/1sbp8ny/gemma_4_vs_qwen_35_benchmark_comparison/",
+     "source_type": "self_reported",
+     "protocol": "reasoning"
+    },
+    {
+     "model": "GPT-4o",
+     "score": 0.543,
+     "source": "https://benchlm.ai/benchmarks/aagpqadiamond",
+     "source_type": "aggregator",
+     "protocol": "reasoning"
+    },
+    {
+     "model": "o4-mini",
+     "score": 0.775,
+     "source": "https://modelbenchmark.io/benchmarks/gpqa-diamond",
+     "source_type": "aggregator",
+     "protocol": "reasoning"
+    },
+    {
+     "model": "Llama 3.1 8B",
+     "score": 0.27,
+     "source": "https://modelbeats.com/models/llama-3-1-8b",
+     "source_type": "aggregator",
+     "protocol": "reasoning",
+     "note": "~27-31 across aggregators; no canonical row"
+    }
+   ]
+  },
+  "arc_challenge": {
+   "jev_context": "Jev 97.9% (direct) is at/above every published row found; benchmark is 2018-era and saturated",
+   "rows": [
+    {
+     "model": "Llama 3.1 405B",
+     "score": 0.969,
+     "source": "https://modelbeats.com/benchmarks/arc-challenge",
+     "source_type": "self_reported",
+     "protocol": "cot_25shot"
+    },
+    {
+     "model": "GPT-4o",
+     "score": 0.967,
+     "source": "https://modelbeats.com/benchmarks/arc-challenge",
+     "source_type": "independent",
+     "protocol": "reasoning"
+    },
+    {
+     "model": "Claude 3 Opus",
+     "score": 0.964,
+     "source": "https://modelbeats.com/benchmarks/arc-challenge",
+     "source_type": "self_reported",
+     "protocol": "reasoning"
+    },
+    {
+     "model": "GPT-4",
+     "score": 0.963,
+     "source": "https://modelbeats.com/benchmarks/arc-challenge",
+     "source_type": "self_reported",
+     "protocol": "cot_25shot"
+    },
+    {
+     "model": "Nemotron-H 56B",
+     "score": 0.9497,
+     "source": "https://genailist.net/benchmark/arc-challenge",
+     "source_type": "self_reported",
+     "protocol": "cot_25shot"
+    },
+    {
+     "model": "Llama 3.1 70B",
+     "score": 0.948,
+     "source": "https://modelbeats.com/benchmarks/arc-challenge",
+     "source_type": "self_reported",
+     "protocol": "cot_25shot"
+    },
+    {
+     "model": "Llama 3.1 8B (base, zero-shot)",
+     "score": 0.747,
+     "source": "https://www.sota2.com/research/sota/multiple-choice-question-answering-on-arc-challenge",
+     "source_type": "aggregator",
+     "protocol": "direct"
+    },
+    {
+     "model": "de minimis nine (2026 flagships)",
+     "score": null,
+     "status": "not_found",
+     "note": "no 2026-era ARC-Challenge rows found for any of the nine (saturated/archived; consistent with research.md 2026-09-19)"
+    }
+   ]
+  },
+  "math500": {
+   "jev_context": "NO protocol-compatible comparison exists: Jev ran a 4-option MCQ adaptation (83.1%) and a per-digit readout (13.6%); published MATH-500 rows are free-form generation, reasoning-era, saturated (~96-99). Context rows only.",
+   "rows": [
+    {
+     "model": "GPT-5 (high)",
+     "score": 0.994,
+     "source": "https://artificialanalysis.ai/evaluations/math-500",
+     "source_type": "canonical",
+     "protocol": "reasoning"
+    },
+    {
+     "model": "o3",
+     "score": 0.992,
+     "source": "https://artificialanalysis.ai/evaluations/math-500",
+     "source_type": "canonical",
+     "protocol": "reasoning"
+    },
+    {
+     "model": "Gemini 3 Pro",
+     "score": 0.964,
+     "source": "https://anotherwrapper.com/tools/llm-pricing/evals/math-500",
+     "source_type": "aggregator",
+     "protocol": "reasoning"
+    },
+    {
+     "model": "DeepSeek R1 Distill Qwen 14B",
+     "score": 0.949,
+     "source": "https://frontierlog.azaharonline24.workers.dev/benchmarks/math-500/",
+     "source_type": "canonical",
+     "protocol": "reasoning"
+    },
+    {
+     "model": "Claude 3.7 Sonnet (thinking)",
+     "score": 0.947,
+     "source": "https://frontierlog.azaharonline24.workers.dev/benchmarks/math-500/",
+     "source_type": "canonical",
+     "protocol": "reasoning",
+     "note": "Vals no-thinking 76.8; Vals thinking 91.6 (benchmarklist)"
+    },
+    {
+     "model": "Gemma 4 E2B",
+     "score": 0.86,
+     "source": "https://frontierlog.azaharonline24.workers.dev/benchmarks/math-500/",
+     "source_type": "canonical",
+     "protocol": "reasoning"
+    },
+    {
+     "model": "DeepSeek R1 Distill Llama 8B",
+     "score": 0.859,
+     "source": "https://frontierlog.azaharonline24.workers.dev/benchmarks/math-500/",
+     "source_type": "canonical",
+     "protocol": "reasoning"
+    },
+    {
+     "model": "GPT-4o (chatgpt-latest 2025-03)",
+     "score": 0.893,
+     "source": "https://frontierlog.azaharonline24.workers.dev/benchmarks/math-500/",
+     "source_type": "canonical",
+     "protocol": "reasoning",
+     "note": "Vals GPT-4o 2024-08-06: 75.2"
+    },
+    {
+     "model": "Llama 3.1 405B",
+     "score": 0.714,
+     "source": "https://benchmarklist.com/benchmarks/vals_math500/",
+     "source_type": "canonical",
+     "protocol": "direct"
+    },
+    {
+     "model": "Llama 3.1 70B",
+     "score": 0.651,
+     "source": "https://benchmarklist.com/benchmarks/vals_math500/",
+     "source_type": "canonical",
+     "protocol": "direct"
+    },
+    {
+     "model": "de minimis nine",
+     "score": null,
+     "status": "not_found",
+     "note": "no individual MATH-500 rows for the nine beyond saturated-era context; MATH-500 excluded from 2026 weighted scoring formulas (benchlm)"
+    }
+   ]
+  },
+  "arc_agi2": {
+   "jev_context": "NOT comparable by design: Jev's numbers are a per-cell discrimination diagnostic (53.5-61.9%) on the PUBLIC 120-task eval, while published scores are exact-grid production pass@2 on the semi-private set. Context only.",
+   "rows": [
+    {
+     "model": "GPT-6 Astra",
+     "score": 0.95,
+     "source": "https://arcprize.org/results",
+     "source_type": "canonical",
+     "protocol": "reasoning_pass2_semiprivate"
+    },
+    {
+     "model": "GPT-5.6 Sol",
+     "score": 0.925,
+     "source": "https://arcprize.org/results",
+     "source_type": "canonical",
+     "protocol": "reasoning_pass2_semiprivate"
+    },
+    {
+     "model": "Claude Opus 5",
+     "score": 0.904,
+     "source": "https://arcprize.org/results",
+     "source_type": "canonical",
+     "protocol": "reasoning_pass2_semiprivate"
+    },
+    {
+     "model": "Claude Fable 5.1",
+     "score": 0.9,
+     "source": "https://arcprize.org/results",
+     "source_type": "canonical",
+     "protocol": "reasoning_pass2_semiprivate"
+    },
+    {
+     "model": "Claude Fable 5",
+     "score": 0.892,
+     "source": "https://arcprize.org/results",
+     "source_type": "canonical",
+     "protocol": "reasoning_pass2_semiprivate"
+    },
+    {
+     "model": "Gemini 3.7 Flash",
+     "score": 0.846,
+     "source": "https://arcprize.org/results",
+     "source_type": "canonical",
+     "protocol": "reasoning_pass2_semiprivate"
+    },
+    {
+     "model": "Grok 4.6",
+     "score": 0.671,
+     "source": "https://arcprize.org/results",
+     "source_type": "canonical",
+     "protocol": "reasoning_pass2_semiprivate"
+    },
+    {
+     "model": "DeepSeek V4 Flash 0731",
+     "score": 0.614,
+     "source": "https://arcprize.org/results",
+     "source_type": "canonical",
+     "protocol": "reasoning_pass2_semiprivate"
+    },
+    {
+     "model": "DeepSeek V4 Pro 0813",
+     "score": 0.613,
+     "source": "https://arcprize.org/results",
+     "source_type": "canonical",
+     "protocol": "reasoning_pass2_semiprivate"
+    },
+    {
+     "model": "Gemini 3.6 Flash",
+     "score": 0.604,
+     "source": "https://arcprize.org/results",
+     "source_type": "canonical",
+     "protocol": "reasoning_pass2_semiprivate"
+    },
+    {
+     "model": "Kimi K3",
+     "score": 0.604,
+     "source": "https://arcprize.org/results",
+     "source_type": "canonical",
+     "protocol": "reasoning_pass2_semiprivate"
+    },
+    {
+     "model": "GPT-5.6 Luna",
+     "score": 0.596,
+     "source": "https://arcprize.org/results",
+     "source_type": "canonical",
+     "protocol": "reasoning_pass2_semiprivate"
+    },
+    {
+     "model": "GPT-5.2 (Dec 2025)",
+     "score": 0.535,
+     "source": "https://intuitionlabs.ai/articles/gpt-5-2-arc-agi-2-benchmark",
+     "source_type": "aggregator",
+     "protocol": "reasoning_pass2_semiprivate"
+    },
+    {
+     "model": "Inkling Small",
+     "score": 0.401,
+     "source": "https://arcprize.org/results",
+     "source_type": "canonical",
+     "protocol": "reasoning_pass2_semiprivate"
+    },
+    {
+     "model": "Claude 3.7 Sonnet (thinking 16K)",
+     "score": 0.286,
+     "source": "https://aisharenet.com/en/arc-agi-2-chengjijieai/",
+     "source_type": "aggregator",
+     "protocol": "reasoning_pass2_public",
+     "note": "base (no thinking): 13.6"
+    },
+    {
+     "model": "GPT-4.5",
+     "score": 0.103,
+     "source": "https://aisharenet.com/en/arc-agi-2-chengjijieai/",
+     "source_type": "aggregator",
+     "protocol": "direct_public"
+    },
+    {
+     "model": "o3 (low)",
+     "score": 0.04,
+     "source": "https://arcprize.org/blog/analyzing-o3-with-arc-agi",
+     "source_type": "canonical",
+     "protocol": "reasoning_pass2_public"
+    },
+    {
+     "model": "GPT-4o",
+     "score": 0.0,
+     "source": "https://modelcap.ai/benchmarks/arc-agi-2",
+     "source_type": "aggregator",
+     "protocol": "reasoning_pass2_public",
+     "note": "0-4.5% across sources"
+    },
+    {
+     "model": "GLM-5.3 / Qwen3.8 Max / GLM-5.3 Flash / Qwen3.8 Flash",
+     "score": null,
+     "status": "not_found",
+     "note": "no verified ARC-AGI-2 rows found"
+    }
+   ]
+  },
+  "hle_text_only": {
+   "jev_context": "Jev ran the MC SUB-TRACK (494 items) direct-answer: 21.9%. Published rows are the FULL text-only subset (2,158 items), mostly reasoning-enabled, some with tools. Chance on Jev's MC sub-track ~17%.",
+   "rows": [
+    {
+     "model": "Claude Opus 5",
+     "score": 0.549,
+     "source": "https://www.ai-atlas.co/benchmarks/humanitys-last-exam",
+     "source_type": "canonical",
+     "protocol": "reasoning",
+     "note": "AA whole-HLE, max effort; vendor Fable 5.1 no-tools 60.9"
+    },
+    {
+     "model": "GPT-6 Astra",
+     "score": 0.5417,
+     "source": "https://labs.scale.com/leaderboard/humanitys_last_exam_text_only",
+     "source_type": "canonical",
+     "protocol": "reasoning",
+     "note": "AA whole-HLE max: 54.7 (ai-atlas.co)"
+    },
+    {
+     "model": "Claude Fable 5.1",
+     "score": 0.591,
+     "source": "https://www.benchleader.com/benchmarks/aa_hle",
+     "source_type": "aggregator",
+     "protocol": "reasoning",
+     "note": "vendor no-tools 60.9 (whole-HLE); Mythos 5.1 not separately published"
+    },
+    {
+     "model": "GPT-5.6 Sol",
+     "score": 0.495,
+     "source": "https://www.ai-atlas.co/benchmarks/humanitys-last-exam",
+     "source_type": "canonical",
+     "protocol": "reasoning"
+    },
+    {
+     "model": "GLM-5.3",
+     "score": 0.625,
+     "source": "https://llmlearner.com/rankings/hle",
+     "source_type": "aggregator",
+     "protocol": "tools",
+     "note": "with tools, max"
+    },
+    {
+     "model": "Qwen3.8 Max",
+     "score": 0.562,
+     "source": "https://llm-stats.com/benchmarks/humanity's-last-exam-(with-tools%2C-text-only)",
+     "source_type": "canonical",
+     "protocol": "tools"
+    },
+    {
+     "model": "Gemini 3.1 Pro (thinking high)",
+     "score": 0.4731,
+     "source": "https://labs.scale.com/leaderboard/humanitys_last_exam_text_only",
+     "source_type": "canonical",
+     "protocol": "reasoning"
+    },
+    {
+     "model": "GPT-5.4 Pro",
+     "score": 0.4532,
+     "source": "https://labs.scale.com/leaderboard/humanitys_last_exam_text_only",
+     "source_type": "canonical",
+     "protocol": "reasoning"
+    },
+    {
+     "model": "GLM-5.3 Flash",
+     "score": 0.502,
+     "source": "https://local-ai-zone.github.io/blog/flash-tier-ai-models-comparative-analysis.html",
+     "source_type": "self_reported",
+     "protocol": "tools",
+     "note": "vendor with-tools row"
+    },
+    {
+     "model": "DeepSeek V4 Flash 0731",
+     "score": 0.348,
+     "source": "https://local-ai-zone.github.io/blog/flash-tier-ai-models-comparative-analysis.html",
+     "source_type": "self_reported",
+     "protocol": "direct",
+     "note": "vendor HLE no-tools Pass@1"
+    },
+    {
+     "model": "Qwen3.8 Flash",
+     "score": null,
+     "status": "not_found",
+     "note": "Qwen3.8-Flash-Next (different variant) 35.9 vendor no-tools"
+    },
+    {
+     "model": "GPT-5 Pro (Oct 2025)",
+     "score": 0.333,
+     "source": "https://labs.scale.com/leaderboard/humanitys_last_exam_text_only",
+     "source_type": "canonical",
+     "protocol": "reasoning"
+    },
+    {
+     "model": "GPT-5 (2025-08)",
+     "score": 0.263,
+     "source": "https://labs.scale.com/leaderboard/humanitys_last_exam_text_only",
+     "source_type": "canonical",
+     "protocol": "reasoning"
+    },
+    {
+     "model": "Qwen3-235B-A22B-Thinking-2507",
+     "score": 0.1543,
+     "source": "https://labs.scale.com/leaderboard/humanitys_last_exam_text_only",
+     "source_type": "canonical",
+     "protocol": "reasoning"
+    },
+    {
+     "model": "DeepSeek-R1-0528",
+     "score": 0.1404,
+     "source": "https://labs.scale.com/leaderboard/humanitys_last_exam_text_only",
+     "source_type": "canonical",
+     "protocol": "reasoning"
+    },
+    {
+     "model": "Claude 3.7 Sonnet",
+     "score": 0.079,
+     "source": "https://benchmarklist.com/models/anthropic-claude-3.7-sonnet/",
+     "source_type": "aggregator",
+     "protocol": "reasoning",
+     "note": "HLE text-only ±1.14pp"
+    }
+   ]
+  }
+ }
+}

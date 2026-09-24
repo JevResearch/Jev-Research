@@ -1,0 +1,19 @@
+{
+  "n_calls": 987,
+  "n_errors": 0,
+  "usage_input_tokens": 894624,
+  "usage_output_tokens": 200384,
+  "estimated_cost_usd_at_0p042_per_M_in": 0.0376,
+  "seed": 97,
+  "families": [
+    "prefill",
+    "headcount",
+    "optioncount",
+    "coldwarm",
+    "concurrency",
+    "ancestry",
+    "tokenizer",
+    "mergerate"
+  ],
+  "limit": 0
+}

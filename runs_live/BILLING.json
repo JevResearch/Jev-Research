@@ -1,0 +1,93 @@
+{
+  "verified_at": "2026-09-18",
+  "note": "server-reported input tokens only; rejected calls may have unknown usage",
+  "runs": [
+    {
+      "experiment": "isolation-anchor",
+      "calls": 9,
+      "input_tokens": 8283
+    },
+    {
+      "experiment": "boolq-sample",
+      "calls": 200,
+      "input_tokens": 90193
+    },
+    {
+      "experiment": "batch-vs-separate",
+      "calls": 15,
+      "input_tokens": 5799
+    },
+    {
+      "experiment": "temporal-knowledge-open",
+      "calls": 10,
+      "input_tokens": 4028
+    },
+    {
+      "experiment": "temporal-knowledge",
+      "calls": 10,
+      "input_tokens": 3678
+    },
+    {
+      "experiment": "multilingual-framing",
+      "calls": 6,
+      "input_tokens": 2230
+    },
+    {
+      "experiment": "scaling-sweep",
+      "calls": 46,
+      "input_tokens": 255554
+    },
+    {
+      "experiment": "serving-jitter",
+      "calls": 30,
+      "input_tokens": 17820
+    },
+    {
+      "experiment": "candidate-odds-ambiguous",
+      "calls": 12,
+      "input_tokens": 5538
+    },
+    {
+      "experiment": "m0-smoke",
+      "calls": 4,
+      "input_tokens": 1274
+    },
+    {
+      "experiment": "candidate-odds",
+      "calls": 9,
+      "input_tokens": 3651
+    },
+    {
+      "experiment": "mmlu-pro-pilot",
+      "calls": 200,
+      "input_tokens": 114054
+    },
+    {
+      "experiment": "identity-probes",
+      "calls": 10,
+      "input_tokens": 3793
+    },
+    {
+      "experiment": "isolation-anchor-v2",
+      "calls": 36,
+      "input_tokens": 22287
+    },
+    {
+      "experiment": "boolq-sample",
+      "calls": 1000,
+      "input_tokens": 439752
+    }
+  ],
+  "talk": {
+    "calls": 14,
+    "input_tokens": 41921
+  },
+  "total_calls": 1611,
+  "total_input_tokens": 1019855,
+  "quoted_cost_usd": 0.042834,
+  "updated_after_audit": {
+    "total_calls": 2283,
+    "total_input_tokens": 1285908,
+    "quoted_cost_usd": 0.054008
+  }
+}

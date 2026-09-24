@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Jev Observatory — Talk (local)</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 860px; margin: 2rem auto; padding: 0 1rem; color: #1a1a2e; }
+  .banner { background: #fff3cd; border: 1px solid #e0c36a; padding: .6rem .8rem; border-radius: 6px; font-size: .9rem; }
+  textarea, input { width: 100%; box-sizing: border-box; margin: .3rem 0; }
+  button { margin: .2rem .3rem .2rem 0; padding: .35rem .8rem; }
+  #prefix { white-space: pre-wrap; font-family: ui-monospace, monospace; background: #f4f4f8; padding: .8rem; border-radius: 6px; min-height: 3rem; }
+  table { border-collapse: collapse; font-size: .85rem; margin-top: .5rem; width: 100%; }
+  td, th { border: 1px solid #ddd; padding: .25rem .5rem; text-align: left; }
+  #status { font-size: .85rem; color: #555; }
+  .row { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .row > div { flex: 1; min-width: 260px; }
+</style>
+</head>
+<body>
+<div class="banner">
+  <strong>Experimental.</strong> Each character is an independently prompted
+  classification over the transcript and the exact prefix — this is not native
+  chat and reveals nothing about the model's internals. Sessions stop at the
+  character/time/request limits shown. Everything stays on this machine.
+</div>
+<h1>Talk (character-by-character)</h1>
+<label>Your prompt<textarea id="prompt" rows="3"></textarea></label>
+<div>
+  <button id="create">New session</button>
+  <button id="step" disabled>Step</button>
+  <button id="run" disabled>Run</button>
+  <button id="cancel" disabled>Cancel</button>
+  <button id="backtrack" disabled>Backtrack</button>
+  <button id="trace" disabled>Download trace</button>
+</div>
+<p id="status">no session</p>
+<div class="row">
+  <div>
+    <h3>Assistant prefix</h3>
+    <div id="prefix"></div>
+  </div>
+  <div>
+    <h3>Next-character probabilities</h3>
+    <table id="probs"><thead><tr><th>char</th><th>p</th></tr></thead><tbody></tbody></table>
+  </div>
+</div>
+<script>
+const $ = (id) => document.getElementById(id);
+let sessionId = null, token = null, lastNode = null;
+
+async function api(path, body) {
+  const res = await fetch(path, {
+    method: body === undefined ? "GET" : "POST",
+    headers: { "Content-Type": "application/json", "X-Session-Token": token },
+    body: body === undefined ? undefined : JSON.stringify(body),
+  });
+  if (!res.ok) { $("status").textContent = "error " + res.status + ": " + (await res.text()); throw new Error("api"); }
+  return res.json();
+}
+
+$("create").onclick = async () => {
+  const data = await api("/api/session", { user_prompt: $("prompt").value });
+  sessionId = data.session_id; token = data.token; lastNode = null;
+  $("status").textContent = `session ${sessionId} — limits: ${JSON.stringify(data.limits)}`;
+  for (const id of ["step", "run", "cancel", "trace"]) $(id).disabled = false;
+  $("prefix").textContent = ""; renderProbs([]);
+};
+
+$("step").onclick = async () => { render(await api(`/api/session/${sessionId}/step`, {})); };
+$("run").onclick = async () => { render(await api(`/api/session/${sessionId}/run`, {})); };
+$("cancel").onclick = async () => { await api(`/api/session/${sessionId}/cancel`, {}); $("status").textContent = "cancel requested"; };
+$("backtrack").onclick = async () => {
+  if (!lastNode) return;
+  render(await api(`/api/session/${sessionId}/backtrack`, { node_id: lastNode }));
+};
+$("trace").onclick = () => {
+  const blob = new Blob([JSON.stringify($("trace")._data || {}, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = `talk-${sessionId}.json`; a.click();
+};
+
+function renderProbs(top) {
+  const tbody = $("probs").tBodies[0];
+  tbody.innerHTML = "";
+  for (const item of top) {
+    const row = tbody.insertRow();
+    const shown = item.char === null ? "END" : JSON.stringify(item.char);
+    row.insertCell().textContent = shown;
+    row.insertCell().textContent = item.p;
+  }
+}
+
+async function render(event) {
+  const state = await api(`/api/session/${sessionId}/state`);
+  $("prefix").textContent = state.prefix;
+  $("status").textContent = `stop: ${state.stop_reason ?? "running"} — ${state.prefix.length} chars, ${state.elapsed_seconds}s elapsed`;
+  if (event && event.node_id) lastNode = event.node_id;
+  $("backtrack").disabled = !lastNode;
+  const last = [...state.events].reverse().find(e => e.type === "step");
+  renderProbs(last ? last.top_next : []);
+  $("trace")._data = await api(`/api/session/${sessionId}/trace`);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+{
+ "claim_type": "exploratory",
+ "method": "clean single-unit runs; baseline = the cheapest run (300 spaces). tokens-per-char ~1.0 means every code point of that script is its own token; much less means the vocab merges that script.",
+ "note": "whitespace collapses to ~0 tokens over baseline -> the server normalizes pure-whitespace input; ASCII runs merge (a=0.23, dash=0.05); non-Latin scripts and digits sit at ~1 token per code point -> the vocabulary has essentially no multilingual or numeric multi-character merges. This is the signature of an English/Latin-centric BPE with Unicode-aware single-character fallback.",
+ "runs": {
+  "a": {
+   "n_chars": 300,
+   "reported": 386,
+   "tokens_over_baseline": 70,
+   "tokens_per_char": 0.233
+  },
+  "dash": {
+   "n_chars": 300,
+   "reported": 330,
+   "tokens_over_baseline": 14,
+   "tokens_per_char": 0.047
+  },
+  "pipe": {
+   "n_chars": 300,
+   "reported": 461,
+   "tokens_over_baseline": 145,
+   "tokens_per_char": 0.483
+  },
+  "digit7": {
+   "n_chars": 300,
+   "reported": 611,
+   "tokens_over_baseline": 295,
+   "tokens_per_char": 0.983
+  },
+  "space": {
+   "n_chars": 300,
+   "reported": 316,
+   "tokens_over_baseline": 0,
+   "tokens_per_char": 0.0
+  },
+  "rus": {
+   "n_chars": 270,
+   "reported": 582,
+   "tokens_over_baseline": 266,
+   "tokens_per_char": 0.985
+  },
+  "cjk": {
+   "n_chars": 120,
+   "reported": 431,
+   "tokens_over_baseline": 115,
+   "tokens_per_char": 0.958
+  },
+  "hang": {
+   "n_chars": 90,
+   "reported": 401,
+   "tokens_over_baseline": 85,
+   "tokens_per_char": 0.944
+  },
+  "kana": {
+   "n_chars": 150,
+   "reported": 461,
+   "tokens_over_baseline": 145,
+   "tokens_per_char": 0.967
+  },
+  "arab": {
+   "n_chars": 200,
+   "reported": 511,
+   "tokens_over_baseline": 195,
+   "tokens_per_char": 0.975
+  },
+  "greek": {
+   "n_chars": 150,
+   "reported": 461,
+   "tokens_over_baseline": 145,
+   "tokens_per_char": 0.967
+  },
+  "emoji": {
+   "n_chars": 100,
+   "reported": 511,
+   "tokens_over_baseline": 195,
+   "tokens_per_char": 1.95
+  },
+  "hindi": {
+   "n_chars": 240,
+   "reported": 593,
+   "tokens_over_baseline": 277,
+   "tokens_per_char": 1.154
+  }
+ }
+}

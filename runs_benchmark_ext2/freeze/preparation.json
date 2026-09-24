@@ -1,0 +1,53 @@
+{
+  "created_at": "2026-09-21T01:23:28.289+00:00",
+  "freeze_sha256": "8c4bbf2988d4c6d712215d99a1d7af91c88d7346161e5d528972bc0c82a3b699",
+  "freeze_path": "runs_benchmark_ext2/freeze/frozen.json",
+  "extended": false,
+  "counts": {
+    "mmlu_pro_test_full": 12032,
+    "option_rotation_items": 420,
+    "arc_challenge_test_full": 1172,
+    "arc_agi2_public_eval_tasks": 120,
+    "arc_agi2_commit": "f3283f727488ad98fe575ea6a5ac981e4a188e49",
+    "math500_test": 500,
+    "gpqa_diamond": 198,
+    "hle_test_rows": 2500,
+    "total_requests": 690,
+    "request_ceiling": 15000
+  },
+  "expected_counts": {
+    "gpqa_diamond": 196,
+    "hle_text_mc": 494
+  },
+  "sources": {
+    "gpqa_diamond": {
+      "file": "data/gpqa_diamond.csv",
+      "sha256": "41d1213cd7a4998605a26c2798500652572007161b3a92817ba46b35befcd305",
+      "url": "https://huggingface.co/datasets/Idavidrein/gpqa/resolve/main/gpqa_diamond.csv"
+    },
+    "hle_text_mc": {
+      "file": "data/hle_test.parquet",
+      "sha256": "6d0ee0602e8aea6b159509577e884f48ecac7b8e3f6822a35f51335a446c726a",
+      "url": "https://huggingface.co/datasets/cais/hle/resolve/main/data/test-00000-of-00001.parquet"
+    }
+  },
+  "cost_estimator": {
+    "formula": "estimated_cost_usd = estimated_input_tokens / 1e6 * price_per_mtok",
+    "jev_price_per_mtok_input": 0.042,
+    "note": "server tokenisation is the only authority; estimates are conservative"
+  },
+  "stages": {
+    "gpqa_diamond": {
+      "run_id": "bench-gpqa_diamond-8c4bbf2988d4",
+      "n_items": 196,
+      "manifest_sha256": "79c083dc60a0bf9d0e9bc1f9a8f6124068a4933dfaac3707371d2af0597374ca",
+      "source_sha256": "41d1213cd7a4998605a26c2798500652572007161b3a92817ba46b35befcd305"
+    },
+    "hle_text_mc": {
+      "run_id": "bench-hle_text_mc-8c4bbf2988d4",
+      "n_items": 494,
+      "manifest_sha256": "bf09d551aab2f2676cda7bd4808dee3d13ef91ec4bdb300c23bca2704e63d33d",
+      "source_sha256": "6d0ee0602e8aea6b159509577e884f48ecac7b8e3f6822a35f51335a446c726a"
+    }
+  }
+}

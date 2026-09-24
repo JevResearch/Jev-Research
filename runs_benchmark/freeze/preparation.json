@@ -1,0 +1,59 @@
+{
+  "created_at": "2026-09-19T22:01:06.928+00:00",
+  "freeze_sha256": "9013bf99bfb67c8e59c40c1d54efad94999f77d45232d43233050ccf4586c36b",
+  "freeze_path": "runs_benchmark/freeze/frozen.json",
+  "counts": {
+    "mmlu_pro_test_full": 12032,
+    "option_rotation_items": 420,
+    "arc_challenge_test_full": 1172,
+    "total_requests": 13624,
+    "request_ceiling": 15000
+  },
+  "expected_counts": {
+    "mmlu_full": 12032,
+    "option_rotations": 420,
+    "arc_test": 1172
+  },
+  "sources": {
+    "mmlu_full": {
+      "file": "data/test-00000-of-00001.parquet",
+      "sha256": "0e24a191921c2f453518a537a8b2117bd137e7714d4ef1565e9ba06c1ecb9ad8",
+      "url": "https://huggingface.co/datasets/TIGER-Lab/MMLU-Pro/resolve/main/data/test-00000-of-00001.parquet"
+    },
+    "option_rotations": {
+      "file": "data/test-00000-of-00001.parquet",
+      "sha256": "0e24a191921c2f453518a537a8b2117bd137e7714d4ef1565e9ba06c1ecb9ad8",
+      "url": "https://huggingface.co/datasets/TIGER-Lab/MMLU-Pro/resolve/main/data/test-00000-of-00001.parquet"
+    },
+    "arc_test": {
+      "file": "data/arc_challenge_test.parquet",
+      "sha256": "62f03257e737aed263f55c6abf87c7bb0028a44a6bdd2a26eb1279eb42c1d1e9",
+      "url": "https://huggingface.co/datasets/allenai/ai2_arc/resolve/main/ARC-Challenge/test-00000-of-00001.parquet"
+    }
+  },
+  "cost_estimator": {
+    "formula": "estimated_cost_usd = estimated_input_tokens / 1e6 * price_per_mtok",
+    "jev_price_per_mtok_input": 0.042,
+    "note": "server tokenisation is the only authority; estimates are conservative"
+  },
+  "stages": {
+    "mmlu_full": {
+      "run_id": "bench-mmlu_full-9013bf99bfb6",
+      "n_items": 12032,
+      "manifest_sha256": "c2499ba9f0863f445ec16b7b025316e79ada12e18812a3ed28f481cb4fd421a7",
+      "source_sha256": "0e24a191921c2f453518a537a8b2117bd137e7714d4ef1565e9ba06c1ecb9ad8"
+    },
+    "option_rotations": {
+      "run_id": "bench-option_rotations-9013bf99bfb6",
+      "n_items": 420,
+      "manifest_sha256": "3da88ad97d61c812082cdcff525d8140b10472e3eacf8a9f942759ebfcd06611",
+      "source_sha256": "0e24a191921c2f453518a537a8b2117bd137e7714d4ef1565e9ba06c1ecb9ad8"
+    },
+    "arc_test": {
+      "run_id": "bench-arc_test-9013bf99bfb6",
+      "n_items": 1172,
+      "manifest_sha256": "44918c20bea799f5df49303af3d38531607dbf7ffd89fdba46cae6e41c38c56f",
+      "source_sha256": "62f03257e737aed263f55c6abf87c7bb0028a44a6bdd2a26eb1279eb42c1d1e9"
+    }
+  }
+}

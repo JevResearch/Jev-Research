@@ -1,0 +1,17 @@
+{
+  "stage": "arc_agi2_score",
+  "run_dir": "runs_benchmark_ext/bench-arc_agi2_score-6bf385f0c234",
+  "variant": "probability_weighted",
+  "definition": "weighted score per item = the probability mass the model assigned to the gold option (choice) / gold level (score questions); the stage number is the mean over scored items \u2014 the model-implied expected accuracy under its own distribution",
+  "separateness_note": "SEPARATE diagnostic artifact: never merged into, substituted for, or averaged with the greedy headline accuracy",
+  "n_expected": 517,
+  "n_weighted_scored": 517,
+  "n_excluded": 0,
+  "exclusion_reasons": {},
+  "weighted_accuracy_mean": null,
+  "weighted_accuracy_p50": 1.3929381108334801e-74,
+  "validity_note": "probability vectors must be finite, in [0,1] and sum to ~1 (within 5e-2); invalid vectors are excluded and counted, never renormalized",
+  "per_cell_weighted_mean": 0.36302696148359487,
+  "item_product_note": "per-cell weighted mean only; a product over hundreds of cells is not a usable statistic and is deliberately not reported",
+  "publish_note": "per-item lists stripped at publish (item ids/answers reference licensed third-party content); aggregates kept"
+}

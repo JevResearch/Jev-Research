@@ -1,0 +1,97 @@
+{
+  "claim_type": "exploratory",
+  "n_probes": 60,
+  "method": "reported input_tokens vs each reference tokenizer's count of the exact serialized payload; per-family affine fit; lowest RMSE (≈ slope 1, intercept = fixed template overhead) wins",
+  "caveat": "a tokenizer match is evidence about the preprocessing layer only; it does not identify the weights or prove provenance",
+  "ranking": [
+    {
+      "family": "qwen25",
+      "label": "Qwen2.5",
+      "rmse_tokens": 1.047,
+      "r2": 0.9179,
+      "slope": 1.0005,
+      "intercept": 250.23
+    },
+    {
+      "family": "mistral",
+      "label": "Mistral Nemo/BPE",
+      "rmse_tokens": 1.357,
+      "r2": 0.8619,
+      "slope": 0.8217,
+      "intercept": 257.55
+    },
+    {
+      "family": "phi",
+      "label": "Phi-3",
+      "rmse_tokens": 1.438,
+      "r2": 0.8448,
+      "slope": 0.79,
+      "intercept": 258.17
+    },
+    {
+      "family": "gemma2",
+      "label": "Gemma 2",
+      "rmse_tokens": 1.487,
+      "r2": 0.8343,
+      "slope": 0.9269,
+      "intercept": 256.27
+    },
+    {
+      "family": "o200k_base",
+      "label": "GPT-4o / o-series",
+      "rmse_tokens": 1.844,
+      "r2": 0.745,
+      "slope": 1.0957,
+      "intercept": 246.49
+    },
+    {
+      "family": "o200k_harmony",
+      "label": "GPT-5-style harmony",
+      "rmse_tokens": 1.844,
+      "r2": 0.745,
+      "slope": 1.0957,
+      "intercept": 246.49
+    },
+    {
+      "family": "deepseek_v3",
+      "label": "DeepSeek-V3",
+      "rmse_tokens": 1.885,
+      "r2": 0.7336,
+      "slope": 1.0567,
+      "intercept": 247.81
+    },
+    {
+      "family": "cl100k_base",
+      "label": "GPT-3.5/4",
+      "rmse_tokens": 1.892,
+      "r2": 0.7315,
+      "slope": 0.9129,
+      "intercept": 257.0
+    },
+    {
+      "family": "llama3",
+      "label": "Llama-3.1 / Hermes",
+      "rmse_tokens": 1.892,
+      "r2": 0.7315,
+      "slope": 0.9849,
+      "intercept": 253.5
+    },
+    {
+      "family": "llama3_mirror",
+      "label": "Llama-3 mirror",
+      "rmse_tokens": 1.892,
+      "r2": 0.7315,
+      "slope": 0.9849,
+      "intercept": 253.5
+    },
+    {
+      "family": "gpt2",
+      "label": "GPT-2/3 BPE",
+      "rmse_tokens": 2.035,
+      "r2": 0.6895,
+      "slope": 0.8534,
+      "intercept": 255.45
+    }
+  ],
+  "per_probe_best_residuals": null
+}

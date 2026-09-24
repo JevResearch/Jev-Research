@@ -1,0 +1,18 @@
+{
+  "stage": "math500_score",
+  "run_dir": "runs_benchmark_ext/bench-math500_score-6bf385f0c234",
+  "variant": "probability_weighted",
+  "definition": "weighted score per item = the probability mass the model assigned to the gold option (choice) / gold level (score questions); the stage number is the mean over scored items \u2014 the model-implied expected accuracy under its own distribution",
+  "separateness_note": "SEPARATE diagnostic artifact: never merged into, substituted for, or averaged with the greedy headline accuracy",
+  "n_expected": 273,
+  "n_weighted_scored": 273,
+  "n_excluded": 0,
+  "exclusion_reasons": {},
+  "weighted_accuracy_mean": 0.04818239333260073,
+  "weighted_accuracy_p05": 8.316000000000001e-05,
+  "weighted_accuracy_p50": 0.0030888,
+  "weighted_accuracy_p95": 0.338256,
+  "validity_note": "probability vectors must be finite, in [0,1] and sum to ~1 (within 5e-2); invalid vectors are excluded and counted, never renormalized",
+  "item_product_note": "item weighted score = PRODUCT of per-digit gold probabilities: the model-implied probability of the whole correct readout under an independent-digits assumption (approximation, labeled)",
+  "publish_note": "per-item lists stripped at publish (item ids/answers reference licensed third-party content); aggregates kept"
+}

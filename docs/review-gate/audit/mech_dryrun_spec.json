@@ -1,0 +1,5867 @@
+{
+  "experiment": "mechanism-dryrun-12x2x4",
+  "model": "jev-1.13.0",
+  "test_family": "mechanism-controlled-v4",
+  "seeds": {
+    "order": 4200
+  },
+  "shuffle": false,
+  "claim_type": "exploratory",
+  "generator_version": "mech_dryrun-1.0.0",
+  "dataset": {
+    "name": "mechanism-dryrun-12x2x4",
+    "source_url": "generated locally",
+    "license_note": "generated",
+    "n_population": 96,
+    "sampling": {
+      "mode": "controlled_anchors_v4",
+      "blocks": 12,
+      "anchors": [
+        "dup-charge",
+        "subscription-proration"
+      ],
+      "arms": [
+        "alone",
+        "siblings",
+        "renamed",
+        "reordered"
+      ],
+      "note": "two already-screened anchors; limited coverage, not general proof",
+      "mappings_sidecar": "mech_dryrun_mappings.json"
+    }
+  },
+  "items": [
+    {
+      "id": "m4-subscription-proration-b00-alone",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b00",
+      "condition": "role=mech4;anchor=subscription-proration;arm=alone;block=0",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b00-reordered",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b00",
+      "condition": "role=mech4;anchor=dup-charge;arm=reordered;block=0",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "s001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b00-alone",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b00",
+      "condition": "role=mech4;anchor=dup-charge;arm=alone;block=0",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b00-siblings",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b00",
+      "condition": "role=mech4;anchor=subscription-proration;arm=siblings;block=0",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b00-reordered",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b00",
+      "condition": "role=mech4;anchor=subscription-proration;arm=reordered;block=0",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b00-renamed",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b00",
+      "condition": "role=mech4;anchor=dup-charge;arm=renamed;block=0",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "renamed_anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "q_00000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "q_00001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "q_00004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "q_00007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b00-renamed",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b00",
+      "condition": "role=mech4;anchor=subscription-proration;arm=renamed;block=0",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "renamed_anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "q_00000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "q_00001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "q_00004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "q_00007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b00-siblings",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b00",
+      "condition": "role=mech4;anchor=dup-charge;arm=siblings;block=0",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b01-reordered",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b01",
+      "condition": "role=mech4;anchor=dup-charge;arm=reordered;block=1",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b01-siblings",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b01",
+      "condition": "role=mech4;anchor=subscription-proration;arm=siblings;block=1",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b01-siblings",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b01",
+      "condition": "role=mech4;anchor=dup-charge;arm=siblings;block=1",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b01-renamed",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b01",
+      "condition": "role=mech4;anchor=dup-charge;arm=renamed;block=1",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "renamed_anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "q_00000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "q_00001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "q_00004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "q_00007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b01-renamed",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b01",
+      "condition": "role=mech4;anchor=subscription-proration;arm=renamed;block=1",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "renamed_anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "q_00000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "q_00001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "q_00004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "q_00007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b01-reordered",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b01",
+      "condition": "role=mech4;anchor=subscription-proration;arm=reordered;block=1",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b01-alone",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b01",
+      "condition": "role=mech4;anchor=dup-charge;arm=alone;block=1",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b01-alone",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b01",
+      "condition": "role=mech4;anchor=subscription-proration;arm=alone;block=1",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b02-reordered",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b02",
+      "condition": "role=mech4;anchor=dup-charge;arm=reordered;block=2",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "s004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b02-alone",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b02",
+      "condition": "role=mech4;anchor=subscription-proration;arm=alone;block=2",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b02-siblings",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b02",
+      "condition": "role=mech4;anchor=dup-charge;arm=siblings;block=2",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b02-renamed",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b02",
+      "condition": "role=mech4;anchor=dup-charge;arm=renamed;block=2",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "renamed_anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "q_00000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "q_00001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "q_00004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "q_00007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b02-siblings",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b02",
+      "condition": "role=mech4;anchor=subscription-proration;arm=siblings;block=2",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b02-renamed",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b02",
+      "condition": "role=mech4;anchor=subscription-proration;arm=renamed;block=2",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "renamed_anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "q_00000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "q_00001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "q_00004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "q_00007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b02-alone",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b02",
+      "condition": "role=mech4;anchor=dup-charge;arm=alone;block=2",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b02-reordered",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b02",
+      "condition": "role=mech4;anchor=subscription-proration;arm=reordered;block=2",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b03-renamed",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b03",
+      "condition": "role=mech4;anchor=dup-charge;arm=renamed;block=3",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "renamed_anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "q_00000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "q_00001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "q_00004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "q_00007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b03-siblings",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b03",
+      "condition": "role=mech4;anchor=subscription-proration;arm=siblings;block=3",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b03-reordered",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b03",
+      "condition": "role=mech4;anchor=subscription-proration;arm=reordered;block=3",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b03-renamed",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b03",
+      "condition": "role=mech4;anchor=subscription-proration;arm=renamed;block=3",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "renamed_anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "q_00000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "q_00001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "q_00004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "q_00007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b03-siblings",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b03",
+      "condition": "role=mech4;anchor=dup-charge;arm=siblings;block=3",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b03-reordered",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b03",
+      "condition": "role=mech4;anchor=dup-charge;arm=reordered;block=3",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b03-alone",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b03",
+      "condition": "role=mech4;anchor=subscription-proration;arm=alone;block=3",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b03-alone",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b03",
+      "condition": "role=mech4;anchor=dup-charge;arm=alone;block=3",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b04-renamed",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b04",
+      "condition": "role=mech4;anchor=dup-charge;arm=renamed;block=4",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "renamed_anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "q_00000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "q_00001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "q_00004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "q_00007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b04-reordered",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b04",
+      "condition": "role=mech4;anchor=subscription-proration;arm=reordered;block=4",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b04-reordered",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b04",
+      "condition": "role=mech4;anchor=dup-charge;arm=reordered;block=4",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b04-alone",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b04",
+      "condition": "role=mech4;anchor=subscription-proration;arm=alone;block=4",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b04-siblings",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b04",
+      "condition": "role=mech4;anchor=dup-charge;arm=siblings;block=4",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b04-siblings",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b04",
+      "condition": "role=mech4;anchor=subscription-proration;arm=siblings;block=4",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b04-renamed",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b04",
+      "condition": "role=mech4;anchor=subscription-proration;arm=renamed;block=4",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "renamed_anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "q_00000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "q_00001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "q_00004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "q_00007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b04-alone",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b04",
+      "condition": "role=mech4;anchor=dup-charge;arm=alone;block=4",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b05-renamed",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b05",
+      "condition": "role=mech4;anchor=subscription-proration;arm=renamed;block=5",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "renamed_anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "q_00000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "q_00001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "q_00004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "q_00007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b05-alone",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b05",
+      "condition": "role=mech4;anchor=subscription-proration;arm=alone;block=5",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b05-siblings",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b05",
+      "condition": "role=mech4;anchor=subscription-proration;arm=siblings;block=5",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b05-reordered",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b05",
+      "condition": "role=mech4;anchor=dup-charge;arm=reordered;block=5",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "s001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b05-alone",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b05",
+      "condition": "role=mech4;anchor=dup-charge;arm=alone;block=5",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b05-siblings",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b05",
+      "condition": "role=mech4;anchor=dup-charge;arm=siblings;block=5",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b05-renamed",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b05",
+      "condition": "role=mech4;anchor=dup-charge;arm=renamed;block=5",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "renamed_anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "q_00000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "q_00001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "q_00004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "q_00007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b05-reordered",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b05",
+      "condition": "role=mech4;anchor=subscription-proration;arm=reordered;block=5",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "s004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b06-renamed",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b06",
+      "condition": "role=mech4;anchor=subscription-proration;arm=renamed;block=6",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "renamed_anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "q_00000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "q_00001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "q_00004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "q_00007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b06-renamed",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b06",
+      "condition": "role=mech4;anchor=dup-charge;arm=renamed;block=6",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "renamed_anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "q_00000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "q_00001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "q_00004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "q_00007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b06-reordered",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b06",
+      "condition": "role=mech4;anchor=dup-charge;arm=reordered;block=6",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b06-reordered",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b06",
+      "condition": "role=mech4;anchor=subscription-proration;arm=reordered;block=6",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b06-alone",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b06",
+      "condition": "role=mech4;anchor=subscription-proration;arm=alone;block=6",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b06-alone",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b06",
+      "condition": "role=mech4;anchor=dup-charge;arm=alone;block=6",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b06-siblings",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b06",
+      "condition": "role=mech4;anchor=subscription-proration;arm=siblings;block=6",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b06-siblings",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b06",
+      "condition": "role=mech4;anchor=dup-charge;arm=siblings;block=6",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b07-reordered",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b07",
+      "condition": "role=mech4;anchor=subscription-proration;arm=reordered;block=7",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b07-reordered",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b07",
+      "condition": "role=mech4;anchor=dup-charge;arm=reordered;block=7",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b07-renamed",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b07",
+      "condition": "role=mech4;anchor=subscription-proration;arm=renamed;block=7",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "renamed_anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "q_00000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "q_00001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "q_00004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "q_00007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b07-siblings",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b07",
+      "condition": "role=mech4;anchor=dup-charge;arm=siblings;block=7",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b07-alone",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b07",
+      "condition": "role=mech4;anchor=dup-charge;arm=alone;block=7",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b07-alone",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b07",
+      "condition": "role=mech4;anchor=subscription-proration;arm=alone;block=7",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b07-siblings",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b07",
+      "condition": "role=mech4;anchor=subscription-proration;arm=siblings;block=7",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b07-renamed",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b07",
+      "condition": "role=mech4;anchor=dup-charge;arm=renamed;block=7",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "renamed_anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "q_00000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "q_00001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "q_00004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "q_00007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b08-siblings",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b08",
+      "condition": "role=mech4;anchor=subscription-proration;arm=siblings;block=8",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b08-reordered",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b08",
+      "condition": "role=mech4;anchor=dup-charge;arm=reordered;block=8",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b08-alone",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b08",
+      "condition": "role=mech4;anchor=subscription-proration;arm=alone;block=8",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b08-renamed",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b08",
+      "condition": "role=mech4;anchor=subscription-proration;arm=renamed;block=8",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "renamed_anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "q_00000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "q_00001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "q_00004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "q_00007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b08-siblings",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b08",
+      "condition": "role=mech4;anchor=dup-charge;arm=siblings;block=8",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b08-reordered",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b08",
+      "condition": "role=mech4;anchor=subscription-proration;arm=reordered;block=8",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "s007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b08-renamed",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b08",
+      "condition": "role=mech4;anchor=dup-charge;arm=renamed;block=8",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "renamed_anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "q_00000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "q_00001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "q_00004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "q_00007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b08-alone",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b08",
+      "condition": "role=mech4;anchor=dup-charge;arm=alone;block=8",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b09-renamed",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b09",
+      "condition": "role=mech4;anchor=dup-charge;arm=renamed;block=9",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "renamed_anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "q_00000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "q_00001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "q_00004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "q_00007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b09-renamed",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b09",
+      "condition": "role=mech4;anchor=subscription-proration;arm=renamed;block=9",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "renamed_anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "q_00000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "q_00001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "q_00004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "q_00007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b09-reordered",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b09",
+      "condition": "role=mech4;anchor=dup-charge;arm=reordered;block=9",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "s001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b09-siblings",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b09",
+      "condition": "role=mech4;anchor=dup-charge;arm=siblings;block=9",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b09-alone",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b09",
+      "condition": "role=mech4;anchor=dup-charge;arm=alone;block=9",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b09-alone",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b09",
+      "condition": "role=mech4;anchor=subscription-proration;arm=alone;block=9",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b09-reordered",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b09",
+      "condition": "role=mech4;anchor=subscription-proration;arm=reordered;block=9",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b09-siblings",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b09",
+      "condition": "role=mech4;anchor=subscription-proration;arm=siblings;block=9",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b10-siblings",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b10",
+      "condition": "role=mech4;anchor=dup-charge;arm=siblings;block=10",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b10-renamed",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b10",
+      "condition": "role=mech4;anchor=subscription-proration;arm=renamed;block=10",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "renamed_anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "q_00000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "q_00001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "q_00004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "q_00007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b10-alone",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b10",
+      "condition": "role=mech4;anchor=dup-charge;arm=alone;block=10",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b10-renamed",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b10",
+      "condition": "role=mech4;anchor=dup-charge;arm=renamed;block=10",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "renamed_anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "q_00000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "q_00001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "q_00004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "q_00007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b10-alone",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b10",
+      "condition": "role=mech4;anchor=subscription-proration;arm=alone;block=10",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b10-reordered",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b10",
+      "condition": "role=mech4;anchor=subscription-proration;arm=reordered;block=10",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "s001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b10-reordered",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b10",
+      "condition": "role=mech4;anchor=dup-charge;arm=reordered;block=10",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b10-siblings",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b10",
+      "condition": "role=mech4;anchor=subscription-proration;arm=siblings;block=10",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b11-siblings",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b11",
+      "condition": "role=mech4;anchor=dup-charge;arm=siblings;block=11",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b11-reordered",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b11",
+      "condition": "role=mech4;anchor=dup-charge;arm=reordered;block=11",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "s001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b11-renamed",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b11",
+      "condition": "role=mech4;anchor=subscription-proration;arm=renamed;block=11",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "renamed_anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "q_00000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "q_00001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "q_00004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "q_00007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b11-reordered",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b11",
+      "condition": "role=mech4;anchor=subscription-proration;arm=reordered;block=11",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b11-alone",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b11",
+      "condition": "role=mech4;anchor=dup-charge;arm=alone;block=11",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-dup-charge-b11-renamed",
+      "group": "mech_dryrun",
+      "cluster": "m4-dup-charge-b11",
+      "condition": "role=mech4;anchor=dup-charge;arm=renamed;block=11",
+      "state": "Ticket 201: The customer was charged twice for order 7712 (29.99 EUR each) and asks us to fix it.",
+      "gold": {},
+      "questions": {
+        "renamed_anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "q_00000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word velvet?"
+        },
+        "q_00001": {
+          "type": "choice",
+          "instructions": "Which zephyr category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00002": {
+          "type": "score",
+          "instructions": "Rate relevance to dapple.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word saffron?"
+        },
+        "q_00004": {
+          "type": "choice",
+          "instructions": "Which harbor category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "q_00005": {
+          "type": "score",
+          "instructions": "Rate relevance to inkling.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "q_00006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "q_00007": {
+          "type": "choice",
+          "instructions": "Which jigsaw category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b11-siblings",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b11",
+      "condition": "role=mech4;anchor=subscription-proration;arm=siblings;block=11",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        },
+        "s000": {
+          "type": "noul",
+          "instructions": "Does the state mention the word tundra?"
+        },
+        "s001": {
+          "type": "choice",
+          "instructions": "Which xenon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s002": {
+          "type": "score",
+          "instructions": "Rate relevance to quarry.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s003": {
+          "type": "noul",
+          "instructions": "Does the state mention the word quarry?"
+        },
+        "s004": {
+          "type": "choice",
+          "instructions": "Which orchid category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        },
+        "s005": {
+          "type": "score",
+          "instructions": "Rate relevance to parchment.",
+          "criteria": [
+            "irrelevant",
+            "tangential",
+            "central"
+          ]
+        },
+        "s006": {
+          "type": "noul",
+          "instructions": "Does the state mention the word candle?"
+        },
+        "s007": {
+          "type": "choice",
+          "instructions": "Which beacon category fits best?",
+          "criteria": {
+            "alpha": "first",
+            "beta": "second",
+            "gamma": "third"
+          }
+        }
+      }
+    },
+    {
+      "id": "m4-subscription-proration-b11-alone",
+      "group": "mech_dryrun",
+      "cluster": "m4-subscription-proration-b11",
+      "condition": "role=mech4;anchor=subscription-proration;arm=alone;block=11",
+      "state": "Ticket 220: After downgrading mid-cycle, the customer asks whether the unused portion will be credited.",
+      "gold": {},
+      "questions": {
+        "anchor": {
+          "type": "choice",
+          "instructions": "Does the state describe a refund request? Choose exactly one.",
+          "criteria": {
+            "yes": "mentions a refund",
+            "no": "does not mention a refund"
+          }
+        }
+      }
+    }
+  ]
+}

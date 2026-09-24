@@ -1,0 +1,5057 @@
+{
+ "claim_type": "exploratory",
+ "method": "affine fit reported~slope*ref_count over 31 whitespace-free mergerate samples; per-script residuals are the discriminator",
+ "n_candidates": 88,
+ "n_samples": 31,
+ "jev": {
+  "urlish": 367.0,
+  "flags": 343.0,
+  "codeish": 409.0,
+  "cjk_numbers": 423.0,
+  "cyrillic_sp": 421.0,
+  "cjk_random": 631.0,
+  "hebrew": 431.0,
+  "cyrillic_common": 431.0,
+  "digits_single": 431.0,
+  "digits_pi": 516.0,
+  "digits01": 491.0,
+  "greek": 431.0,
+  "latin_repeat_a": 361.0,
+  "emoji_run": 359.0,
+  "arabic": 431.0,
+  "latin_random": 361.0,
+  "codeswitch": 322.0,
+  "kana_hira": 421.0,
+  "hangul": 401.0,
+  "repeated_dash": 318.0,
+  "cyrillic_random": 511.0,
+  "devanagari": 431.0,
+  "repeated_pipe": 361.0,
+  "latin_words": 359.0,
+  "latin_hello": 341.0,
+  "latin_bigram": 391.0,
+  "md_link": 382.0,
+  "thai": 415.0,
+  "digits_years": 503.0,
+  "cyrillic_word": 451.0,
+  "cjk_common": 399.0
+ },
+ "ranking": [
+  {
+   "slope": 0.8893,
+   "intercept": 277.4,
+   "rmse": 20.583,
+   "max_abs": 47.59,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_sp",
+     47.6
+    ],
+    [
+     "cyrillic",
+     "cyrillic_word",
+     46.5
+    ],
+    [
+     "cjk",
+     "cjk_numbers",
+     39.8
+    ],
+    [
+     "hangul",
+     "hangul",
+     -39.1
+    ],
+    [
+     "emoji",
+     "flags",
+     -33.1
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     26.5
+    ]
+   ],
+   "per_script": {
+    "digits": -3.11,
+    "mixed": -16.72,
+    "emoji": -25.08,
+    "hebrew": -9.11,
+    "thai": -10.88,
+    "cyrillic": 30.07,
+    "arabic": 12.23,
+    "devanagari": -9.11,
+    "code": -13.04,
+    "cjk": 26.44,
+    "hangul": -39.11,
+    "kana": 9.35,
+    "latin": -2.09,
+    "ascii": -9.33,
+    "greek": -9.11
+   },
+   "id": "tencent/Hy-MT2-7B",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.879,
+   "intercept": 280.9,
+   "rmse": 21.449,
+   "max_abs": 62.88,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     62.9
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     42.9
+    ],
+    [
+     "hangul",
+     "hangul",
+     -39.9
+    ],
+    [
+     "cjk",
+     "cjk_numbers",
+     38.4
+    ],
+    [
+     "cyrillic",
+     "cyrillic_sp",
+     27.6
+    ],
+    [
+     "cjk",
+     "cjk_common",
+     24.9
+    ]
+   ],
+   "per_script": {
+    "digits": -3.3,
+    "mixed": -18.65,
+    "emoji": -19.54,
+    "hebrew": -9.86,
+    "thai": -11.8,
+    "cyrillic": 33.3,
+    "arabic": 11.24,
+    "devanagari": 7.72,
+    "code": -14.59,
+    "cjk": 25.89,
+    "hangul": -39.86,
+    "kana": -11.07,
+    "latin": -5.12,
+    "ascii": -7.22,
+    "greek": -9.86
+   },
+   "id": "tencent/Youtu-LLM-2B",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.879,
+   "intercept": 280.9,
+   "rmse": 21.449,
+   "max_abs": 62.88,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     62.9
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     42.9
+    ],
+    [
+     "hangul",
+     "hangul",
+     -39.9
+    ],
+    [
+     "cjk",
+     "cjk_numbers",
+     38.4
+    ],
+    [
+     "cyrillic",
+     "cyrillic_sp",
+     27.6
+    ],
+    [
+     "cjk",
+     "cjk_common",
+     24.9
+    ]
+   ],
+   "per_script": {
+    "digits": -3.3,
+    "mixed": -18.65,
+    "emoji": -19.54,
+    "hebrew": -9.86,
+    "thai": -11.8,
+    "cyrillic": 33.3,
+    "arabic": 11.24,
+    "devanagari": 7.72,
+    "code": -14.59,
+    "cjk": 25.89,
+    "hangul": -39.86,
+    "kana": -11.07,
+    "latin": -5.12,
+    "ascii": -7.22,
+    "greek": -9.86
+   },
+   "id": "tencent/Youtu-LLM-2B-Base",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.684,
+   "intercept": 303.9,
+   "rmse": 23.059,
+   "max_abs": 49.33,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     49.3
+    ],
+    [
+     "ascii",
+     "urlish",
+     -44.9
+    ],
+    [
+     "cjk",
+     "cjk_random",
+     -44.3
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     43.0
+    ],
+    [
+     "ascii",
+     "repeated_dash",
+     -30.3
+    ],
+    [
+     "mixed",
+     "codeswitch",
+     -29.7
+    ]
+   ],
+   "per_script": {
+    "digits": 19.12,
+    "mixed": -29.74,
+    "emoji": -23.31,
+    "hebrew": 1.97,
+    "thai": -3.09,
+    "cyrillic": 37.12,
+    "arabic": 18.39,
+    "devanagari": 1.97,
+    "code": -13.01,
+    "cjk": -12.63,
+    "hangul": -7.51,
+    "kana": 13.86,
+    "latin": -6.79,
+    "ascii": -26.1,
+    "greek": 1.97
+   },
+   "id": "HuggingFaceTB/stack-edu-classifier-python",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.8616,
+   "intercept": 289.1,
+   "rmse": 23.622,
+   "max_abs": 56.75,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     56.7
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     54.0
+    ],
+    [
+     "arabic",
+     "arabic",
+     47.1
+    ],
+    [
+     "hangul",
+     "hangul",
+     32.6
+    ],
+    [
+     "latin",
+     "latin_hello",
+     -27.4
+    ],
+    [
+     "emoji",
+     "flags",
+     -27.1
+    ]
+   ],
+   "per_script": {
+    "digits": -7.44,
+    "mixed": -26.59,
+    "emoji": -26.02,
+    "hebrew": -14.95,
+    "thai": 5.24,
+    "cyrillic": 32.11,
+    "arabic": 47.09,
+    "devanagari": 18.66,
+    "code": -19.86,
+    "cjk": -1.25,
+    "hangul": 32.6,
+    "kana": 2.62,
+    "latin": -10.11,
+    "ascii": -14.57,
+    "greek": 26.41
+   },
+   "id": "upstage/Solar-Open-100B",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.8616,
+   "intercept": 289.1,
+   "rmse": 23.622,
+   "max_abs": 56.75,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     56.7
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     54.0
+    ],
+    [
+     "arabic",
+     "arabic",
+     47.1
+    ],
+    [
+     "hangul",
+     "hangul",
+     32.6
+    ],
+    [
+     "latin",
+     "latin_hello",
+     -27.4
+    ],
+    [
+     "emoji",
+     "flags",
+     -27.1
+    ]
+   ],
+   "per_script": {
+    "digits": -7.44,
+    "mixed": -26.59,
+    "emoji": -26.02,
+    "hebrew": -14.95,
+    "thai": 5.24,
+    "cyrillic": 32.11,
+    "arabic": 47.09,
+    "devanagari": 18.66,
+    "code": -19.86,
+    "cjk": -1.25,
+    "hangul": 32.6,
+    "kana": 2.62,
+    "latin": -10.11,
+    "ascii": -14.57,
+    "greek": 26.41
+   },
+   "id": "upstage/Solar-Open2-250B",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.865,
+   "intercept": 286.5,
+   "rmse": 24.874,
+   "max_abs": 74.54,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     74.5
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     54.5
+    ],
+    [
+     "arabic",
+     "arabic",
+     47.6
+    ],
+    [
+     "cjk",
+     "cjk_numbers",
+     32.7
+    ],
+    [
+     "latin",
+     "latin_hello",
+     -26.8
+    ],
+    [
+     "emoji",
+     "flags",
+     -26.5
+    ]
+   ],
+   "per_script": {
+    "digits": -7.33,
+    "mixed": -25.91,
+    "emoji": -25.46,
+    "hebrew": 11.3,
+    "thai": 5.68,
+    "cyrillic": 36.82,
+    "arabic": 47.62,
+    "devanagari": 19.08,
+    "code": -19.88,
+    "cjk": 15.04,
+    "hangul": -18.7,
+    "kana": -16.0,
+    "latin": -9.7,
+    "ascii": -17.7,
+    "greek": 6.11
+   },
+   "id": "NousResearch/Hermes-4.3-36B",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.682,
+   "intercept": 298.3,
+   "rmse": 26.012,
+   "max_abs": 65.42,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     65.4
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     59.1
+    ],
+    [
+     "emoji",
+     "flags",
+     -45.3
+    ],
+    [
+     "ascii",
+     "urlish",
+     -43.1
+    ],
+    [
+     "cjk",
+     "cjk_random",
+     -41.0
+    ],
+    [
+     "digits",
+     "digits_pi",
+     31.5
+    ]
+   ],
+   "per_script": {
+    "digits": 21.75,
+    "mixed": -27.43,
+    "emoji": -23.67,
+    "hebrew": 4.5,
+    "thai": -0.59,
+    "cyrillic": 46.44,
+    "arabic": 4.5,
+    "devanagari": 4.5,
+    "code": -10.88,
+    "cjk": -14.92,
+    "hangul": -5.04,
+    "kana": 1.32,
+    "latin": -10.57,
+    "ascii": -30.77,
+    "greek": 4.5
+   },
+   "id": "mistralai/Mistral-7B-v0.1",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.682,
+   "intercept": 298.3,
+   "rmse": 26.012,
+   "max_abs": 65.42,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     65.4
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     59.1
+    ],
+    [
+     "emoji",
+     "flags",
+     -45.3
+    ],
+    [
+     "ascii",
+     "urlish",
+     -43.1
+    ],
+    [
+     "cjk",
+     "cjk_random",
+     -41.0
+    ],
+    [
+     "digits",
+     "digits_pi",
+     31.5
+    ]
+   ],
+   "per_script": {
+    "digits": 21.75,
+    "mixed": -27.43,
+    "emoji": -23.67,
+    "hebrew": 4.5,
+    "thai": -0.59,
+    "cyrillic": 46.44,
+    "arabic": 4.5,
+    "devanagari": 4.5,
+    "code": -10.88,
+    "cjk": -14.92,
+    "hangul": -5.04,
+    "kana": 1.32,
+    "latin": -10.57,
+    "ascii": -30.77,
+    "greek": 4.5
+   },
+   "id": "mistralai/Mistral-7B-Instruct-v0.3",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.682,
+   "intercept": 298.3,
+   "rmse": 26.012,
+   "max_abs": 65.42,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     65.4
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     59.1
+    ],
+    [
+     "emoji",
+     "flags",
+     -45.3
+    ],
+    [
+     "ascii",
+     "urlish",
+     -43.1
+    ],
+    [
+     "cjk",
+     "cjk_random",
+     -41.0
+    ],
+    [
+     "digits",
+     "digits_pi",
+     31.5
+    ]
+   ],
+   "per_script": {
+    "digits": 21.75,
+    "mixed": -27.43,
+    "emoji": -23.67,
+    "hebrew": 4.5,
+    "thai": -0.59,
+    "cyrillic": 46.44,
+    "arabic": 4.5,
+    "devanagari": 4.5,
+    "code": -10.88,
+    "cjk": -14.92,
+    "hangul": -5.04,
+    "kana": 1.32,
+    "latin": -10.57,
+    "ascii": -30.77,
+    "greek": 4.5
+   },
+   "id": "mistralai/Codestral-22B-v0.1",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.682,
+   "intercept": 298.3,
+   "rmse": 26.012,
+   "max_abs": 65.42,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     65.4
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     59.1
+    ],
+    [
+     "emoji",
+     "flags",
+     -45.3
+    ],
+    [
+     "ascii",
+     "urlish",
+     -43.1
+    ],
+    [
+     "cjk",
+     "cjk_random",
+     -41.0
+    ],
+    [
+     "digits",
+     "digits_pi",
+     31.5
+    ]
+   ],
+   "per_script": {
+    "digits": 21.75,
+    "mixed": -27.43,
+    "emoji": -23.67,
+    "hebrew": 4.5,
+    "thai": -0.59,
+    "cyrillic": 46.44,
+    "arabic": 4.5,
+    "devanagari": 4.5,
+    "code": -10.88,
+    "cjk": -14.92,
+    "hangul": -5.04,
+    "kana": 1.32,
+    "latin": -10.57,
+    "ascii": -30.77,
+    "greek": 4.5
+   },
+   "id": "mistralai/Mamba-Codestral-7B-v0.1",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.682,
+   "intercept": 298.3,
+   "rmse": 26.012,
+   "max_abs": 65.42,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     65.4
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     59.1
+    ],
+    [
+     "emoji",
+     "flags",
+     -45.3
+    ],
+    [
+     "ascii",
+     "urlish",
+     -43.1
+    ],
+    [
+     "cjk",
+     "cjk_random",
+     -41.0
+    ],
+    [
+     "digits",
+     "digits_pi",
+     31.5
+    ]
+   ],
+   "per_script": {
+    "digits": 21.75,
+    "mixed": -27.43,
+    "emoji": -23.67,
+    "hebrew": 4.5,
+    "thai": -0.59,
+    "cyrillic": 46.44,
+    "arabic": 4.5,
+    "devanagari": 4.5,
+    "code": -10.88,
+    "cjk": -14.92,
+    "hangul": -5.04,
+    "kana": 1.32,
+    "latin": -10.57,
+    "ascii": -30.77,
+    "greek": 4.5
+   },
+   "id": "mistralai/Mistral-Large-Instruct-2411",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.682,
+   "intercept": 298.3,
+   "rmse": 26.012,
+   "max_abs": 65.42,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     65.4
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     59.1
+    ],
+    [
+     "emoji",
+     "flags",
+     -45.3
+    ],
+    [
+     "ascii",
+     "urlish",
+     -43.1
+    ],
+    [
+     "cjk",
+     "cjk_random",
+     -41.0
+    ],
+    [
+     "digits",
+     "digits_pi",
+     31.5
+    ]
+   ],
+   "per_script": {
+    "digits": 21.75,
+    "mixed": -27.43,
+    "emoji": -23.67,
+    "hebrew": 4.5,
+    "thai": -0.59,
+    "cyrillic": 46.44,
+    "arabic": 4.5,
+    "devanagari": 4.5,
+    "code": -10.88,
+    "cjk": -14.92,
+    "hangul": -5.04,
+    "kana": 1.32,
+    "latin": -10.57,
+    "ascii": -30.77,
+    "greek": 4.5
+   },
+   "id": "BAAI/bge-en-icl",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.682,
+   "intercept": 298.3,
+   "rmse": 26.012,
+   "max_abs": 65.42,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     65.4
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     59.1
+    ],
+    [
+     "emoji",
+     "flags",
+     -45.3
+    ],
+    [
+     "ascii",
+     "urlish",
+     -43.1
+    ],
+    [
+     "cjk",
+     "cjk_random",
+     -41.0
+    ],
+    [
+     "digits",
+     "digits_pi",
+     31.5
+    ]
+   ],
+   "per_script": {
+    "digits": 21.75,
+    "mixed": -27.43,
+    "emoji": -23.67,
+    "hebrew": 4.5,
+    "thai": -0.59,
+    "cyrillic": 46.44,
+    "arabic": 4.5,
+    "devanagari": 4.5,
+    "code": -10.88,
+    "cjk": -14.92,
+    "hangul": -5.04,
+    "kana": 1.32,
+    "latin": -10.57,
+    "ascii": -30.77,
+    "greek": 4.5
+   },
+   "id": "BAAI/BGE-VL-MLLM-S1",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.682,
+   "intercept": 298.3,
+   "rmse": 26.012,
+   "max_abs": 65.42,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     65.4
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     59.1
+    ],
+    [
+     "emoji",
+     "flags",
+     -45.3
+    ],
+    [
+     "ascii",
+     "urlish",
+     -43.1
+    ],
+    [
+     "cjk",
+     "cjk_random",
+     -41.0
+    ],
+    [
+     "digits",
+     "digits_pi",
+     31.5
+    ]
+   ],
+   "per_script": {
+    "digits": 21.75,
+    "mixed": -27.43,
+    "emoji": -23.67,
+    "hebrew": 4.5,
+    "thai": -0.59,
+    "cyrillic": 46.44,
+    "arabic": 4.5,
+    "devanagari": 4.5,
+    "code": -10.88,
+    "cjk": -14.92,
+    "hangul": -5.04,
+    "kana": 1.32,
+    "latin": -10.57,
+    "ascii": -30.77,
+    "greek": 4.5
+   },
+   "id": "NousResearch/Hermes-2-Pro-Mistral-7B",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.682,
+   "intercept": 298.3,
+   "rmse": 26.012,
+   "max_abs": 65.42,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     65.4
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     59.1
+    ],
+    [
+     "emoji",
+     "flags",
+     -45.3
+    ],
+    [
+     "ascii",
+     "urlish",
+     -43.1
+    ],
+    [
+     "cjk",
+     "cjk_random",
+     -41.0
+    ],
+    [
+     "digits",
+     "digits_pi",
+     31.5
+    ]
+   ],
+   "per_script": {
+    "digits": 21.75,
+    "mixed": -27.43,
+    "emoji": -23.67,
+    "hebrew": 4.5,
+    "thai": -0.59,
+    "cyrillic": 46.44,
+    "arabic": 4.5,
+    "devanagari": 4.5,
+    "code": -10.88,
+    "cjk": -14.92,
+    "hangul": -5.04,
+    "kana": 1.32,
+    "latin": -10.57,
+    "ascii": -30.77,
+    "greek": 4.5
+   },
+   "id": "NousResearch/Nous-Hermes-2-Mixtral-8x7B-DPO",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.8253,
+   "intercept": 296.2,
+   "rmse": 26.47,
+   "max_abs": 69.8,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     69.8
+    ],
+    [
+     "hebrew",
+     "hebrew",
+     58.1
+    ],
+    [
+     "arabic",
+     "arabic",
+     43.2
+    ],
+    [
+     "cyrillic",
+     "cyrillic_sp",
+     36.5
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     33.3
+    ],
+    [
+     "latin",
+     "latin_hello",
+     -31.9
+    ]
+   ],
+   "per_script": {
+    "digits": -6.75,
+    "mixed": -31.14,
+    "emoji": -13.69,
+    "hebrew": 58.06,
+    "thai": 23.9,
+    "cyrillic": 34.34,
+    "arabic": 43.2,
+    "devanagari": -16.22,
+    "code": -22.42,
+    "cjk": 20.6,
+    "hangul": -21.46,
+    "kana": 0.19,
+    "latin": -14.64,
+    "ascii": -22.35,
+    "greek": -16.22
+   },
+   "id": "Qwen/Qwen2.5-7B",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.8253,
+   "intercept": 296.2,
+   "rmse": 26.47,
+   "max_abs": 69.8,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     69.8
+    ],
+    [
+     "hebrew",
+     "hebrew",
+     58.1
+    ],
+    [
+     "arabic",
+     "arabic",
+     43.2
+    ],
+    [
+     "cyrillic",
+     "cyrillic_sp",
+     36.5
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     33.3
+    ],
+    [
+     "latin",
+     "latin_hello",
+     -31.9
+    ]
+   ],
+   "per_script": {
+    "digits": -6.75,
+    "mixed": -31.14,
+    "emoji": -13.69,
+    "hebrew": 58.06,
+    "thai": 23.9,
+    "cyrillic": 34.34,
+    "arabic": 43.2,
+    "devanagari": -16.22,
+    "code": -22.42,
+    "cjk": 20.6,
+    "hangul": -21.46,
+    "kana": 0.19,
+    "latin": -14.64,
+    "ascii": -22.35,
+    "greek": -16.22
+   },
+   "id": "Qwen/Qwen3-8B",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.8253,
+   "intercept": 296.2,
+   "rmse": 26.47,
+   "max_abs": 69.8,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     69.8
+    ],
+    [
+     "hebrew",
+     "hebrew",
+     58.1
+    ],
+    [
+     "arabic",
+     "arabic",
+     43.2
+    ],
+    [
+     "cyrillic",
+     "cyrillic_sp",
+     36.5
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     33.3
+    ],
+    [
+     "latin",
+     "latin_hello",
+     -31.9
+    ]
+   ],
+   "per_script": {
+    "digits": -6.75,
+    "mixed": -31.14,
+    "emoji": -13.69,
+    "hebrew": 58.06,
+    "thai": 23.9,
+    "cyrillic": 34.34,
+    "arabic": 43.2,
+    "devanagari": -16.22,
+    "code": -22.42,
+    "cjk": 20.6,
+    "hangul": -21.46,
+    "kana": 0.19,
+    "latin": -14.64,
+    "ascii": -22.35,
+    "greek": -16.22
+   },
+   "id": "XiaomiMiMo/MiMo-7B-Base",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.8253,
+   "intercept": 296.2,
+   "rmse": 26.47,
+   "max_abs": 69.8,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     69.8
+    ],
+    [
+     "hebrew",
+     "hebrew",
+     58.1
+    ],
+    [
+     "arabic",
+     "arabic",
+     43.2
+    ],
+    [
+     "cyrillic",
+     "cyrillic_sp",
+     36.5
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     33.3
+    ],
+    [
+     "latin",
+     "latin_hello",
+     -31.9
+    ]
+   ],
+   "per_script": {
+    "digits": -6.75,
+    "mixed": -31.14,
+    "emoji": -13.69,
+    "hebrew": 58.06,
+    "thai": 23.9,
+    "cyrillic": 34.34,
+    "arabic": 43.2,
+    "devanagari": -16.22,
+    "code": -22.42,
+    "cjk": 20.6,
+    "hangul": -21.46,
+    "kana": 0.19,
+    "latin": -14.64,
+    "ascii": -22.35,
+    "greek": -16.22
+   },
+   "id": "Qwen/Qwen1.5-7B",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.8253,
+   "intercept": 296.2,
+   "rmse": 26.47,
+   "max_abs": 69.8,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     69.8
+    ],
+    [
+     "hebrew",
+     "hebrew",
+     58.1
+    ],
+    [
+     "arabic",
+     "arabic",
+     43.2
+    ],
+    [
+     "cyrillic",
+     "cyrillic_sp",
+     36.5
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     33.3
+    ],
+    [
+     "latin",
+     "latin_hello",
+     -31.9
+    ]
+   ],
+   "per_script": {
+    "digits": -6.75,
+    "mixed": -31.14,
+    "emoji": -13.69,
+    "hebrew": 58.06,
+    "thai": 23.9,
+    "cyrillic": 34.34,
+    "arabic": 43.2,
+    "devanagari": -16.22,
+    "code": -22.42,
+    "cjk": 20.6,
+    "hangul": -21.46,
+    "kana": 0.19,
+    "latin": -14.64,
+    "ascii": -22.35,
+    "greek": -16.22
+   },
+   "id": "Qwen/QwQ-32B",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.8253,
+   "intercept": 296.2,
+   "rmse": 26.47,
+   "max_abs": 69.8,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     69.8
+    ],
+    [
+     "hebrew",
+     "hebrew",
+     58.1
+    ],
+    [
+     "arabic",
+     "arabic",
+     43.2
+    ],
+    [
+     "cyrillic",
+     "cyrillic_sp",
+     36.5
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     33.3
+    ],
+    [
+     "latin",
+     "latin_hello",
+     -31.9
+    ]
+   ],
+   "per_script": {
+    "digits": -6.75,
+    "mixed": -31.14,
+    "emoji": -13.69,
+    "hebrew": 58.06,
+    "thai": 23.9,
+    "cyrillic": 34.34,
+    "arabic": 43.2,
+    "devanagari": -16.22,
+    "code": -22.42,
+    "cjk": 20.6,
+    "hangul": -21.46,
+    "kana": 0.19,
+    "latin": -14.64,
+    "ascii": -22.35,
+    "greek": -16.22
+   },
+   "id": "Qwen/Qwen3-Embedding-0.6B",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.8253,
+   "intercept": 296.2,
+   "rmse": 26.47,
+   "max_abs": 69.8,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     69.8
+    ],
+    [
+     "hebrew",
+     "hebrew",
+     58.1
+    ],
+    [
+     "arabic",
+     "arabic",
+     43.2
+    ],
+    [
+     "cyrillic",
+     "cyrillic_sp",
+     36.5
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     33.3
+    ],
+    [
+     "latin",
+     "latin_hello",
+     -31.9
+    ]
+   ],
+   "per_script": {
+    "digits": -6.75,
+    "mixed": -31.14,
+    "emoji": -13.69,
+    "hebrew": 58.06,
+    "thai": 23.9,
+    "cyrillic": 34.34,
+    "arabic": 43.2,
+    "devanagari": -16.22,
+    "code": -22.42,
+    "cjk": 20.6,
+    "hangul": -21.46,
+    "kana": 0.19,
+    "latin": -14.64,
+    "ascii": -22.35,
+    "greek": -16.22
+   },
+   "id": "Qwen/Qwen3-Embedding-8B",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.8253,
+   "intercept": 296.2,
+   "rmse": 26.47,
+   "max_abs": 69.8,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     69.8
+    ],
+    [
+     "hebrew",
+     "hebrew",
+     58.1
+    ],
+    [
+     "arabic",
+     "arabic",
+     43.2
+    ],
+    [
+     "cyrillic",
+     "cyrillic_sp",
+     36.5
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     33.3
+    ],
+    [
+     "latin",
+     "latin_hello",
+     -31.9
+    ]
+   ],
+   "per_script": {
+    "digits": -6.75,
+    "mixed": -31.14,
+    "emoji": -13.69,
+    "hebrew": 58.06,
+    "thai": 23.9,
+    "cyrillic": 34.34,
+    "arabic": 43.2,
+    "devanagari": -16.22,
+    "code": -22.42,
+    "cjk": 20.6,
+    "hangul": -21.46,
+    "kana": 0.19,
+    "latin": -14.64,
+    "ascii": -22.35,
+    "greek": -16.22
+   },
+   "id": "Qwen/Qwen2-VL-2B-Instruct",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.8253,
+   "intercept": 296.2,
+   "rmse": 26.47,
+   "max_abs": 69.8,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     69.8
+    ],
+    [
+     "hebrew",
+     "hebrew",
+     58.1
+    ],
+    [
+     "arabic",
+     "arabic",
+     43.2
+    ],
+    [
+     "cyrillic",
+     "cyrillic_sp",
+     36.5
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     33.3
+    ],
+    [
+     "latin",
+     "latin_hello",
+     -31.9
+    ]
+   ],
+   "per_script": {
+    "digits": -6.75,
+    "mixed": -31.14,
+    "emoji": -13.69,
+    "hebrew": 58.06,
+    "thai": 23.9,
+    "cyrillic": 34.34,
+    "arabic": 43.2,
+    "devanagari": -16.22,
+    "code": -22.42,
+    "cjk": 20.6,
+    "hangul": -21.46,
+    "kana": 0.19,
+    "latin": -14.64,
+    "ascii": -22.35,
+    "greek": -16.22
+   },
+   "id": "Qwen/Qwen2-VL-7B-Instruct-AWQ",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.8253,
+   "intercept": 296.2,
+   "rmse": 26.47,
+   "max_abs": 69.8,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     69.8
+    ],
+    [
+     "hebrew",
+     "hebrew",
+     58.1
+    ],
+    [
+     "arabic",
+     "arabic",
+     43.2
+    ],
+    [
+     "cyrillic",
+     "cyrillic_sp",
+     36.5
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     33.3
+    ],
+    [
+     "latin",
+     "latin_hello",
+     -31.9
+    ]
+   ],
+   "per_script": {
+    "digits": -6.75,
+    "mixed": -31.14,
+    "emoji": -13.69,
+    "hebrew": 58.06,
+    "thai": 23.9,
+    "cyrillic": 34.34,
+    "arabic": 43.2,
+    "devanagari": -16.22,
+    "code": -22.42,
+    "cjk": 20.6,
+    "hangul": -21.46,
+    "kana": 0.19,
+    "latin": -14.64,
+    "ascii": -22.35,
+    "greek": -16.22
+   },
+   "id": "XiaomiMiMo/MiMo-V2.5",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.8253,
+   "intercept": 296.2,
+   "rmse": 26.47,
+   "max_abs": 69.8,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     69.8
+    ],
+    [
+     "hebrew",
+     "hebrew",
+     58.1
+    ],
+    [
+     "arabic",
+     "arabic",
+     43.2
+    ],
+    [
+     "cyrillic",
+     "cyrillic_sp",
+     36.5
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     33.3
+    ],
+    [
+     "latin",
+     "latin_hello",
+     -31.9
+    ]
+   ],
+   "per_script": {
+    "digits": -6.75,
+    "mixed": -31.14,
+    "emoji": -13.69,
+    "hebrew": 58.06,
+    "thai": 23.9,
+    "cyrillic": 34.34,
+    "arabic": 43.2,
+    "devanagari": -16.22,
+    "code": -22.42,
+    "cjk": 20.6,
+    "hangul": -21.46,
+    "kana": 0.19,
+    "latin": -14.64,
+    "ascii": -22.35,
+    "greek": -16.22
+   },
+   "id": "XiaomiMiMo/MiMo-V2.5-ASR",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.8253,
+   "intercept": 296.2,
+   "rmse": 26.47,
+   "max_abs": 69.8,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     69.8
+    ],
+    [
+     "hebrew",
+     "hebrew",
+     58.1
+    ],
+    [
+     "arabic",
+     "arabic",
+     43.2
+    ],
+    [
+     "cyrillic",
+     "cyrillic_sp",
+     36.5
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     33.3
+    ],
+    [
+     "latin",
+     "latin_hello",
+     -31.9
+    ]
+   ],
+   "per_script": {
+    "digits": -6.75,
+    "mixed": -31.14,
+    "emoji": -13.69,
+    "hebrew": 58.06,
+    "thai": 23.9,
+    "cyrillic": 34.34,
+    "arabic": 43.2,
+    "devanagari": -16.22,
+    "code": -22.42,
+    "cjk": 20.6,
+    "hangul": -21.46,
+    "kana": 0.19,
+    "latin": -14.64,
+    "ascii": -22.35,
+    "greek": -16.22
+   },
+   "id": "internlm/CapRL-InternVL3.5-8B",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.8253,
+   "intercept": 296.2,
+   "rmse": 26.47,
+   "max_abs": 69.8,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     69.8
+    ],
+    [
+     "hebrew",
+     "hebrew",
+     58.1
+    ],
+    [
+     "arabic",
+     "arabic",
+     43.2
+    ],
+    [
+     "cyrillic",
+     "cyrillic_sp",
+     36.5
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     33.3
+    ],
+    [
+     "latin",
+     "latin_hello",
+     -31.9
+    ]
+   ],
+   "per_script": {
+    "digits": -6.75,
+    "mixed": -31.14,
+    "emoji": -13.69,
+    "hebrew": 58.06,
+    "thai": 23.9,
+    "cyrillic": 34.34,
+    "arabic": 43.2,
+    "devanagari": -16.22,
+    "code": -22.42,
+    "cjk": 20.6,
+    "hangul": -21.46,
+    "kana": 0.19,
+    "latin": -14.64,
+    "ascii": -22.35,
+    "greek": -16.22
+   },
+   "id": "allenai/Molmo2-4B",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.8253,
+   "intercept": 296.2,
+   "rmse": 26.47,
+   "max_abs": 69.8,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     69.8
+    ],
+    [
+     "hebrew",
+     "hebrew",
+     58.1
+    ],
+    [
+     "arabic",
+     "arabic",
+     43.2
+    ],
+    [
+     "cyrillic",
+     "cyrillic_sp",
+     36.5
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     33.3
+    ],
+    [
+     "latin",
+     "latin_hello",
+     -31.9
+    ]
+   ],
+   "per_script": {
+    "digits": -6.75,
+    "mixed": -31.14,
+    "emoji": -13.69,
+    "hebrew": 58.06,
+    "thai": 23.9,
+    "cyrillic": 34.34,
+    "arabic": 43.2,
+    "devanagari": -16.22,
+    "code": -22.42,
+    "cjk": 20.6,
+    "hangul": -21.46,
+    "kana": 0.19,
+    "latin": -14.64,
+    "ascii": -22.35,
+    "greek": -16.22
+   },
+   "id": "allenai/Molmo-7B-D-0924",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.8253,
+   "intercept": 296.2,
+   "rmse": 26.47,
+   "max_abs": 69.8,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     69.8
+    ],
+    [
+     "hebrew",
+     "hebrew",
+     58.1
+    ],
+    [
+     "arabic",
+     "arabic",
+     43.2
+    ],
+    [
+     "cyrillic",
+     "cyrillic_sp",
+     36.5
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     33.3
+    ],
+    [
+     "latin",
+     "latin_hello",
+     -31.9
+    ]
+   ],
+   "per_script": {
+    "digits": -6.75,
+    "mixed": -31.14,
+    "emoji": -13.69,
+    "hebrew": 58.06,
+    "thai": 23.9,
+    "cyrillic": 34.34,
+    "arabic": 43.2,
+    "devanagari": -16.22,
+    "code": -22.42,
+    "cjk": 20.6,
+    "hangul": -21.46,
+    "kana": 0.19,
+    "latin": -14.64,
+    "ascii": -22.35,
+    "greek": -16.22
+   },
+   "id": "BAAI/bge-code-v1",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.8253,
+   "intercept": 296.2,
+   "rmse": 26.47,
+   "max_abs": 69.8,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     69.8
+    ],
+    [
+     "hebrew",
+     "hebrew",
+     58.1
+    ],
+    [
+     "arabic",
+     "arabic",
+     43.2
+    ],
+    [
+     "cyrillic",
+     "cyrillic_sp",
+     36.5
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     33.3
+    ],
+    [
+     "latin",
+     "latin_hello",
+     -31.9
+    ]
+   ],
+   "per_script": {
+    "digits": -6.75,
+    "mixed": -31.14,
+    "emoji": -13.69,
+    "hebrew": 58.06,
+    "thai": 23.9,
+    "cyrillic": 34.34,
+    "arabic": 43.2,
+    "devanagari": -16.22,
+    "code": -22.42,
+    "cjk": 20.6,
+    "hangul": -21.46,
+    "kana": 0.19,
+    "latin": -14.64,
+    "ascii": -22.35,
+    "greek": -16.22
+   },
+   "id": "BAAI/Recon2Reason-Reasoning-4B",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.6706,
+   "intercept": 303.0,
+   "rmse": 26.913,
+   "max_abs": 62.21,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     62.2
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     55.6
+    ],
+    [
+     "emoji",
+     "flags",
+     -48.5
+    ],
+    [
+     "ascii",
+     "urlish",
+     -45.9
+    ],
+    [
+     "cjk",
+     "cjk_random",
+     -39.4
+    ],
+    [
+     "ascii",
+     "repeated_dash",
+     -35.2
+    ]
+   ],
+   "per_script": {
+    "digits": 19.85,
+    "mixed": -31.25,
+    "emoji": -27.06,
+    "hebrew": 1.98,
+    "thai": 31.58,
+    "cyrillic": 43.59,
+    "arabic": 1.98,
+    "devanagari": 1.98,
+    "code": -13.74,
+    "cjk": -11.3,
+    "hangul": 12.21,
+    "kana": 13.44,
+    "latin": -13.98,
+    "ascii": -34.09,
+    "greek": 1.98
+   },
+   "id": "upstage/solar-1-mini-tokenizer",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.813,
+   "intercept": 296.6,
+   "rmse": 28.335,
+   "max_abs": 70.62,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     70.6
+    ],
+    [
+     "hebrew",
+     "hebrew",
+     58.8
+    ],
+    [
+     "ascii",
+     "urlish",
+     -58.1
+    ],
+    [
+     "arabic",
+     "arabic",
+     44.1
+    ],
+    [
+     "cyrillic",
+     "cyrillic_sp",
+     37.4
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     34.4
+    ]
+   ],
+   "per_script": {
+    "digits": -4.28,
+    "mixed": -30.73,
+    "emoji": -13.12,
+    "hebrew": 58.75,
+    "thai": 24.86,
+    "cyrillic": 35.72,
+    "arabic": 44.12,
+    "devanagari": -14.42,
+    "code": -25.53,
+    "cjk": 22.65,
+    "hangul": -20.03,
+    "kana": 1.6,
+    "latin": -13.88,
+    "ascii": -32.25,
+    "greek": -14.42
+   },
+   "id": "BAAI/Emu3-Chat-hf",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.8713,
+   "intercept": 294.2,
+   "rmse": 29.079,
+   "max_abs": 75.66,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_random",
+     75.7
+    ],
+    [
+     "cyrillic",
+     "cyrillic_word",
+     67.9
+    ],
+    [
+     "emoji",
+     "flags",
+     -47.0
+    ],
+    [
+     "arabic",
+     "arabic",
+     41.0
+    ],
+    [
+     "cyrillic",
+     "cyrillic_sp",
+     34.4
+    ],
+    [
+     "latin",
+     "latin_hello",
+     -33.4
+    ]
+   ],
+   "per_script": {
+    "digits": -14.78,
+    "mixed": -31.44,
+    "emoji": -28.58,
+    "hebrew": 30.51,
+    "thai": 21.48,
+    "cyrillic": 52.14,
+    "arabic": 40.96,
+    "devanagari": 13.08,
+    "code": -26.34,
+    "cjk": 14.14,
+    "hangul": 0.51,
+    "kana": -3.89,
+    "latin": -16.28,
+    "ascii": -23.65,
+    "greek": -0.86
+   },
+   "id": "Qwen/Qwen3.8-27B",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.8713,
+   "intercept": 294.2,
+   "rmse": 29.079,
+   "max_abs": 75.66,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_random",
+     75.7
+    ],
+    [
+     "cyrillic",
+     "cyrillic_word",
+     67.9
+    ],
+    [
+     "emoji",
+     "flags",
+     -47.0
+    ],
+    [
+     "arabic",
+     "arabic",
+     41.0
+    ],
+    [
+     "cyrillic",
+     "cyrillic_sp",
+     34.4
+    ],
+    [
+     "latin",
+     "latin_hello",
+     -33.4
+    ]
+   ],
+   "per_script": {
+    "digits": -14.78,
+    "mixed": -31.44,
+    "emoji": -28.58,
+    "hebrew": 30.51,
+    "thai": 21.48,
+    "cyrillic": 52.14,
+    "arabic": 40.96,
+    "devanagari": 13.08,
+    "code": -26.34,
+    "cjk": 14.14,
+    "hangul": 0.51,
+    "kana": -3.89,
+    "latin": -16.28,
+    "ascii": -23.65,
+    "greek": -0.86
+   },
+   "id": "Qwen/Qwen3.5-9B",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.6749,
+   "intercept": 296.7,
+   "rmse": 30.043,
+   "max_abs": 81.36,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     81.4
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     61.4
+    ],
+    [
+     "latin",
+     "latin_random",
+     -49.1
+    ],
+    [
+     "emoji",
+     "emoji_run",
+     -48.4
+    ],
+    [
+     "emoji",
+     "flags",
+     -42.8
+    ],
+    [
+     "ascii",
+     "urlish",
+     -40.4
+    ]
+   ],
+   "per_script": {
+    "digits": 25.01,
+    "mixed": -25.37,
+    "emoji": -45.63,
+    "hebrew": 7.37,
+    "thai": 2.17,
+    "cyrillic": 52.48,
+    "arabic": 7.37,
+    "devanagari": 7.37,
+    "code": -7.88,
+    "cjk": -11.29,
+    "hangul": -2.38,
+    "kana": 4.12,
+    "latin": -18.38,
+    "ascii": -28.39,
+    "greek": 7.37
+   },
+   "id": "microsoft/Phi-3-medium-4k-instruct",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.6749,
+   "intercept": 296.7,
+   "rmse": 30.043,
+   "max_abs": 81.36,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     81.4
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     61.4
+    ],
+    [
+     "latin",
+     "latin_random",
+     -49.1
+    ],
+    [
+     "emoji",
+     "emoji_run",
+     -48.4
+    ],
+    [
+     "emoji",
+     "flags",
+     -42.8
+    ],
+    [
+     "ascii",
+     "urlish",
+     -40.4
+    ]
+   ],
+   "per_script": {
+    "digits": 25.01,
+    "mixed": -25.37,
+    "emoji": -45.63,
+    "hebrew": 7.37,
+    "thai": 2.17,
+    "cyrillic": 52.48,
+    "arabic": 7.37,
+    "devanagari": 7.37,
+    "code": -7.88,
+    "cjk": -11.29,
+    "hangul": -2.38,
+    "kana": 4.12,
+    "latin": -18.38,
+    "ascii": -28.39,
+    "greek": 7.37
+   },
+   "id": "snowflake/snowflake-arctic-instruct",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.6749,
+   "intercept": 296.7,
+   "rmse": 30.043,
+   "max_abs": 81.36,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     81.4
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     61.4
+    ],
+    [
+     "latin",
+     "latin_random",
+     -49.1
+    ],
+    [
+     "emoji",
+     "emoji_run",
+     -48.4
+    ],
+    [
+     "emoji",
+     "flags",
+     -42.8
+    ],
+    [
+     "ascii",
+     "urlish",
+     -40.4
+    ]
+   ],
+   "per_script": {
+    "digits": 25.01,
+    "mixed": -25.37,
+    "emoji": -45.63,
+    "hebrew": 7.37,
+    "thai": 2.17,
+    "cyrillic": 52.48,
+    "arabic": 7.37,
+    "devanagari": 7.37,
+    "code": -7.88,
+    "cjk": -11.29,
+    "hangul": -2.38,
+    "kana": 4.12,
+    "latin": -18.38,
+    "ascii": -28.39,
+    "greek": 7.37
+   },
+   "id": "microsoft/Phi-3.5-vision-instruct",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.6749,
+   "intercept": 296.7,
+   "rmse": 30.043,
+   "max_abs": 81.36,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     81.4
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     61.4
+    ],
+    [
+     "latin",
+     "latin_random",
+     -49.1
+    ],
+    [
+     "emoji",
+     "emoji_run",
+     -48.4
+    ],
+    [
+     "emoji",
+     "flags",
+     -42.8
+    ],
+    [
+     "ascii",
+     "urlish",
+     -40.4
+    ]
+   ],
+   "per_script": {
+    "digits": 25.01,
+    "mixed": -25.37,
+    "emoji": -45.63,
+    "hebrew": 7.37,
+    "thai": 2.17,
+    "cyrillic": 52.48,
+    "arabic": 7.37,
+    "devanagari": 7.37,
+    "code": -7.88,
+    "cjk": -11.29,
+    "hangul": -2.38,
+    "kana": 4.12,
+    "latin": -18.38,
+    "ascii": -28.39,
+    "greek": 7.37
+   },
+   "id": "upstage/solar-pro-preview-instruct",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.6602,
+   "intercept": 317.3,
+   "rmse": 30.082,
+   "max_abs": 66.33,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     66.3
+    ],
+    [
+     "devanagari",
+     "devanagari",
+     59.5
+    ],
+    [
+     "ascii",
+     "urlish",
+     -54.0
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     46.3
+    ],
+    [
+     "ascii",
+     "repeated_dash",
+     -44.9
+    ],
+    [
+     "arabic",
+     "arabic",
+     41.1
+    ]
+   ],
+   "per_script": {
+    "digits": 11.96,
+    "mixed": -40.22,
+    "emoji": -20.47,
+    "hebrew": 33.13,
+    "thai": 5.25,
+    "cyrillic": 41.77,
+    "arabic": 41.05,
+    "devanagari": 59.53,
+    "code": -22.18,
+    "cjk": -7.28,
+    "hangul": 3.13,
+    "kana": 4.64,
+    "latin": -18.9,
+    "ascii": -43.04,
+    "greek": 9.36
+   },
+   "id": "aisingapore/SEA-LION-ModernBERT-Embedding-600M",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.6271,
+   "intercept": 321.6,
+   "rmse": 30.646,
+   "max_abs": 65.46,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     65.5
+    ],
+    [
+     "devanagari",
+     "devanagari",
+     58.0
+    ],
+    [
+     "ascii",
+     "urlish",
+     -53.0
+    ],
+    [
+     "ascii",
+     "repeated_dash",
+     -46.8
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     45.5
+    ],
+    [
+     "mixed",
+     "codeswitch",
+     -42.2
+    ]
+   ],
+   "per_script": {
+    "digits": 15.52,
+    "mixed": -42.22,
+    "emoji": -22.0,
+    "hebrew": 32.91,
+    "thai": 5.63,
+    "cyrillic": 42.24,
+    "arabic": 40.44,
+    "devanagari": 58.0,
+    "code": -21.4,
+    "cjk": -9.08,
+    "hangul": 2.91,
+    "kana": 5.35,
+    "latin": -19.93,
+    "ascii": -43.57,
+    "greek": 10.34
+   },
+   "id": "google/gemma-3-4b-it",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.6271,
+   "intercept": 321.6,
+   "rmse": 30.646,
+   "max_abs": 65.46,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     65.5
+    ],
+    [
+     "devanagari",
+     "devanagari",
+     58.0
+    ],
+    [
+     "ascii",
+     "urlish",
+     -53.0
+    ],
+    [
+     "ascii",
+     "repeated_dash",
+     -46.8
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     45.5
+    ],
+    [
+     "mixed",
+     "codeswitch",
+     -42.2
+    ]
+   ],
+   "per_script": {
+    "digits": 15.52,
+    "mixed": -42.22,
+    "emoji": -22.0,
+    "hebrew": 32.91,
+    "thai": 5.63,
+    "cyrillic": 42.24,
+    "arabic": 40.44,
+    "devanagari": 58.0,
+    "code": -21.4,
+    "cjk": -9.08,
+    "hangul": 2.91,
+    "kana": 5.35,
+    "latin": -19.93,
+    "ascii": -43.57,
+    "greek": 10.34
+   },
+   "id": "microsoft/harrier-oss-v1-270m",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.6601,
+   "intercept": 302.0,
+   "rmse": 31.039,
+   "max_abs": 77.7,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     77.7
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     57.7
+    ],
+    [
+     "latin",
+     "latin_random",
+     -51.9
+    ],
+    [
+     "emoji",
+     "emoji_run",
+     -51.3
+    ],
+    [
+     "emoji",
+     "flags",
+     -46.1
+    ],
+    [
+     "ascii",
+     "urlish",
+     -43.3
+    ]
+   ],
+   "per_script": {
+    "digits": 23.33,
+    "mixed": -29.51,
+    "emoji": -48.7,
+    "hebrew": 4.89,
+    "thai": 33.78,
+    "cyrillic": 49.51,
+    "arabic": 4.89,
+    "devanagari": 4.89,
+    "code": -10.8,
+    "cjk": -7.35,
+    "hangul": 14.5,
+    "kana": 16.02,
+    "latin": -21.79,
+    "ascii": -31.89,
+    "greek": 4.89
+   },
+   "id": "upstage/solar-pro-tokenizer",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.6437,
+   "intercept": 312.8,
+   "rmse": 31.82,
+   "max_abs": 71.28,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     71.3
+    ],
+    [
+     "latin",
+     "latin_repeat_a",
+     -57.3
+    ],
+    [
+     "latin",
+     "latin_random",
+     -57.3
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     51.3
+    ],
+    [
+     "arabic",
+     "arabic",
+     46.1
+    ],
+    [
+     "emoji",
+     "flags",
+     -41.9
+    ]
+   ],
+   "per_script": {
+    "digits": 19.12,
+    "mixed": -35.84,
+    "emoji": -33.87,
+    "hebrew": 19.1,
+    "thai": 10.82,
+    "cyrillic": 43.85,
+    "arabic": 46.13,
+    "devanagari": 24.89,
+    "code": -13.18,
+    "cjk": -6.09,
+    "hangul": 27.72,
+    "kana": 10.38,
+    "latin": -34.37,
+    "ascii": -28.69,
+    "greek": 15.24
+   },
+   "id": "upstage/solar-pro2-tokenizer",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.817,
+   "intercept": 278.0,
+   "rmse": 31.977,
+   "max_abs": 84.78,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     84.8
+    ],
+    [
+     "thai",
+     "thai",
+     -67.2
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     64.8
+    ],
+    [
+     "latin",
+     "latin_random",
+     -54.2
+    ],
+    [
+     "cyrillic",
+     "cyrillic_sp",
+     50.7
+    ],
+    [
+     "arabic",
+     "arabic",
+     38.6
+    ]
+   ],
+   "per_script": {
+    "digits": 9.35,
+    "mixed": -17.26,
+    "emoji": -31.56,
+    "hebrew": -25.09,
+    "thai": -67.23,
+    "cyrillic": 53.58,
+    "arabic": 38.64,
+    "devanagari": -33.26,
+    "code": -7.48,
+    "cjk": 23.07,
+    "hangul": -6.07,
+    "kana": -2.41,
+    "latin": -18.65,
+    "ascii": -18.64,
+    "greek": 19.03
+   },
+   "id": "zai-org/glm-edge-4b-chat",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.535,
+   "intercept": 307.7,
+   "rmse": 33.126,
+   "max_abs": 70.98,
+   "worst": [
+    [
+     "hangul",
+     "hangul",
+     -71.0
+    ],
+    [
+     "digits",
+     "digits_pi",
+     62.7
+    ],
+    [
+     "digits",
+     "digits_years",
+     56.7
+    ],
+    [
+     "digits",
+     "digits01",
+     51.1
+    ],
+    [
+     "cjk",
+     "cjk_common",
+     -50.5
+    ],
+    [
+     "cyrillic",
+     "cyrillic_random",
+     -46.6
+    ]
+   ],
+   "per_script": {
+    "digits": 48.44,
+    "mixed": -26.94,
+    "emoji": -24.69,
+    "hebrew": 7.17,
+    "thai": -39.86,
+    "cyrillic": 14.95,
+    "arabic": 23.22,
+    "devanagari": 23.22,
+    "code": 3.5,
+    "cjk": -15.11,
+    "hangul": -70.98,
+    "kana": -28.51,
+    "latin": -5.17,
+    "ascii": -16.86,
+    "greek": 23.22
+   },
+   "id": "HuggingFaceTB/SmolLM2-135M",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.535,
+   "intercept": 307.7,
+   "rmse": 33.126,
+   "max_abs": 70.98,
+   "worst": [
+    [
+     "hangul",
+     "hangul",
+     -71.0
+    ],
+    [
+     "digits",
+     "digits_pi",
+     62.7
+    ],
+    [
+     "digits",
+     "digits_years",
+     56.7
+    ],
+    [
+     "digits",
+     "digits01",
+     51.1
+    ],
+    [
+     "cjk",
+     "cjk_common",
+     -50.5
+    ],
+    [
+     "cyrillic",
+     "cyrillic_random",
+     -46.6
+    ]
+   ],
+   "per_script": {
+    "digits": 48.44,
+    "mixed": -26.94,
+    "emoji": -24.69,
+    "hebrew": 7.17,
+    "thai": -39.86,
+    "cyrillic": 14.95,
+    "arabic": 23.22,
+    "devanagari": 23.22,
+    "code": 3.5,
+    "cjk": -15.11,
+    "hangul": -70.98,
+    "kana": -28.51,
+    "latin": -5.17,
+    "ascii": -16.86,
+    "greek": 23.22
+   },
+   "id": "HuggingFaceTB/SmolVLM2-500M-Video-Instruct",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.535,
+   "intercept": 307.7,
+   "rmse": 33.126,
+   "max_abs": 70.98,
+   "worst": [
+    [
+     "hangul",
+     "hangul",
+     -71.0
+    ],
+    [
+     "digits",
+     "digits_pi",
+     62.7
+    ],
+    [
+     "digits",
+     "digits_years",
+     56.7
+    ],
+    [
+     "digits",
+     "digits01",
+     51.1
+    ],
+    [
+     "cjk",
+     "cjk_common",
+     -50.5
+    ],
+    [
+     "cyrillic",
+     "cyrillic_random",
+     -46.6
+    ]
+   ],
+   "per_script": {
+    "digits": 48.44,
+    "mixed": -26.94,
+    "emoji": -24.69,
+    "hebrew": 7.17,
+    "thai": -39.86,
+    "cyrillic": 14.95,
+    "arabic": 23.22,
+    "devanagari": 23.22,
+    "code": 3.5,
+    "cjk": -15.11,
+    "hangul": -70.98,
+    "kana": -28.51,
+    "latin": -5.17,
+    "ascii": -16.86,
+    "greek": 23.22
+   },
+   "id": "HuggingFaceTB/SmolVLM-Instruct",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.535,
+   "intercept": 307.7,
+   "rmse": 33.126,
+   "max_abs": 70.98,
+   "worst": [
+    [
+     "hangul",
+     "hangul",
+     -71.0
+    ],
+    [
+     "digits",
+     "digits_pi",
+     62.7
+    ],
+    [
+     "digits",
+     "digits_years",
+     56.7
+    ],
+    [
+     "digits",
+     "digits01",
+     51.1
+    ],
+    [
+     "cjk",
+     "cjk_common",
+     -50.5
+    ],
+    [
+     "cyrillic",
+     "cyrillic_random",
+     -46.6
+    ]
+   ],
+   "per_script": {
+    "digits": 48.44,
+    "mixed": -26.94,
+    "emoji": -24.69,
+    "hebrew": 7.17,
+    "thai": -39.86,
+    "cyrillic": 14.95,
+    "arabic": 23.22,
+    "devanagari": 23.22,
+    "code": 3.5,
+    "cjk": -15.11,
+    "hangul": -70.98,
+    "kana": -28.51,
+    "latin": -5.17,
+    "ascii": -16.86,
+    "greek": 23.22
+   },
+   "id": "HuggingFaceTB/SmolVLM2-2.2B-Base",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.6456,
+   "intercept": 309.9,
+   "rmse": 33.144,
+   "max_abs": 73.97,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     74.0
+    ],
+    [
+     "latin",
+     "latin_repeat_a",
+     -54.8
+    ],
+    [
+     "latin",
+     "latin_random",
+     -54.8
+    ],
+    [
+     "emoji",
+     "emoji_run",
+     -54.2
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     54.0
+    ],
+    [
+     "emoji",
+     "flags",
+     -49.5
+    ]
+   ],
+   "per_script": {
+    "digits": 21.55,
+    "mixed": -33.08,
+    "emoji": -51.86,
+    "hebrew": 21.69,
+    "thai": 13.43,
+    "cyrillic": 46.45,
+    "arabic": 48.8,
+    "devanagari": 27.5,
+    "code": -10.59,
+    "cjk": -3.74,
+    "hangul": -8.31,
+    "kana": 12.98,
+    "latin": -31.74,
+    "ascii": -26.0,
+    "greek": 17.81
+   },
+   "id": "mistralai/Mistral-Small-3.1-24B-Instruct-2503",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.6214,
+   "intercept": 326.3,
+   "rmse": 33.415,
+   "max_abs": 84.02,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_random",
+     84.0
+    ],
+    [
+     "cyrillic",
+     "cyrillic_word",
+     61.3
+    ],
+    [
+     "ascii",
+     "urlish",
+     -56.9
+    ],
+    [
+     "ascii",
+     "repeated_dash",
+     -51.2
+    ],
+    [
+     "hebrew",
+     "hebrew",
+     47.5
+    ],
+    [
+     "mixed",
+     "codeswitch",
+     -46.6
+    ]
+   ],
+   "per_script": {
+    "digits": 12.13,
+    "mixed": -46.57,
+    "emoji": -26.27,
+    "hebrew": 47.52,
+    "thai": 1.69,
+    "cyrillic": 53.86,
+    "arabic": 36.33,
+    "devanagari": 28.26,
+    "code": -25.27,
+    "cjk": -0.65,
+    "hangul": -1.12,
+    "kana": 1.48,
+    "latin": -22.62,
+    "ascii": -39.99,
+    "greek": 6.51
+   },
+   "id": "google/gemma-2-2b",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.6214,
+   "intercept": 326.3,
+   "rmse": 33.415,
+   "max_abs": 84.02,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_random",
+     84.0
+    ],
+    [
+     "cyrillic",
+     "cyrillic_word",
+     61.3
+    ],
+    [
+     "ascii",
+     "urlish",
+     -56.9
+    ],
+    [
+     "ascii",
+     "repeated_dash",
+     -51.2
+    ],
+    [
+     "hebrew",
+     "hebrew",
+     47.5
+    ],
+    [
+     "mixed",
+     "codeswitch",
+     -46.6
+    ]
+   ],
+   "per_script": {
+    "digits": 12.13,
+    "mixed": -46.57,
+    "emoji": -26.27,
+    "hebrew": 47.52,
+    "thai": 1.69,
+    "cyrillic": 53.86,
+    "arabic": 36.33,
+    "devanagari": 28.26,
+    "code": -25.27,
+    "cjk": -0.65,
+    "hangul": -1.12,
+    "kana": 1.48,
+    "latin": -22.62,
+    "ascii": -39.99,
+    "greek": 6.51
+   },
+   "id": "google/gemma-2b",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.6214,
+   "intercept": 326.3,
+   "rmse": 33.415,
+   "max_abs": 84.02,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_random",
+     84.0
+    ],
+    [
+     "cyrillic",
+     "cyrillic_word",
+     61.3
+    ],
+    [
+     "ascii",
+     "urlish",
+     -56.9
+    ],
+    [
+     "ascii",
+     "repeated_dash",
+     -51.2
+    ],
+    [
+     "hebrew",
+     "hebrew",
+     47.5
+    ],
+    [
+     "mixed",
+     "codeswitch",
+     -46.6
+    ]
+   ],
+   "per_script": {
+    "digits": 12.13,
+    "mixed": -46.57,
+    "emoji": -26.27,
+    "hebrew": 47.52,
+    "thai": 1.69,
+    "cyrillic": 53.86,
+    "arabic": 36.33,
+    "devanagari": 28.26,
+    "code": -25.27,
+    "cjk": -0.65,
+    "hangul": -1.12,
+    "kana": 1.48,
+    "latin": -22.62,
+    "ascii": -39.99,
+    "greek": 6.51
+   },
+   "id": "google/paligemma-3b-pt-224",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.6214,
+   "intercept": 326.3,
+   "rmse": 33.415,
+   "max_abs": 84.02,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_random",
+     84.0
+    ],
+    [
+     "cyrillic",
+     "cyrillic_word",
+     61.3
+    ],
+    [
+     "ascii",
+     "urlish",
+     -56.9
+    ],
+    [
+     "ascii",
+     "repeated_dash",
+     -51.2
+    ],
+    [
+     "hebrew",
+     "hebrew",
+     47.5
+    ],
+    [
+     "mixed",
+     "codeswitch",
+     -46.6
+    ]
+   ],
+   "per_script": {
+    "digits": 12.13,
+    "mixed": -46.57,
+    "emoji": -26.27,
+    "hebrew": 47.52,
+    "thai": 1.69,
+    "cyrillic": 53.86,
+    "arabic": 36.33,
+    "devanagari": 28.26,
+    "code": -25.27,
+    "cjk": -0.65,
+    "hangul": -1.12,
+    "kana": 1.48,
+    "latin": -22.62,
+    "ascii": -39.99,
+    "greek": 6.51
+   },
+   "id": "BAAI/bge-multilingual-gemma2",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.6214,
+   "intercept": 326.3,
+   "rmse": 33.415,
+   "max_abs": 84.02,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_random",
+     84.0
+    ],
+    [
+     "cyrillic",
+     "cyrillic_word",
+     61.3
+    ],
+    [
+     "ascii",
+     "urlish",
+     -56.9
+    ],
+    [
+     "ascii",
+     "repeated_dash",
+     -51.2
+    ],
+    [
+     "hebrew",
+     "hebrew",
+     47.5
+    ],
+    [
+     "mixed",
+     "codeswitch",
+     -46.6
+    ]
+   ],
+   "per_script": {
+    "digits": 12.13,
+    "mixed": -46.57,
+    "emoji": -26.27,
+    "hebrew": 47.52,
+    "thai": 1.69,
+    "cyrillic": 53.86,
+    "arabic": 36.33,
+    "devanagari": 28.26,
+    "code": -25.27,
+    "cjk": -0.65,
+    "hangul": -1.12,
+    "kana": 1.48,
+    "latin": -22.62,
+    "ascii": -39.99,
+    "greek": 6.51
+   },
+   "id": "BAAI/bge-reranker-v2-gemma",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.6412,
+   "intercept": 311.0,
+   "rmse": 33.563,
+   "max_abs": 73.3,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     73.3
+    ],
+    [
+     "latin",
+     "latin_repeat_a",
+     -55.2
+    ],
+    [
+     "latin",
+     "latin_random",
+     -55.2
+    ],
+    [
+     "emoji",
+     "emoji_run",
+     -54.6
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     53.3
+    ],
+    [
+     "emoji",
+     "flags",
+     -50.1
+    ]
+   ],
+   "per_script": {
+    "digits": 21.47,
+    "mixed": -33.9,
+    "emoji": -52.35,
+    "hebrew": 21.24,
+    "thai": 12.93,
+    "cyrillic": 45.98,
+    "arabic": 48.17,
+    "devanagari": 39.84,
+    "code": -11.05,
+    "cjk": -3.66,
+    "hangul": -8.76,
+    "kana": 12.52,
+    "latin": -32.28,
+    "ascii": -26.68,
+    "greek": 17.39
+   },
+   "id": "mistralai/Mistral-Nemo-Instruct-2407",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.6412,
+   "intercept": 311.0,
+   "rmse": 33.563,
+   "max_abs": 73.3,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     73.3
+    ],
+    [
+     "latin",
+     "latin_repeat_a",
+     -55.2
+    ],
+    [
+     "latin",
+     "latin_random",
+     -55.2
+    ],
+    [
+     "emoji",
+     "emoji_run",
+     -54.6
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     53.3
+    ],
+    [
+     "emoji",
+     "flags",
+     -50.1
+    ]
+   ],
+   "per_script": {
+    "digits": 21.47,
+    "mixed": -33.9,
+    "emoji": -52.35,
+    "hebrew": 21.24,
+    "thai": 12.93,
+    "cyrillic": 45.98,
+    "arabic": 48.17,
+    "devanagari": 39.84,
+    "code": -11.05,
+    "cjk": -3.66,
+    "hangul": -8.76,
+    "kana": 12.52,
+    "latin": -32.28,
+    "ascii": -26.68,
+    "greek": 17.39
+   },
+   "id": "mistralai/Ministral-8B-Instruct-2410",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.6412,
+   "intercept": 311.0,
+   "rmse": 33.563,
+   "max_abs": 73.3,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     73.3
+    ],
+    [
+     "latin",
+     "latin_repeat_a",
+     -55.2
+    ],
+    [
+     "latin",
+     "latin_random",
+     -55.2
+    ],
+    [
+     "emoji",
+     "emoji_run",
+     -54.6
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     53.3
+    ],
+    [
+     "emoji",
+     "flags",
+     -50.1
+    ]
+   ],
+   "per_script": {
+    "digits": 21.47,
+    "mixed": -33.9,
+    "emoji": -52.35,
+    "hebrew": 21.24,
+    "thai": 12.93,
+    "cyrillic": 45.98,
+    "arabic": 48.17,
+    "devanagari": 39.84,
+    "code": -11.05,
+    "cjk": -3.66,
+    "hangul": -8.76,
+    "kana": 12.52,
+    "latin": -32.28,
+    "ascii": -26.68,
+    "greek": 17.39
+   },
+   "id": "mistralai/Ministral-3-14B-Reasoning-2512",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.6412,
+   "intercept": 311.0,
+   "rmse": 33.563,
+   "max_abs": 73.3,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     73.3
+    ],
+    [
+     "latin",
+     "latin_repeat_a",
+     -55.2
+    ],
+    [
+     "latin",
+     "latin_random",
+     -55.2
+    ],
+    [
+     "emoji",
+     "emoji_run",
+     -54.6
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     53.3
+    ],
+    [
+     "emoji",
+     "flags",
+     -50.1
+    ]
+   ],
+   "per_script": {
+    "digits": 21.47,
+    "mixed": -33.9,
+    "emoji": -52.35,
+    "hebrew": 21.24,
+    "thai": 12.93,
+    "cyrillic": 45.98,
+    "arabic": 48.17,
+    "devanagari": 39.84,
+    "code": -11.05,
+    "cjk": -3.66,
+    "hangul": -8.76,
+    "kana": 12.52,
+    "latin": -32.28,
+    "ascii": -26.68,
+    "greek": 17.39
+   },
+   "id": "mistralai/Ministral-3-14B-Instruct-2512-BF16",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.6412,
+   "intercept": 311.0,
+   "rmse": 33.563,
+   "max_abs": 73.3,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     73.3
+    ],
+    [
+     "latin",
+     "latin_repeat_a",
+     -55.2
+    ],
+    [
+     "latin",
+     "latin_random",
+     -55.2
+    ],
+    [
+     "emoji",
+     "emoji_run",
+     -54.6
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     53.3
+    ],
+    [
+     "emoji",
+     "flags",
+     -50.1
+    ]
+   ],
+   "per_script": {
+    "digits": 21.47,
+    "mixed": -33.9,
+    "emoji": -52.35,
+    "hebrew": 21.24,
+    "thai": 12.93,
+    "cyrillic": 45.98,
+    "arabic": 48.17,
+    "devanagari": 39.84,
+    "code": -11.05,
+    "cjk": -3.66,
+    "hangul": -8.76,
+    "kana": 12.52,
+    "latin": -32.28,
+    "ascii": -26.68,
+    "greek": 17.39
+   },
+   "id": "nvidia/NVIDIA-Nemotron-3-Nano-4B-BF16",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.6412,
+   "intercept": 311.0,
+   "rmse": 33.563,
+   "max_abs": 73.3,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     73.3
+    ],
+    [
+     "latin",
+     "latin_repeat_a",
+     -55.2
+    ],
+    [
+     "latin",
+     "latin_random",
+     -55.2
+    ],
+    [
+     "emoji",
+     "emoji_run",
+     -54.6
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     53.3
+    ],
+    [
+     "emoji",
+     "flags",
+     -50.1
+    ]
+   ],
+   "per_script": {
+    "digits": 21.47,
+    "mixed": -33.9,
+    "emoji": -52.35,
+    "hebrew": 21.24,
+    "thai": 12.93,
+    "cyrillic": 45.98,
+    "arabic": 48.17,
+    "devanagari": 39.84,
+    "code": -11.05,
+    "cjk": -3.66,
+    "hangul": -8.76,
+    "kana": 12.52,
+    "latin": -32.28,
+    "ascii": -26.68,
+    "greek": 17.39
+   },
+   "id": "nvidia/Cosmos3-Edge",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.6412,
+   "intercept": 311.0,
+   "rmse": 33.563,
+   "max_abs": 73.3,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     73.3
+    ],
+    [
+     "latin",
+     "latin_repeat_a",
+     -55.2
+    ],
+    [
+     "latin",
+     "latin_random",
+     -55.2
+    ],
+    [
+     "emoji",
+     "emoji_run",
+     -54.6
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     53.3
+    ],
+    [
+     "emoji",
+     "flags",
+     -50.1
+    ]
+   ],
+   "per_script": {
+    "digits": 21.47,
+    "mixed": -33.9,
+    "emoji": -52.35,
+    "hebrew": 21.24,
+    "thai": 12.93,
+    "cyrillic": 45.98,
+    "arabic": 48.17,
+    "devanagari": 39.84,
+    "code": -11.05,
+    "cjk": -3.66,
+    "hangul": -8.76,
+    "kana": 12.52,
+    "latin": -32.28,
+    "ascii": -26.68,
+    "greek": 17.39
+   },
+   "id": "nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-FP8",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.6412,
+   "intercept": 311.0,
+   "rmse": 33.563,
+   "max_abs": 73.3,
+   "worst": [
+    [
+     "cyrillic",
+     "cyrillic_word",
+     73.3
+    ],
+    [
+     "latin",
+     "latin_repeat_a",
+     -55.2
+    ],
+    [
+     "latin",
+     "latin_random",
+     -55.2
+    ],
+    [
+     "emoji",
+     "emoji_run",
+     -54.6
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     53.3
+    ],
+    [
+     "emoji",
+     "flags",
+     -50.1
+    ]
+   ],
+   "per_script": {
+    "digits": 21.47,
+    "mixed": -33.9,
+    "emoji": -52.35,
+    "hebrew": 21.24,
+    "thai": 12.93,
+    "cyrillic": 45.98,
+    "arabic": 48.17,
+    "devanagari": 39.84,
+    "code": -11.05,
+    "cjk": -3.66,
+    "hangul": -8.76,
+    "kana": 12.52,
+    "latin": -32.28,
+    "ascii": -26.68,
+    "greek": 17.39
+   },
+   "id": "nvidia/NVIDIA-Nemotron-Nano-9B-v2",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.7373,
+   "intercept": 294.0,
+   "rmse": 34.15,
+   "max_abs": 78.79,
+   "worst": [
+    [
+     "thai",
+     "thai",
+     -78.8
+    ],
+    [
+     "cyrillic",
+     "cyrillic_word",
+     66.3
+    ],
+    [
+     "kana",
+     "kana_hira",
+     -65.4
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     61.1
+    ],
+    [
+     "cjk",
+     "cjk_random",
+     54.6
+    ],
+    [
+     "hangul",
+     "hangul",
+     -50.0
+    ]
+   ],
+   "per_script": {
+    "digits": 16.34,
+    "mixed": -22.87,
+    "emoji": -24.83,
+    "hebrew": 2.08,
+    "thai": -78.79,
+    "cyrillic": 49.47,
+    "arabic": 2.08,
+    "devanagari": 2.08,
+    "code": -11.3,
+    "cjk": 40.67,
+    "hangul": -50.03,
+    "kana": -65.42,
+    "latin": -7.63,
+    "ascii": -22.01,
+    "greek": 2.08
+   },
+   "id": "deepseek-ai/deepseek-vl-1.3b-chat",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.7373,
+   "intercept": 294.0,
+   "rmse": 34.15,
+   "max_abs": 78.79,
+   "worst": [
+    [
+     "thai",
+     "thai",
+     -78.8
+    ],
+    [
+     "cyrillic",
+     "cyrillic_word",
+     66.3
+    ],
+    [
+     "kana",
+     "kana_hira",
+     -65.4
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     61.1
+    ],
+    [
+     "cjk",
+     "cjk_random",
+     54.6
+    ],
+    [
+     "hangul",
+     "hangul",
+     -50.0
+    ]
+   ],
+   "per_script": {
+    "digits": 16.34,
+    "mixed": -22.87,
+    "emoji": -24.83,
+    "hebrew": 2.08,
+    "thai": -78.79,
+    "cyrillic": 49.47,
+    "arabic": 2.08,
+    "devanagari": 2.08,
+    "code": -11.3,
+    "cjk": 40.67,
+    "hangul": -50.03,
+    "kana": -65.42,
+    "latin": -7.63,
+    "ascii": -22.01,
+    "greek": 2.08
+   },
+   "id": "deepseek-ai/deepseek-vl2-small",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.9441,
+   "intercept": 288.2,
+   "rmse": 35.676,
+   "max_abs": 87.64,
+   "worst": [
+    [
+     "digits",
+     "digits01",
+     87.6
+    ],
+    [
+     "cyrillic",
+     "cyrillic_random",
+     69.9
+    ],
+    [
+     "cyrillic",
+     "cyrillic_word",
+     66.5
+    ],
+    [
+     "digits",
+     "digits_years",
+     50.6
+    ],
+    [
+     "emoji",
+     "flags",
+     -49.0
+    ],
+    [
+     "digits",
+     "digits_pi",
+     46.6
+    ]
+   ],
+   "per_script": {
+    "digits": 48.38,
+    "mixed": -30.38,
+    "emoji": -29.7,
+    "hebrew": -29.0,
+    "thai": -29.9,
+    "cyrillic": 48.96,
+    "arabic": 38.97,
+    "devanagari": -29.0,
+    "code": -30.99,
+    "cjk": 5.45,
+    "hangul": -30.68,
+    "kana": -8.79,
+    "latin": -17.34,
+    "ascii": -24.16,
+    "greek": -6.34
+   },
+   "id": "zai-org/GLM-4.7-Flash",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.9471,
+   "intercept": 287.0,
+   "rmse": 36.11,
+   "max_abs": 88.41,
+   "worst": [
+    [
+     "digits",
+     "digits01",
+     88.4
+    ],
+    [
+     "cyrillic",
+     "cyrillic_random",
+     70.5
+    ],
+    [
+     "cyrillic",
+     "cyrillic_word",
+     67.4
+    ],
+    [
+     "digits",
+     "digits_years",
+     51.2
+    ],
+    [
+     "emoji",
+     "flags",
+     -48.2
+    ],
+    [
+     "digits",
+     "digits_pi",
+     47.1
+    ]
+   ],
+   "per_script": {
+    "digits": 49.04,
+    "mixed": -29.45,
+    "emoji": -40.22,
+    "hebrew": -28.42,
+    "thai": -29.26,
+    "cyrillic": 49.73,
+    "arabic": 39.78,
+    "devanagari": -28.42,
+    "code": -30.29,
+    "cjk": 5.98,
+    "hangul": -30.0,
+    "kana": -8.11,
+    "latin": -16.5,
+    "ascii": -23.3,
+    "greek": -5.68
+   },
+   "id": "zai-org/GLM-4.5",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.9471,
+   "intercept": 287.0,
+   "rmse": 36.11,
+   "max_abs": 88.41,
+   "worst": [
+    [
+     "digits",
+     "digits01",
+     88.4
+    ],
+    [
+     "cyrillic",
+     "cyrillic_random",
+     70.5
+    ],
+    [
+     "cyrillic",
+     "cyrillic_word",
+     67.4
+    ],
+    [
+     "digits",
+     "digits_years",
+     51.2
+    ],
+    [
+     "emoji",
+     "flags",
+     -48.2
+    ],
+    [
+     "digits",
+     "digits_pi",
+     47.1
+    ]
+   ],
+   "per_script": {
+    "digits": 49.04,
+    "mixed": -29.45,
+    "emoji": -40.22,
+    "hebrew": -28.42,
+    "thai": -29.26,
+    "cyrillic": 49.73,
+    "arabic": 39.78,
+    "devanagari": -28.42,
+    "code": -30.29,
+    "cjk": 5.98,
+    "hangul": -30.0,
+    "kana": -8.11,
+    "latin": -16.5,
+    "ascii": -23.3,
+    "greek": -5.68
+   },
+   "id": "zai-org/GLM-4.1V-9B-Thinking",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.9471,
+   "intercept": 287.0,
+   "rmse": 36.11,
+   "max_abs": 88.41,
+   "worst": [
+    [
+     "digits",
+     "digits01",
+     88.4
+    ],
+    [
+     "cyrillic",
+     "cyrillic_random",
+     70.5
+    ],
+    [
+     "cyrillic",
+     "cyrillic_word",
+     67.4
+    ],
+    [
+     "digits",
+     "digits_years",
+     51.2
+    ],
+    [
+     "emoji",
+     "flags",
+     -48.2
+    ],
+    [
+     "digits",
+     "digits_pi",
+     47.1
+    ]
+   ],
+   "per_script": {
+    "digits": 49.04,
+    "mixed": -29.45,
+    "emoji": -40.22,
+    "hebrew": -28.42,
+    "thai": -29.26,
+    "cyrillic": 49.73,
+    "arabic": 39.78,
+    "devanagari": -28.42,
+    "code": -30.29,
+    "cjk": 5.98,
+    "hangul": -30.0,
+    "kana": -8.11,
+    "latin": -16.5,
+    "ascii": -23.3,
+    "greek": -5.68
+   },
+   "id": "zai-org/codegeex4-all-9b",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.8713,
+   "intercept": 293.8,
+   "rmse": 37.773,
+   "max_abs": 107.19,
+   "worst": [
+    [
+     "digits",
+     "digits_pi",
+     107.2
+    ],
+    [
+     "digits",
+     "digits_years",
+     98.5
+    ],
+    [
+     "digits",
+     "digits01",
+     90.0
+    ],
+    [
+     "digits",
+     "digits_single",
+     47.5
+    ],
+    [
+     "ascii",
+     "urlish",
+     -37.5
+    ],
+    [
+     "latin",
+     "latin_hello",
+     -33.8
+    ]
+   ],
+   "per_script": {
+    "digits": 85.81,
+    "mixed": -31.92,
+    "emoji": -32.54,
+    "hebrew": -22.25,
+    "thai": 21.0,
+    "cyrillic": 7.66,
+    "arabic": -1.34,
+    "devanagari": -22.25,
+    "code": -27.25,
+    "cjk": -2.31,
+    "hangul": 0.03,
+    "kana": -4.36,
+    "latin": -16.76,
+    "ascii": -26.74,
+    "greek": -22.25
+   },
+   "id": "kakaocorp/kanana-2-3b-instruct",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.8569,
+   "intercept": 301.8,
+   "rmse": 40.346,
+   "max_abs": 102.79,
+   "worst": [
+    [
+     "digits",
+     "digits_pi",
+     102.8
+    ],
+    [
+     "digits",
+     "digits_years",
+     94.1
+    ],
+    [
+     "digits",
+     "digits01",
+     85.5
+    ],
+    [
+     "cyrillic",
+     "cyrillic_word",
+     62.6
+    ],
+    [
+     "emoji",
+     "flags",
+     -52.2
+    ],
+    [
+     "digits",
+     "digits_single",
+     42.6
+    ]
+   ],
+   "per_script": {
+    "digits": 81.25,
+    "mixed": -38.09,
+    "emoji": -44.22,
+    "hebrew": -25.91,
+    "thai": -5.92,
+    "cyrillic": 25.51,
+    "arabic": 35.78,
+    "devanagari": 7.51,
+    "code": -30.99,
+    "cjk": -11.99,
+    "hangul": -4.5,
+    "kana": -8.49,
+    "latin": -21.65,
+    "ascii": -29.13,
+    "greek": -5.35
+   },
+   "id": "NousResearch/Meta-Llama-3-8B",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.8569,
+   "intercept": 301.8,
+   "rmse": 40.346,
+   "max_abs": 102.79,
+   "worst": [
+    [
+     "digits",
+     "digits_pi",
+     102.8
+    ],
+    [
+     "digits",
+     "digits_years",
+     94.1
+    ],
+    [
+     "digits",
+     "digits01",
+     85.5
+    ],
+    [
+     "cyrillic",
+     "cyrillic_word",
+     62.6
+    ],
+    [
+     "emoji",
+     "flags",
+     -52.2
+    ],
+    [
+     "digits",
+     "digits_single",
+     42.6
+    ]
+   ],
+   "per_script": {
+    "digits": 81.25,
+    "mixed": -38.09,
+    "emoji": -44.22,
+    "hebrew": -25.91,
+    "thai": -5.92,
+    "cyrillic": 25.51,
+    "arabic": 35.78,
+    "devanagari": 7.51,
+    "code": -30.99,
+    "cjk": -11.99,
+    "hangul": -4.5,
+    "kana": -8.49,
+    "latin": -21.65,
+    "ascii": -29.13,
+    "greek": -5.35
+   },
+   "id": "meta-llama/Llama-3.1-8B",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.8644,
+   "intercept": 302.1,
+   "rmse": 40.824,
+   "max_abs": 100.62,
+   "worst": [
+    [
+     "digits",
+     "digits_pi",
+     100.6
+    ],
+    [
+     "digits",
+     "digits_years",
+     91.9
+    ],
+    [
+     "digits",
+     "digits01",
+     83.4
+    ],
+    [
+     "cyrillic",
+     "cyrillic_word",
+     60.7
+    ],
+    [
+     "ascii",
+     "urlish",
+     -44.9
+    ],
+    [
+     "cyrillic",
+     "cyrillic_common",
+     40.7
+    ]
+   ],
+   "per_script": {
+    "digits": 79.16,
+    "mixed": -38.92,
+    "emoji": -39.31,
+    "hebrew": -2.53,
+    "thai": -8.16,
+    "cyrillic": 23.0,
+    "arabic": 33.77,
+    "devanagari": 22.54,
+    "code": -33.71,
+    "cjk": 7.59,
+    "hangul": -32.53,
+    "kana": -10.8,
+    "latin": -27.88,
+    "ascii": -33.87,
+    "greek": -7.72
+   },
+   "id": "deepseek-ai/DeepSeek-V3",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.603,
+   "intercept": 325.6,
+   "rmse": 40.957,
+   "max_abs": 111.44,
+   "worst": [
+    [
+     "digits",
+     "digits_pi",
+     111.4
+    ],
+    [
+     "digits",
+     "digits_years",
+     101.5
+    ],
+    [
+     "digits",
+     "digits01",
+     91.9
+    ],
+    [
+     "emoji",
+     "flags",
+     -48.9
+    ],
+    [
+     "ascii",
+     "repeated_dash",
+     -46.2
+    ],
+    [
+     "mixed",
+     "codeswitch",
+     -45.2
+    ]
+   ],
+   "per_script": {
+    "digits": 87.17,
+    "mixed": -45.18,
+    "emoji": -40.9,
+    "hebrew": -4.32,
+    "thai": -10.67,
+    "cyrillic": 29.49,
+    "arabic": 10.15,
+    "devanagari": -4.32,
+    "code": -18.41,
+    "cjk": -19.73,
+    "hangul": -34.32,
+    "kana": 4.98,
+    "latin": -21.58,
+    "ascii": -30.97,
+    "greek": -4.32
+   },
+   "id": "microsoft/Phi-4",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.603,
+   "intercept": 325.6,
+   "rmse": 40.957,
+   "max_abs": 111.44,
+   "worst": [
+    [
+     "digits",
+     "digits_pi",
+     111.4
+    ],
+    [
+     "digits",
+     "digits_years",
+     101.5
+    ],
+    [
+     "digits",
+     "digits01",
+     91.9
+    ],
+    [
+     "emoji",
+     "flags",
+     -48.9
+    ],
+    [
+     "ascii",
+     "repeated_dash",
+     -46.2
+    ],
+    [
+     "mixed",
+     "codeswitch",
+     -45.2
+    ]
+   ],
+   "per_script": {
+    "digits": 87.17,
+    "mixed": -45.18,
+    "emoji": -40.9,
+    "hebrew": -4.32,
+    "thai": -10.67,
+    "cyrillic": 29.49,
+    "arabic": 10.15,
+    "devanagari": -4.32,
+    "code": -18.41,
+    "cjk": -19.73,
+    "hangul": -34.32,
+    "kana": 4.98,
+    "latin": -21.58,
+    "ascii": -30.97,
+    "greek": -4.32
+   },
+   "id": "allenai/OLMo-2-0425-1B",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.603,
+   "intercept": 325.6,
+   "rmse": 40.957,
+   "max_abs": 111.44,
+   "worst": [
+    [
+     "digits",
+     "digits_pi",
+     111.4
+    ],
+    [
+     "digits",
+     "digits_years",
+     101.5
+    ],
+    [
+     "digits",
+     "digits01",
+     91.9
+    ],
+    [
+     "emoji",
+     "flags",
+     -48.9
+    ],
+    [
+     "ascii",
+     "repeated_dash",
+     -46.2
+    ],
+    [
+     "mixed",
+     "codeswitch",
+     -45.2
+    ]
+   ],
+   "per_script": {
+    "digits": 87.17,
+    "mixed": -45.18,
+    "emoji": -40.9,
+    "hebrew": -4.32,
+    "thai": -10.67,
+    "cyrillic": 29.49,
+    "arabic": 10.15,
+    "devanagari": -4.32,
+    "code": -18.41,
+    "cjk": -19.73,
+    "hangul": -34.32,
+    "kana": 4.98,
+    "latin": -21.58,
+    "ascii": -30.97,
+    "greek": -4.32
+   },
+   "id": "allenai/Olmo-3-7B-Instruct",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.603,
+   "intercept": 325.6,
+   "rmse": 40.957,
+   "max_abs": 111.44,
+   "worst": [
+    [
+     "digits",
+     "digits_pi",
+     111.4
+    ],
+    [
+     "digits",
+     "digits_years",
+     101.5
+    ],
+    [
+     "digits",
+     "digits01",
+     91.9
+    ],
+    [
+     "emoji",
+     "flags",
+     -48.9
+    ],
+    [
+     "ascii",
+     "repeated_dash",
+     -46.2
+    ],
+    [
+     "mixed",
+     "codeswitch",
+     -45.2
+    ]
+   ],
+   "per_script": {
+    "digits": 87.17,
+    "mixed": -45.18,
+    "emoji": -40.9,
+    "hebrew": -4.32,
+    "thai": -10.67,
+    "cyrillic": 29.49,
+    "arabic": 10.15,
+    "devanagari": -4.32,
+    "code": -18.41,
+    "cjk": -19.73,
+    "hangul": -34.32,
+    "kana": 4.98,
+    "latin": -21.58,
+    "ascii": -30.97,
+    "greek": -4.32
+   },
+   "id": "allenai/Molmo2-O-7B",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.849,
+   "intercept": 298.5,
+   "rmse": 41.451,
+   "max_abs": 104.53,
+   "worst": [
+    [
+     "digits",
+     "digits_pi",
+     104.5
+    ],
+    [
+     "digits",
+     "digits_years",
+     95.8
+    ],
+    [
+     "digits",
+     "digits01",
+     87.2
+    ],
+    [
+     "emoji",
+     "flags",
+     -50.6
+    ],
+    [
+     "cyrillic",
+     "cyrillic_word",
+     47.2
+    ],
+    [
+     "ascii",
+     "urlish",
+     -46.2
+    ]
+   ],
+   "per_script": {
+    "digits": 82.91,
+    "mixed": -35.98,
+    "emoji": -42.64,
+    "hebrew": 1.7,
+    "thai": -26.19,
+    "cyrillic": 22.93,
+    "arabic": 37.36,
+    "devanagari": 9.34,
+    "code": -29.55,
+    "cjk": 12.58,
+    "hangul": -28.3,
+    "kana": -25.28,
+    "latin": -25.78,
+    "ascii": -32.24,
+    "greek": -23.77
+   },
+   "id": "tencent/HunyuanOCR",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.849,
+   "intercept": 298.5,
+   "rmse": 41.451,
+   "max_abs": 104.53,
+   "worst": [
+    [
+     "digits",
+     "digits_pi",
+     104.5
+    ],
+    [
+     "digits",
+     "digits_years",
+     95.8
+    ],
+    [
+     "digits",
+     "digits01",
+     87.2
+    ],
+    [
+     "emoji",
+     "flags",
+     -50.6
+    ],
+    [
+     "cyrillic",
+     "cyrillic_word",
+     47.2
+    ],
+    [
+     "ascii",
+     "urlish",
+     -46.2
+    ]
+   ],
+   "per_script": {
+    "digits": 82.91,
+    "mixed": -35.98,
+    "emoji": -42.64,
+    "hebrew": 1.7,
+    "thai": -26.19,
+    "cyrillic": 22.93,
+    "arabic": 37.36,
+    "devanagari": 9.34,
+    "code": -29.55,
+    "cjk": 12.58,
+    "hangul": -28.3,
+    "kana": -25.28,
+    "latin": -25.78,
+    "ascii": -32.24,
+    "greek": -23.77
+   },
+   "id": "tencent/Hy3-preview",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.849,
+   "intercept": 298.5,
+   "rmse": 41.451,
+   "max_abs": 104.53,
+   "worst": [
+    [
+     "digits",
+     "digits_pi",
+     104.5
+    ],
+    [
+     "digits",
+     "digits_years",
+     95.8
+    ],
+    [
+     "digits",
+     "digits01",
+     87.2
+    ],
+    [
+     "emoji",
+     "flags",
+     -50.6
+    ],
+    [
+     "cyrillic",
+     "cyrillic_word",
+     47.2
+    ],
+    [
+     "ascii",
+     "urlish",
+     -46.2
+    ]
+   ],
+   "per_script": {
+    "digits": 82.91,
+    "mixed": -35.98,
+    "emoji": -42.64,
+    "hebrew": 1.7,
+    "thai": -26.19,
+    "cyrillic": 22.93,
+    "arabic": 37.36,
+    "devanagari": 9.34,
+    "code": -29.55,
+    "cjk": 12.58,
+    "hangul": -28.3,
+    "kana": -25.28,
+    "latin": -25.78,
+    "ascii": -32.24,
+    "greek": -23.77
+   },
+   "id": "tencent/Hy3-FP8",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.849,
+   "intercept": 298.5,
+   "rmse": 41.451,
+   "max_abs": 104.53,
+   "worst": [
+    [
+     "digits",
+     "digits_pi",
+     104.5
+    ],
+    [
+     "digits",
+     "digits_years",
+     95.8
+    ],
+    [
+     "digits",
+     "digits01",
+     87.2
+    ],
+    [
+     "emoji",
+     "flags",
+     -50.6
+    ],
+    [
+     "cyrillic",
+     "cyrillic_word",
+     47.2
+    ],
+    [
+     "ascii",
+     "urlish",
+     -46.2
+    ]
+   ],
+   "per_script": {
+    "digits": 82.91,
+    "mixed": -35.98,
+    "emoji": -42.64,
+    "hebrew": 1.7,
+    "thai": -26.19,
+    "cyrillic": 22.93,
+    "arabic": 37.36,
+    "devanagari": 9.34,
+    "code": -29.55,
+    "cjk": 12.58,
+    "hangul": -28.3,
+    "kana": -25.28,
+    "latin": -25.78,
+    "ascii": -32.24,
+    "greek": -23.77
+   },
+   "id": "tencent/Hy-MT2-30B-A3B",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.9023,
+   "intercept": 304.4,
+   "rmse": 41.827,
+   "max_abs": 94.29,
+   "worst": [
+    [
+     "digits",
+     "digits_pi",
+     94.3
+    ],
+    [
+     "digits",
+     "digits_years",
+     85.8
+    ],
+    [
+     "digits",
+     "digits01",
+     77.4
+    ],
+    [
+     "cyrillic",
+     "cyrillic_random",
+     61.3
+    ],
+    [
+     "cyrillic",
+     "cyrillic_word",
+     55.5
+    ],
+    [
+     "latin",
+     "latin_hello",
+     -45.5
+    ]
+   ],
+   "per_script": {
+    "digits": 73.24,
+    "mixed": -42.87,
+    "emoji": -33.72,
+    "hebrew": 44.48,
+    "thai": -14.83,
+    "cyrillic": 43.29,
+    "arabic": 28.24,
+    "devanagari": 16.51,
+    "code": -40.2,
+    "cjk": -18.28,
+    "hangul": -12.59,
+    "kana": -17.86,
+    "latin": -28.62,
+    "ascii": -35.45,
+    "greek": -15.07
+   },
+   "id": "openai/gpt-oss-20b",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.4702,
+   "intercept": 318.5,
+   "rmse": 42.437,
+   "max_abs": 85.44,
+   "worst": [
+    [
+     "thai",
+     "thai",
+     -85.4
+    ],
+    [
+     "devanagari",
+     "devanagari",
+     -73.2
+    ],
+    [
+     "digits",
+     "digits_pi",
+     65.9
+    ],
+    [
+     "cyrillic",
+     "cyrillic_random",
+     63.2
+    ],
+    [
+     "cyrillic",
+     "cyrillic_word",
+     59.6
+    ],
+    [
+     "digits",
+     "digits_years",
+     59.0
+    ]
+   ],
+   "per_script": {
+    "digits": 49.58,
+    "mixed": -34.57,
+    "emoji": -40.36,
+    "hebrew": -35.58,
+    "thai": -85.44,
+    "cyrillic": 54.38,
+    "arabic": -1.73,
+    "devanagari": -73.2,
+    "code": -0.56,
+    "cjk": 39.69,
+    "hangul": -51.48,
+    "kana": -25.84,
+    "latin": -13.24,
+    "ascii": -33.29,
+    "greek": 20.83
+   },
+   "id": "01-ai/Yi-6B",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.4702,
+   "intercept": 318.5,
+   "rmse": 42.437,
+   "max_abs": 85.44,
+   "worst": [
+    [
+     "thai",
+     "thai",
+     -85.4
+    ],
+    [
+     "devanagari",
+     "devanagari",
+     -73.2
+    ],
+    [
+     "digits",
+     "digits_pi",
+     65.9
+    ],
+    [
+     "cyrillic",
+     "cyrillic_random",
+     63.2
+    ],
+    [
+     "cyrillic",
+     "cyrillic_word",
+     59.6
+    ],
+    [
+     "digits",
+     "digits_years",
+     59.0
+    ]
+   ],
+   "per_script": {
+    "digits": 49.58,
+    "mixed": -34.57,
+    "emoji": -40.36,
+    "hebrew": -35.58,
+    "thai": -85.44,
+    "cyrillic": 54.38,
+    "arabic": -1.73,
+    "devanagari": -73.2,
+    "code": -0.56,
+    "cjk": 39.69,
+    "hangul": -51.48,
+    "kana": -25.84,
+    "latin": -13.24,
+    "ascii": -33.29,
+    "greek": 20.83
+   },
+   "id": "01-ai/Yi-1.5-9B-Chat-16K",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.4702,
+   "intercept": 318.5,
+   "rmse": 42.437,
+   "max_abs": 85.44,
+   "worst": [
+    [
+     "thai",
+     "thai",
+     -85.4
+    ],
+    [
+     "devanagari",
+     "devanagari",
+     -73.2
+    ],
+    [
+     "digits",
+     "digits_pi",
+     65.9
+    ],
+    [
+     "cyrillic",
+     "cyrillic_random",
+     63.2
+    ],
+    [
+     "cyrillic",
+     "cyrillic_word",
+     59.6
+    ],
+    [
+     "digits",
+     "digits_years",
+     59.0
+    ]
+   ],
+   "per_script": {
+    "digits": 49.58,
+    "mixed": -34.57,
+    "emoji": -40.36,
+    "hebrew": -35.58,
+    "thai": -85.44,
+    "cyrillic": 54.38,
+    "arabic": -1.73,
+    "devanagari": -73.2,
+    "code": -0.56,
+    "cjk": 39.69,
+    "hangul": -51.48,
+    "kana": -25.84,
+    "latin": -13.24,
+    "ascii": -33.29,
+    "greek": 20.83
+   },
+   "id": "01-ai/Yi-Coder-9B",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.4507,
+   "intercept": 328.6,
+   "rmse": 43.963,
+   "max_abs": 118.91,
+   "worst": [
+    [
+     "digits",
+     "digits_pi",
+     118.9
+    ],
+    [
+     "digits",
+     "digits_years",
+     114.9
+    ],
+    [
+     "digits",
+     "digits01",
+     91.2
+    ],
+    [
+     "hangul",
+     "hangul",
+     -66.4
+    ],
+    [
+     "cjk",
+     "cjk_random",
+     55.4
+    ],
+    [
+     "digits",
+     "digits_single",
+     44.7
+    ]
+   ],
+   "per_script": {
+    "digits": 92.44,
+    "mixed": -41.74,
+    "emoji": -29.86,
+    "hebrew": 4.16,
+    "thai": -37.98,
+    "cyrillic": 3.0,
+    "arabic": 17.68,
+    "devanagari": -36.4,
+    "code": -4.29,
+    "cjk": 1.31,
+    "hangul": -66.4,
+    "kana": -7.64,
+    "latin": -13.67,
+    "ascii": -29.19,
+    "greek": 6.87
+   },
+   "id": "microsoft/phi-2",
+   "n_samples": 31
+  },
+  {
+   "slope": 0.7196,
+   "intercept": 294.8,
+   "rmse": 47.533,
+   "max_abs": 174.28,
+   "worst": [
+    [
+     "cjk",
+     "cjk_random",
+     174.3
+    ],
+    [
+     "thai",
+     "thai",
+     -113.7
+    ],
+    [
+     "ascii",
+     "repeated_dash",
+     -95.5
+    ],
+    [
+     "cyrillic",
+     "cyrillic_word",
+     51.8
+    ],
+    [
+     "hangul",
+     "hangul",
+     -48.5
+    ],
+    [
+     "emoji",
+     "flags",
+     -44.6
+    ]
+   ],
+   "per_script": {
+    "digits": 18.27,
+    "mixed": -23.9,
+    "emoji": -22.25,
+    "hebrew": -18.53,
+    "thai": -113.69,
+    "cyrillic": 31.32,
+    "arabic": 20.33,
+    "devanagari": 3.06,
+    "code": -10.85,
+    "cjk": 80.38,
+    "hangul": -48.53,
+    "kana": 0.26,
+    "latin": -7.91,
+    "ascii": -51.93,
+    "greek": 3.06
+   },
+   "id": "BAAI/bge-reranker-v2-minicpm-layerwise",
+   "n_samples": 31
+  }
+ ]
+}

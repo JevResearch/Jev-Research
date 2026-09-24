@@ -1,0 +1,2020 @@
+{
+  "design": "mech_dryrun_12x2x4",
+  "version": "mech_dryrun-1.0.0",
+  "blocks": 12,
+  "anchors": [
+    "dup-charge",
+    "subscription-proration"
+  ],
+  "arms": [
+    "alone",
+    "siblings",
+    "renamed",
+    "reordered"
+  ],
+  "order_seed": 4200,
+  "arm_contracts": {
+    "renamed": "ALL question ids renamed (anchor included); positions and content preserved",
+    "reordered": "ALL questions reordered (anchor moved); all ids and content retained"
+  },
+  "anchor_state_source": {
+    "file": "runs_live_spec_screen.json",
+    "item_id": "screen-subscription-proration",
+    "sha256": "7787bbf35ef783b4adba8a5aae3e989b0cbf88fecb5048a67eb2d648781af8ad",
+    "note": "states are exact copies of the screened items; hash recorded for traceability"
+  },
+  "sibling_rename_maps": {
+    "dup-charge": {
+      "anchor": "renamed_anchor",
+      "s000": "q_00000",
+      "s001": "q_00001",
+      "s002": "q_00002",
+      "s003": "q_00003",
+      "s004": "q_00004",
+      "s005": "q_00005",
+      "s006": "q_00006",
+      "s007": "q_00007"
+    },
+    "subscription-proration": {
+      "anchor": "renamed_anchor",
+      "s000": "q_00000",
+      "s001": "q_00001",
+      "s002": "q_00002",
+      "s003": "q_00003",
+      "s004": "q_00004",
+      "s005": "q_00005",
+      "s006": "q_00006",
+      "s007": "q_00007"
+    }
+  },
+  "items": [
+    {
+      "item_id": "m4-subscription-proration-b00-alone",
+      "block": 0,
+      "anchor": "subscription-proration",
+      "arm": "alone",
+      "dispatch_index": 0,
+      "question_order": [
+        "anchor"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b00-reordered",
+      "block": 0,
+      "anchor": "dup-charge",
+      "arm": "reordered",
+      "dispatch_index": 1,
+      "question_order": [
+        "s001",
+        "s002",
+        "s004",
+        "s003",
+        "s005",
+        "anchor",
+        "s000",
+        "s006",
+        "s007"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b00-alone",
+      "block": 0,
+      "anchor": "dup-charge",
+      "arm": "alone",
+      "dispatch_index": 2,
+      "question_order": [
+        "anchor"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b00-siblings",
+      "block": 0,
+      "anchor": "subscription-proration",
+      "arm": "siblings",
+      "dispatch_index": 3,
+      "question_order": [
+        "anchor",
+        "s000",
+        "s001",
+        "s002",
+        "s003",
+        "s004",
+        "s005",
+        "s006",
+        "s007"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b00-reordered",
+      "block": 0,
+      "anchor": "subscription-proration",
+      "arm": "reordered",
+      "dispatch_index": 4,
+      "question_order": [
+        "anchor",
+        "s002",
+        "s003",
+        "s006",
+        "s004",
+        "s000",
+        "s001",
+        "s007",
+        "s005"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b00-renamed",
+      "block": 0,
+      "anchor": "dup-charge",
+      "arm": "renamed",
+      "dispatch_index": 5,
+      "question_order": [
+        "renamed_anchor",
+        "q_00000",
+        "q_00001",
+        "q_00002",
+        "q_00003",
+        "q_00004",
+        "q_00005",
+        "q_00006",
+        "q_00007"
+      ],
+      "measured_anchor_id": "renamed_anchor",
+      "renamed_ids": {
+        "anchor": "renamed_anchor",
+        "s000": "q_00000",
+        "s001": "q_00001",
+        "s002": "q_00002",
+        "s003": "q_00003",
+        "s004": "q_00004",
+        "s005": "q_00005",
+        "s006": "q_00006",
+        "s007": "q_00007"
+      }
+    },
+    {
+      "item_id": "m4-subscription-proration-b00-renamed",
+      "block": 0,
+      "anchor": "subscription-proration",
+      "arm": "renamed",
+      "dispatch_index": 6,
+      "question_order": [
+        "renamed_anchor",
+        "q_00000",
+        "q_00001",
+        "q_00002",
+        "q_00003",
+        "q_00004",
+        "q_00005",
+        "q_00006",
+        "q_00007"
+      ],
+      "measured_anchor_id": "renamed_anchor",
+      "renamed_ids": {
+        "anchor": "renamed_anchor",
+        "s000": "q_00000",
+        "s001": "q_00001",
+        "s002": "q_00002",
+        "s003": "q_00003",
+        "s004": "q_00004",
+        "s005": "q_00005",
+        "s006": "q_00006",
+        "s007": "q_00007"
+      }
+    },
+    {
+      "item_id": "m4-dup-charge-b00-siblings",
+      "block": 0,
+      "anchor": "dup-charge",
+      "arm": "siblings",
+      "dispatch_index": 7,
+      "question_order": [
+        "anchor",
+        "s000",
+        "s001",
+        "s002",
+        "s003",
+        "s004",
+        "s005",
+        "s006",
+        "s007"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b01-reordered",
+      "block": 1,
+      "anchor": "dup-charge",
+      "arm": "reordered",
+      "dispatch_index": 0,
+      "question_order": [
+        "s003",
+        "s007",
+        "s005",
+        "s002",
+        "s001",
+        "s004",
+        "anchor",
+        "s006",
+        "s000"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b01-siblings",
+      "block": 1,
+      "anchor": "subscription-proration",
+      "arm": "siblings",
+      "dispatch_index": 1,
+      "question_order": [
+        "anchor",
+        "s000",
+        "s001",
+        "s002",
+        "s003",
+        "s004",
+        "s005",
+        "s006",
+        "s007"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b01-siblings",
+      "block": 1,
+      "anchor": "dup-charge",
+      "arm": "siblings",
+      "dispatch_index": 2,
+      "question_order": [
+        "anchor",
+        "s000",
+        "s001",
+        "s002",
+        "s003",
+        "s004",
+        "s005",
+        "s006",
+        "s007"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b01-renamed",
+      "block": 1,
+      "anchor": "dup-charge",
+      "arm": "renamed",
+      "dispatch_index": 3,
+      "question_order": [
+        "renamed_anchor",
+        "q_00000",
+        "q_00001",
+        "q_00002",
+        "q_00003",
+        "q_00004",
+        "q_00005",
+        "q_00006",
+        "q_00007"
+      ],
+      "measured_anchor_id": "renamed_anchor",
+      "renamed_ids": {
+        "anchor": "renamed_anchor",
+        "s000": "q_00000",
+        "s001": "q_00001",
+        "s002": "q_00002",
+        "s003": "q_00003",
+        "s004": "q_00004",
+        "s005": "q_00005",
+        "s006": "q_00006",
+        "s007": "q_00007"
+      }
+    },
+    {
+      "item_id": "m4-subscription-proration-b01-renamed",
+      "block": 1,
+      "anchor": "subscription-proration",
+      "arm": "renamed",
+      "dispatch_index": 4,
+      "question_order": [
+        "renamed_anchor",
+        "q_00000",
+        "q_00001",
+        "q_00002",
+        "q_00003",
+        "q_00004",
+        "q_00005",
+        "q_00006",
+        "q_00007"
+      ],
+      "measured_anchor_id": "renamed_anchor",
+      "renamed_ids": {
+        "anchor": "renamed_anchor",
+        "s000": "q_00000",
+        "s001": "q_00001",
+        "s002": "q_00002",
+        "s003": "q_00003",
+        "s004": "q_00004",
+        "s005": "q_00005",
+        "s006": "q_00006",
+        "s007": "q_00007"
+      }
+    },
+    {
+      "item_id": "m4-subscription-proration-b01-reordered",
+      "block": 1,
+      "anchor": "subscription-proration",
+      "arm": "reordered",
+      "dispatch_index": 5,
+      "question_order": [
+        "s002",
+        "s006",
+        "s000",
+        "s004",
+        "s003",
+        "s007",
+        "s005",
+        "s001",
+        "anchor"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b01-alone",
+      "block": 1,
+      "anchor": "dup-charge",
+      "arm": "alone",
+      "dispatch_index": 6,
+      "question_order": [
+        "anchor"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b01-alone",
+      "block": 1,
+      "anchor": "subscription-proration",
+      "arm": "alone",
+      "dispatch_index": 7,
+      "question_order": [
+        "anchor"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b02-reordered",
+      "block": 2,
+      "anchor": "dup-charge",
+      "arm": "reordered",
+      "dispatch_index": 0,
+      "question_order": [
+        "s004",
+        "s006",
+        "s000",
+        "anchor",
+        "s003",
+        "s007",
+        "s001",
+        "s005",
+        "s002"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b02-alone",
+      "block": 2,
+      "anchor": "subscription-proration",
+      "arm": "alone",
+      "dispatch_index": 1,
+      "question_order": [
+        "anchor"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b02-siblings",
+      "block": 2,
+      "anchor": "dup-charge",
+      "arm": "siblings",
+      "dispatch_index": 2,
+      "question_order": [
+        "anchor",
+        "s000",
+        "s001",
+        "s002",
+        "s003",
+        "s004",
+        "s005",
+        "s006",
+        "s007"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b02-renamed",
+      "block": 2,
+      "anchor": "dup-charge",
+      "arm": "renamed",
+      "dispatch_index": 3,
+      "question_order": [
+        "renamed_anchor",
+        "q_00000",
+        "q_00001",
+        "q_00002",
+        "q_00003",
+        "q_00004",
+        "q_00005",
+        "q_00006",
+        "q_00007"
+      ],
+      "measured_anchor_id": "renamed_anchor",
+      "renamed_ids": {
+        "anchor": "renamed_anchor",
+        "s000": "q_00000",
+        "s001": "q_00001",
+        "s002": "q_00002",
+        "s003": "q_00003",
+        "s004": "q_00004",
+        "s005": "q_00005",
+        "s006": "q_00006",
+        "s007": "q_00007"
+      }
+    },
+    {
+      "item_id": "m4-subscription-proration-b02-siblings",
+      "block": 2,
+      "anchor": "subscription-proration",
+      "arm": "siblings",
+      "dispatch_index": 4,
+      "question_order": [
+        "anchor",
+        "s000",
+        "s001",
+        "s002",
+        "s003",
+        "s004",
+        "s005",
+        "s006",
+        "s007"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b02-renamed",
+      "block": 2,
+      "anchor": "subscription-proration",
+      "arm": "renamed",
+      "dispatch_index": 5,
+      "question_order": [
+        "renamed_anchor",
+        "q_00000",
+        "q_00001",
+        "q_00002",
+        "q_00003",
+        "q_00004",
+        "q_00005",
+        "q_00006",
+        "q_00007"
+      ],
+      "measured_anchor_id": "renamed_anchor",
+      "renamed_ids": {
+        "anchor": "renamed_anchor",
+        "s000": "q_00000",
+        "s001": "q_00001",
+        "s002": "q_00002",
+        "s003": "q_00003",
+        "s004": "q_00004",
+        "s005": "q_00005",
+        "s006": "q_00006",
+        "s007": "q_00007"
+      }
+    },
+    {
+      "item_id": "m4-dup-charge-b02-alone",
+      "block": 2,
+      "anchor": "dup-charge",
+      "arm": "alone",
+      "dispatch_index": 6,
+      "question_order": [
+        "anchor"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b02-reordered",
+      "block": 2,
+      "anchor": "subscription-proration",
+      "arm": "reordered",
+      "dispatch_index": 7,
+      "question_order": [
+        "s002",
+        "s001",
+        "s004",
+        "s000",
+        "anchor",
+        "s003",
+        "s007",
+        "s005",
+        "s006"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b03-renamed",
+      "block": 3,
+      "anchor": "dup-charge",
+      "arm": "renamed",
+      "dispatch_index": 0,
+      "question_order": [
+        "renamed_anchor",
+        "q_00000",
+        "q_00001",
+        "q_00002",
+        "q_00003",
+        "q_00004",
+        "q_00005",
+        "q_00006",
+        "q_00007"
+      ],
+      "measured_anchor_id": "renamed_anchor",
+      "renamed_ids": {
+        "anchor": "renamed_anchor",
+        "s000": "q_00000",
+        "s001": "q_00001",
+        "s002": "q_00002",
+        "s003": "q_00003",
+        "s004": "q_00004",
+        "s005": "q_00005",
+        "s006": "q_00006",
+        "s007": "q_00007"
+      }
+    },
+    {
+      "item_id": "m4-subscription-proration-b03-siblings",
+      "block": 3,
+      "anchor": "subscription-proration",
+      "arm": "siblings",
+      "dispatch_index": 1,
+      "question_order": [
+        "anchor",
+        "s000",
+        "s001",
+        "s002",
+        "s003",
+        "s004",
+        "s005",
+        "s006",
+        "s007"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b03-reordered",
+      "block": 3,
+      "anchor": "subscription-proration",
+      "arm": "reordered",
+      "dispatch_index": 2,
+      "question_order": [
+        "anchor",
+        "s003",
+        "s004",
+        "s001",
+        "s002",
+        "s006",
+        "s005",
+        "s000",
+        "s007"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b03-renamed",
+      "block": 3,
+      "anchor": "subscription-proration",
+      "arm": "renamed",
+      "dispatch_index": 3,
+      "question_order": [
+        "renamed_anchor",
+        "q_00000",
+        "q_00001",
+        "q_00002",
+        "q_00003",
+        "q_00004",
+        "q_00005",
+        "q_00006",
+        "q_00007"
+      ],
+      "measured_anchor_id": "renamed_anchor",
+      "renamed_ids": {
+        "anchor": "renamed_anchor",
+        "s000": "q_00000",
+        "s001": "q_00001",
+        "s002": "q_00002",
+        "s003": "q_00003",
+        "s004": "q_00004",
+        "s005": "q_00005",
+        "s006": "q_00006",
+        "s007": "q_00007"
+      }
+    },
+    {
+      "item_id": "m4-dup-charge-b03-siblings",
+      "block": 3,
+      "anchor": "dup-charge",
+      "arm": "siblings",
+      "dispatch_index": 4,
+      "question_order": [
+        "anchor",
+        "s000",
+        "s001",
+        "s002",
+        "s003",
+        "s004",
+        "s005",
+        "s006",
+        "s007"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b03-reordered",
+      "block": 3,
+      "anchor": "dup-charge",
+      "arm": "reordered",
+      "dispatch_index": 5,
+      "question_order": [
+        "s006",
+        "s007",
+        "s000",
+        "s003",
+        "s001",
+        "anchor",
+        "s004",
+        "s005",
+        "s002"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b03-alone",
+      "block": 3,
+      "anchor": "subscription-proration",
+      "arm": "alone",
+      "dispatch_index": 6,
+      "question_order": [
+        "anchor"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b03-alone",
+      "block": 3,
+      "anchor": "dup-charge",
+      "arm": "alone",
+      "dispatch_index": 7,
+      "question_order": [
+        "anchor"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b04-renamed",
+      "block": 4,
+      "anchor": "dup-charge",
+      "arm": "renamed",
+      "dispatch_index": 0,
+      "question_order": [
+        "renamed_anchor",
+        "q_00000",
+        "q_00001",
+        "q_00002",
+        "q_00003",
+        "q_00004",
+        "q_00005",
+        "q_00006",
+        "q_00007"
+      ],
+      "measured_anchor_id": "renamed_anchor",
+      "renamed_ids": {
+        "anchor": "renamed_anchor",
+        "s000": "q_00000",
+        "s001": "q_00001",
+        "s002": "q_00002",
+        "s003": "q_00003",
+        "s004": "q_00004",
+        "s005": "q_00005",
+        "s006": "q_00006",
+        "s007": "q_00007"
+      }
+    },
+    {
+      "item_id": "m4-subscription-proration-b04-reordered",
+      "block": 4,
+      "anchor": "subscription-proration",
+      "arm": "reordered",
+      "dispatch_index": 1,
+      "question_order": [
+        "s006",
+        "anchor",
+        "s001",
+        "s002",
+        "s000",
+        "s004",
+        "s005",
+        "s007",
+        "s003"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b04-reordered",
+      "block": 4,
+      "anchor": "dup-charge",
+      "arm": "reordered",
+      "dispatch_index": 2,
+      "question_order": [
+        "s002",
+        "s001",
+        "s003",
+        "s004",
+        "anchor",
+        "s005",
+        "s000",
+        "s007",
+        "s006"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b04-alone",
+      "block": 4,
+      "anchor": "subscription-proration",
+      "arm": "alone",
+      "dispatch_index": 3,
+      "question_order": [
+        "anchor"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b04-siblings",
+      "block": 4,
+      "anchor": "dup-charge",
+      "arm": "siblings",
+      "dispatch_index": 4,
+      "question_order": [
+        "anchor",
+        "s000",
+        "s001",
+        "s002",
+        "s003",
+        "s004",
+        "s005",
+        "s006",
+        "s007"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b04-siblings",
+      "block": 4,
+      "anchor": "subscription-proration",
+      "arm": "siblings",
+      "dispatch_index": 5,
+      "question_order": [
+        "anchor",
+        "s000",
+        "s001",
+        "s002",
+        "s003",
+        "s004",
+        "s005",
+        "s006",
+        "s007"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b04-renamed",
+      "block": 4,
+      "anchor": "subscription-proration",
+      "arm": "renamed",
+      "dispatch_index": 6,
+      "question_order": [
+        "renamed_anchor",
+        "q_00000",
+        "q_00001",
+        "q_00002",
+        "q_00003",
+        "q_00004",
+        "q_00005",
+        "q_00006",
+        "q_00007"
+      ],
+      "measured_anchor_id": "renamed_anchor",
+      "renamed_ids": {
+        "anchor": "renamed_anchor",
+        "s000": "q_00000",
+        "s001": "q_00001",
+        "s002": "q_00002",
+        "s003": "q_00003",
+        "s004": "q_00004",
+        "s005": "q_00005",
+        "s006": "q_00006",
+        "s007": "q_00007"
+      }
+    },
+    {
+      "item_id": "m4-dup-charge-b04-alone",
+      "block": 4,
+      "anchor": "dup-charge",
+      "arm": "alone",
+      "dispatch_index": 7,
+      "question_order": [
+        "anchor"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b05-renamed",
+      "block": 5,
+      "anchor": "subscription-proration",
+      "arm": "renamed",
+      "dispatch_index": 0,
+      "question_order": [
+        "renamed_anchor",
+        "q_00000",
+        "q_00001",
+        "q_00002",
+        "q_00003",
+        "q_00004",
+        "q_00005",
+        "q_00006",
+        "q_00007"
+      ],
+      "measured_anchor_id": "renamed_anchor",
+      "renamed_ids": {
+        "anchor": "renamed_anchor",
+        "s000": "q_00000",
+        "s001": "q_00001",
+        "s002": "q_00002",
+        "s003": "q_00003",
+        "s004": "q_00004",
+        "s005": "q_00005",
+        "s006": "q_00006",
+        "s007": "q_00007"
+      }
+    },
+    {
+      "item_id": "m4-subscription-proration-b05-alone",
+      "block": 5,
+      "anchor": "subscription-proration",
+      "arm": "alone",
+      "dispatch_index": 1,
+      "question_order": [
+        "anchor"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b05-siblings",
+      "block": 5,
+      "anchor": "subscription-proration",
+      "arm": "siblings",
+      "dispatch_index": 2,
+      "question_order": [
+        "anchor",
+        "s000",
+        "s001",
+        "s002",
+        "s003",
+        "s004",
+        "s005",
+        "s006",
+        "s007"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b05-reordered",
+      "block": 5,
+      "anchor": "dup-charge",
+      "arm": "reordered",
+      "dispatch_index": 3,
+      "question_order": [
+        "s001",
+        "anchor",
+        "s000",
+        "s005",
+        "s003",
+        "s002",
+        "s006",
+        "s007",
+        "s004"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b05-alone",
+      "block": 5,
+      "anchor": "dup-charge",
+      "arm": "alone",
+      "dispatch_index": 4,
+      "question_order": [
+        "anchor"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b05-siblings",
+      "block": 5,
+      "anchor": "dup-charge",
+      "arm": "siblings",
+      "dispatch_index": 5,
+      "question_order": [
+        "anchor",
+        "s000",
+        "s001",
+        "s002",
+        "s003",
+        "s004",
+        "s005",
+        "s006",
+        "s007"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b05-renamed",
+      "block": 5,
+      "anchor": "dup-charge",
+      "arm": "renamed",
+      "dispatch_index": 6,
+      "question_order": [
+        "renamed_anchor",
+        "q_00000",
+        "q_00001",
+        "q_00002",
+        "q_00003",
+        "q_00004",
+        "q_00005",
+        "q_00006",
+        "q_00007"
+      ],
+      "measured_anchor_id": "renamed_anchor",
+      "renamed_ids": {
+        "anchor": "renamed_anchor",
+        "s000": "q_00000",
+        "s001": "q_00001",
+        "s002": "q_00002",
+        "s003": "q_00003",
+        "s004": "q_00004",
+        "s005": "q_00005",
+        "s006": "q_00006",
+        "s007": "q_00007"
+      }
+    },
+    {
+      "item_id": "m4-subscription-proration-b05-reordered",
+      "block": 5,
+      "anchor": "subscription-proration",
+      "arm": "reordered",
+      "dispatch_index": 7,
+      "question_order": [
+        "s004",
+        "anchor",
+        "s006",
+        "s000",
+        "s002",
+        "s007",
+        "s003",
+        "s005",
+        "s001"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b06-renamed",
+      "block": 6,
+      "anchor": "subscription-proration",
+      "arm": "renamed",
+      "dispatch_index": 0,
+      "question_order": [
+        "renamed_anchor",
+        "q_00000",
+        "q_00001",
+        "q_00002",
+        "q_00003",
+        "q_00004",
+        "q_00005",
+        "q_00006",
+        "q_00007"
+      ],
+      "measured_anchor_id": "renamed_anchor",
+      "renamed_ids": {
+        "anchor": "renamed_anchor",
+        "s000": "q_00000",
+        "s001": "q_00001",
+        "s002": "q_00002",
+        "s003": "q_00003",
+        "s004": "q_00004",
+        "s005": "q_00005",
+        "s006": "q_00006",
+        "s007": "q_00007"
+      }
+    },
+    {
+      "item_id": "m4-dup-charge-b06-renamed",
+      "block": 6,
+      "anchor": "dup-charge",
+      "arm": "renamed",
+      "dispatch_index": 1,
+      "question_order": [
+        "renamed_anchor",
+        "q_00000",
+        "q_00001",
+        "q_00002",
+        "q_00003",
+        "q_00004",
+        "q_00005",
+        "q_00006",
+        "q_00007"
+      ],
+      "measured_anchor_id": "renamed_anchor",
+      "renamed_ids": {
+        "anchor": "renamed_anchor",
+        "s000": "q_00000",
+        "s001": "q_00001",
+        "s002": "q_00002",
+        "s003": "q_00003",
+        "s004": "q_00004",
+        "s005": "q_00005",
+        "s006": "q_00006",
+        "s007": "q_00007"
+      }
+    },
+    {
+      "item_id": "m4-dup-charge-b06-reordered",
+      "block": 6,
+      "anchor": "dup-charge",
+      "arm": "reordered",
+      "dispatch_index": 2,
+      "question_order": [
+        "anchor",
+        "s005",
+        "s007",
+        "s004",
+        "s003",
+        "s006",
+        "s000",
+        "s002",
+        "s001"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b06-reordered",
+      "block": 6,
+      "anchor": "subscription-proration",
+      "arm": "reordered",
+      "dispatch_index": 3,
+      "question_order": [
+        "s002",
+        "s001",
+        "s007",
+        "s005",
+        "s000",
+        "s006",
+        "s003",
+        "s004",
+        "anchor"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b06-alone",
+      "block": 6,
+      "anchor": "subscription-proration",
+      "arm": "alone",
+      "dispatch_index": 4,
+      "question_order": [
+        "anchor"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b06-alone",
+      "block": 6,
+      "anchor": "dup-charge",
+      "arm": "alone",
+      "dispatch_index": 5,
+      "question_order": [
+        "anchor"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b06-siblings",
+      "block": 6,
+      "anchor": "subscription-proration",
+      "arm": "siblings",
+      "dispatch_index": 6,
+      "question_order": [
+        "anchor",
+        "s000",
+        "s001",
+        "s002",
+        "s003",
+        "s004",
+        "s005",
+        "s006",
+        "s007"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b06-siblings",
+      "block": 6,
+      "anchor": "dup-charge",
+      "arm": "siblings",
+      "dispatch_index": 7,
+      "question_order": [
+        "anchor",
+        "s000",
+        "s001",
+        "s002",
+        "s003",
+        "s004",
+        "s005",
+        "s006",
+        "s007"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b07-reordered",
+      "block": 7,
+      "anchor": "subscription-proration",
+      "arm": "reordered",
+      "dispatch_index": 0,
+      "question_order": [
+        "s000",
+        "s004",
+        "anchor",
+        "s003",
+        "s005",
+        "s006",
+        "s001",
+        "s002",
+        "s007"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b07-reordered",
+      "block": 7,
+      "anchor": "dup-charge",
+      "arm": "reordered",
+      "dispatch_index": 1,
+      "question_order": [
+        "s005",
+        "s004",
+        "s007",
+        "s001",
+        "s003",
+        "s000",
+        "s006",
+        "s002",
+        "anchor"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b07-renamed",
+      "block": 7,
+      "anchor": "subscription-proration",
+      "arm": "renamed",
+      "dispatch_index": 2,
+      "question_order": [
+        "renamed_anchor",
+        "q_00000",
+        "q_00001",
+        "q_00002",
+        "q_00003",
+        "q_00004",
+        "q_00005",
+        "q_00006",
+        "q_00007"
+      ],
+      "measured_anchor_id": "renamed_anchor",
+      "renamed_ids": {
+        "anchor": "renamed_anchor",
+        "s000": "q_00000",
+        "s001": "q_00001",
+        "s002": "q_00002",
+        "s003": "q_00003",
+        "s004": "q_00004",
+        "s005": "q_00005",
+        "s006": "q_00006",
+        "s007": "q_00007"
+      }
+    },
+    {
+      "item_id": "m4-dup-charge-b07-siblings",
+      "block": 7,
+      "anchor": "dup-charge",
+      "arm": "siblings",
+      "dispatch_index": 3,
+      "question_order": [
+        "anchor",
+        "s000",
+        "s001",
+        "s002",
+        "s003",
+        "s004",
+        "s005",
+        "s006",
+        "s007"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b07-alone",
+      "block": 7,
+      "anchor": "dup-charge",
+      "arm": "alone",
+      "dispatch_index": 4,
+      "question_order": [
+        "anchor"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b07-alone",
+      "block": 7,
+      "anchor": "subscription-proration",
+      "arm": "alone",
+      "dispatch_index": 5,
+      "question_order": [
+        "anchor"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b07-siblings",
+      "block": 7,
+      "anchor": "subscription-proration",
+      "arm": "siblings",
+      "dispatch_index": 6,
+      "question_order": [
+        "anchor",
+        "s000",
+        "s001",
+        "s002",
+        "s003",
+        "s004",
+        "s005",
+        "s006",
+        "s007"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b07-renamed",
+      "block": 7,
+      "anchor": "dup-charge",
+      "arm": "renamed",
+      "dispatch_index": 7,
+      "question_order": [
+        "renamed_anchor",
+        "q_00000",
+        "q_00001",
+        "q_00002",
+        "q_00003",
+        "q_00004",
+        "q_00005",
+        "q_00006",
+        "q_00007"
+      ],
+      "measured_anchor_id": "renamed_anchor",
+      "renamed_ids": {
+        "anchor": "renamed_anchor",
+        "s000": "q_00000",
+        "s001": "q_00001",
+        "s002": "q_00002",
+        "s003": "q_00003",
+        "s004": "q_00004",
+        "s005": "q_00005",
+        "s006": "q_00006",
+        "s007": "q_00007"
+      }
+    },
+    {
+      "item_id": "m4-subscription-proration-b08-siblings",
+      "block": 8,
+      "anchor": "subscription-proration",
+      "arm": "siblings",
+      "dispatch_index": 0,
+      "question_order": [
+        "anchor",
+        "s000",
+        "s001",
+        "s002",
+        "s003",
+        "s004",
+        "s005",
+        "s006",
+        "s007"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b08-reordered",
+      "block": 8,
+      "anchor": "dup-charge",
+      "arm": "reordered",
+      "dispatch_index": 1,
+      "question_order": [
+        "s003",
+        "s004",
+        "s002",
+        "s001",
+        "s007",
+        "s005",
+        "s006",
+        "s000",
+        "anchor"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b08-alone",
+      "block": 8,
+      "anchor": "subscription-proration",
+      "arm": "alone",
+      "dispatch_index": 2,
+      "question_order": [
+        "anchor"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b08-renamed",
+      "block": 8,
+      "anchor": "subscription-proration",
+      "arm": "renamed",
+      "dispatch_index": 3,
+      "question_order": [
+        "renamed_anchor",
+        "q_00000",
+        "q_00001",
+        "q_00002",
+        "q_00003",
+        "q_00004",
+        "q_00005",
+        "q_00006",
+        "q_00007"
+      ],
+      "measured_anchor_id": "renamed_anchor",
+      "renamed_ids": {
+        "anchor": "renamed_anchor",
+        "s000": "q_00000",
+        "s001": "q_00001",
+        "s002": "q_00002",
+        "s003": "q_00003",
+        "s004": "q_00004",
+        "s005": "q_00005",
+        "s006": "q_00006",
+        "s007": "q_00007"
+      }
+    },
+    {
+      "item_id": "m4-dup-charge-b08-siblings",
+      "block": 8,
+      "anchor": "dup-charge",
+      "arm": "siblings",
+      "dispatch_index": 4,
+      "question_order": [
+        "anchor",
+        "s000",
+        "s001",
+        "s002",
+        "s003",
+        "s004",
+        "s005",
+        "s006",
+        "s007"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b08-reordered",
+      "block": 8,
+      "anchor": "subscription-proration",
+      "arm": "reordered",
+      "dispatch_index": 5,
+      "question_order": [
+        "s007",
+        "s005",
+        "s001",
+        "s006",
+        "s000",
+        "s004",
+        "s003",
+        "anchor",
+        "s002"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b08-renamed",
+      "block": 8,
+      "anchor": "dup-charge",
+      "arm": "renamed",
+      "dispatch_index": 6,
+      "question_order": [
+        "renamed_anchor",
+        "q_00000",
+        "q_00001",
+        "q_00002",
+        "q_00003",
+        "q_00004",
+        "q_00005",
+        "q_00006",
+        "q_00007"
+      ],
+      "measured_anchor_id": "renamed_anchor",
+      "renamed_ids": {
+        "anchor": "renamed_anchor",
+        "s000": "q_00000",
+        "s001": "q_00001",
+        "s002": "q_00002",
+        "s003": "q_00003",
+        "s004": "q_00004",
+        "s005": "q_00005",
+        "s006": "q_00006",
+        "s007": "q_00007"
+      }
+    },
+    {
+      "item_id": "m4-dup-charge-b08-alone",
+      "block": 8,
+      "anchor": "dup-charge",
+      "arm": "alone",
+      "dispatch_index": 7,
+      "question_order": [
+        "anchor"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b09-renamed",
+      "block": 9,
+      "anchor": "dup-charge",
+      "arm": "renamed",
+      "dispatch_index": 0,
+      "question_order": [
+        "renamed_anchor",
+        "q_00000",
+        "q_00001",
+        "q_00002",
+        "q_00003",
+        "q_00004",
+        "q_00005",
+        "q_00006",
+        "q_00007"
+      ],
+      "measured_anchor_id": "renamed_anchor",
+      "renamed_ids": {
+        "anchor": "renamed_anchor",
+        "s000": "q_00000",
+        "s001": "q_00001",
+        "s002": "q_00002",
+        "s003": "q_00003",
+        "s004": "q_00004",
+        "s005": "q_00005",
+        "s006": "q_00006",
+        "s007": "q_00007"
+      }
+    },
+    {
+      "item_id": "m4-subscription-proration-b09-renamed",
+      "block": 9,
+      "anchor": "subscription-proration",
+      "arm": "renamed",
+      "dispatch_index": 1,
+      "question_order": [
+        "renamed_anchor",
+        "q_00000",
+        "q_00001",
+        "q_00002",
+        "q_00003",
+        "q_00004",
+        "q_00005",
+        "q_00006",
+        "q_00007"
+      ],
+      "measured_anchor_id": "renamed_anchor",
+      "renamed_ids": {
+        "anchor": "renamed_anchor",
+        "s000": "q_00000",
+        "s001": "q_00001",
+        "s002": "q_00002",
+        "s003": "q_00003",
+        "s004": "q_00004",
+        "s005": "q_00005",
+        "s006": "q_00006",
+        "s007": "q_00007"
+      }
+    },
+    {
+      "item_id": "m4-dup-charge-b09-reordered",
+      "block": 9,
+      "anchor": "dup-charge",
+      "arm": "reordered",
+      "dispatch_index": 2,
+      "question_order": [
+        "s001",
+        "anchor",
+        "s006",
+        "s004",
+        "s005",
+        "s002",
+        "s003",
+        "s000",
+        "s007"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b09-siblings",
+      "block": 9,
+      "anchor": "dup-charge",
+      "arm": "siblings",
+      "dispatch_index": 3,
+      "question_order": [
+        "anchor",
+        "s000",
+        "s001",
+        "s002",
+        "s003",
+        "s004",
+        "s005",
+        "s006",
+        "s007"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b09-alone",
+      "block": 9,
+      "anchor": "dup-charge",
+      "arm": "alone",
+      "dispatch_index": 4,
+      "question_order": [
+        "anchor"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b09-alone",
+      "block": 9,
+      "anchor": "subscription-proration",
+      "arm": "alone",
+      "dispatch_index": 5,
+      "question_order": [
+        "anchor"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b09-reordered",
+      "block": 9,
+      "anchor": "subscription-proration",
+      "arm": "reordered",
+      "dispatch_index": 6,
+      "question_order": [
+        "anchor",
+        "s003",
+        "s006",
+        "s000",
+        "s001",
+        "s004",
+        "s005",
+        "s002",
+        "s007"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b09-siblings",
+      "block": 9,
+      "anchor": "subscription-proration",
+      "arm": "siblings",
+      "dispatch_index": 7,
+      "question_order": [
+        "anchor",
+        "s000",
+        "s001",
+        "s002",
+        "s003",
+        "s004",
+        "s005",
+        "s006",
+        "s007"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b10-siblings",
+      "block": 10,
+      "anchor": "dup-charge",
+      "arm": "siblings",
+      "dispatch_index": 0,
+      "question_order": [
+        "anchor",
+        "s000",
+        "s001",
+        "s002",
+        "s003",
+        "s004",
+        "s005",
+        "s006",
+        "s007"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b10-renamed",
+      "block": 10,
+      "anchor": "subscription-proration",
+      "arm": "renamed",
+      "dispatch_index": 1,
+      "question_order": [
+        "renamed_anchor",
+        "q_00000",
+        "q_00001",
+        "q_00002",
+        "q_00003",
+        "q_00004",
+        "q_00005",
+        "q_00006",
+        "q_00007"
+      ],
+      "measured_anchor_id": "renamed_anchor",
+      "renamed_ids": {
+        "anchor": "renamed_anchor",
+        "s000": "q_00000",
+        "s001": "q_00001",
+        "s002": "q_00002",
+        "s003": "q_00003",
+        "s004": "q_00004",
+        "s005": "q_00005",
+        "s006": "q_00006",
+        "s007": "q_00007"
+      }
+    },
+    {
+      "item_id": "m4-dup-charge-b10-alone",
+      "block": 10,
+      "anchor": "dup-charge",
+      "arm": "alone",
+      "dispatch_index": 2,
+      "question_order": [
+        "anchor"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b10-renamed",
+      "block": 10,
+      "anchor": "dup-charge",
+      "arm": "renamed",
+      "dispatch_index": 3,
+      "question_order": [
+        "renamed_anchor",
+        "q_00000",
+        "q_00001",
+        "q_00002",
+        "q_00003",
+        "q_00004",
+        "q_00005",
+        "q_00006",
+        "q_00007"
+      ],
+      "measured_anchor_id": "renamed_anchor",
+      "renamed_ids": {
+        "anchor": "renamed_anchor",
+        "s000": "q_00000",
+        "s001": "q_00001",
+        "s002": "q_00002",
+        "s003": "q_00003",
+        "s004": "q_00004",
+        "s005": "q_00005",
+        "s006": "q_00006",
+        "s007": "q_00007"
+      }
+    },
+    {
+      "item_id": "m4-subscription-proration-b10-alone",
+      "block": 10,
+      "anchor": "subscription-proration",
+      "arm": "alone",
+      "dispatch_index": 4,
+      "question_order": [
+        "anchor"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b10-reordered",
+      "block": 10,
+      "anchor": "subscription-proration",
+      "arm": "reordered",
+      "dispatch_index": 5,
+      "question_order": [
+        "s001",
+        "s005",
+        "s006",
+        "s000",
+        "s007",
+        "s003",
+        "anchor",
+        "s004",
+        "s002"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b10-reordered",
+      "block": 10,
+      "anchor": "dup-charge",
+      "arm": "reordered",
+      "dispatch_index": 6,
+      "question_order": [
+        "s005",
+        "s007",
+        "s004",
+        "s002",
+        "s006",
+        "s000",
+        "s001",
+        "anchor",
+        "s003"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b10-siblings",
+      "block": 10,
+      "anchor": "subscription-proration",
+      "arm": "siblings",
+      "dispatch_index": 7,
+      "question_order": [
+        "anchor",
+        "s000",
+        "s001",
+        "s002",
+        "s003",
+        "s004",
+        "s005",
+        "s006",
+        "s007"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b11-siblings",
+      "block": 11,
+      "anchor": "dup-charge",
+      "arm": "siblings",
+      "dispatch_index": 0,
+      "question_order": [
+        "anchor",
+        "s000",
+        "s001",
+        "s002",
+        "s003",
+        "s004",
+        "s005",
+        "s006",
+        "s007"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b11-reordered",
+      "block": 11,
+      "anchor": "dup-charge",
+      "arm": "reordered",
+      "dispatch_index": 1,
+      "question_order": [
+        "s001",
+        "s006",
+        "anchor",
+        "s003",
+        "s004",
+        "s007",
+        "s005",
+        "s000",
+        "s002"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b11-renamed",
+      "block": 11,
+      "anchor": "subscription-proration",
+      "arm": "renamed",
+      "dispatch_index": 2,
+      "question_order": [
+        "renamed_anchor",
+        "q_00000",
+        "q_00001",
+        "q_00002",
+        "q_00003",
+        "q_00004",
+        "q_00005",
+        "q_00006",
+        "q_00007"
+      ],
+      "measured_anchor_id": "renamed_anchor",
+      "renamed_ids": {
+        "anchor": "renamed_anchor",
+        "s000": "q_00000",
+        "s001": "q_00001",
+        "s002": "q_00002",
+        "s003": "q_00003",
+        "s004": "q_00004",
+        "s005": "q_00005",
+        "s006": "q_00006",
+        "s007": "q_00007"
+      }
+    },
+    {
+      "item_id": "m4-subscription-proration-b11-reordered",
+      "block": 11,
+      "anchor": "subscription-proration",
+      "arm": "reordered",
+      "dispatch_index": 3,
+      "question_order": [
+        "s002",
+        "s001",
+        "anchor",
+        "s006",
+        "s005",
+        "s004",
+        "s000",
+        "s003",
+        "s007"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b11-alone",
+      "block": 11,
+      "anchor": "dup-charge",
+      "arm": "alone",
+      "dispatch_index": 4,
+      "question_order": [
+        "anchor"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-dup-charge-b11-renamed",
+      "block": 11,
+      "anchor": "dup-charge",
+      "arm": "renamed",
+      "dispatch_index": 5,
+      "question_order": [
+        "renamed_anchor",
+        "q_00000",
+        "q_00001",
+        "q_00002",
+        "q_00003",
+        "q_00004",
+        "q_00005",
+        "q_00006",
+        "q_00007"
+      ],
+      "measured_anchor_id": "renamed_anchor",
+      "renamed_ids": {
+        "anchor": "renamed_anchor",
+        "s000": "q_00000",
+        "s001": "q_00001",
+        "s002": "q_00002",
+        "s003": "q_00003",
+        "s004": "q_00004",
+        "s005": "q_00005",
+        "s006": "q_00006",
+        "s007": "q_00007"
+      }
+    },
+    {
+      "item_id": "m4-subscription-proration-b11-siblings",
+      "block": 11,
+      "anchor": "subscription-proration",
+      "arm": "siblings",
+      "dispatch_index": 6,
+      "question_order": [
+        "anchor",
+        "s000",
+        "s001",
+        "s002",
+        "s003",
+        "s004",
+        "s005",
+        "s006",
+        "s007"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    },
+    {
+      "item_id": "m4-subscription-proration-b11-alone",
+      "block": 11,
+      "anchor": "subscription-proration",
+      "arm": "alone",
+      "dispatch_index": 7,
+      "question_order": [
+        "anchor"
+      ],
+      "measured_anchor_id": "anchor",
+      "renamed_ids": {}
+    }
+  ]
+}

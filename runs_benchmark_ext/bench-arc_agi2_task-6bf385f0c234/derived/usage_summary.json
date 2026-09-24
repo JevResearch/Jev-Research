@@ -1,0 +1,7 @@
+{
+  "stage": "bench-arc_agi2_task-6bf385f0c234",
+  "n_attempts_ok": 496,
+  "n_attempts_other": 1,
+  "usage_input_tokens_sum": 12801923,
+  "method": "aggregated from attempts.jsonl; per-attempt logs withheld"
+}

@@ -1,0 +1,1269 @@
+{
+ "claim_type": "exploratory",
+ "method": "leave-one-out affine residual in tokens (absorbs template offset + scale)",
+ "n_probes": 60,
+ "n_tokenizers_scored": 128,
+ "n_repos_scanned": 1215,
+ "ranking": [
+  {
+   "sha": "4185389a69284fdd",
+   "loocv_mean_abs": 0.468,
+   "loocv_rmse": 0.835,
+   "loocv_max_abs": 3.015,
+   "fit_slope": 1.006,
+   "n_probes_used": 60,
+   "vocab": 128167,
+   "n_models": 3,
+   "represent": "tencent/Hy-MT2-7B",
+   "models_sample": [
+    "tencent/HY-MT1.5-7B",
+    "tencent/Hy-MT2-7B",
+    "tencent/Hy-MT2-7B-FP8"
+   ]
+  },
+  {
+   "sha": "2885591ad59de233",
+   "loocv_mean_abs": 0.51,
+   "loocv_rmse": 0.853,
+   "loocv_max_abs": 3.965,
+   "fit_slope": 0.995,
+   "n_probes_used": 60,
+   "vocab": 128256,
+   "n_models": 1,
+   "represent": "tencent/Youtu-LLM-2B",
+   "models_sample": [
+    "tencent/Youtu-LLM-2B"
+   ]
+  },
+  {
+   "sha": "02bb3009a086c74a",
+   "loocv_mean_abs": 0.51,
+   "loocv_rmse": 0.853,
+   "loocv_max_abs": 3.965,
+   "fit_slope": 0.995,
+   "n_probes_used": 60,
+   "vocab": 128256,
+   "n_models": 1,
+   "represent": "tencent/Youtu-LLM-2B-Base",
+   "models_sample": [
+    "tencent/Youtu-LLM-2B-Base"
+   ]
+  },
+  {
+   "sha": "d3b4df07a0ce3940",
+   "loocv_mean_abs": 0.664,
+   "loocv_rmse": 1.07,
+   "loocv_max_abs": 3.759,
+   "fit_slope": 0.895,
+   "n_probes_used": 60,
+   "vocab": 49156,
+   "n_models": 8,
+   "represent": "HuggingFaceTB/stack-edu-classifier-python",
+   "models_sample": [
+    "HuggingFaceTB/stack-edu-classifier-c",
+    "HuggingFaceTB/stack-edu-classifier-cpp",
+    "HuggingFaceTB/stack-edu-classifier-go",
+    "HuggingFaceTB/stack-edu-classifier-java",
+    "HuggingFaceTB/stack-edu-classifier-markdown",
+    "HuggingFaceTB/stack-edu-classifier-php"
+   ]
+  },
+  {
+   "sha": "e12327d68562df1d",
+   "loocv_mean_abs": 0.702,
+   "loocv_rmse": 1.242,
+   "loocv_max_abs": 4.953,
+   "fit_slope": 0.97,
+   "n_probes_used": 60,
+   "vocab": 155136,
+   "n_models": 1,
+   "represent": "NousResearch/Hermes-4.3-36B",
+   "models_sample": [
+    "NousResearch/Hermes-4.3-36B"
+   ]
+  },
+  {
+   "sha": "f7c9b2dba4a296b1",
+   "loocv_mean_abs": 0.721,
+   "loocv_rmse": 1.071,
+   "loocv_max_abs": 4.827,
+   "fit_slope": 1.001,
+   "n_probes_used": 60,
+   "vocab": 151936,
+   "n_models": 2,
+   "represent": "Qwen/Qwen1.5-7B",
+   "models_sample": [
+    "Qwen/Qwen1.5-7B",
+    "Qwen/Qwen2-7B"
+   ]
+  },
+  {
+   "sha": "c0382117ea329cdf",
+   "loocv_mean_abs": 0.721,
+   "loocv_rmse": 1.071,
+   "loocv_max_abs": 4.827,
+   "fit_slope": 1.001,
+   "n_probes_used": 60,
+   "vocab": 152064,
+   "n_models": 46,
+   "represent": "Qwen/Qwen2.5-7B",
+   "models_sample": [
+    "BAAI/Aquila-VL-2B-llava-qwen",
+    "BAAI/BGE-VL-Screenshot",
+    "MiniMaxAI/SynLogic-32B",
+    "MiniMaxAI/SynLogic-7B",
+    "MiniMaxAI/SynLogic-Mix-3-32B",
+    "Qwen/Qwen2.5-0.5B"
+   ]
+  },
+  {
+   "sha": "aeb13307a71acd8f",
+   "loocv_mean_abs": 0.721,
+   "loocv_rmse": 1.071,
+   "loocv_max_abs": 4.827,
+   "fit_slope": 1.001,
+   "n_probes_used": 60,
+   "vocab": 151936,
+   "n_models": 54,
+   "represent": "Qwen/Qwen3-8B",
+   "models_sample": [
+    "BAAI/RoboBrain2.5-4B",
+    "BAAI/bge-reasoner-embed-qwen3-8b-0923",
+    "HuggingFaceTB/qwen3-1.7b-gsm8k-sft",
+    "NousResearch/Hermes-4-14B",
+    "NousResearch/Hermes-4-14B-FP8",
+    "NousResearch/NousCoder-14B"
+   ]
+  },
+  {
+   "sha": "19564a48c4f71a2a",
+   "loocv_mean_abs": 0.721,
+   "loocv_rmse": 1.071,
+   "loocv_max_abs": 4.827,
+   "fit_slope": 1.001,
+   "n_probes_used": 60,
+   "vocab": 152064,
+   "n_models": 1,
+   "represent": "Qwen/QwQ-32B",
+   "models_sample": [
+    "Qwen/QwQ-32B"
+   ]
+  },
+  {
+   "sha": "def76fb086971c78",
+   "loocv_mean_abs": 0.721,
+   "loocv_rmse": 1.071,
+   "loocv_max_abs": 4.827,
+   "fit_slope": 1.001,
+   "n_probes_used": 60,
+   "vocab": 151669,
+   "n_models": 4,
+   "represent": "Qwen/Qwen3-Embedding-0.6B",
+   "models_sample": [
+    "Qwen/Qwen3-Embedding-0.6B",
+    "Qwen/Qwen3-Reranker-0.6B",
+    "Qwen/Qwen3-Reranker-4B",
+    "tencent/R3-rerank-0.6b"
+   ]
+  },
+  {
+   "sha": "83cdf8c3a34f6886",
+   "loocv_mean_abs": 0.721,
+   "loocv_rmse": 1.071,
+   "loocv_max_abs": 4.827,
+   "fit_slope": 1.001,
+   "n_probes_used": 60,
+   "vocab": 151665,
+   "n_models": 2,
+   "represent": "Qwen/Qwen3-Embedding-8B",
+   "models_sample": [
+    "Qwen/Qwen3-Embedding-4B",
+    "Qwen/Qwen3-Embedding-8B"
+   ]
+  },
+  {
+   "sha": "cb63a0a23eef3d5b",
+   "loocv_mean_abs": 0.721,
+   "loocv_rmse": 1.071,
+   "loocv_max_abs": 4.827,
+   "fit_slope": 1.001,
+   "n_probes_used": 60,
+   "vocab": 151936,
+   "n_models": 1,
+   "represent": "Qwen/Qwen2-VL-2B-Instruct",
+   "models_sample": [
+    "Qwen/Qwen2-VL-2B-Instruct"
+   ]
+  },
+  {
+   "sha": "bfb053cacf2735b3",
+   "loocv_mean_abs": 0.721,
+   "loocv_rmse": 1.071,
+   "loocv_max_abs": 4.827,
+   "fit_slope": 1.001,
+   "n_probes_used": 60,
+   "vocab": 152064,
+   "n_models": 2,
+   "represent": "Qwen/Qwen2-VL-7B-Instruct-AWQ",
+   "models_sample": [
+    "Qwen/Qwen2-VL-7B-Instruct-AWQ",
+    "allenai/olmOCR-7B-0225-preview"
+   ]
+  },
+  {
+   "sha": "633518aad78f9f61",
+   "loocv_mean_abs": 0.721,
+   "loocv_rmse": 1.071,
+   "loocv_max_abs": 4.827,
+   "fit_slope": 1.001,
+   "n_probes_used": 60,
+   "vocab": 152576,
+   "n_models": 5,
+   "represent": "XiaomiMiMo/MiMo-V2.5",
+   "models_sample": [
+    "XiaomiMiMo/MiMo-V2.5",
+    "XiaomiMiMo/MiMo-V2.5-Base",
+    "XiaomiMiMo/MiMo-V2.5-DFlash",
+    "XiaomiMiMo/MiMo-V2.6-Flash-RL",
+    "XiaomiMiMo/MiMo-V2.6-Pro-RL"
+   ]
+  },
+  {
+   "sha": "d91a78cce6441fd6",
+   "loocv_mean_abs": 0.721,
+   "loocv_rmse": 1.071,
+   "loocv_max_abs": 4.827,
+   "fit_slope": 1.001,
+   "n_probes_used": 60,
+   "vocab": 151680,
+   "n_models": 3,
+   "represent": "XiaomiMiMo/MiMo-V2.5-ASR",
+   "models_sample": [
+    "XiaomiMiMo/MiMo-Audio-7B-Base",
+    "XiaomiMiMo/MiMo-Audio-7B-Instruct",
+    "XiaomiMiMo/MiMo-V2.5-ASR"
+   ]
+  },
+  {
+   "sha": "a533f74ee4dd57d2",
+   "loocv_mean_abs": 0.721,
+   "loocv_rmse": 1.071,
+   "loocv_max_abs": 4.827,
+   "fit_slope": 1.001,
+   "n_probes_used": 60,
+   "vocab": 151936,
+   "n_models": 1,
+   "represent": "internlm/CapRL-InternVL3.5-8B",
+   "models_sample": [
+    "internlm/CapRL-InternVL3.5-8B"
+   ]
+  },
+  {
+   "sha": "95e80901c901584f",
+   "loocv_mean_abs": 0.721,
+   "loocv_rmse": 1.071,
+   "loocv_max_abs": 4.827,
+   "fit_slope": 1.001,
+   "n_probes_used": 60,
+   "vocab": 151936,
+   "n_models": 2,
+   "represent": "allenai/Molmo2-4B",
+   "models_sample": [
+    "allenai/Molmo2-4B",
+    "allenai/Molmo2-8B"
+   ]
+  },
+  {
+   "sha": "568ed05a32050cfa",
+   "loocv_mean_abs": 0.721,
+   "loocv_rmse": 1.071,
+   "loocv_max_abs": 4.827,
+   "fit_slope": 1.001,
+   "n_probes_used": 60,
+   "vocab": 152064,
+   "n_models": 1,
+   "represent": "allenai/Molmo-7B-D-0924",
+   "models_sample": [
+    "allenai/Molmo-7B-D-0924"
+   ]
+  },
+  {
+   "sha": "a56524092f5d0676",
+   "loocv_mean_abs": 0.721,
+   "loocv_rmse": 1.071,
+   "loocv_max_abs": 4.827,
+   "fit_slope": 1.001,
+   "n_probes_used": 60,
+   "vocab": 151667,
+   "n_models": 1,
+   "represent": "BAAI/bge-code-v1",
+   "models_sample": [
+    "BAAI/bge-code-v1"
+   ]
+  },
+  {
+   "sha": "e922683c962fc465",
+   "loocv_mean_abs": 0.721,
+   "loocv_rmse": 1.071,
+   "loocv_max_abs": 4.827,
+   "fit_slope": 1.001,
+   "n_probes_used": 60,
+   "vocab": 151936,
+   "n_models": 1,
+   "represent": "BAAI/Recon2Reason-Reasoning-4B",
+   "models_sample": [
+    "BAAI/Recon2Reason-Reasoning-4B"
+   ]
+  },
+  {
+   "sha": "f78a0fcf4b6ef0e4",
+   "loocv_mean_abs": 0.768,
+   "loocv_rmse": 1.267,
+   "loocv_max_abs": 5.075,
+   "fit_slope": 0.908,
+   "n_probes_used": 60,
+   "vocab": 59264,
+   "n_models": 2,
+   "represent": "zai-org/glm-edge-4b-chat",
+   "models_sample": [
+    "zai-org/glm-edge-1.5b-chat",
+    "zai-org/glm-edge-4b-chat"
+   ]
+  },
+  {
+   "sha": "b7a8c81670e4651c",
+   "loocv_mean_abs": 0.776,
+   "loocv_rmse": 1.146,
+   "loocv_max_abs": 4.726,
+   "fit_slope": 0.987,
+   "n_probes_used": 60,
+   "vocab": 196608,
+   "n_models": 2,
+   "represent": "upstage/Solar-Open-100B",
+   "models_sample": [
+    "upstage/Solar-Open-100B",
+    "upstage/solar-pro3-tokenizer"
+   ]
+  },
+  {
+   "sha": "c7b7cb72447bbe1f",
+   "loocv_mean_abs": 0.776,
+   "loocv_rmse": 1.146,
+   "loocv_max_abs": 4.726,
+   "fit_slope": 0.987,
+   "n_probes_used": 60,
+   "vocab": 196608,
+   "n_models": 2,
+   "represent": "upstage/Solar-Open2-250B",
+   "models_sample": [
+    "upstage/Solar-Open2-250B",
+    "upstage/solar-pro4-tokenizer"
+   ]
+  },
+  {
+   "sha": "bfaf7c5eea956421",
+   "loocv_mean_abs": 0.781,
+   "loocv_rmse": 1.32,
+   "loocv_max_abs": 4.994,
+   "fit_slope": 0.955,
+   "n_probes_used": 60,
+   "vocab": null,
+   "n_models": 1,
+   "represent": "upstage/solar-pro2-tokenizer",
+   "models_sample": [
+    "upstage/solar-pro2-tokenizer"
+   ]
+  },
+  {
+   "sha": "42f73d01995bd71c",
+   "loocv_mean_abs": 0.864,
+   "loocv_rmse": 1.354,
+   "loocv_max_abs": 4.468,
+   "fit_slope": 0.906,
+   "n_probes_used": 60,
+   "vocab": 122753,
+   "n_models": 1,
+   "represent": "BAAI/bge-reranker-v2-minicpm-layerwise",
+   "models_sample": [
+    "BAAI/bge-reranker-v2-minicpm-layerwise"
+   ]
+  },
+  {
+   "sha": "c37805242c128a8c",
+   "loocv_mean_abs": 0.867,
+   "loocv_rmse": 1.278,
+   "loocv_max_abs": 4.853,
+   "fit_slope": 0.927,
+   "n_probes_used": 60,
+   "vocab": null,
+   "n_models": 2,
+   "represent": "BAAI/Emu3-Chat-hf",
+   "models_sample": [
+    "BAAI/Emu3-Chat-hf",
+    "BAAI/Emu3-Gen-hf"
+   ]
+  },
+  {
+   "sha": "3c7da6f8a2dffb63",
+   "loocv_mean_abs": 0.887,
+   "loocv_rmse": 1.455,
+   "loocv_max_abs": 5.934,
+   "fit_slope": 0.845,
+   "n_probes_used": 60,
+   "vocab": 102400,
+   "n_models": 2,
+   "represent": "deepseek-ai/deepseek-vl-1.3b-chat",
+   "models_sample": [
+    "deepseek-ai/deepseek-vl-1.3b-chat",
+    "deepseek-ai/deepseek-vl-7b-chat"
+   ]
+  },
+  {
+   "sha": "aa5136968a8d13c5",
+   "loocv_mean_abs": 0.887,
+   "loocv_rmse": 1.455,
+   "loocv_max_abs": 5.934,
+   "fit_slope": 0.845,
+   "n_probes_used": 60,
+   "vocab": null,
+   "n_models": 1,
+   "represent": "deepseek-ai/deepseek-vl2-small",
+   "models_sample": [
+    "deepseek-ai/deepseek-vl2-small"
+   ]
+  },
+  {
+   "sha": "11c08db21487c885",
+   "loocv_mean_abs": 0.931,
+   "loocv_rmse": 1.497,
+   "loocv_max_abs": 6.345,
+   "fit_slope": 0.822,
+   "n_probes_used": 60,
+   "vocab": 32000,
+   "n_models": 17,
+   "represent": "mistralai/Mistral-7B-v0.1",
+   "models_sample": [
+    "HuggingFaceTB/cosmo-1b",
+    "NousResearch/Yarn-Mistral-7b-128k",
+    "Snowflake/snowflake-arctic-base",
+    "mistralai/Mistral-7B-Instruct-v0.1",
+    "mistralai/Mistral-7B-Instruct-v0.2",
+    "mistralai/Mistral-7B-v0.1"
+   ]
+  },
+  {
+   "sha": "e553af6fff7d7ad7",
+   "loocv_mean_abs": 0.931,
+   "loocv_rmse": 1.497,
+   "loocv_max_abs": 6.345,
+   "fit_slope": 0.822,
+   "n_probes_used": 60,
+   "vocab": 32768,
+   "n_models": 3,
+   "represent": "mistralai/Mistral-7B-Instruct-v0.3",
+   "models_sample": [
+    "mistralai/Mistral-7B-Instruct-v0.3",
+    "mistralai/Mistral-7B-v0.3",
+    "mistralai/Mixtral-8x22B-Instruct-v0.1"
+   ]
+  },
+  {
+   "sha": "5bbd20ebc1349f5e",
+   "loocv_mean_abs": 0.931,
+   "loocv_rmse": 1.497,
+   "loocv_max_abs": 6.345,
+   "fit_slope": 0.822,
+   "n_probes_used": 60,
+   "vocab": 32768,
+   "n_models": 1,
+   "represent": "mistralai/Codestral-22B-v0.1",
+   "models_sample": [
+    "mistralai/Codestral-22B-v0.1"
+   ]
+  },
+  {
+   "sha": "f9fb70f3b3629119",
+   "loocv_mean_abs": 0.931,
+   "loocv_rmse": 1.497,
+   "loocv_max_abs": 6.345,
+   "fit_slope": 0.822,
+   "n_probes_used": 60,
+   "vocab": 32768,
+   "n_models": 4,
+   "represent": "mistralai/Mamba-Codestral-7B-v0.1",
+   "models_sample": [
+    "mistralai/Mamba-Codestral-7B-v0.1",
+    "mistralai/Mathstral-7B-v0.1",
+    "mistralai/Mistral-Large-Instruct-2407",
+    "mistralai/Mistral-Small-Instruct-2409"
+   ]
+  },
+  {
+   "sha": "2482d54bc351bc5f",
+   "loocv_mean_abs": 0.931,
+   "loocv_rmse": 1.497,
+   "loocv_max_abs": 6.345,
+   "fit_slope": 0.822,
+   "n_probes_used": 60,
+   "vocab": 32768,
+   "n_models": 1,
+   "represent": "mistralai/Mistral-Large-Instruct-2411",
+   "models_sample": [
+    "mistralai/Mistral-Large-Instruct-2411"
+   ]
+  },
+  {
+   "sha": "1553b589b62de31b",
+   "loocv_mean_abs": 0.931,
+   "loocv_rmse": 1.497,
+   "loocv_max_abs": 6.345,
+   "fit_slope": 0.822,
+   "n_probes_used": 60,
+   "vocab": 32003,
+   "n_models": 1,
+   "represent": "BAAI/bge-en-icl",
+   "models_sample": [
+    "BAAI/bge-en-icl"
+   ]
+  },
+  {
+   "sha": "b34b0f034284a86e",
+   "loocv_mean_abs": 0.931,
+   "loocv_rmse": 1.497,
+   "loocv_max_abs": 6.345,
+   "fit_slope": 0.822,
+   "n_probes_used": 60,
+   "vocab": 32005,
+   "n_models": 1,
+   "represent": "BAAI/BGE-VL-MLLM-S1",
+   "models_sample": [
+    "BAAI/BGE-VL-MLLM-S1"
+   ]
+  },
+  {
+   "sha": "6fd76dbb783f99e2",
+   "loocv_mean_abs": 0.931,
+   "loocv_rmse": 1.497,
+   "loocv_max_abs": 6.345,
+   "fit_slope": 0.822,
+   "n_probes_used": 60,
+   "vocab": 32032,
+   "n_models": 1,
+   "represent": "NousResearch/Hermes-2-Pro-Mistral-7B",
+   "models_sample": [
+    "NousResearch/Hermes-2-Pro-Mistral-7B"
+   ]
+  },
+  {
+   "sha": "6af1053883a8321f",
+   "loocv_mean_abs": 0.931,
+   "loocv_rmse": 1.497,
+   "loocv_max_abs": 6.345,
+   "fit_slope": 0.822,
+   "n_probes_used": 60,
+   "vocab": 32002,
+   "n_models": 3,
+   "represent": "NousResearch/Nous-Hermes-2-Mixtral-8x7B-DPO",
+   "models_sample": [
+    "NousResearch/Nous-Hermes-2-Mistral-7B-DPO",
+    "NousResearch/Nous-Hermes-2-Mixtral-8x7B-DPO",
+    "NousResearch/Nous-Hermes-2-SOLAR-10.7B"
+   ]
+  },
+  {
+   "sha": "0bbddd4b39b59402",
+   "loocv_mean_abs": 0.952,
+   "loocv_rmse": 1.564,
+   "loocv_max_abs": 5.456,
+   "fit_slope": 0.79,
+   "n_probes_used": 60,
+   "vocab": 32064,
+   "n_models": 5,
+   "represent": "microsoft/Phi-3-medium-4k-instruct",
+   "models_sample": [
+    "microsoft/Phi-3-medium-4k-instruct",
+    "microsoft/Phi-3-mini-128k-instruct",
+    "microsoft/Phi-3-mini-4k-instruct",
+    "microsoft/Phi-3.5-MoE-instruct",
+    "microsoft/Phi-3.5-mini-instruct"
+   ]
+  },
+  {
+   "sha": "7880d52ee8fec545",
+   "loocv_mean_abs": 0.952,
+   "loocv_rmse": 1.564,
+   "loocv_max_abs": 5.456,
+   "fit_slope": 0.79,
+   "n_probes_used": 60,
+   "vocab": 32000,
+   "n_models": 3,
+   "represent": "snowflake/snowflake-arctic-instruct",
+   "models_sample": [
+    "Snowflake/snowflake-arctic-instruct",
+    "Snowflake/snowflake-arctic-instruct-vllm",
+    "snowflake/snowflake-arctic-instruct"
+   ]
+  },
+  {
+   "sha": "493f8ad437be806d",
+   "loocv_mean_abs": 0.952,
+   "loocv_rmse": 1.564,
+   "loocv_max_abs": 5.456,
+   "fit_slope": 0.79,
+   "n_probes_used": 60,
+   "vocab": 32064,
+   "n_models": 1,
+   "represent": "microsoft/Phi-3.5-vision-instruct",
+   "models_sample": [
+    "microsoft/Phi-3.5-vision-instruct"
+   ]
+  },
+  {
+   "sha": "592a70a0f7aae41e",
+   "loocv_mean_abs": 0.952,
+   "loocv_rmse": 1.564,
+   "loocv_max_abs": 5.456,
+   "fit_slope": 0.79,
+   "n_probes_used": 60,
+   "vocab": 32128,
+   "n_models": 1,
+   "represent": "upstage/solar-pro-preview-instruct",
+   "models_sample": [
+    "upstage/solar-pro-preview-instruct"
+   ]
+  },
+  {
+   "sha": "a13ccc285aea27f5",
+   "loocv_mean_abs": 0.996,
+   "loocv_rmse": 1.57,
+   "loocv_max_abs": 5.322,
+   "fit_slope": 0.782,
+   "n_probes_used": 60,
+   "vocab": 64000,
+   "n_models": 13,
+   "represent": "01-ai/Yi-1.5-9B-Chat-16K",
+   "models_sample": [
+    "01-ai/Yi-1.5-34B-Chat",
+    "01-ai/Yi-1.5-34B-Chat-16K",
+    "01-ai/Yi-1.5-6B-Chat",
+    "01-ai/Yi-1.5-9B-Chat",
+    "01-ai/Yi-1.5-9B-Chat-16K",
+    "01-ai/Yi-34B-Chat"
+   ]
+  },
+  {
+   "sha": "18da9ff3421e5c87",
+   "loocv_mean_abs": 0.996,
+   "loocv_rmse": 1.57,
+   "loocv_max_abs": 5.322,
+   "fit_slope": 0.782,
+   "n_probes_used": 60,
+   "vocab": 64000,
+   "n_models": 2,
+   "represent": "01-ai/Yi-Coder-9B",
+   "models_sample": [
+    "01-ai/Yi-Coder-1.5B",
+    "01-ai/Yi-Coder-9B"
+   ]
+  },
+  {
+   "sha": "6912ec1de7de7193",
+   "loocv_mean_abs": 1.002,
+   "loocv_rmse": 1.53,
+   "loocv_max_abs": 6.244,
+   "fit_slope": 0.813,
+   "n_probes_used": 60,
+   "vocab": null,
+   "n_models": 1,
+   "represent": "upstage/solar-1-mini-tokenizer",
+   "models_sample": [
+    "upstage/solar-1-mini-tokenizer"
+   ]
+  },
+  {
+   "sha": "e134ef9b9c28222a",
+   "loocv_mean_abs": 1.024,
+   "loocv_rmse": 1.596,
+   "loocv_max_abs": 5.356,
+   "fit_slope": 0.781,
+   "n_probes_used": 60,
+   "vocab": null,
+   "n_models": 1,
+   "represent": "upstage/solar-pro-tokenizer",
+   "models_sample": [
+    "upstage/solar-pro-tokenizer"
+   ]
+  },
+  {
+   "sha": "1c4be9ecf77c9264",
+   "loocv_mean_abs": 1.054,
+   "loocv_rmse": 1.719,
+   "loocv_max_abs": 8.613,
+   "fit_slope": 1.082,
+   "n_probes_used": 60,
+   "vocab": 128256,
+   "n_models": 11,
+   "represent": "kakaocorp/kanana-2-3b-instruct",
+   "models_sample": [
+    "kakaocorp/kanana-2-1.3b-base",
+    "kakaocorp/kanana-2-1.3b-instruct",
+    "kakaocorp/kanana-2-30b-a3b-base",
+    "kakaocorp/kanana-2-30b-a3b-base-2601",
+    "kakaocorp/kanana-2-30b-a3b-instruct",
+    "kakaocorp/kanana-2-30b-a3b-instruct-2601"
+   ]
+  },
+  {
+   "sha": "5f9e4d4901a92b99",
+   "loocv_mean_abs": 1.057,
+   "loocv_rmse": 1.6,
+   "loocv_max_abs": 7.034,
+   "fit_slope": 0.865,
+   "n_probes_used": 60,
+   "vocab": 248320,
+   "n_models": 25,
+   "represent": "Qwen/Qwen3.5-9B",
+   "models_sample": [
+    "BAAI/AREX-Base",
+    "BAAI/AREX-Turbo",
+    "Qwen/Qwen3.5-0.8B",
+    "Qwen/Qwen3.5-27B",
+    "Qwen/Qwen3.5-2B",
+    "Qwen/Qwen3.5-35B-A3B"
+   ]
+  },
+  {
+   "sha": "9ca9acddb6525a19",
+   "loocv_mean_abs": 1.07,
+   "loocv_rmse": 1.579,
+   "loocv_max_abs": 4.696,
+   "fit_slope": 0.815,
+   "n_probes_used": 60,
+   "vocab": 49152,
+   "n_models": 21,
+   "represent": "HuggingFaceTB/SmolLM2-135M",
+   "models_sample": [
+    "HuggingFaceTB/SmolLM-1.7B",
+    "HuggingFaceTB/SmolLM-1.7B-Instruct",
+    "HuggingFaceTB/SmolLM-135M",
+    "HuggingFaceTB/SmolLM-135M-Instruct",
+    "HuggingFaceTB/SmolLM-360M",
+    "HuggingFaceTB/SmolLM-360M-Instruct"
+   ]
+  },
+  {
+   "sha": "5ece781dc8d2b2f3",
+   "loocv_mean_abs": 1.07,
+   "loocv_rmse": 1.579,
+   "loocv_max_abs": 4.696,
+   "fit_slope": 0.815,
+   "n_probes_used": 60,
+   "vocab": 49280,
+   "n_models": 5,
+   "represent": "HuggingFaceTB/SmolVLM2-500M-Video-Instruct",
+   "models_sample": [
+    "HuggingFaceTB/SmolVLM-256M-Instruct",
+    "HuggingFaceTB/SmolVLM-500M-Instruct",
+    "HuggingFaceTB/SmolVLM2-2.2B-Instruct",
+    "HuggingFaceTB/SmolVLM2-256M-Video-Instruct",
+    "HuggingFaceTB/SmolVLM2-500M-Video-Instruct"
+   ]
+  },
+  {
+   "sha": "cbfb7909eeb6746a",
+   "loocv_mean_abs": 1.07,
+   "loocv_rmse": 1.579,
+   "loocv_max_abs": 4.696,
+   "fit_slope": 0.815,
+   "n_probes_used": 60,
+   "vocab": 49155,
+   "n_models": 3,
+   "represent": "HuggingFaceTB/SmolVLM-Instruct",
+   "models_sample": [
+    "HuggingFaceTB/SmolVLM-Base",
+    "HuggingFaceTB/SmolVLM-Instruct",
+    "HuggingFaceTB/SmolVLM-Synthetic"
+   ]
+  },
+  {
+   "sha": "761e5e6886a3184d",
+   "loocv_mean_abs": 1.07,
+   "loocv_rmse": 1.579,
+   "loocv_max_abs": 4.696,
+   "fit_slope": 0.815,
+   "n_probes_used": 60,
+   "vocab": 49191,
+   "n_models": 3,
+   "represent": "HuggingFaceTB/SmolVLM2-2.2B-Base",
+   "models_sample": [
+    "HuggingFaceTB/SmolVLM-256M-Base",
+    "HuggingFaceTB/SmolVLM-500M-Base",
+    "HuggingFaceTB/SmolVLM2-2.2B-Base"
+   ]
+  },
+  {
+   "sha": "c15eb04bc5ad609f",
+   "loocv_mean_abs": 1.094,
+   "loocv_rmse": 1.546,
+   "loocv_max_abs": 4.631,
+   "fit_slope": 0.927,
+   "n_probes_used": 60,
+   "vocab": 256000,
+   "n_models": 1,
+   "represent": "google/gemma-2b",
+   "models_sample": [
+    "google/gemma-2b"
+   ]
+  },
+  {
+   "sha": "3f289bc05132635a",
+   "loocv_mean_abs": 1.094,
+   "loocv_rmse": 1.546,
+   "loocv_max_abs": 4.631,
+   "fit_slope": 0.927,
+   "n_probes_used": 60,
+   "vocab": 256000,
+   "n_models": 11,
+   "represent": "google/gemma-2-2b",
+   "models_sample": [
+    "aisingapore/Gemma-SEA-LION-v3-9B",
+    "aisingapore/Gemma-SEA-LION-v3-9B-IT",
+    "aisingapore/Gemma2-9b-WangchanLIONv2-instruct",
+    "google/gemma-2-2b",
+    "google/gemma-2-2b-it",
+    "google/gemma-2-9b-it"
+   ]
+  },
+  {
+   "sha": "4667f2089529e8e7",
+   "loocv_mean_abs": 1.094,
+   "loocv_rmse": 1.546,
+   "loocv_max_abs": 4.631,
+   "fit_slope": 0.927,
+   "n_probes_used": 60,
+   "vocab": null,
+   "n_models": 11,
+   "represent": "google/gemma-3-4b-it",
+   "models_sample": [
+    "aisingapore/Gemma-SEA-Guard-12B-2602",
+    "aisingapore/Gemma-SEA-LION-v4-27B",
+    "aisingapore/Gemma-SEA-LION-v4-27B-IT",
+    "aisingapore/Gemma-SEA-LION-v4-27B-IT-FP8-Dynamic",
+    "aisingapore/Gemma-SEA-LION-v4-27B-IT-NVFP4",
+    "aisingapore/Gemma-SEA-LION-v4-27B-VL"
+   ]
+  },
+  {
+   "sha": "6852f8d561078cc0",
+   "loocv_mean_abs": 1.094,
+   "loocv_rmse": 1.546,
+   "loocv_max_abs": 4.631,
+   "fit_slope": 0.927,
+   "n_probes_used": 60,
+   "vocab": 262144,
+   "n_models": 4,
+   "represent": "microsoft/harrier-oss-v1-270m",
+   "models_sample": [
+    "google/embeddinggemma-300m",
+    "google/gemma-3-1b-it",
+    "google/gemma-3-270m",
+    "microsoft/harrier-oss-v1-270m"
+   ]
+  },
+  {
+   "sha": "ef6773c135b77b83",
+   "loocv_mean_abs": 1.094,
+   "loocv_rmse": 1.546,
+   "loocv_max_abs": 4.631,
+   "fit_slope": 0.927,
+   "n_probes_used": 60,
+   "vocab": 257216,
+   "n_models": 2,
+   "represent": "google/paligemma-3b-pt-224",
+   "models_sample": [
+    "google/paligemma-3b-ft-cococap-448",
+    "google/paligemma-3b-pt-224"
+   ]
+  },
+  {
+   "sha": "fb2db5158483282d",
+   "loocv_mean_abs": 1.094,
+   "loocv_rmse": 1.546,
+   "loocv_max_abs": 4.631,
+   "fit_slope": 0.927,
+   "n_probes_used": 60,
+   "vocab": 262144,
+   "n_models": 4,
+   "represent": "aisingapore/SEA-LION-ModernBERT-Embedding-600M",
+   "models_sample": [
+    "aisingapore/SEA-LION-ModernBERT-300M",
+    "aisingapore/SEA-LION-ModernBERT-600M",
+    "aisingapore/SEA-LION-ModernBERT-Embedding-300M",
+    "aisingapore/SEA-LION-ModernBERT-Embedding-600M"
+   ]
+  },
+  {
+   "sha": "2eaeb76aefb50cfe",
+   "loocv_mean_abs": 1.094,
+   "loocv_rmse": 1.546,
+   "loocv_max_abs": 4.631,
+   "fit_slope": 0.927,
+   "n_probes_used": 60,
+   "vocab": 256002,
+   "n_models": 1,
+   "represent": "BAAI/bge-multilingual-gemma2",
+   "models_sample": [
+    "BAAI/bge-multilingual-gemma2"
+   ]
+  },
+  {
+   "sha": "d0d908b4f9326e09",
+   "loocv_mean_abs": 1.094,
+   "loocv_rmse": 1.546,
+   "loocv_max_abs": 4.631,
+   "fit_slope": 0.927,
+   "n_probes_used": 60,
+   "vocab": 256000,
+   "n_models": 1,
+   "represent": "BAAI/bge-reranker-v2-gemma",
+   "models_sample": [
+    "BAAI/bge-reranker-v2-gemma"
+   ]
+  },
+  {
+   "sha": "9340665016419c82",
+   "loocv_mean_abs": 1.119,
+   "loocv_rmse": 1.75,
+   "loocv_max_abs": 6.117,
+   "fit_slope": 1.002,
+   "n_probes_used": 60,
+   "vocab": 151552,
+   "n_models": 14,
+   "represent": "zai-org/GLM-4.5",
+   "models_sample": [
+    "zai-org/GLM-4.5",
+    "zai-org/GLM-4.5-Air",
+    "zai-org/GLM-4.5-Air-Base",
+    "zai-org/GLM-4.5-Air-FP8",
+    "zai-org/GLM-4.5-FP8",
+    "zai-org/GLM-4.5V"
+   ]
+  },
+  {
+   "sha": "76ebeac0d8bd7879",
+   "loocv_mean_abs": 1.119,
+   "loocv_rmse": 1.75,
+   "loocv_max_abs": 6.117,
+   "fit_slope": 1.002,
+   "n_probes_used": 60,
+   "vocab": 151552,
+   "n_models": 8,
+   "represent": "zai-org/GLM-4.1V-9B-Thinking",
+   "models_sample": [
+    "zai-org/AutoGLM-Phone-9B",
+    "zai-org/GLM-4-32B-0414",
+    "zai-org/GLM-4-9B-0414",
+    "zai-org/GLM-4.1V-9B-Thinking",
+    "zai-org/GLM-Z1-32B-0414",
+    "zai-org/GLM-Z1-9B-0414"
+   ]
+  },
+  {
+   "sha": "b3bbfa7d61e43c6c",
+   "loocv_mean_abs": 1.119,
+   "loocv_rmse": 1.75,
+   "loocv_max_abs": 6.117,
+   "fit_slope": 1.002,
+   "n_probes_used": 60,
+   "vocab": 151552,
+   "n_models": 1,
+   "represent": "zai-org/codegeex4-all-9b",
+   "models_sample": [
+    "zai-org/codegeex4-all-9b"
+   ]
+  },
+  {
+   "sha": "9f38d05d9d25756b",
+   "loocv_mean_abs": 1.158,
+   "loocv_rmse": 2.108,
+   "loocv_max_abs": 9.428,
+   "fit_slope": 0.913,
+   "n_probes_used": 60,
+   "vocab": 100352,
+   "n_models": 2,
+   "represent": "microsoft/Phi-4",
+   "models_sample": [
+    "microsoft/Phi-4",
+    "microsoft/phi-4"
+   ]
+  },
+  {
+   "sha": "73fd5254624f39a8",
+   "loocv_mean_abs": 1.158,
+   "loocv_rmse": 2.108,
+   "loocv_max_abs": 9.428,
+   "fit_slope": 0.913,
+   "n_probes_used": 60,
+   "vocab": 100352,
+   "n_models": 19,
+   "represent": "allenai/OLMo-2-0425-1B",
+   "models_sample": [
+    "allenai/FlexOlmo-7x7B-1T",
+    "allenai/OLMo-2-0325-32B",
+    "allenai/OLMo-2-0325-32B-Instruct",
+    "allenai/OLMo-2-0425-1B",
+    "allenai/OLMo-2-0425-1B-DPO",
+    "allenai/OLMo-2-0425-1B-Instruct"
+   ]
+  },
+  {
+   "sha": "7738a25c46a6043a",
+   "loocv_mean_abs": 1.158,
+   "loocv_rmse": 2.108,
+   "loocv_max_abs": 9.428,
+   "fit_slope": 0.913,
+   "n_probes_used": 60,
+   "vocab": 100278,
+   "n_models": 5,
+   "represent": "allenai/Olmo-3-7B-Instruct",
+   "models_sample": [
+    "allenai/Olmo-3-7B-Instruct",
+    "allenai/Olmo-3-7B-Instruct-DPO",
+    "allenai/Olmo-3-7B-Instruct-SFT",
+    "allenai/Olmo-3.1-32B-Instruct",
+    "allenai/Olmo-Hybrid-Instruct-SFT-7B"
+   ]
+  },
+  {
+   "sha": "76db5197ad57a8ad",
+   "loocv_mean_abs": 1.158,
+   "loocv_rmse": 2.108,
+   "loocv_max_abs": 9.428,
+   "fit_slope": 0.913,
+   "n_probes_used": 60,
+   "vocab": 100278,
+   "n_models": 1,
+   "represent": "allenai/Molmo2-O-7B",
+   "models_sample": [
+    "allenai/Molmo2-O-7B"
+   ]
+  },
+  {
+   "sha": "19e773648cb4e65d",
+   "loocv_mean_abs": 1.172,
+   "loocv_rmse": 1.645,
+   "loocv_max_abs": 5.013,
+   "fit_slope": 1.134,
+   "n_probes_used": 60,
+   "vocab": 154880,
+   "n_models": 1,
+   "represent": "zai-org/GLM-4.7-Flash",
+   "models_sample": [
+    "zai-org/GLM-4.7-Flash"
+   ]
+  },
+  {
+   "sha": "3e2ab46bcc5ed8bc",
+   "loocv_mean_abs": 1.173,
+   "loocv_rmse": 1.811,
+   "loocv_max_abs": 8.579,
+   "fit_slope": 1.084,
+   "n_probes_used": 60,
+   "vocab": 120818,
+   "n_models": 1,
+   "represent": "tencent/HunyuanOCR",
+   "models_sample": [
+    "tencent/HunyuanOCR"
+   ]
+  },
+  {
+   "sha": "78f86354e4052439",
+   "loocv_mean_abs": 1.173,
+   "loocv_rmse": 1.811,
+   "loocv_max_abs": 8.579,
+   "fit_slope": 1.084,
+   "n_probes_used": 60,
+   "vocab": 120832,
+   "n_models": 1,
+   "represent": "tencent/Hy3-preview",
+   "models_sample": [
+    "tencent/Hy3-preview"
+   ]
+  },
+  {
+   "sha": "446e0b59cd941637",
+   "loocv_mean_abs": 1.173,
+   "loocv_rmse": 1.811,
+   "loocv_max_abs": 8.579,
+   "fit_slope": 1.084,
+   "n_probes_used": 60,
+   "vocab": 120832,
+   "n_models": 2,
+   "represent": "tencent/Hy3-FP8",
+   "models_sample": [
+    "tencent/Hy3",
+    "tencent/Hy3-FP8"
+   ]
+  },
+  {
+   "sha": "ad96ef9f641b79bb",
+   "loocv_mean_abs": 1.173,
+   "loocv_rmse": 1.811,
+   "loocv_max_abs": 8.579,
+   "fit_slope": 1.084,
+   "n_probes_used": 60,
+   "vocab": 120832,
+   "n_models": 2,
+   "represent": "tencent/Hy-MT2-30B-A3B",
+   "models_sample": [
+    "tencent/Hy-MT2-30B-A3B",
+    "tencent/Hy-MT2-30B-A3B-FP8"
+   ]
+  },
+  {
+   "sha": "e11c71726323d33d",
+   "loocv_mean_abs": 1.182,
+   "loocv_rmse": 1.799,
+   "loocv_max_abs": 6.036,
+   "fit_slope": 0.791,
+   "n_probes_used": 60,
+   "vocab": 131072,
+   "n_models": 2,
+   "represent": "mistralai/Mistral-Nemo-Instruct-2407",
+   "models_sample": [
+    "mistralai/Mistral-Nemo-Base-2407",
+    "mistralai/Mistral-Nemo-Instruct-2407"
+   ]
+  },
+  {
+   "sha": "b76085f9923309d8",
+   "loocv_mean_abs": 1.182,
+   "loocv_rmse": 1.799,
+   "loocv_max_abs": 6.036,
+   "fit_slope": 0.791,
+   "n_probes_used": 60,
+   "vocab": 131072,
+   "n_models": 4,
+   "represent": "mistralai/Mistral-Small-3.1-24B-Instruct-2503",
+   "models_sample": [
+    "mistralai/Mistral-Small-24B-Base-2501",
+    "mistralai/Mistral-Small-24B-Instruct-2501",
+    "mistralai/Mistral-Small-3.1-24B-Base-2503",
+    "mistralai/Mistral-Small-3.1-24B-Instruct-2503"
+   ]
+  },
+  {
+   "sha": "d7edbeaf20dd7f57",
+   "loocv_mean_abs": 1.182,
+   "loocv_rmse": 1.799,
+   "loocv_max_abs": 6.036,
+   "fit_slope": 0.791,
+   "n_probes_used": 60,
+   "vocab": 131072,
+   "n_models": 1,
+   "represent": "mistralai/Ministral-8B-Instruct-2410",
+   "models_sample": [
+    "mistralai/Ministral-8B-Instruct-2410"
+   ]
+  },
+  {
+   "sha": "577575622324b2e0",
+   "loocv_mean_abs": 1.182,
+   "loocv_rmse": 1.799,
+   "loocv_max_abs": 6.036,
+   "fit_slope": 0.791,
+   "n_probes_used": 60,
+   "vocab": 131072,
+   "n_models": 8,
+   "represent": "mistralai/Ministral-3-14B-Reasoning-2512",
+   "models_sample": [
+    "mistralai/Ministral-3-14B-Base-2512",
+    "mistralai/Ministral-3-14B-Reasoning-2512",
+    "mistralai/Ministral-3-3B-Base-2512",
+    "mistralai/Ministral-3-3B-Reasoning-2512",
+    "mistralai/Ministral-3-8B-Base-2512",
+    "mistralai/Ministral-3-8B-Reasoning-2512"
+   ]
+  },
+  {
+   "sha": "d5f6046775b112f0",
+   "loocv_mean_abs": 1.182,
+   "loocv_rmse": 1.799,
+   "loocv_max_abs": 6.036,
+   "fit_slope": 0.791,
+   "n_probes_used": 60,
+   "vocab": 131072,
+   "n_models": 3,
+   "represent": "mistralai/Ministral-3-14B-Instruct-2512-BF16",
+   "models_sample": [
+    "mistralai/Ministral-3-14B-Instruct-2512-BF16",
+    "mistralai/Ministral-3-3B-Instruct-2512-BF16",
+    "mistralai/Ministral-3-8B-Instruct-2512-BF16"
+   ]
+  },
+  {
+   "sha": "623c34567aebb185",
+   "loocv_mean_abs": 1.182,
+   "loocv_rmse": 1.799,
+   "loocv_max_abs": 6.036,
+   "fit_slope": 0.791,
+   "n_probes_used": 60,
+   "vocab": 131072,
+   "n_models": 12,
+   "represent": "nvidia/NVIDIA-Nemotron-3-Nano-4B-BF16",
+   "models_sample": [
+    "aisingapore/Nemotron-SEA-LION-v4.8-120B-A12B",
+    "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16",
+    "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-FP8",
+    "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-NVFP4",
+    "nvidia/NVIDIA-Nemotron-3-Nano-4B-BF16",
+    "nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16"
+   ]
+  },
+  {
+   "sha": "4dc692a99dca6d92",
+   "loocv_mean_abs": 1.182,
+   "loocv_rmse": 1.799,
+   "loocv_max_abs": 6.036,
+   "fit_slope": 0.791,
+   "n_probes_used": 60,
+   "vocab": 131072,
+   "n_models": 1,
+   "represent": "nvidia/Cosmos3-Edge",
+   "models_sample": [
+    "nvidia/Cosmos3-Edge"
+   ]
+  },
+  {
+   "sha": "e5e7dc84d72e8f24",
+   "loocv_mean_abs": 1.182,
+   "loocv_rmse": 1.799,
+   "loocv_max_abs": 6.036,
+   "fit_slope": 0.791,
+   "n_probes_used": 60,
+   "vocab": 131072,
+   "n_models": 3,
+   "represent": "nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-FP8",
+   "models_sample": [
+    "nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16",
+    "nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-FP8",
+    "nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-NVFP4"
+   ]
+  },
+  {
+   "sha": "3277c00fe5fb3963",
+   "loocv_mean_abs": 1.182,
+   "loocv_rmse": 1.799,
+   "loocv_max_abs": 6.036,
+   "fit_slope": 0.791,
+   "n_probes_used": 60,
+   "vocab": 131072,
+   "n_models": 2,
+   "represent": "nvidia/NVIDIA-Nemotron-Nano-9B-v2",
+   "models_sample": [
+    "nvidia/NVIDIA-Nemotron-Nano-9B-v2",
+    "nvidia/NVIDIA-Nemotron-Nano-9B-v2-FP8"
+   ]
+  }
+ ]
+}

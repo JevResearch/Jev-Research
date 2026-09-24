@@ -1,0 +1,60 @@
+{
+  "models": [
+    "claude-3.5-sonnet (historical)",
+    "gpt-4o (historical)",
+    "jev-1.13.0 (direct, 0-shot, this pilot)",
+    "llama-3-70b-instruct (historical)"
+  ],
+  "datasets": [
+    "mmlu-pro"
+  ],
+  "rows": [
+    {
+      "dataset": "mmlu-pro",
+      "cells": [
+        {
+          "value": 0.734667,
+          "display": "0.734667^",
+          "missing": false,
+          "n": 12032,
+          "metric": "accuracy",
+          "comparison_class": "historical_contextual",
+          "uncertainty_missing": true,
+          "source_url": "https://huggingface.co/spaces/TIGER-Lab/MMLU-Pro (mini-leaderboard)"
+        },
+        {
+          "value": 0.695,
+          "display": "0.695^",
+          "missing": false,
+          "n": 12032,
+          "metric": "accuracy",
+          "comparison_class": "historical_contextual",
+          "uncertainty_missing": true,
+          "source_url": "https://huggingface.co/spaces/TIGER-Lab/MMLU-Pro (mini-leaderboard)"
+        },
+        {
+          "value": 0.833333,
+          "display": "0.833333^",
+          "missing": false,
+          "n": 200,
+          "metric": "accuracy",
+          "comparison_class": "historical_contextual",
+          "uncertainty_missing": true,
+          "source_url": "runs_live/2026-09-18-898eb7b602d0 (this project)"
+        },
+        {
+          "value": 0.513333,
+          "display": "0.513333^",
+          "missing": false,
+          "n": 12032,
+          "metric": "accuracy",
+          "comparison_class": "historical_contextual",
+          "uncertainty_missing": true,
+          "source_url": "https://huggingface.co/spaces/TIGER-Lab/MMLU-Pro (mini-leaderboard)"
+        }
+      ]
+    }
+  ],
+  "chance_adjusted": true,
+  "note": "\u2014 marks absent results; contextual comparators carry ^ and must not be pooled"
+}

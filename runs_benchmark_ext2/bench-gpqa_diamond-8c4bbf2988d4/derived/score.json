@@ -1,0 +1,68 @@
+{
+  "stage": "gpqa_diamond",
+  "run_dir": "runs_benchmark_ext2/bench-gpqa_diamond-8c4bbf2988d4",
+  "n_expected": 196,
+  "n_terminal_results": 196,
+  "n_scored": 196,
+  "n_missing_terminal": 0,
+  "accuracy": 0.7653061224489796,
+  "wilson_95": {
+    "low": 0.701226,
+    "high": 0.819186
+  },
+  "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject.",
+  "status_counts": {
+    "ok": 196
+  },
+  "strict_format_failures": 0,
+  "zero_probability_gold": 0,
+  "zero_probability_gold_candidates": 196,
+  "proper_scores": {
+    "n": 196,
+    "excluded_no_valid_probabilities": 0,
+    "brier_mean": 0.34699438775510205,
+    "log_loss_mean": 0.6741194214421417,
+    "note": "proper scores only over attempts with usable, finite probabilities; text-only baselines contribute none"
+  },
+  "by_group": {
+    "Biology": {
+      "n": 19,
+      "correct": 14,
+      "accuracy": 0.7368421052631579,
+      "wilson_95": {
+        "low": 0.512084,
+        "high": 0.881936
+      },
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+    },
+    "Chemistry": {
+      "n": 91,
+      "correct": 66,
+      "accuracy": 0.7252747252747253,
+      "wilson_95": {
+        "low": 0.625852,
+        "high": 0.806448
+      },
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+    },
+    "Physics": {
+      "n": 86,
+      "correct": 70,
+      "accuracy": 0.813953488372093,
+      "wilson_95": {
+        "low": 0.71895,
+        "high": 0.882109
+      },
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+    }
+  },
+  "by_rotation_variant": {},
+  "attempts_summary": {
+    "n_attempts": 196,
+    "n_uncertain_attempts": 0,
+    "usage_input_tokens_sum": 105465,
+    "usage_output_tokens_sum": 9016,
+    "attempts_without_usage": 0
+  },
+  "publish_note": "per-item lists stripped at publish (item ids/answers reference licensed third-party content); aggregates kept"
+}

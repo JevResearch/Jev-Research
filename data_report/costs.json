@@ -1,0 +1,443 @@
+{
+ "prices_usd_per_M": {
+  "GPT-6 Astra": {
+   "input": 10.0,
+   "output": 50.0,
+   "note": "OpenAI list, Sep 2026"
+  },
+  "GPT-5.6 Sol": {
+   "input": 4.0,
+   "output": 20.0,
+   "note": "OpenAI promo rate (standard 5/30)"
+  },
+  "Claude Fable 5.1": {
+   "input": 10.0,
+   "output": 50.0,
+   "note": "Anthropic list, Sep 2026"
+  },
+  "Claude Opus 5": {
+   "input": 5.0,
+   "output": 25.0,
+   "note": "Anthropic list, Sep 2026"
+  },
+  "GLM-5.3": {
+   "input": 1.4,
+   "output": 4.4,
+   "note": "z.ai list, Aug 2026"
+  },
+  "GLM-5.3 Flash": {
+   "input": 0.15,
+   "output": 0.5,
+   "note": "z.ai list (promos below this exist)"
+  },
+  "Qwen3.8 Max": {
+   "input": 1.65,
+   "output": 4.95,
+   "note": "Alibaba Cloud list, Aug 2026"
+  },
+  "DeepSeek V4 Flash 0731": {
+   "input": 0.44,
+   "output": 1.32,
+   "note": "peak rate; off-peak 0.22/0.66"
+  },
+  "GPT-4o": {
+   "input": 2.5,
+   "output": 10.0,
+   "note": "launch May 2024 (08-06 same)"
+  },
+  "Claude 3.7 Sonnet (no thinking)": {
+   "input": 3.0,
+   "output": 15.0,
+   "note": "launch Feb 2025"
+  },
+  "Jev": {
+   "input": 0.042,
+   "output": 0.0,
+   "note": "measured billing rate; output free"
+  }
+ },
+ "priors": {
+  "mmlu_pro": {
+   "in": 750,
+   "out": 300,
+   "n": 12032,
+   "basis": "Vals 5-shot CoT; question+10 options+few-shot in, short CoT out"
+  },
+  "gpqa": {
+   "in": 350,
+   "out": 1800,
+   "n": 196,
+   "basis": "AA-style reasoning; Astra measured 1.77k out/question on OpenRouter"
+  },
+  "arc": {
+   "in": 420,
+   "out": 150,
+   "n": 1172,
+   "basis": "25-shot MCQ, short answers"
+  },
+  "math500": {
+   "in": 200,
+   "out": 3000,
+   "n": 500,
+   "basis": "free-form math with reasoning"
+  },
+  "hle": {
+   "in": 400,
+   "out": 6000,
+   "n": 494,
+   "basis": "reasoning on the MC sub-track"
+  }
+ },
+ "anchors": {
+  "gpqa": {
+   "model": "GPT-6 Astra",
+   "per_item": 0.099,
+   "source": "OpenRouter GPQA leaderboard cost/question"
+  },
+  "mmlu_pro": {
+   "model": "Claude Opus 5",
+   "per_item": 0.028,
+   "source": "Vals MMLU-Pro 'cost per test' column"
+  }
+ },
+ "jev_measured_input_tokens": {
+  "mmlu_pro": 6734956,
+  "gpqa": 105465,
+  "arc": 451947,
+  "math500": 115490,
+  "hle": 453718
+ },
+ "caveat": "External costs are estimates from public list prices and per-item token priors; where a measured cost/question exists we calibrate to it. Expect a few-x error on estimates; the frontier gaps shown are 3-6 orders of magnitude. Jev's own costs are measured from billing.",
+ "costs_usd": {
+  "mmlu_pro": {
+   "Jev": {
+    "usd": 0.2829,
+    "method": "measured billing (input tokens x $0.042/M; output free)"
+   },
+   "GPT-6 Astra": {
+    "usd": 673.79,
+    "usd_uncalibrated": 270.72,
+    "method": "anchored estimate",
+    "anchor": "calibrated on Claude Opus 5 measured cost (Vals MMLU-Pro 'cost per test' column)"
+   },
+   "GPT-5.6 Sol": {
+    "usd": 269.52,
+    "usd_uncalibrated": 108.29,
+    "method": "anchored estimate",
+    "anchor": "calibrated on Claude Opus 5 measured cost (Vals MMLU-Pro 'cost per test' column)"
+   },
+   "Claude Fable 5.1": {
+    "usd": 673.79,
+    "usd_uncalibrated": 270.72,
+    "method": "anchored estimate",
+    "anchor": "calibrated on Claude Opus 5 measured cost (Vals MMLU-Pro 'cost per test' column)"
+   },
+   "Claude Opus 5": {
+    "usd": 135.36,
+    "usd_uncalibrated": 135.36,
+    "method": "prior estimate",
+    "anchor": null
+   },
+   "GLM-5.3": {
+    "usd": 70.97,
+    "usd_uncalibrated": 28.52,
+    "method": "anchored estimate",
+    "anchor": "calibrated on Claude Opus 5 measured cost (Vals MMLU-Pro 'cost per test' column)"
+   },
+   "GLM-5.3 Flash": {
+    "usd": 7.86,
+    "usd_uncalibrated": 3.16,
+    "method": "anchored estimate",
+    "anchor": "calibrated on Claude Opus 5 measured cost (Vals MMLU-Pro 'cost per test' column)"
+   },
+   "Qwen3.8 Max": {
+    "usd": 81.53,
+    "usd_uncalibrated": 32.76,
+    "method": "anchored estimate",
+    "anchor": "calibrated on Claude Opus 5 measured cost (Vals MMLU-Pro 'cost per test' column)"
+   },
+   "DeepSeek V4 Flash 0731": {
+    "usd": 21.74,
+    "usd_uncalibrated": 8.74,
+    "method": "anchored estimate",
+    "anchor": "calibrated on Claude Opus 5 measured cost (Vals MMLU-Pro 'cost per test' column)"
+   },
+   "GPT-4o": {
+    "usd": 145.99,
+    "usd_uncalibrated": 58.66,
+    "method": "anchored estimate",
+    "anchor": "calibrated on Claude Opus 5 measured cost (Vals MMLU-Pro 'cost per test' column)"
+   },
+   "Claude 3.7 Sonnet (no thinking)": {
+    "usd": 202.14,
+    "usd_uncalibrated": 81.22,
+    "method": "anchored estimate",
+    "anchor": "calibrated on Claude Opus 5 measured cost (Vals MMLU-Pro 'cost per test' column)"
+   }
+  },
+  "gpqa": {
+   "Jev": {
+    "usd": 0.0044,
+    "method": "measured billing (input tokens x $0.042/M; output free)"
+   },
+   "GPT-6 Astra": {
+    "usd": 18.33,
+    "usd_uncalibrated": 18.33,
+    "method": "prior estimate",
+    "anchor": null
+   },
+   "GPT-5.6 Sol": {
+    "usd": 7.76,
+    "usd_uncalibrated": 7.33,
+    "method": "anchored estimate",
+    "anchor": "calibrated on GPT-6 Astra measured cost (OpenRouter GPQA leaderboard cost/question)"
+   },
+   "Claude Fable 5.1": {
+    "usd": 19.4,
+    "usd_uncalibrated": 18.33,
+    "method": "anchored estimate",
+    "anchor": "calibrated on GPT-6 Astra measured cost (OpenRouter GPQA leaderboard cost/question)"
+   },
+   "Claude Opus 5": {
+    "usd": 9.7,
+    "usd_uncalibrated": 9.16,
+    "method": "anchored estimate",
+    "anchor": "calibrated on GPT-6 Astra measured cost (OpenRouter GPQA leaderboard cost/question)"
+   },
+   "GLM-5.3": {
+    "usd": 1.75,
+    "usd_uncalibrated": 1.65,
+    "method": "anchored estimate",
+    "anchor": "calibrated on GPT-6 Astra measured cost (OpenRouter GPQA leaderboard cost/question)"
+   },
+   "GLM-5.3 Flash": {
+    "usd": 0.2,
+    "usd_uncalibrated": 0.19,
+    "method": "anchored estimate",
+    "anchor": "calibrated on GPT-6 Astra measured cost (OpenRouter GPQA leaderboard cost/question)"
+   },
+   "Qwen3.8 Max": {
+    "usd": 1.97,
+    "usd_uncalibrated": 1.86,
+    "method": "anchored estimate",
+    "anchor": "calibrated on GPT-6 Astra measured cost (OpenRouter GPQA leaderboard cost/question)"
+   },
+   "DeepSeek V4 Flash 0731": {
+    "usd": 0.53,
+    "usd_uncalibrated": 0.5,
+    "method": "anchored estimate",
+    "anchor": "calibrated on GPT-6 Astra measured cost (OpenRouter GPQA leaderboard cost/question)"
+   },
+   "GPT-4o": {
+    "usd": 3.92,
+    "usd_uncalibrated": 3.7,
+    "method": "anchored estimate",
+    "anchor": "calibrated on GPT-6 Astra measured cost (OpenRouter GPQA leaderboard cost/question)"
+   },
+   "Claude 3.7 Sonnet (no thinking)": {
+    "usd": 5.82,
+    "usd_uncalibrated": 5.5,
+    "method": "anchored estimate",
+    "anchor": "calibrated on GPT-6 Astra measured cost (OpenRouter GPQA leaderboard cost/question)"
+   }
+  },
+  "arc": {
+   "Jev": {
+    "usd": 0.019,
+    "method": "measured billing (input tokens x $0.042/M; output free)"
+   },
+   "GPT-6 Astra": {
+    "usd": 13.71,
+    "usd_uncalibrated": 13.71,
+    "method": "prior estimate",
+    "anchor": null
+   },
+   "GPT-5.6 Sol": {
+    "usd": 5.48,
+    "usd_uncalibrated": 5.48,
+    "method": "prior estimate",
+    "anchor": null
+   },
+   "Claude Fable 5.1": {
+    "usd": 13.71,
+    "usd_uncalibrated": 13.71,
+    "method": "prior estimate",
+    "anchor": null
+   },
+   "Claude Opus 5": {
+    "usd": 6.86,
+    "usd_uncalibrated": 6.86,
+    "method": "prior estimate",
+    "anchor": null
+   },
+   "GLM-5.3": {
+    "usd": 1.46,
+    "usd_uncalibrated": 1.46,
+    "method": "prior estimate",
+    "anchor": null
+   },
+   "GLM-5.3 Flash": {
+    "usd": 0.16,
+    "usd_uncalibrated": 0.16,
+    "method": "prior estimate",
+    "anchor": null
+   },
+   "Qwen3.8 Max": {
+    "usd": 1.68,
+    "usd_uncalibrated": 1.68,
+    "method": "prior estimate",
+    "anchor": null
+   },
+   "DeepSeek V4 Flash 0731": {
+    "usd": 0.45,
+    "usd_uncalibrated": 0.45,
+    "method": "prior estimate",
+    "anchor": null
+   },
+   "GPT-4o": {
+    "usd": 2.99,
+    "usd_uncalibrated": 2.99,
+    "method": "prior estimate",
+    "anchor": null
+   },
+   "Claude 3.7 Sonnet (no thinking)": {
+    "usd": 4.11,
+    "usd_uncalibrated": 4.11,
+    "method": "prior estimate",
+    "anchor": null
+   }
+  },
+  "math500": {
+   "Jev": {
+    "usd": 0.0049,
+    "method": "measured billing (input tokens x $0.042/M; output free)"
+   },
+   "GPT-6 Astra": {
+    "usd": 76.0,
+    "usd_uncalibrated": 76.0,
+    "method": "prior estimate",
+    "anchor": null
+   },
+   "GPT-5.6 Sol": {
+    "usd": 30.4,
+    "usd_uncalibrated": 30.4,
+    "method": "prior estimate",
+    "anchor": null
+   },
+   "Claude Fable 5.1": {
+    "usd": 76.0,
+    "usd_uncalibrated": 76.0,
+    "method": "prior estimate",
+    "anchor": null
+   },
+   "Claude Opus 5": {
+    "usd": 38.0,
+    "usd_uncalibrated": 38.0,
+    "method": "prior estimate",
+    "anchor": null
+   },
+   "GLM-5.3": {
+    "usd": 6.74,
+    "usd_uncalibrated": 6.74,
+    "method": "prior estimate",
+    "anchor": null
+   },
+   "GLM-5.3 Flash": {
+    "usd": 0.77,
+    "usd_uncalibrated": 0.77,
+    "method": "prior estimate",
+    "anchor": null
+   },
+   "Qwen3.8 Max": {
+    "usd": 7.59,
+    "usd_uncalibrated": 7.59,
+    "method": "prior estimate",
+    "anchor": null
+   },
+   "DeepSeek V4 Flash 0731": {
+    "usd": 2.02,
+    "usd_uncalibrated": 2.02,
+    "method": "prior estimate",
+    "anchor": null
+   },
+   "GPT-4o": {
+    "usd": 15.25,
+    "usd_uncalibrated": 15.25,
+    "method": "prior estimate",
+    "anchor": null
+   },
+   "Claude 3.7 Sonnet (no thinking)": {
+    "usd": 22.8,
+    "usd_uncalibrated": 22.8,
+    "method": "prior estimate",
+    "anchor": null
+   }
+  },
+  "hle": {
+   "Jev": {
+    "usd": 0.0191,
+    "method": "measured billing (input tokens x $0.042/M; output free)"
+   },
+   "GPT-6 Astra": {
+    "usd": 150.18,
+    "usd_uncalibrated": 150.18,
+    "method": "prior estimate",
+    "anchor": null
+   },
+   "GPT-5.6 Sol": {
+    "usd": 60.07,
+    "usd_uncalibrated": 60.07,
+    "method": "prior estimate",
+    "anchor": null
+   },
+   "Claude Fable 5.1": {
+    "usd": 150.18,
+    "usd_uncalibrated": 150.18,
+    "method": "prior estimate",
+    "anchor": null
+   },
+   "Claude Opus 5": {
+    "usd": 75.09,
+    "usd_uncalibrated": 75.09,
+    "method": "prior estimate",
+    "anchor": null
+   },
+   "GLM-5.3": {
+    "usd": 13.32,
+    "usd_uncalibrated": 13.32,
+    "method": "prior estimate",
+    "anchor": null
+   },
+   "GLM-5.3 Flash": {
+    "usd": 1.51,
+    "usd_uncalibrated": 1.51,
+    "method": "prior estimate",
+    "anchor": null
+   },
+   "Qwen3.8 Max": {
+    "usd": 15.0,
+    "usd_uncalibrated": 15.0,
+    "method": "prior estimate",
+    "anchor": null
+   },
+   "DeepSeek V4 Flash 0731": {
+    "usd": 4.0,
+    "usd_uncalibrated": 4.0,
+    "method": "prior estimate",
+    "anchor": null
+   },
+   "GPT-4o": {
+    "usd": 30.13,
+    "usd_uncalibrated": 30.13,
+    "method": "prior estimate",
+    "anchor": null
+   },
+   "Claude 3.7 Sonnet (no thinking)": {
+    "usd": 45.05,
+    "usd_uncalibrated": 45.05,
+    "method": "prior estimate",
+    "anchor": null
+   }
+  }
+ }
+}

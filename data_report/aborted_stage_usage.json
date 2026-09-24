@@ -1,0 +1,30 @@
+{
+  "note": "extension stage aborted by validator mid-run; billed calls real, raw logs and item text excluded from the published bundle",
+  "stages": {
+    "bench-arc_agi2_choice-3a6ecf9ec0ec": {
+      "n_attempts_ok": 448,
+      "n_attempts_other": 0,
+      "usage_input_tokens_sum": 11306774
+    },
+    "bench-arc_agi2_score-3a6ecf9ec0ec": {
+      "n_attempts_ok": 6,
+      "n_attempts_other": 0,
+      "usage_input_tokens_sum": 153890
+    },
+    "bench-arc_agi2_task-3a6ecf9ec0ec": {
+      "n_attempts_ok": 6,
+      "n_attempts_other": 0,
+      "usage_input_tokens_sum": 178142
+    },
+    "bench-math500_choice-3a6ecf9ec0ec": {
+      "n_attempts_ok": 261,
+      "n_attempts_other": 0,
+      "usage_input_tokens_sum": 115490
+    },
+    "bench-math500_score-3a6ecf9ec0ec": {
+      "n_attempts_ok": 10,
+      "n_attempts_other": 0,
+      "usage_input_tokens_sum": 9733
+    }
+  }
+}

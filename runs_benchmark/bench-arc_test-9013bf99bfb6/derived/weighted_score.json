@@ -1,0 +1,17 @@
+{
+  "stage": "arc_test",
+  "run_dir": "runs_benchmark/bench-arc_test-9013bf99bfb6",
+  "variant": "probability_weighted",
+  "definition": "weighted score per item = the probability mass the model assigned to the gold option (choice) / gold level (score questions); the stage number is the mean over scored items \u2014 the model-implied expected accuracy under its own distribution",
+  "separateness_note": "SEPARATE diagnostic artifact: never merged into, substituted for, or averaged with the greedy headline accuracy",
+  "n_expected": 1172,
+  "n_weighted_scored": 1172,
+  "n_excluded": 0,
+  "exclusion_reasons": {},
+  "weighted_accuracy_mean": 0.9684982935153583,
+  "weighted_accuracy_p05": 0.88,
+  "weighted_accuracy_p50": 1.0,
+  "weighted_accuracy_p95": 1.0,
+  "validity_note": "probability vectors must be finite, in [0,1] and sum to ~1 (within 5e-2); invalid vectors are excluded and counted, never renormalized",
+  "publish_note": "per-item lists stripped at publish (item ids/answers reference licensed third-party content); aggregates kept"
+}

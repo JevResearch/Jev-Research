@@ -1,0 +1,56 @@
+{
+  "scores": [
+    {
+      "source": {
+        "source_url": "https://huggingface.co/spaces/TIGER-Lab/MMLU-Pro (mini-leaderboard)",
+        "accessed_at": "2026-09-18",
+        "model": "claude-3.5-sonnet (historical)",
+        "dataset": "mmlu-pro"
+      },
+      "comparison_class": "historical_contextual",
+      "metric": "accuracy",
+      "value": 0.7612,
+      "n": 12032,
+      "protocol_notes": "vendor-protocol unknown (likely CoT, 10 options); chance=0.1"
+    },
+    {
+      "source": {
+        "source_url": "https://huggingface.co/spaces/TIGER-Lab/MMLU-Pro (mini-leaderboard)",
+        "accessed_at": "2026-09-18",
+        "model": "gpt-4o (historical)",
+        "dataset": "mmlu-pro"
+      },
+      "comparison_class": "historical_contextual",
+      "metric": "accuracy",
+      "value": 0.7255,
+      "n": 12032,
+      "protocol_notes": "vendor-protocol unknown (likely CoT, 10 options); chance=0.1"
+    },
+    {
+      "source": {
+        "source_url": "https://huggingface.co/spaces/TIGER-Lab/MMLU-Pro (mini-leaderboard)",
+        "accessed_at": "2026-09-18",
+        "model": "llama-3-70b-instruct (historical)",
+        "dataset": "mmlu-pro"
+      },
+      "comparison_class": "historical_contextual",
+      "metric": "accuracy",
+      "value": 0.562,
+      "n": 12032,
+      "protocol_notes": "vendor-protocol unknown; chance=0.1"
+    },
+    {
+      "source": {
+        "source_url": "runs_live/2026-09-18-898eb7b602d0 (this project)",
+        "accessed_at": "2026-09-18",
+        "model": "jev-1.13.0 (direct, 0-shot, this pilot)",
+        "dataset": "mmlu-pro"
+      },
+      "comparison_class": "historical_contextual",
+      "metric": "accuracy",
+      "value": 0.85,
+      "n": 200,
+      "protocol_notes": "direct choice, no CoT, stratified pilot n=200, chance=0.1 (avg options/item varies)"
+    }
+  ]
+}

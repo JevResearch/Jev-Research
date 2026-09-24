@@ -1,0 +1,110 @@
+{
+  "generated_by": "scripts/report/aggregate_billing.py",
+  "price_usd_per_M_input": 0.042,
+  "method": "input tokens are server-reported and billed; output tokens are free. Totals read only from on-disk artifacts; dedup rules are documented in the script header.",
+  "sources": [
+    {
+      "name": "bench-arc_test-9013bf99bfb6",
+      "provenance": "runs_benchmark/bench-arc_test-9013bf99bfb6/derived/score.json",
+      "calls": 1172,
+      "input_tokens": 451947,
+      "method": "derived/score.json attempts_summary"
+    },
+    {
+      "name": "bench-mmlu_full-9013bf99bfb6",
+      "provenance": "runs_benchmark/bench-mmlu_full-9013bf99bfb6/derived/score.json",
+      "calls": 12032,
+      "input_tokens": 6734956,
+      "method": "derived/score.json attempts_summary"
+    },
+    {
+      "name": "bench-option_rotations-9013bf99bfb6",
+      "provenance": "runs_benchmark/bench-option_rotations-9013bf99bfb6/derived/score.json",
+      "calls": 420,
+      "input_tokens": 239946,
+      "method": "derived/score.json attempts_summary"
+    },
+    {
+      "name": "bench-math500_choice-6bf385f0c234",
+      "provenance": "runs_benchmark_ext/bench-math500_choice-6bf385f0c234/derived/score.json",
+      "calls": 261,
+      "input_tokens": 115490,
+      "method": "derived/score.json attempts_summary"
+    },
+    {
+      "name": "bench-math500_score-6bf385f0c234",
+      "provenance": "runs_benchmark_ext/bench-math500_score-6bf385f0c234/derived/score.json",
+      "calls": 273,
+      "input_tokens": 242475,
+      "method": "derived/score.json attempts_summary"
+    },
+    {
+      "name": "bench-gpqa_diamond-8c4bbf2988d4",
+      "provenance": "runs_benchmark_ext2/bench-gpqa_diamond-8c4bbf2988d4/derived/score.json",
+      "calls": 196,
+      "input_tokens": 105465,
+      "method": "derived/score.json attempts_summary"
+    },
+    {
+      "name": "bench-hle_text_mc-8c4bbf2988d4",
+      "provenance": "runs_benchmark_ext2/bench-hle_text_mc-8c4bbf2988d4/derived/score.json",
+      "calls": 494,
+      "input_tokens": 453718,
+      "method": "derived/score.json attempts_summary"
+    },
+    {
+      "name": "bench-arc_agi2_choice-6bf385f0c234",
+      "provenance": "runs_benchmark_ext/bench-arc_agi2_choice-6bf385f0c234/derived/usage_summary.json",
+      "calls": 517,
+      "input_tokens": 12999233,
+      "method": "derived/usage_summary.json (published roll-up)"
+    },
+    {
+      "name": "bench-arc_agi2_score-6bf385f0c234",
+      "provenance": "runs_benchmark_ext/bench-arc_agi2_score-6bf385f0c234/derived/usage_summary.json",
+      "calls": 517,
+      "input_tokens": 12806533,
+      "method": "derived/usage_summary.json (published roll-up)"
+    },
+    {
+      "name": "bench-arc_agi2_task-6bf385f0c234",
+      "provenance": "runs_benchmark_ext/bench-arc_agi2_task-6bf385f0c234/derived/usage_summary.json",
+      "calls": 496,
+      "input_tokens": 12801923,
+      "method": "derived/usage_summary.json (published roll-up)"
+    },
+    {
+      "name": "aborted1-extension-stage",
+      "provenance": "data_report/aborted_stage_usage.json",
+      "calls": 731,
+      "input_tokens": 11764029,
+      "method": "data_report/aborted_stage_usage.json (real billed spend; raw logs unpublished)"
+    },
+    {
+      "name": "archprobe-battery",
+      "provenance": "runs_archprobe/BILLING.json",
+      "calls": 987,
+      "input_tokens": 894624,
+      "method": "BILLING.json"
+    },
+    {
+      "name": "runs-live-phase1",
+      "provenance": "runs_live/BILLING.json",
+      "calls": 2283,
+      "input_tokens": 1285908,
+      "method": "BILLING.json updated_after_audit (includes original 14-call char Talk)"
+    },
+    {
+      "name": "talk-program",
+      "provenance": "runs_live/*.json (60 artifacts)",
+      "calls": 3080,
+      "input_tokens": 24278650,
+      "method": "per-node usage_input_tokens; probe summaries via total_in_tokens fields"
+    }
+  ],
+  "totals": {
+    "calls_recorded": 23459,
+    "input_tokens": 85174897,
+    "usd": 3.58
+  }
+}

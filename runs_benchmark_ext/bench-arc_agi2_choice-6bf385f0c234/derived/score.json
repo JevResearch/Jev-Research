@@ -1,0 +1,635 @@
+{
+  "stage": "arc_agi2_choice",
+  "run_dir": "runs_benchmark_ext/bench-arc_agi2_choice-6bf385f0c234",
+  "official_task_criterion": "task solved only when every output cell of every test input is exactly correct (pass@1; no retries by protocol)",
+  "n_tasks_expected": 120,
+  "n_tasks": 120,
+  "tasks_solved": 0,
+  "task_accuracy": 0.0,
+  "grids_expected": 167,
+  "grids_correct": 0,
+  "grid_accuracy": 0.0,
+  "cell_accuracy_diagnostic": 0.5351212553495007,
+  "cells_correct": 37512,
+  "cells_total": 70100,
+  "n_chunk_items_expected": 517,
+  "n_chunk_items_terminal": 517,
+  "n_missing_terminal": 0,
+  "missing_items": [],
+  "status_counts": {
+    "ok": 517
+  },
+  "cells_unusable": 0,
+  "note_on_strict_format": "per-item strict-format counts are not defined for multi-question chunk items; unusable CELLS are counted in cells_unusable and scored wrong",
+  "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject.",
+  "base_score_doc": {
+    "note": "item-level choice accuracy is NOT defined for multi-question chunk items; use the cell/grid/task metrics above",
+    "wilson_cell_diagnostic": {
+      "low": 0.0,
+      "high": 0.007375
+    }
+  },
+  "per_task": {
+    "0934a4d8": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "135a2760": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "136b0064": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "13e47133": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "142ca369": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "16b78196": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "16de56c4": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "1818057f": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "195c6913": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "1ae2feb7": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 3
+    },
+    "20270e3b": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "20a9e565": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "21897d95": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "221dfab4": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "247ef758": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "269e22fb": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "271d71e2": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "28a6681f": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "291dc1e1": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "2b83f449": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "2ba387bc": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "2c181942": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "2d0172a1": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "31f7f899": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "332f06d7": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "35ab12c3": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "36a08778": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "38007db0": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "3a25b0d8": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "3dc255db": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "3e6067c3": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "409aa875": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "446ef5d2": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "45a5af55": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "4a21e3da": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "4c3d4a41": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "4c416de3": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "4c7dc4dd": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "4e34c42c": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "53fb4810": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "5545f144": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "581f7754": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "58490d8a": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "58f5dbd5": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "5961cc34": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "5dbc8537": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "62593bfd": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "64efde09": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "65b59efc": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "67e490f4": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "6e453dd6": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "6e4f6532": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "6ffbe589": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "71e489b6": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "7491f3cf": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "7666fa5d": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "78332cb0": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "7b0280bc": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "7b3084d4": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "7b5033c1": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "7b80bb43": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "7c66cb00": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "7ed72f31": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "800d221b": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "80a900e0": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "8698868d": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "88bcf3b4": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "88e364bc": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "89565ca0": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "898e7135": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "8b7bacbf": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "8b9c3697": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "8e5c0c38": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "8f215267": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "8f3a5a89": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "9385bd28": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "97d7923e": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "981571dc": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "9aaea919": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "9bbf930d": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "a251c730": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "a25697e4": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "a32d8b75": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "a395ee82": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "a47bf94d": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "a6f40cea": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "aa4ec2a5": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "abc82100": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "b0039139": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "b10624e5": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "b5ca7ac4": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "b6f77b65": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "b99e7126": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "b9e38dc0": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "bf45cf4b": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "c4d067a0": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "c7f57c3e": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "cb2d8a2c": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "cbebaa4b": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "d35bdbdc": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 3
+    },
+    "d59b0160": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "d8e07eb2": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "da515329": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "db0c5428": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "db695cfb": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "dbff022c": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "dd6b8c4b": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "de809cff": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "dfadab01": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "e12f9a14": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "e3721c99": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "e376de54": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "e8686506": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "e87109e9": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "edb79dae": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "eee78d87": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "f560132c": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "f931b4a8": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 2
+    },
+    "faa9f03d": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    },
+    "fc7cae8d": {
+      "solved": false,
+      "grids_correct": 0,
+      "grids_total": 1
+    }
+  },
+  "publish_note": "per-item lists stripped at publish (item ids/answers reference licensed third-party content); aggregates kept"
+}

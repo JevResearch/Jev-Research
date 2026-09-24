@@ -1,0 +1,3482 @@
+{
+  "experiment": "fresh-capability-v3",
+  "model": "jev-1.13.0",
+  "test_family": "capability-fresh-v3",
+  "seeds": {
+    "order": 4242,
+    "dev_seed": 101,
+    "test_seed": 4242,
+    "per_family": {
+      "graph_two_hop": {
+        "dev": 101,
+        "test": 4242
+      },
+      "missing_info": {
+        "dev": 101,
+        "test": 4242
+      },
+      "synthetic_dates": {
+        "dev": 101,
+        "test": 4242
+      }
+    }
+  },
+  "shuffle": true,
+  "claim_type": "exploratory",
+  "generator_version": "fresh_v3-1.0.0",
+  "dataset": {
+    "name": "fresh-capability-v3",
+    "source_url": "generated locally",
+    "license_note": "generated; no redistribution restrictions",
+    "n_population": 144,
+    "sampling": {
+      "mode": "fresh_v3_dev_test",
+      "dev_n": 24,
+      "test_n": 120,
+      "note": "DEV items are for prompt tuning only; TEST items are held out from tuning",
+      "generator_version": "fresh_v3-1.0.0"
+    }
+  },
+  "items": [
+    {
+      "id": "freshv3-test-graph-000",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Adria–Mahsa, Levan–Nadia, Alina–Elmas, Pavel–Ivo, Mahsa–Levan, Elmas–Pavel, Levan–Hideko, Ivo–Vasile.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Levan"
+        },
+        "target_node": "Adria",
+        "role_of": {
+          "positive": "Levan",
+          "distractor": "Mahsa",
+          "negative": "Alina"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Adria? Choose exactly one.",
+          "criteria": {
+            "Levan": "a person named in the relationship list",
+            "Alina": "a person named in the relationship list",
+            "Mahsa": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-001",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Odalys–Hideko, Elmas–Teodora, Mahsa–Rosalind, Rosalind–Mirek, Pirro–Mahsa, Rosalind–Pirro, Teodora–Pavel, Rosalind–Odalys.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Pavel"
+        },
+        "target_node": "Elmas",
+        "role_of": {
+          "positive": "Pavel",
+          "distractor": "Teodora",
+          "negative": "Dalia"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Elmas? Choose exactly one.",
+          "criteria": {
+            "Dalia": "a person named in the relationship list",
+            "Pavel": "a person named in the relationship list",
+            "Teodora": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-002",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Kalinda–Rurik, Mirek–Dalia, Pavel–Zora, Halia–Mahsa, Pavel–Kalinda, Dalia–Halia, Kalinda–Farid, Pavel–Ivo.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Halia"
+        },
+        "target_node": "Mirek",
+        "role_of": {
+          "positive": "Halia",
+          "distractor": "Dalia",
+          "negative": "Pavel"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Mirek? Choose exactly one.",
+          "criteria": {
+            "Pavel": "a person named in the relationship list",
+            "Dalia": "a person named in the relationship list",
+            "Halia": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-003",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Levan–Farid, Luminita–Levan, Umeko–Odalys, Jasleen–Luminita, Cato–Pavel, Farid–Ulmo, Odalys–Nadia, Farid–Umeko.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Levan"
+        },
+        "target_node": "Jasleen",
+        "role_of": {
+          "positive": "Levan",
+          "distractor": "Luminita",
+          "negative": "Cato"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Jasleen? Choose exactly one.",
+          "criteria": {
+            "Levan": "a person named in the relationship list",
+            "Luminita": "a person named in the relationship list",
+            "Cato": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-004",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Kalinda–Toma, Delphine–Umeko, Toma–Eino, Cato–Rurik, Kalinda–Hideko, Gavril–Kalinda, Rurik–Fenn, Kalinda–Delphine.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Fenn"
+        },
+        "target_node": "Cato",
+        "role_of": {
+          "positive": "Fenn",
+          "distractor": "Rurik",
+          "negative": "Gavril"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Cato? Choose exactly one.",
+          "criteria": {
+            "Gavril": "a person named in the relationship list",
+            "Fenn": "a person named in the relationship list",
+            "Rurik": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-005",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Ulmo–Jasleen, Toma–Wren, Halia–Pavel, Jasleen–Odalys, Sefa–Elmas, Sefa–Rosalind, Wren–Halia, Odalys–Toma.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Odalys"
+        },
+        "target_node": "Ulmo",
+        "role_of": {
+          "positive": "Odalys",
+          "distractor": "Jasleen",
+          "negative": "Sefa"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Ulmo? Choose exactly one.",
+          "criteria": {
+            "Sefa": "a person named in the relationship list",
+            "Jasleen": "a person named in the relationship list",
+            "Odalys": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-006",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Ulmo–Jorunn, Zora–Kalinda, Ulmo–Gunhild, Hideko–Odalys, Qira–Ulmo, Qira–Levan, Jorunn–Qira, Kalinda–Pavel.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Pavel"
+        },
+        "target_node": "Zora",
+        "role_of": {
+          "positive": "Pavel",
+          "distractor": "Kalinda",
+          "negative": "Hideko"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Zora? Choose exactly one.",
+          "criteria": {
+            "Pavel": "a person named in the relationship list",
+            "Kalinda": "a person named in the relationship list",
+            "Hideko": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-007",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Odalys–Halia, Dalia–Farid, Hideko–Odalys, Farid–Cemir, Cemir–Hideko, Hideko–Qira, Cemir–Umeko, Cemir–Gavril.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Cemir"
+        },
+        "target_node": "Dalia",
+        "role_of": {
+          "positive": "Cemir",
+          "distractor": "Farid",
+          "negative": "Mirek"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Dalia? Choose exactly one.",
+          "criteria": {
+            "Mirek": "a person named in the relationship list",
+            "Cemir": "a person named in the relationship list",
+            "Farid": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-008",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Vasile–Qira, Vasile–Levan, Cemir–Vasile, Ximena–Quenna, Adria–Ximena, Qira–Kelso, Qira–Cemir, Levan–Wren.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Quenna"
+        },
+        "target_node": "Adria",
+        "role_of": {
+          "positive": "Quenna",
+          "distractor": "Ximena",
+          "negative": "Jasleen"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Adria? Choose exactly one.",
+          "criteria": {
+            "Ximena": "a person named in the relationship list",
+            "Jasleen": "a person named in the relationship list",
+            "Quenna": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-009",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Zora–Ivo, Eino–Mahsa, Rurik–Dalia, Eino–Zora, Mahsa–Farid, Fenn–Eino, Dalia–Rurik, Toma–Fenn.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Eino"
+        },
+        "target_node": "Toma",
+        "role_of": {
+          "positive": "Eino",
+          "distractor": "Fenn",
+          "negative": "Halia"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Toma? Choose exactly one.",
+          "criteria": {
+            "Eino": "a person named in the relationship list",
+            "Halia": "a person named in the relationship list",
+            "Fenn": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-010",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Oksana–Rurik, Wren–Oksana, Fenn–Cemir, Sanne–Levan, Jorunn–Fenn, Cemir–Sanne, Jorunn–Ivo, Sanne–Jorunn.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Rurik"
+        },
+        "target_node": "Wren",
+        "role_of": {
+          "positive": "Rurik",
+          "distractor": "Oksana",
+          "negative": "Halia"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Wren? Choose exactly one.",
+          "criteria": {
+            "Halia": "a person named in the relationship list",
+            "Rurik": "a person named in the relationship list",
+            "Oksana": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-011",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Nils–Jasleen, Wren–Sanne, Jasleen–Rosalind, Rosalind–Fenn, Sanne–Nils, Kelso–Mirek, Mirek–Elmas, Nils–Wren.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Elmas"
+        },
+        "target_node": "Kelso",
+        "role_of": {
+          "positive": "Elmas",
+          "distractor": "Mirek",
+          "negative": "Zora"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Kelso? Choose exactly one.",
+          "criteria": {
+            "Mirek": "a person named in the relationship list",
+            "Zora": "a person named in the relationship list",
+            "Elmas": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-012",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Eino–Zora, Basim–Gavril, Fenn–Hideko, Hideko–Sefa, Basim–Eino, Zora–Mirek, Zora–Alina, Sefa–Oksana.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Sefa"
+        },
+        "target_node": "Fenn",
+        "role_of": {
+          "positive": "Sefa",
+          "distractor": "Hideko",
+          "negative": "Basim"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Fenn? Choose exactly one.",
+          "criteria": {
+            "Sefa": "a person named in the relationship list",
+            "Hideko": "a person named in the relationship list",
+            "Basim": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-013",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Sefa–Umeko, Rosalind–Pirro, Teodora–Sefa, Teodora–Kalinda, Oksana–Iker, Iker–Teodora, Kalinda–Ulmo, Pirro–Basim.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Teodora"
+        },
+        "target_node": "Oksana",
+        "role_of": {
+          "positive": "Teodora",
+          "distractor": "Iker",
+          "negative": "Rosalind"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Oksana? Choose exactly one.",
+          "criteria": {
+            "Rosalind": "a person named in the relationship list",
+            "Teodora": "a person named in the relationship list",
+            "Iker": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-014",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Teodora–Ivo, Delphine–Gavril, Gavril–Nadia, Nadia–Sefa, Ivo–Vasile, Ivo–Farid, Vasile–Mahsa, Teodora–Jorunn.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Nadia"
+        },
+        "target_node": "Delphine",
+        "role_of": {
+          "positive": "Nadia",
+          "distractor": "Gavril",
+          "negative": "Teodora"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Delphine? Choose exactly one.",
+          "criteria": {
+            "Teodora": "a person named in the relationship list",
+            "Gavril": "a person named in the relationship list",
+            "Nadia": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-015",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Jorunn–Gavril, Kelso–Mahsa, Basim–Kelso, Jorunn–Ximena, Ximena–Nils, Kalinda–Adria, Adria–Umeko, Kelso–Jorunn.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Umeko"
+        },
+        "target_node": "Kalinda",
+        "role_of": {
+          "positive": "Umeko",
+          "distractor": "Adria",
+          "negative": "Basim"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Kalinda? Choose exactly one.",
+          "criteria": {
+            "Umeko": "a person named in the relationship list",
+            "Adria": "a person named in the relationship list",
+            "Basim": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-016",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Mirek–Jorunn, Yusuf–Ulmo, Ivo–Sanne, Sefa–Yusuf, Elmas–Ivo, Ivo–Elmas, Jorunn–Quenna, Quenna–Mirek.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Ulmo"
+        },
+        "target_node": "Sefa",
+        "role_of": {
+          "positive": "Ulmo",
+          "distractor": "Yusuf",
+          "negative": "Toma"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Sefa? Choose exactly one.",
+          "criteria": {
+            "Yusuf": "a person named in the relationship list",
+            "Ulmo": "a person named in the relationship list",
+            "Toma": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-017",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Dalia–Jasleen, Halia–Dalia, Luminita–Iker, Cato–Halia, Kelso–Elmas, Fenn–Cato, Iker–Kelso, Ivo–Luminita.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Iker"
+        },
+        "target_node": "Ivo",
+        "role_of": {
+          "positive": "Iker",
+          "distractor": "Luminita",
+          "negative": "Fenn"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Ivo? Choose exactly one.",
+          "criteria": {
+            "Fenn": "a person named in the relationship list",
+            "Luminita": "a person named in the relationship list",
+            "Iker": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-018",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Gunhild–Sanne, Pirro–Rurik, Mirek–Pirro, Mahsa–Quenna, Sanne–Zora, Sanne–Delphine, Zora–Gunhild, Rurik–Mahsa.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Rurik"
+        },
+        "target_node": "Mirek",
+        "role_of": {
+          "positive": "Rurik",
+          "distractor": "Pirro",
+          "negative": "Odalys"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Mirek? Choose exactly one.",
+          "criteria": {
+            "Rurik": "a person named in the relationship list",
+            "Odalys": "a person named in the relationship list",
+            "Pirro": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-019",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Pirro–Dalia, Jorunn–Nils, Dalia–Farid, Oksana–Jorunn, Zora–Alina, Farid–Levan, Farid–Zora, Alina–Oksana.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Farid"
+        },
+        "target_node": "Pirro",
+        "role_of": {
+          "positive": "Farid",
+          "distractor": "Dalia",
+          "negative": "Iker"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Pirro? Choose exactly one.",
+          "criteria": {
+            "Dalia": "a person named in the relationship list",
+            "Farid": "a person named in the relationship list",
+            "Iker": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-020",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Eino–Cemir, Nadia–Iker, Iker–Gunhild, Gunhild–Ulmo, Cemir–Nadia, Gunhild–Farid, Sefa–Odalys, Sefa–Dalia.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Nadia"
+        },
+        "target_node": "Eino",
+        "role_of": {
+          "positive": "Nadia",
+          "distractor": "Cemir",
+          "negative": "Sefa"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Eino? Choose exactly one.",
+          "criteria": {
+            "Sefa": "a person named in the relationship list",
+            "Cemir": "a person named in the relationship list",
+            "Nadia": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-021",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Ivo–Kalinda, Nadia–Umeko, Halia–Quenna, Odalys–Halia, Kalinda–Cemir, Odalys–Levan, Odalys–Nadia, Nadia–Odalys.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Cemir"
+        },
+        "target_node": "Ivo",
+        "role_of": {
+          "positive": "Cemir",
+          "distractor": "Kalinda",
+          "negative": "Adria"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Ivo? Choose exactly one.",
+          "criteria": {
+            "Cemir": "a person named in the relationship list",
+            "Kalinda": "a person named in the relationship list",
+            "Adria": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-022",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Mahsa–Kalinda, Cato–Elmas, Pavel–Kelso, Cato–Vasile, Cato–Pavel, Adria–Mahsa, Vasile–Cato, Kelso–Fenn.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Kalinda"
+        },
+        "target_node": "Adria",
+        "role_of": {
+          "positive": "Kalinda",
+          "distractor": "Mahsa",
+          "negative": "Wren"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Adria? Choose exactly one.",
+          "criteria": {
+            "Mahsa": "a person named in the relationship list",
+            "Kalinda": "a person named in the relationship list",
+            "Wren": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-023",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Ximena–Jasleen, Yusuf–Halia, Wren–Alina, Farid–Umeko, Halia–Ximena, Odalys–Wren, Alina–Odalys, Alina–Mirek.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Ximena"
+        },
+        "target_node": "Yusuf",
+        "role_of": {
+          "positive": "Ximena",
+          "distractor": "Halia",
+          "negative": "Farid"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Yusuf? Choose exactly one.",
+          "criteria": {
+            "Farid": "a person named in the relationship list",
+            "Halia": "a person named in the relationship list",
+            "Ximena": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-024",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Halia–Toma, Ivo–Gunhild, Zora–Oksana, Iker–Cato, Sefa–Rurik, Gunhild–Zora, Rurik–Halia, Toma–Ivo.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Halia"
+        },
+        "target_node": "Sefa",
+        "role_of": {
+          "positive": "Halia",
+          "distractor": "Rurik",
+          "negative": "Iker"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Sefa? Choose exactly one.",
+          "criteria": {
+            "Halia": "a person named in the relationship list",
+            "Iker": "a person named in the relationship list",
+            "Rurik": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-025",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Mirek–Qira, Adria–Mirek, Boris–Quenna, Cato–Adria, Qira–Levan, Fenn–Wren, Quenna–Farid, Levan–Fenn.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Farid"
+        },
+        "target_node": "Boris",
+        "role_of": {
+          "positive": "Farid",
+          "distractor": "Quenna",
+          "negative": "Cato"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Boris? Choose exactly one.",
+          "criteria": {
+            "Quenna": "a person named in the relationship list",
+            "Farid": "a person named in the relationship list",
+            "Cato": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-026",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Boris–Hideko, Alina–Rurik, Boris–Vasile, Boris–Teodora, Halia–Boris, Boris–Alina, Ulmo–Halia, Qira–Yusuf.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Boris"
+        },
+        "target_node": "Ulmo",
+        "role_of": {
+          "positive": "Boris",
+          "distractor": "Halia",
+          "negative": "Qira"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Ulmo? Choose exactly one.",
+          "criteria": {
+            "Halia": "a person named in the relationship list",
+            "Qira": "a person named in the relationship list",
+            "Boris": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-027",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Zora–Levan, Pavel–Alina, Oksana–Ximena, Delphine–Pavel, Ivo–Zora, Alina–Basim, Alina–Delphine, Mirek–Oksana.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Levan"
+        },
+        "target_node": "Ivo",
+        "role_of": {
+          "positive": "Levan",
+          "distractor": "Zora",
+          "negative": "Mirek"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Ivo? Choose exactly one.",
+          "criteria": {
+            "Levan": "a person named in the relationship list",
+            "Zora": "a person named in the relationship list",
+            "Mirek": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-028",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Kalinda–Eino, Eino–Ulmo, Sefa–Oksana, Zora–Kalinda, Eino–Hideko, Kalinda–Jorunn, Elmas–Zora, Kalinda–Iker.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Kalinda"
+        },
+        "target_node": "Elmas",
+        "role_of": {
+          "positive": "Kalinda",
+          "distractor": "Zora",
+          "negative": "Sefa"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Elmas? Choose exactly one.",
+          "criteria": {
+            "Sefa": "a person named in the relationship list",
+            "Kalinda": "a person named in the relationship list",
+            "Zora": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-029",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Eino–Alina, Adria–Basim, Mirek–Adria, Alina–Mirek, Mirek–Qira, Mirek–Vasile, Mirek–Sanne, Sanne–Kalinda.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Mirek"
+        },
+        "target_node": "Eino",
+        "role_of": {
+          "positive": "Mirek",
+          "distractor": "Alina",
+          "negative": "Teodora"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Eino? Choose exactly one.",
+          "criteria": {
+            "Teodora": "a person named in the relationship list",
+            "Alina": "a person named in the relationship list",
+            "Mirek": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-030",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Pirro–Farid, Adria–Kelso, Sefa–Delphine, Pirro–Eino, Quenna–Jasleen, Eino–Sefa, Pirro–Ulmo, Jasleen–Pirro.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Pirro"
+        },
+        "target_node": "Quenna",
+        "role_of": {
+          "positive": "Pirro",
+          "distractor": "Jasleen",
+          "negative": "Adria"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Quenna? Choose exactly one.",
+          "criteria": {
+            "Pirro": "a person named in the relationship list",
+            "Adria": "a person named in the relationship list",
+            "Jasleen": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-031",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Iker–Ivo, Nils–Fenn, Yusuf–Pavel, Vasile–Rurik, Teodora–Qira, Iker–Yusuf, Fenn–Iker, Iker–Vasile.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Iker"
+        },
+        "target_node": "Nils",
+        "role_of": {
+          "positive": "Iker",
+          "distractor": "Fenn",
+          "negative": "Teodora"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Nils? Choose exactly one.",
+          "criteria": {
+            "Fenn": "a person named in the relationship list",
+            "Iker": "a person named in the relationship list",
+            "Teodora": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-032",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Elmas–Odalys, Jorunn–Kalinda, Fenn–Iker, Wren–Jorunn, Kalinda–Eino, Eino–Fenn, Cato–Elmas, Eino–Rosalind.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Kalinda"
+        },
+        "target_node": "Wren",
+        "role_of": {
+          "positive": "Kalinda",
+          "distractor": "Jorunn",
+          "negative": "Cato"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Wren? Choose exactly one.",
+          "criteria": {
+            "Jorunn": "a person named in the relationship list",
+            "Cato": "a person named in the relationship list",
+            "Kalinda": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-033",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Mirek–Sefa, Mirek–Luminita, Mirek–Alina, Wren–Farid, Teodora–Qira, Teodora–Mirek, Farid–Delphine, Mirek–Vasile.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Delphine"
+        },
+        "target_node": "Wren",
+        "role_of": {
+          "positive": "Delphine",
+          "distractor": "Farid",
+          "negative": "Teodora"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Wren? Choose exactly one.",
+          "criteria": {
+            "Delphine": "a person named in the relationship list",
+            "Teodora": "a person named in the relationship list",
+            "Farid": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-034",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Halia–Ximena, Cemir–Dalia, Luminita–Cemir, Halia–Luminita, Basim–Gunhild, Ximena–Basim, Toma–Pirro, Pirro–Halia.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Halia"
+        },
+        "target_node": "Toma",
+        "role_of": {
+          "positive": "Halia",
+          "distractor": "Pirro",
+          "negative": "Sefa"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Toma? Choose exactly one.",
+          "criteria": {
+            "Sefa": "a person named in the relationship list",
+            "Halia": "a person named in the relationship list",
+            "Pirro": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-035",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Ivo–Dalia, Kalinda–Sanne, Ivo–Pavel, Pavel–Boris, Pavel–Eino, Nils–Odalys, Sanne–Vasile, Odalys–Kalinda.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Kalinda"
+        },
+        "target_node": "Nils",
+        "role_of": {
+          "positive": "Kalinda",
+          "distractor": "Odalys",
+          "negative": "Ivo"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Nils? Choose exactly one.",
+          "criteria": {
+            "Ivo": "a person named in the relationship list",
+            "Odalys": "a person named in the relationship list",
+            "Kalinda": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-036",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Umeko–Cemir, Umeko–Yusuf, Boris–Alina, Yusuf–Mahsa, Luminita–Umeko, Umeko–Luminita, Teodora–Boris, Halia–Iker.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Alina"
+        },
+        "target_node": "Teodora",
+        "role_of": {
+          "positive": "Alina",
+          "distractor": "Boris",
+          "negative": "Halia"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Teodora? Choose exactly one.",
+          "criteria": {
+            "Alina": "a person named in the relationship list",
+            "Boris": "a person named in the relationship list",
+            "Halia": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-037",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Elmas–Zora, Mahsa–Yusuf, Halia–Mahsa, Basim–Rosalind, Yusuf–Pavel, Levan–Halia, Rosalind–Levan, Zora–Basim.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Basim"
+        },
+        "target_node": "Elmas",
+        "role_of": {
+          "positive": "Basim",
+          "distractor": "Zora",
+          "negative": "Alina"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Elmas? Choose exactly one.",
+          "criteria": {
+            "Alina": "a person named in the relationship list",
+            "Basim": "a person named in the relationship list",
+            "Zora": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-038",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Oksana–Teodora, Rosalind–Oksana, Oksana–Nadia, Rurik–Dalia, Rosalind–Farid, Quenna–Iker, Dalia–Rosalind, Quenna–Eino.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Rosalind"
+        },
+        "target_node": "Rurik",
+        "role_of": {
+          "positive": "Rosalind",
+          "distractor": "Dalia",
+          "negative": "Quenna"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Rurik? Choose exactly one.",
+          "criteria": {
+            "Dalia": "a person named in the relationship list",
+            "Quenna": "a person named in the relationship list",
+            "Rosalind": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-graph-039",
+      "group": "fresh_v3_graph",
+      "cluster": "fresh_v3_graph:4242",
+      "condition": "role=fresh_v3;family=graph_two_hop;seed=4242",
+      "state": "Directory of working relationships: Zora–Gavril, Toma–Iker, Zora–Halia, Umeko–Zora, Gavril–Gunhild, Sanne–Umeko, Gavril–Levan, Iker–Toma.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": "Zora"
+        },
+        "target_node": "Sanne",
+        "role_of": {
+          "positive": "Zora",
+          "distractor": "Umeko",
+          "negative": "Rurik"
+        }
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "In the directory described, which person is exactly two working relationships away from Sanne? Choose exactly one.",
+          "criteria": {
+            "Zora": "a person named in the relationship list",
+            "Rurik": "a person named in the relationship list",
+            "Umeko": "a person named in the relationship list"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-000",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=1;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Gunhild: desk location floor 1\n- Levan: desk location floor 3\n- Jasleen: desk location floor 4\n- Mahsa: desk location floor 2",
+      "gold": {
+        "answer": {
+          "value": "opt_2"
+        },
+        "option_values": {
+          "opt_2": "floor 3",
+          "opt_0": "floor 2",
+          "opt_1": "floor 1",
+          "opt_3": "the registry does not state this"
+        },
+        "target_entity": "Levan",
+        "attribute": "desk location",
+        "answerable": true
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the desk location of Levan? Choose exactly one.",
+          "criteria": {
+            "opt_2": "floor 3",
+            "opt_0": "floor 2",
+            "opt_1": "floor 1",
+            "opt_3": "the registry does not state this"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-001",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=1;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Rurik: desk location floor 4\n- Qira: desk location floor 3\n- Alina: desk location floor 1\n- Kelso: desk location floor 2",
+      "gold": {
+        "answer": {
+          "value": "opt_1"
+        },
+        "option_values": {
+          "opt_0": "the registry does not state this",
+          "opt_1": "floor 3",
+          "opt_3": "floor 1",
+          "opt_2": "floor 4"
+        },
+        "target_entity": "Qira",
+        "attribute": "desk location",
+        "answerable": true
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the desk location of Qira? Choose exactly one.",
+          "criteria": {
+            "opt_0": "the registry does not state this",
+            "opt_1": "floor 3",
+            "opt_3": "floor 1",
+            "opt_2": "floor 4"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-002",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=1;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Gunhild: desk location floor 1\n- Mahsa: desk location floor 4\n- Pirro: desk location floor 2\n- Vasile: desk location floor 3",
+      "gold": {
+        "answer": {
+          "value": "opt_0"
+        },
+        "option_values": {
+          "opt_3": "floor 3",
+          "opt_2": "the registry does not state this",
+          "opt_0": "floor 2",
+          "opt_1": "floor 4"
+        },
+        "target_entity": "Pirro",
+        "attribute": "desk location",
+        "answerable": true
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the desk location of Pirro? Choose exactly one.",
+          "criteria": {
+            "opt_3": "floor 3",
+            "opt_2": "the registry does not state this",
+            "opt_0": "floor 2",
+            "opt_1": "floor 4"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-003",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=1;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Luminita: desk location floor 4\n- Elmas: desk location floor 3\n- Fenn: desk location floor 2\n- Sefa: desk location floor 1",
+      "gold": {
+        "answer": {
+          "value": "opt_3"
+        },
+        "option_values": {
+          "opt_1": "floor 3",
+          "opt_2": "floor 2",
+          "opt_0": "the registry does not state this",
+          "opt_3": "floor 1"
+        },
+        "target_entity": "Sefa",
+        "attribute": "desk location",
+        "answerable": true
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the desk location of Sefa? Choose exactly one.",
+          "criteria": {
+            "opt_1": "floor 3",
+            "opt_2": "floor 2",
+            "opt_0": "the registry does not state this",
+            "opt_3": "floor 1"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-004",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=1;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Vasile: desk location floor 1\n- Teodora: desk location floor 2\n- Ximena: desk location floor 4\n- Nils: desk location floor 3",
+      "gold": {
+        "answer": {
+          "value": "opt_1"
+        },
+        "option_values": {
+          "opt_1": "floor 1",
+          "opt_2": "floor 4",
+          "opt_3": "floor 3",
+          "opt_0": "the registry does not state this"
+        },
+        "target_entity": "Vasile",
+        "attribute": "desk location",
+        "answerable": true
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the desk location of Vasile? Choose exactly one.",
+          "criteria": {
+            "opt_1": "floor 1",
+            "opt_2": "floor 4",
+            "opt_3": "floor 3",
+            "opt_0": "the registry does not state this"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-005",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=1;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Odalys: start quarter Q1\n- Ivo: start quarter Q2\n- Pirro: start quarter Q4\n- Ulmo: start quarter Q3",
+      "gold": {
+        "answer": {
+          "value": "opt_2"
+        },
+        "option_values": {
+          "opt_3": "the registry does not state this",
+          "opt_2": "Q4",
+          "opt_0": "Q2",
+          "opt_1": "Q3"
+        },
+        "target_entity": "Pirro",
+        "attribute": "start quarter",
+        "answerable": true
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the start quarter of Pirro? Choose exactly one.",
+          "criteria": {
+            "opt_3": "the registry does not state this",
+            "opt_2": "Q4",
+            "opt_0": "Q2",
+            "opt_1": "Q3"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-006",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=1;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Basim: equipment model Gammaview 2\n- Gavril: equipment model Alphaview 7\n- Eino: equipment model Deltaview 5\n- Jasleen: equipment model Betaview 9",
+      "gold": {
+        "answer": {
+          "value": "opt_1"
+        },
+        "option_values": {
+          "opt_3": "Betaview 9",
+          "opt_2": "the registry does not state this",
+          "opt_1": "Alphaview 7",
+          "opt_0": "Gammaview 2"
+        },
+        "target_entity": "Gavril",
+        "attribute": "equipment model",
+        "answerable": true
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the equipment model of Gavril? Choose exactly one.",
+          "criteria": {
+            "opt_3": "Betaview 9",
+            "opt_2": "the registry does not state this",
+            "opt_1": "Alphaview 7",
+            "opt_0": "Gammaview 2"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-007",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=1;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Iker: equipment model Deltaview 5\n- Quenna: equipment model Betaview 9\n- Teodora: equipment model Gammaview 2\n- Boris: equipment model Alphaview 7",
+      "gold": {
+        "answer": {
+          "value": "opt_1"
+        },
+        "option_values": {
+          "opt_0": "Alphaview 7",
+          "opt_2": "Gammaview 2",
+          "opt_3": "the registry does not state this",
+          "opt_1": "Betaview 9"
+        },
+        "target_entity": "Quenna",
+        "attribute": "equipment model",
+        "answerable": true
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the equipment model of Quenna? Choose exactly one.",
+          "criteria": {
+            "opt_0": "Alphaview 7",
+            "opt_2": "Gammaview 2",
+            "opt_3": "the registry does not state this",
+            "opt_1": "Betaview 9"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-008",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=1;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Ximena: desk location floor 1\n- Rurik: desk location floor 4\n- Rosalind: desk location floor 3\n- Alina: desk location floor 2",
+      "gold": {
+        "answer": {
+          "value": "opt_2"
+        },
+        "option_values": {
+          "opt_2": "floor 4",
+          "opt_0": "floor 3",
+          "opt_3": "floor 1",
+          "opt_1": "the registry does not state this"
+        },
+        "target_entity": "Rurik",
+        "attribute": "desk location",
+        "answerable": true
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the desk location of Rurik? Choose exactly one.",
+          "criteria": {
+            "opt_2": "floor 4",
+            "opt_0": "floor 3",
+            "opt_3": "floor 1",
+            "opt_1": "the registry does not state this"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-009",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=1;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Levan: desk location floor 2\n- Nils: desk location floor 1\n- Ximena: desk location floor 4\n- Delphine: desk location floor 3",
+      "gold": {
+        "answer": {
+          "value": "opt_2"
+        },
+        "option_values": {
+          "opt_3": "the registry does not state this",
+          "opt_2": "floor 4",
+          "opt_0": "floor 2",
+          "opt_1": "floor 3"
+        },
+        "target_entity": "Ximena",
+        "attribute": "desk location",
+        "answerable": true
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the desk location of Ximena? Choose exactly one.",
+          "criteria": {
+            "opt_3": "the registry does not state this",
+            "opt_2": "floor 4",
+            "opt_0": "floor 2",
+            "opt_1": "floor 3"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-010",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=1;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Zora: start quarter Q1\n- Adria: start quarter Q4\n- Vasile: start quarter Q2\n- Gavril: start quarter Q3",
+      "gold": {
+        "answer": {
+          "value": "opt_2"
+        },
+        "option_values": {
+          "opt_0": "Q4",
+          "opt_3": "the registry does not state this",
+          "opt_2": "Q3",
+          "opt_1": "Q2"
+        },
+        "target_entity": "Gavril",
+        "attribute": "start quarter",
+        "answerable": true
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the start quarter of Gavril? Choose exactly one.",
+          "criteria": {
+            "opt_0": "Q4",
+            "opt_3": "the registry does not state this",
+            "opt_2": "Q3",
+            "opt_1": "Q2"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-011",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=1;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Nadia: start quarter Q4\n- Ulmo: start quarter Q1\n- Eino: start quarter Q2\n- Ximena: start quarter Q3",
+      "gold": {
+        "answer": {
+          "value": "opt_3"
+        },
+        "option_values": {
+          "opt_2": "Q2",
+          "opt_1": "Q4",
+          "opt_0": "the registry does not state this",
+          "opt_3": "Q1"
+        },
+        "target_entity": "Ulmo",
+        "attribute": "start quarter",
+        "answerable": true
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the start quarter of Ulmo? Choose exactly one.",
+          "criteria": {
+            "opt_2": "Q2",
+            "opt_1": "Q4",
+            "opt_0": "the registry does not state this",
+            "opt_3": "Q1"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-012",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=1;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Nadia: equipment model Alphaview 7\n- Wren: equipment model Gammaview 2\n- Nils: equipment model Betaview 9\n- Sanne: equipment model Deltaview 5",
+      "gold": {
+        "answer": {
+          "value": "opt_1"
+        },
+        "option_values": {
+          "opt_1": "Alphaview 7",
+          "opt_3": "Betaview 9",
+          "opt_2": "Deltaview 5",
+          "opt_0": "the registry does not state this"
+        },
+        "target_entity": "Nadia",
+        "attribute": "equipment model",
+        "answerable": true
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the equipment model of Nadia? Choose exactly one.",
+          "criteria": {
+            "opt_1": "Alphaview 7",
+            "opt_3": "Betaview 9",
+            "opt_2": "Deltaview 5",
+            "opt_0": "the registry does not state this"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-013",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=1;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Ulmo: equipment model Deltaview 5\n- Teodora: equipment model Gammaview 2\n- Eino: equipment model Betaview 9\n- Sefa: equipment model Alphaview 7",
+      "gold": {
+        "answer": {
+          "value": "opt_1"
+        },
+        "option_values": {
+          "opt_3": "the registry does not state this",
+          "opt_1": "Gammaview 2",
+          "opt_0": "Alphaview 7",
+          "opt_2": "Betaview 9"
+        },
+        "target_entity": "Teodora",
+        "attribute": "equipment model",
+        "answerable": true
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the equipment model of Teodora? Choose exactly one.",
+          "criteria": {
+            "opt_3": "the registry does not state this",
+            "opt_1": "Gammaview 2",
+            "opt_0": "Alphaview 7",
+            "opt_2": "Betaview 9"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-014",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=1;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Zora: equipment model Alphaview 7\n- Umeko: equipment model Betaview 9\n- Elmas: equipment model Deltaview 5\n- Pavel: equipment model Gammaview 2",
+      "gold": {
+        "answer": {
+          "value": "opt_1"
+        },
+        "option_values": {
+          "opt_2": "Gammaview 2",
+          "opt_3": "the registry does not state this",
+          "opt_1": "Alphaview 7",
+          "opt_0": "Deltaview 5"
+        },
+        "target_entity": "Zora",
+        "attribute": "equipment model",
+        "answerable": true
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the equipment model of Zora? Choose exactly one.",
+          "criteria": {
+            "opt_2": "Gammaview 2",
+            "opt_3": "the registry does not state this",
+            "opt_1": "Alphaview 7",
+            "opt_0": "Deltaview 5"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-015",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=1;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Mahsa: desk location floor 3\n- Pirro: desk location floor 2\n- Ximena: desk location floor 1\n- Basim: desk location floor 4",
+      "gold": {
+        "answer": {
+          "value": "opt_2"
+        },
+        "option_values": {
+          "opt_0": "floor 3",
+          "opt_1": "floor 1",
+          "opt_3": "the registry does not state this",
+          "opt_2": "floor 2"
+        },
+        "target_entity": "Pirro",
+        "attribute": "desk location",
+        "answerable": true
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the desk location of Pirro? Choose exactly one.",
+          "criteria": {
+            "opt_0": "floor 3",
+            "opt_1": "floor 1",
+            "opt_3": "the registry does not state this",
+            "opt_2": "floor 2"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-016",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=1;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Odalys: desk location floor 2\n- Sefa: desk location floor 4\n- Pirro: desk location floor 3\n- Cato: desk location floor 1",
+      "gold": {
+        "answer": {
+          "value": "opt_0"
+        },
+        "option_values": {
+          "opt_0": "floor 1",
+          "opt_2": "floor 4",
+          "opt_1": "floor 2",
+          "opt_3": "the registry does not state this"
+        },
+        "target_entity": "Cato",
+        "attribute": "desk location",
+        "answerable": true
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the desk location of Cato? Choose exactly one.",
+          "criteria": {
+            "opt_0": "floor 1",
+            "opt_2": "floor 4",
+            "opt_1": "floor 2",
+            "opt_3": "the registry does not state this"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-017",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=1;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Ximena: desk location floor 2\n- Yusuf: desk location floor 1\n- Nils: desk location floor 4\n- Mahsa: desk location floor 3",
+      "gold": {
+        "answer": {
+          "value": "opt_2"
+        },
+        "option_values": {
+          "opt_1": "the registry does not state this",
+          "opt_2": "floor 4",
+          "opt_3": "floor 1",
+          "opt_0": "floor 2"
+        },
+        "target_entity": "Nils",
+        "attribute": "desk location",
+        "answerable": true
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the desk location of Nils? Choose exactly one.",
+          "criteria": {
+            "opt_1": "the registry does not state this",
+            "opt_2": "floor 4",
+            "opt_3": "floor 1",
+            "opt_0": "floor 2"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-018",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=1;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Yusuf: start quarter Q1\n- Vasile: start quarter Q2\n- Qira: start quarter Q4\n- Odalys: start quarter Q3",
+      "gold": {
+        "answer": {
+          "value": "opt_2"
+        },
+        "option_values": {
+          "opt_1": "Q1",
+          "opt_3": "the registry does not state this",
+          "opt_2": "Q4",
+          "opt_0": "Q2"
+        },
+        "target_entity": "Qira",
+        "attribute": "start quarter",
+        "answerable": true
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the start quarter of Qira? Choose exactly one.",
+          "criteria": {
+            "opt_1": "Q1",
+            "opt_3": "the registry does not state this",
+            "opt_2": "Q4",
+            "opt_0": "Q2"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-019",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=1;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Gavril: start quarter Q1\n- Hideko: start quarter Q2\n- Kalinda: start quarter Q3\n- Ulmo: start quarter Q4",
+      "gold": {
+        "answer": {
+          "value": "opt_3"
+        },
+        "option_values": {
+          "opt_1": "Q3",
+          "opt_2": "Q1",
+          "opt_0": "the registry does not state this",
+          "opt_3": "Q4"
+        },
+        "target_entity": "Ulmo",
+        "attribute": "start quarter",
+        "answerable": true
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the start quarter of Ulmo? Choose exactly one.",
+          "criteria": {
+            "opt_1": "Q3",
+            "opt_2": "Q1",
+            "opt_0": "the registry does not state this",
+            "opt_3": "Q4"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-020",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=0;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Dalia: on leave this quarter\n- Mahsa: start quarter Q2\n- Teodora: start quarter Q4\n- Nils: start quarter Q3",
+      "gold": {
+        "answer": {
+          "value": "opt_0"
+        },
+        "option_values": {
+          "opt_0": "the registry does not state this",
+          "opt_2": "Q1",
+          "opt_3": "Q2",
+          "opt_1": "Q3"
+        },
+        "target_entity": "Dalia",
+        "attribute": "start quarter",
+        "answerable": false
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the start quarter of Dalia? Choose exactly one.",
+          "criteria": {
+            "opt_0": "the registry does not state this",
+            "opt_2": "Q1",
+            "opt_3": "Q2",
+            "opt_1": "Q3"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-021",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=0;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Levan: equipment model Deltaview 5\n- Kelso: on leave this quarter\n- Farid: equipment model Gammaview 2\n- Iker: equipment model Betaview 9",
+      "gold": {
+        "answer": {
+          "value": "opt_2"
+        },
+        "option_values": {
+          "opt_1": "Deltaview 5",
+          "opt_2": "the registry does not state this",
+          "opt_0": "Alphaview 7",
+          "opt_3": "Betaview 9"
+        },
+        "target_entity": "Kelso",
+        "attribute": "equipment model",
+        "answerable": false
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the equipment model of Kelso? Choose exactly one.",
+          "criteria": {
+            "opt_1": "Deltaview 5",
+            "opt_2": "the registry does not state this",
+            "opt_0": "Alphaview 7",
+            "opt_3": "Betaview 9"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-022",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=0;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Mirek: on leave this quarter\n- Teodora: start quarter Q2\n- Ulmo: start quarter Q3\n- Kelso: start quarter Q4",
+      "gold": {
+        "answer": {
+          "value": "opt_1"
+        },
+        "option_values": {
+          "opt_2": "Q4",
+          "opt_0": "Q3",
+          "opt_1": "the registry does not state this",
+          "opt_3": "Q1"
+        },
+        "target_entity": "Mirek",
+        "attribute": "start quarter",
+        "answerable": false
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the start quarter of Mirek? Choose exactly one.",
+          "criteria": {
+            "opt_2": "Q4",
+            "opt_0": "Q3",
+            "opt_1": "the registry does not state this",
+            "opt_3": "Q1"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-023",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=0;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Jorunn: on leave this quarter\n- Mahsa: start quarter Q4\n- Odalys: start quarter Q3\n- Rurik: start quarter Q1",
+      "gold": {
+        "answer": {
+          "value": "opt_1"
+        },
+        "option_values": {
+          "opt_2": "Q2",
+          "opt_3": "Q3",
+          "opt_0": "Q1",
+          "opt_1": "the registry does not state this"
+        },
+        "target_entity": "Jorunn",
+        "attribute": "start quarter",
+        "answerable": false
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the start quarter of Jorunn? Choose exactly one.",
+          "criteria": {
+            "opt_2": "Q2",
+            "opt_3": "Q3",
+            "opt_0": "Q1",
+            "opt_1": "the registry does not state this"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-024",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=0;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Pirro: equipment model Gammaview 2\n- Halia: equipment model Betaview 9\n- Ximena: equipment model Alphaview 7\n- Zora: on leave this quarter",
+      "gold": {
+        "answer": {
+          "value": "opt_1"
+        },
+        "option_values": {
+          "opt_1": "the registry does not state this",
+          "opt_2": "Deltaview 5",
+          "opt_0": "Alphaview 7",
+          "opt_3": "Gammaview 2"
+        },
+        "target_entity": "Zora",
+        "attribute": "equipment model",
+        "answerable": false
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the equipment model of Zora? Choose exactly one.",
+          "criteria": {
+            "opt_1": "the registry does not state this",
+            "opt_2": "Deltaview 5",
+            "opt_0": "Alphaview 7",
+            "opt_3": "Gammaview 2"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-025",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=0;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Quenna: on leave this quarter\n- Rosalind: equipment model Gammaview 2\n- Delphine: equipment model Deltaview 5\n- Hideko: equipment model Betaview 9",
+      "gold": {
+        "answer": {
+          "value": "opt_2"
+        },
+        "option_values": {
+          "opt_1": "Gammaview 2",
+          "opt_2": "the registry does not state this",
+          "opt_0": "Alphaview 7",
+          "opt_3": "Deltaview 5"
+        },
+        "target_entity": "Quenna",
+        "attribute": "equipment model",
+        "answerable": false
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the equipment model of Quenna? Choose exactly one.",
+          "criteria": {
+            "opt_1": "Gammaview 2",
+            "opt_2": "the registry does not state this",
+            "opt_0": "Alphaview 7",
+            "opt_3": "Deltaview 5"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-026",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=0;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Jasleen: on leave this quarter\n- Rosalind: start quarter Q3\n- Delphine: start quarter Q2\n- Vasile: start quarter Q4",
+      "gold": {
+        "answer": {
+          "value": "opt_1"
+        },
+        "option_values": {
+          "opt_2": "Q4",
+          "opt_0": "Q2",
+          "opt_1": "the registry does not state this",
+          "opt_3": "Q1"
+        },
+        "target_entity": "Jasleen",
+        "attribute": "start quarter",
+        "answerable": false
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the start quarter of Jasleen? Choose exactly one.",
+          "criteria": {
+            "opt_2": "Q4",
+            "opt_0": "Q2",
+            "opt_1": "the registry does not state this",
+            "opt_3": "Q1"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-027",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=0;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Pirro: equipment model Betaview 9\n- Luminita: equipment model Deltaview 5\n- Elmas: equipment model Alphaview 7\n- Yusuf: on leave this quarter",
+      "gold": {
+        "answer": {
+          "value": "opt_1"
+        },
+        "option_values": {
+          "opt_2": "Gammaview 2",
+          "opt_0": "Deltaview 5",
+          "opt_3": "Betaview 9",
+          "opt_1": "the registry does not state this"
+        },
+        "target_entity": "Yusuf",
+        "attribute": "equipment model",
+        "answerable": false
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the equipment model of Yusuf? Choose exactly one.",
+          "criteria": {
+            "opt_2": "Gammaview 2",
+            "opt_0": "Deltaview 5",
+            "opt_3": "Betaview 9",
+            "opt_1": "the registry does not state this"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-028",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=0;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Wren: equipment model Gammaview 2\n- Farid: equipment model Alphaview 7\n- Pavel: on leave this quarter\n- Quenna: equipment model Deltaview 5",
+      "gold": {
+        "answer": {
+          "value": "opt_2"
+        },
+        "option_values": {
+          "opt_2": "the registry does not state this",
+          "opt_3": "Betaview 9",
+          "opt_1": "Alphaview 7",
+          "opt_0": "Deltaview 5"
+        },
+        "target_entity": "Pavel",
+        "attribute": "equipment model",
+        "answerable": false
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the equipment model of Pavel? Choose exactly one.",
+          "criteria": {
+            "opt_2": "the registry does not state this",
+            "opt_3": "Betaview 9",
+            "opt_1": "Alphaview 7",
+            "opt_0": "Deltaview 5"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-029",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=0;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Delphine: on leave this quarter\n- Pirro: start quarter Q2\n- Cato: start quarter Q1\n- Mahsa: start quarter Q3",
+      "gold": {
+        "answer": {
+          "value": "opt_3"
+        },
+        "option_values": {
+          "opt_0": "Q2",
+          "opt_3": "the registry does not state this",
+          "opt_2": "Q4",
+          "opt_1": "Q1"
+        },
+        "target_entity": "Delphine",
+        "attribute": "start quarter",
+        "answerable": false
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the start quarter of Delphine? Choose exactly one.",
+          "criteria": {
+            "opt_0": "Q2",
+            "opt_3": "the registry does not state this",
+            "opt_2": "Q4",
+            "opt_1": "Q1"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-030",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=0;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Cemir: start quarter Q4\n- Toma: start quarter Q3\n- Kelso: start quarter Q1\n- Luminita: on leave this quarter",
+      "gold": {
+        "answer": {
+          "value": "opt_2"
+        },
+        "option_values": {
+          "opt_3": "Q4",
+          "opt_0": "Q3",
+          "opt_2": "the registry does not state this",
+          "opt_1": "Q2"
+        },
+        "target_entity": "Luminita",
+        "attribute": "start quarter",
+        "answerable": false
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the start quarter of Luminita? Choose exactly one.",
+          "criteria": {
+            "opt_3": "Q4",
+            "opt_0": "Q3",
+            "opt_2": "the registry does not state this",
+            "opt_1": "Q2"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-031",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=0;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Farid: start quarter Q4\n- Yusuf: on leave this quarter\n- Umeko: start quarter Q2\n- Iker: start quarter Q1",
+      "gold": {
+        "answer": {
+          "value": "opt_0"
+        },
+        "option_values": {
+          "opt_1": "Q3",
+          "opt_2": "Q1",
+          "opt_3": "Q2",
+          "opt_0": "the registry does not state this"
+        },
+        "target_entity": "Yusuf",
+        "attribute": "start quarter",
+        "answerable": false
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the start quarter of Yusuf? Choose exactly one.",
+          "criteria": {
+            "opt_1": "Q3",
+            "opt_2": "Q1",
+            "opt_3": "Q2",
+            "opt_0": "the registry does not state this"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-032",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=0;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Delphine: start quarter Q3\n- Vasile: start quarter Q1\n- Kalinda: start quarter Q4\n- Luminita: on leave this quarter",
+      "gold": {
+        "answer": {
+          "value": "opt_1"
+        },
+        "option_values": {
+          "opt_1": "the registry does not state this",
+          "opt_3": "Q2",
+          "opt_0": "Q4",
+          "opt_2": "Q1"
+        },
+        "target_entity": "Luminita",
+        "attribute": "start quarter",
+        "answerable": false
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the start quarter of Luminita? Choose exactly one.",
+          "criteria": {
+            "opt_1": "the registry does not state this",
+            "opt_3": "Q2",
+            "opt_0": "Q4",
+            "opt_2": "Q1"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-033",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=0;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Jasleen: desk location floor 4\n- Rosalind: desk location floor 3\n- Kalinda: desk location floor 1\n- Adria: on leave this quarter",
+      "gold": {
+        "answer": {
+          "value": "opt_0"
+        },
+        "option_values": {
+          "opt_2": "floor 3",
+          "opt_0": "the registry does not state this",
+          "opt_3": "floor 2",
+          "opt_1": "floor 1"
+        },
+        "target_entity": "Adria",
+        "attribute": "desk location",
+        "answerable": false
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the desk location of Adria? Choose exactly one.",
+          "criteria": {
+            "opt_2": "floor 3",
+            "opt_0": "the registry does not state this",
+            "opt_3": "floor 2",
+            "opt_1": "floor 1"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-034",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=0;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Kalinda: start quarter Q2\n- Jasleen: start quarter Q1\n- Quenna: start quarter Q4\n- Umeko: on leave this quarter",
+      "gold": {
+        "answer": {
+          "value": "opt_2"
+        },
+        "option_values": {
+          "opt_1": "Q2",
+          "opt_0": "Q4",
+          "opt_2": "the registry does not state this",
+          "opt_3": "Q3"
+        },
+        "target_entity": "Umeko",
+        "attribute": "start quarter",
+        "answerable": false
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the start quarter of Umeko? Choose exactly one.",
+          "criteria": {
+            "opt_1": "Q2",
+            "opt_0": "Q4",
+            "opt_2": "the registry does not state this",
+            "opt_3": "Q3"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-035",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=0;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Nadia: desk location floor 4\n- Luminita: desk location floor 2\n- Fenn: desk location floor 3\n- Umeko: on leave this quarter",
+      "gold": {
+        "answer": {
+          "value": "opt_1"
+        },
+        "option_values": {
+          "opt_0": "floor 1",
+          "opt_2": "floor 4",
+          "opt_3": "floor 3",
+          "opt_1": "the registry does not state this"
+        },
+        "target_entity": "Umeko",
+        "attribute": "desk location",
+        "answerable": false
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the desk location of Umeko? Choose exactly one.",
+          "criteria": {
+            "opt_0": "floor 1",
+            "opt_2": "floor 4",
+            "opt_3": "floor 3",
+            "opt_1": "the registry does not state this"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-036",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=0;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Qira: start quarter Q2\n- Alina: start quarter Q4\n- Halia: on leave this quarter\n- Luminita: start quarter Q1",
+      "gold": {
+        "answer": {
+          "value": "opt_1"
+        },
+        "option_values": {
+          "opt_1": "the registry does not state this",
+          "opt_0": "Q3",
+          "opt_2": "Q1",
+          "opt_3": "Q4"
+        },
+        "target_entity": "Halia",
+        "attribute": "start quarter",
+        "answerable": false
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the start quarter of Halia? Choose exactly one.",
+          "criteria": {
+            "opt_1": "the registry does not state this",
+            "opt_0": "Q3",
+            "opt_2": "Q1",
+            "opt_3": "Q4"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-037",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=0;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Nils: desk location floor 2\n- Toma: desk location floor 1\n- Farid: on leave this quarter\n- Jorunn: desk location floor 3",
+      "gold": {
+        "answer": {
+          "value": "opt_1"
+        },
+        "option_values": {
+          "opt_0": "floor 3",
+          "opt_1": "the registry does not state this",
+          "opt_2": "floor 4",
+          "opt_3": "floor 2"
+        },
+        "target_entity": "Farid",
+        "attribute": "desk location",
+        "answerable": false
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the desk location of Farid? Choose exactly one.",
+          "criteria": {
+            "opt_0": "floor 3",
+            "opt_1": "the registry does not state this",
+            "opt_2": "floor 4",
+            "opt_3": "floor 2"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-038",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=0;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Adria: equipment model Deltaview 5\n- Umeko: equipment model Gammaview 2\n- Jorunn: on leave this quarter\n- Hideko: equipment model Alphaview 7",
+      "gold": {
+        "answer": {
+          "value": "opt_3"
+        },
+        "option_values": {
+          "opt_0": "Gammaview 2",
+          "opt_1": "Alphaview 7",
+          "opt_3": "the registry does not state this",
+          "opt_2": "Betaview 9"
+        },
+        "target_entity": "Jorunn",
+        "attribute": "equipment model",
+        "answerable": false
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the equipment model of Jorunn? Choose exactly one.",
+          "criteria": {
+            "opt_0": "Gammaview 2",
+            "opt_1": "Alphaview 7",
+            "opt_3": "the registry does not state this",
+            "opt_2": "Betaview 9"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-missing-039",
+      "group": "fresh_v3_missing_info",
+      "cluster": "fresh_v3_missing:4242",
+      "condition": "role=fresh_v3;family=missing_info;answerable=0;seed=4242",
+      "leakage_check": false,
+      "state": "Office registry:\n- Nils: on leave this quarter\n- Ximena: equipment model Gammaview 2\n- Umeko: equipment model Betaview 9\n- Hideko: equipment model Deltaview 5",
+      "gold": {
+        "answer": {
+          "value": "opt_2"
+        },
+        "option_values": {
+          "opt_0": "Alphaview 7",
+          "opt_1": "Betaview 9",
+          "opt_3": "Gammaview 2",
+          "opt_2": "the registry does not state this"
+        },
+        "target_entity": "Nils",
+        "attribute": "equipment model",
+        "answerable": false
+      },
+      "questions": {
+        "answer": {
+          "type": "choice",
+          "instructions": "According only to the registry, what is the equipment model of Nils? Choose exactly one.",
+          "criteria": {
+            "opt_0": "Alphaview 7",
+            "opt_1": "Betaview 9",
+            "opt_3": "Gammaview 2",
+            "opt_2": "the registry does not state this"
+          }
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-000",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=26;gap=10;seed=4242",
+      "state": "Planning calendar rules: every month in this calendar has exactly 30 days, numbered 1 to 30. The review meeting takes place on day 26 of Month 1. The follow-up audit is scheduled exactly 10 days after the review meeting.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": false
+        },
+        "start_day": 26,
+        "gap_days": 10,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-001",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=26;gap=5;seed=4242",
+      "state": "Planning calendar rules: every month in this calendar has exactly 30 days, numbered 1 to 30. The review meeting takes place on day 26 of Month 1. The follow-up audit follows the review meeting by exactly 5 days.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": false
+        },
+        "start_day": 26,
+        "gap_days": 5,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-002",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=24;gap=10;seed=4242",
+      "state": "Calendar convention: each month lasts exactly 30 days (day 1 through day 30); the next day after day 30 is day 1 of the following month. The review meeting takes place on day 24 of Month 1. Exactly 10 days after the review meeting, the follow-up audit happens.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": false
+        },
+        "start_day": 24,
+        "gap_days": 10,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-003",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=7;gap=5;seed=4242",
+      "state": "Calendar convention: each month lasts exactly 30 days (day 1 through day 30); the next day after day 30 is day 1 of the following month. A review meeting is scheduled for day 7 of Month 1. Exactly 5 days after the review meeting, the follow-up audit happens.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": true
+        },
+        "start_day": 7,
+        "gap_days": 5,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-004",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=20;gap=10;seed=4242",
+      "state": "This planner uses uniform months of 30 days; there are no shorter or longer months. A review meeting is scheduled for day 20 of Month 1. Exactly 10 days after the review meeting, the follow-up audit happens.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": true
+        },
+        "start_day": 20,
+        "gap_days": 10,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-005",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=2;gap=29;seed=4242",
+      "state": "This planner uses uniform months of 30 days; there are no shorter or longer months. The review meeting takes place on day 2 of Month 1. Exactly 29 days after the review meeting, the follow-up audit happens.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": false
+        },
+        "start_day": 2,
+        "gap_days": 29,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-006",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=4;gap=45;seed=4242",
+      "state": "Calendar convention: each month lasts exactly 30 days (day 1 through day 30); the next day after day 30 is day 1 of the following month. A review meeting is scheduled for day 4 of Month 1. The follow-up audit is scheduled exactly 45 days after the review meeting.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": false
+        },
+        "start_day": 4,
+        "gap_days": 45,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-007",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=13;gap=31;seed=4242",
+      "state": "This planner uses uniform months of 30 days; there are no shorter or longer months. Month 1, day 13: review meeting. The follow-up audit is scheduled exactly 31 days after the review meeting.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": false
+        },
+        "start_day": 13,
+        "gap_days": 31,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-008",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=8;gap=30;seed=4242",
+      "state": "Planning calendar rules: every month in this calendar has exactly 30 days, numbered 1 to 30. A review meeting is scheduled for day 8 of Month 1. Exactly 30 days after the review meeting, the follow-up audit happens.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": false
+        },
+        "start_day": 8,
+        "gap_days": 30,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-009",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=16;gap=31;seed=4242",
+      "state": "Calendar convention: each month lasts exactly 30 days (day 1 through day 30); the next day after day 30 is day 1 of the following month. Month 1, day 16: review meeting. Exactly 31 days after the review meeting, the follow-up audit happens.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": false
+        },
+        "start_day": 16,
+        "gap_days": 31,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-010",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=9;gap=31;seed=4242",
+      "state": "This planner uses uniform months of 30 days; there are no shorter or longer months. Month 1, day 9: review meeting. The follow-up audit follows the review meeting by exactly 31 days.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": false
+        },
+        "start_day": 9,
+        "gap_days": 31,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-011",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=25;gap=31;seed=4242",
+      "state": "This planner uses uniform months of 30 days; there are no shorter or longer months. Month 1, day 25: review meeting. The follow-up audit is scheduled exactly 31 days after the review meeting.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": false
+        },
+        "start_day": 25,
+        "gap_days": 31,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-012",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=15;gap=30;seed=4242",
+      "state": "This planner uses uniform months of 30 days; there are no shorter or longer months. Month 1, day 15: review meeting. The follow-up audit follows the review meeting by exactly 30 days.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": false
+        },
+        "start_day": 15,
+        "gap_days": 30,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-013",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=3;gap=29;seed=4242",
+      "state": "Calendar convention: each month lasts exactly 30 days (day 1 through day 30); the next day after day 30 is day 1 of the following month. A review meeting is scheduled for day 3 of Month 1. Exactly 29 days after the review meeting, the follow-up audit happens.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": false
+        },
+        "start_day": 3,
+        "gap_days": 29,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-014",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=11;gap=5;seed=4242",
+      "state": "Calendar convention: each month lasts exactly 30 days (day 1 through day 30); the next day after day 30 is day 1 of the following month. The review meeting takes place on day 11 of Month 1. The follow-up audit is scheduled exactly 5 days after the review meeting.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": true
+        },
+        "start_day": 11,
+        "gap_days": 5,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-015",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=2;gap=20;seed=4242",
+      "state": "This planner uses uniform months of 30 days; there are no shorter or longer months. Month 1, day 2: review meeting. The follow-up audit is scheduled exactly 20 days after the review meeting.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": true
+        },
+        "start_day": 2,
+        "gap_days": 20,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-016",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=5;gap=5;seed=4242",
+      "state": "Planning calendar rules: every month in this calendar has exactly 30 days, numbered 1 to 30. The review meeting takes place on day 5 of Month 1. Exactly 5 days after the review meeting, the follow-up audit happens.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": true
+        },
+        "start_day": 5,
+        "gap_days": 5,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-017",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=24;gap=31;seed=4242",
+      "state": "This planner uses uniform months of 30 days; there are no shorter or longer months. Month 1, day 24: review meeting. Exactly 31 days after the review meeting, the follow-up audit happens.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": false
+        },
+        "start_day": 24,
+        "gap_days": 31,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-018",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=18;gap=45;seed=4242",
+      "state": "This planner uses uniform months of 30 days; there are no shorter or longer months. The review meeting takes place on day 18 of Month 1. The follow-up audit is scheduled exactly 45 days after the review meeting.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": false
+        },
+        "start_day": 18,
+        "gap_days": 45,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-019",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=18;gap=10;seed=4242",
+      "state": "Planning calendar rules: every month in this calendar has exactly 30 days, numbered 1 to 30. Month 1, day 18: review meeting. Exactly 10 days after the review meeting, the follow-up audit happens.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": true
+        },
+        "start_day": 18,
+        "gap_days": 10,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-020",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=8;gap=10;seed=4242",
+      "state": "This planner uses uniform months of 30 days; there are no shorter or longer months. Month 1, day 8: review meeting. The follow-up audit is scheduled exactly 10 days after the review meeting.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": true
+        },
+        "start_day": 8,
+        "gap_days": 10,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-021",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=13;gap=5;seed=4242",
+      "state": "Calendar convention: each month lasts exactly 30 days (day 1 through day 30); the next day after day 30 is day 1 of the following month. The review meeting takes place on day 13 of Month 1. The follow-up audit follows the review meeting by exactly 5 days.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": true
+        },
+        "start_day": 13,
+        "gap_days": 5,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-022",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=19;gap=5;seed=4242",
+      "state": "Planning calendar rules: every month in this calendar has exactly 30 days, numbered 1 to 30. Month 1, day 19: review meeting. The follow-up audit follows the review meeting by exactly 5 days.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": true
+        },
+        "start_day": 19,
+        "gap_days": 5,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-023",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=28;gap=5;seed=4242",
+      "state": "This planner uses uniform months of 30 days; there are no shorter or longer months. The review meeting takes place on day 28 of Month 1. The follow-up audit follows the review meeting by exactly 5 days.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": false
+        },
+        "start_day": 28,
+        "gap_days": 5,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-024",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=29;gap=5;seed=4242",
+      "state": "Calendar convention: each month lasts exactly 30 days (day 1 through day 30); the next day after day 30 is day 1 of the following month. The review meeting takes place on day 29 of Month 1. The follow-up audit follows the review meeting by exactly 5 days.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": false
+        },
+        "start_day": 29,
+        "gap_days": 5,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-025",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=3;gap=10;seed=4242",
+      "state": "Planning calendar rules: every month in this calendar has exactly 30 days, numbered 1 to 30. Month 1, day 3: review meeting. The follow-up audit follows the review meeting by exactly 10 days.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": true
+        },
+        "start_day": 3,
+        "gap_days": 10,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-026",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=7;gap=20;seed=4242",
+      "state": "Planning calendar rules: every month in this calendar has exactly 30 days, numbered 1 to 30. A review meeting is scheduled for day 7 of Month 1. The follow-up audit is scheduled exactly 20 days after the review meeting.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": true
+        },
+        "start_day": 7,
+        "gap_days": 20,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-027",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=10;gap=45;seed=4242",
+      "state": "Planning calendar rules: every month in this calendar has exactly 30 days, numbered 1 to 30. The review meeting takes place on day 10 of Month 1. Exactly 45 days after the review meeting, the follow-up audit happens.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": false
+        },
+        "start_day": 10,
+        "gap_days": 45,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-028",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=17;gap=30;seed=4242",
+      "state": "Calendar convention: each month lasts exactly 30 days (day 1 through day 30); the next day after day 30 is day 1 of the following month. A review meeting is scheduled for day 17 of Month 1. Exactly 30 days after the review meeting, the follow-up audit happens.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": false
+        },
+        "start_day": 17,
+        "gap_days": 30,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-029",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=5;gap=30;seed=4242",
+      "state": "This planner uses uniform months of 30 days; there are no shorter or longer months. Month 1, day 5: review meeting. The follow-up audit is scheduled exactly 30 days after the review meeting.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": false
+        },
+        "start_day": 5,
+        "gap_days": 30,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-030",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=16;gap=10;seed=4242",
+      "state": "This planner uses uniform months of 30 days; there are no shorter or longer months. The review meeting takes place on day 16 of Month 1. The follow-up audit is scheduled exactly 10 days after the review meeting.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": true
+        },
+        "start_day": 16,
+        "gap_days": 10,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-031",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=19;gap=50;seed=4242",
+      "state": "Calendar convention: each month lasts exactly 30 days (day 1 through day 30); the next day after day 30 is day 1 of the following month. Month 1, day 19: review meeting. Exactly 50 days after the review meeting, the follow-up audit happens.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": false
+        },
+        "start_day": 19,
+        "gap_days": 50,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-032",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=16;gap=5;seed=4242",
+      "state": "This planner uses uniform months of 30 days; there are no shorter or longer months. A review meeting is scheduled for day 16 of Month 1. Exactly 5 days after the review meeting, the follow-up audit happens.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": true
+        },
+        "start_day": 16,
+        "gap_days": 5,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-033",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=15;gap=5;seed=4242",
+      "state": "Planning calendar rules: every month in this calendar has exactly 30 days, numbered 1 to 30. The review meeting takes place on day 15 of Month 1. The follow-up audit is scheduled exactly 5 days after the review meeting.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": true
+        },
+        "start_day": 15,
+        "gap_days": 5,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-034",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=8;gap=5;seed=4242",
+      "state": "This planner uses uniform months of 30 days; there are no shorter or longer months. The review meeting takes place on day 8 of Month 1. Exactly 5 days after the review meeting, the follow-up audit happens.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": true
+        },
+        "start_day": 8,
+        "gap_days": 5,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-035",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=5;gap=20;seed=4242",
+      "state": "Planning calendar rules: every month in this calendar has exactly 30 days, numbered 1 to 30. A review meeting is scheduled for day 5 of Month 1. The follow-up audit is scheduled exactly 20 days after the review meeting.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": true
+        },
+        "start_day": 5,
+        "gap_days": 20,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-036",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=14;gap=10;seed=4242",
+      "state": "Calendar convention: each month lasts exactly 30 days (day 1 through day 30); the next day after day 30 is day 1 of the following month. Month 1, day 14: review meeting. The follow-up audit follows the review meeting by exactly 10 days.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": true
+        },
+        "start_day": 14,
+        "gap_days": 10,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-037",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=6;gap=10;seed=4242",
+      "state": "This planner uses uniform months of 30 days; there are no shorter or longer months. The review meeting takes place on day 6 of Month 1. The follow-up audit is scheduled exactly 10 days after the review meeting.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": true
+        },
+        "start_day": 6,
+        "gap_days": 10,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-038",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=3;gap=5;seed=4242",
+      "state": "Calendar convention: each month lasts exactly 30 days (day 1 through day 30); the next day after day 30 is day 1 of the following month. The review meeting takes place on day 3 of Month 1. The follow-up audit follows the review meeting by exactly 5 days.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": true
+        },
+        "start_day": 3,
+        "gap_days": 5,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    },
+    {
+      "id": "freshv3-test-dates-039",
+      "group": "fresh_v3_dates",
+      "cluster": "fresh_v3_dates:4242",
+      "condition": "role=fresh_v3;family=synthetic_dates;start=4;gap=20;seed=4242",
+      "state": "Calendar convention: each month lasts exactly 30 days (day 1 through day 30); the next day after day 30 is day 1 of the following month. A review meeting is scheduled for day 4 of Month 1. The follow-up audit follows the review meeting by exactly 20 days.",
+      "leakage_check": false,
+      "gold": {
+        "answer": {
+          "value": true
+        },
+        "start_day": 4,
+        "gap_days": 20,
+        "calendar": "uniform 30-day months"
+      },
+      "questions": {
+        "answer": {
+          "type": "noul",
+          "instructions": "Based only on the calendar rules stated, answer yes or no: does the follow-up audit fall in the same month as the review meeting?"
+        }
+      }
+    }
+  ]
+}

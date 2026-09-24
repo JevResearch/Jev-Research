@@ -1,0 +1,412 @@
+{
+  "claim_level": "exploratory_architecture_evidence",
+  "counts": {
+    "n_rows": 987,
+    "n_errors": 0
+  },
+  "prefill": {
+    "family": "prefill",
+    "claim_type": "exploratory",
+    "status": "ok",
+    "n_configs": 35,
+    "fixed_floor_ms": 73.11,
+    "ms_per_1k_input_tokens": 6.053,
+    "r2_linear": 0.857,
+    "quadratic_term": 0.0756,
+    "token_range": [
+      859,
+      28859
+    ],
+    "interpretation": "compute is dominated by a fixed floor plus a linear per-token term; a large quadratic term would point to attention over long prompts. Behavioral evidence only."
+  },
+  "headcount": {
+    "family": "headcount",
+    "claim_type": "exploratory",
+    "n_configs": 45,
+    "marginal_ms_per_question": 0.4417,
+    "reference_nq": 1.0,
+    "marginal_output_tokens_per_question": 33.387,
+    "self_batch_note": "~0 ms per extra question supports a single forward pass with many read-outs; a large positive slope would contradict it. Output tokens per question reflect the per-question distribution being emitted."
+  },
+  "optioncount": {
+    "family": "optioncount",
+    "claim_type": "exploratory",
+    "n_configs": 35,
+    "marginal_ms_per_option": 0.102,
+    "marginal_output_tokens_per_option": 9.575,
+    "note": "cost that grows with the option count is the output head scoring/emitting more candidates from the same state."
+  },
+  "coldwarm": {
+    "family": "coldwarm",
+    "claim_type": "exploratory",
+    "n_cold": 8,
+    "n_warm": 8,
+    "median_cold_ms": 659.9,
+    "median_warm_ms": 306.5,
+    "connection_overhead_ms": 353.5,
+    "note": "wall-clock difference is TCP+TLS setup; upstream_ms is unaffected by connection state and isolates compute."
+  },
+  "concurrency": {
+    "family": "concurrency",
+    "claim_type": "exploratory",
+    "per_call_wall": {
+      "1": {
+        "median_wall_ms": 288.5,
+        "median_upstream_ms": 78.5,
+        "n": 4
+      },
+      "2": {
+        "median_wall_ms": 295.6,
+        "median_upstream_ms": 80.0,
+        "n": 8
+      },
+      "4": {
+        "median_wall_ms": 288.2,
+        "median_upstream_ms": 86.0,
+        "n": 16
+      },
+      "8": {
+        "median_wall_ms": 280.2,
+        "median_upstream_ms": 80.0,
+        "n": 32
+      },
+      "16": {
+        "median_wall_ms": 282.0,
+        "median_upstream_ms": 74.0,
+        "n": 64
+      },
+      "32": {
+        "median_wall_ms": 622.0,
+        "median_upstream_ms": 81.5,
+        "n": 128
+      }
+    },
+    "batch_completion_ms_per_call": {
+      "32": 26.95,
+      "16": 35.14,
+      "2": 129.85,
+      "4": 96.64,
+      "8": 43.86,
+      "1": 245.14
+    },
+    "note": "compare median_wall_ms (client-observed) vs median_upstream_ms (server compute). Where wall rises but upstream stays flat the slowdown is our own connection pool / TLS, not a server batch limit. Flat upstream across in-flight counts means independent requests share compute (continuous batching)."
+  },
+  "ancestry": {
+    "family": "ancestry",
+    "claim_type": "exploratory",
+    "n_frames_with_probs": 360,
+    "top_options_by_mean_p": [
+      [
+        "OpenAI",
+        0.3068
+      ],
+      [
+        "GPT",
+        0.0884
+      ],
+      [
+        "ChatGPT",
+        0.0852
+      ],
+      [
+        "Qwen",
+        0.0813
+      ],
+      [
+        "Jev",
+        0.0648
+      ],
+      [
+        "Claude",
+        0.0515
+      ],
+      [
+        "DeepSeek",
+        0.0463
+      ],
+      [
+        "Google",
+        0.0397
+      ]
+    ],
+    "greedy_votes": {
+      "OpenAI": 293,
+      "ChatGPT": 22,
+      "GPT": 22,
+      "Qwen": 15,
+      "Jev": 6,
+      "Grok": 1,
+      "xAI": 1
+    },
+    "choice_index_share": {
+      "21": 16,
+      "16": 14,
+      "8": 19,
+      "23": 18,
+      "6": 14,
+      "12": 12,
+      "20": 18,
+      "1": 22,
+      "19": 14,
+      "3": 17,
+      "2": 16,
+      "13": 16,
+      "0": 17,
+      "7": 14,
+      "22": 13,
+      "18": 10,
+      "11": 19,
+      "15": 14,
+      "9": 10,
+      "14": 20,
+      "17": 12,
+      "4": 9,
+      "10": 15,
+      "5": 11
+    },
+    "choice_at_index_0_frac": 0.047,
+    "position_cancellation_ok": true,
+    "mean_p_jev": 0.0648,
+    "mean_p_typesafe": 0.0103,
+    "family_mass": {
+      "openai": 0.4803,
+      "qwen": 0.112,
+      "typesafe": 0.1031,
+      "anthropic": 0.0871,
+      "google": 0.0548,
+      "deepseek": 0.0463,
+      "microsoft": 0.0377,
+      "meta": 0.0314,
+      "xai": 0.0264,
+      "glm": 0.0085,
+      "mistral": 0.0052,
+      "amazon": 0.0047,
+      "nvidia": 0.002
+    },
+    "typesafe_offer": true,
+    "note": "position-balanced preference among a parity set that INCLUDES Typesafe/Jev. A consistent pull to one family despite parity is suggestive of a prior; it does not identify an actual base."
+  },
+  "mergerate": {
+    "family": "mergerate",
+    "claim_type": "exploratory",
+    "samples": {
+      "arabic": {
+        "script": "arabic",
+        "n_chars": 120,
+        "median_reported_in": 431.0,
+        "median_state_chars": 130.0,
+        "n_reps": 4
+      },
+      "cjk_common": {
+        "script": "cjk",
+        "n_chars": 88,
+        "median_reported_in": 399.0,
+        "median_state_chars": 98.0,
+        "n_reps": 4
+      },
+      "cjk_numbers": {
+        "script": "cjk",
+        "n_chars": 112,
+        "median_reported_in": 423.0,
+        "median_state_chars": 122.0,
+        "n_reps": 4
+      },
+      "cjk_random": {
+        "script": "cjk",
+        "n_chars": 160,
+        "median_reported_in": 631.0,
+        "median_state_chars": 170.0,
+        "n_reps": 4
+      },
+      "codeish": {
+        "script": "code",
+        "n_chars": 210,
+        "median_reported_in": 409.0,
+        "median_state_chars": 220.0,
+        "n_reps": 4
+      },
+      "codeswitch": {
+        "script": "mixed",
+        "n_chars": 24,
+        "median_reported_in": 322.0,
+        "median_state_chars": 34.0,
+        "n_reps": 4
+      },
+      "cyrillic_common": {
+        "script": "cyrillic",
+        "n_chars": 120,
+        "median_reported_in": 431.0,
+        "median_state_chars": 130.0,
+        "n_reps": 4
+      },
+      "cyrillic_random": {
+        "script": "cyrillic",
+        "n_chars": 200,
+        "median_reported_in": 511.0,
+        "median_state_chars": 210.0,
+        "n_reps": 4
+      },
+      "cyrillic_sp": {
+        "script": "cyrillic",
+        "n_chars": 110,
+        "median_reported_in": 421.0,
+        "median_state_chars": 120.0,
+        "n_reps": 4
+      },
+      "cyrillic_word": {
+        "script": "cyrillic",
+        "n_chars": 140,
+        "median_reported_in": 451.0,
+        "median_state_chars": 150.0,
+        "n_reps": 4
+      },
+      "devanagari": {
+        "script": "devanagari",
+        "n_chars": 120,
+        "median_reported_in": 431.0,
+        "median_state_chars": 130.0,
+        "n_reps": 4
+      },
+      "digits01": {
+        "script": "digits",
+        "n_chars": 180,
+        "median_reported_in": 491.0,
+        "median_state_chars": 190.0,
+        "n_reps": 4
+      },
+      "digits_pi": {
+        "script": "digits",
+        "n_chars": 205,
+        "median_reported_in": 516.0,
+        "median_state_chars": 215.0,
+        "n_reps": 4
+      },
+      "digits_single": {
+        "script": "digits",
+        "n_chars": 120,
+        "median_reported_in": 431.0,
+        "median_state_chars": 130.0,
+        "n_reps": 4
+      },
+      "digits_years": {
+        "script": "digits",
+        "n_chars": 192,
+        "median_reported_in": 503.0,
+        "median_state_chars": 202.0,
+        "n_reps": 4
+      },
+      "emoji_run": {
+        "script": "emoji",
+        "n_chars": 24,
+        "median_reported_in": 359.0,
+        "median_state_chars": 34.0,
+        "n_reps": 4
+      },
+      "flags": {
+        "script": "emoji",
+        "n_chars": 16,
+        "median_reported_in": 343.0,
+        "median_state_chars": 26.0,
+        "n_reps": 4
+      },
+      "greek": {
+        "script": "greek",
+        "n_chars": 120,
+        "median_reported_in": 431.0,
+        "median_state_chars": 130.0,
+        "n_reps": 4
+      },
+      "hangul": {
+        "script": "hangul",
+        "n_chars": 90,
+        "median_reported_in": 401.0,
+        "median_state_chars": 100.0,
+        "n_reps": 4
+      },
+      "hebrew": {
+        "script": "hebrew",
+        "n_chars": 120,
+        "median_reported_in": 431.0,
+        "median_state_chars": 130.0,
+        "n_reps": 4
+      },
+      "kana_hira": {
+        "script": "kana",
+        "n_chars": 110,
+        "median_reported_in": 421.0,
+        "median_state_chars": 120.0,
+        "n_reps": 4
+      },
+      "latin_bigram": {
+        "script": "latin",
+        "n_chars": 160,
+        "median_reported_in": 391.0,
+        "median_state_chars": 170.0,
+        "n_reps": 4
+      },
+      "latin_hello": {
+        "script": "latin",
+        "n_chars": 150,
+        "median_reported_in": 341.0,
+        "median_state_chars": 160.0,
+        "n_reps": 4
+      },
+      "latin_random": {
+        "script": "latin",
+        "n_chars": 200,
+        "median_reported_in": 361.0,
+        "median_state_chars": 210.0,
+        "n_reps": 4
+      },
+      "latin_repeat_a": {
+        "script": "latin",
+        "n_chars": 200,
+        "median_reported_in": 361.0,
+        "median_state_chars": 210.0,
+        "n_reps": 4
+      },
+      "latin_words": {
+        "script": "latin",
+        "n_chars": 160,
+        "median_reported_in": 359.0,
+        "median_state_chars": 170.0,
+        "n_reps": 4
+      },
+      "md_link": {
+        "script": "code",
+        "n_chars": 216,
+        "median_reported_in": 382.0,
+        "median_state_chars": 226.0,
+        "n_reps": 4
+      },
+      "repeated_dash": {
+        "script": "ascii",
+        "n_chars": 100,
+        "median_reported_in": 318.0,
+        "median_state_chars": 110.0,
+        "n_reps": 4
+      },
+      "repeated_pipe": {
+        "script": "ascii",
+        "n_chars": 100,
+        "median_reported_in": 361.0,
+        "median_state_chars": 110.0,
+        "n_reps": 4
+      },
+      "thai": {
+        "script": "thai",
+        "n_chars": 104,
+        "median_reported_in": 415.0,
+        "median_state_chars": 114.0,
+        "n_reps": 4
+      },
+      "urlish": {
+        "script": "ascii",
+        "n_chars": 208,
+        "median_reported_in": 367.0,
+        "median_state_chars": 218.0,
+        "n_reps": 4
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "stage": "gpqa_diamond",
+  "run_dir": "runs_benchmark_ext2/bench-gpqa_diamond-8c4bbf2988d4",
+  "variant": "probability_weighted",
+  "definition": "weighted score per item = the probability mass the model assigned to the gold option (choice) / gold level (score questions); the stage number is the mean over scored items \u2014 the model-implied expected accuracy under its own distribution",
+  "separateness_note": "SEPARATE diagnostic artifact: never merged into, substituted for, or averaged with the greedy headline accuracy",
+  "n_expected": 196,
+  "n_weighted_scored": 196,
+  "n_excluded": 0,
+  "exclusion_reasons": {},
+  "weighted_accuracy_mean": 0.6297959183673469,
+  "weighted_accuracy_p05": 0.11,
+  "weighted_accuracy_p50": 0.65,
+  "weighted_accuracy_p95": 1.0,
+  "validity_note": "probability vectors must be finite, in [0,1] and sum to ~1 (within 5e-2); invalid vectors are excluded and counted, never renormalized",
+  "publish_note": "per-item lists stripped at publish (item ids/answers reference licensed third-party content); aggregates kept"
+}

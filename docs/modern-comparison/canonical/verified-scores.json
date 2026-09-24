@@ -1,0 +1,103 @@
+{
+  "generated_utc": "2026-09-19",
+  "generator": "research subagent — canonical verification pass over docs/modern-comparison/REFERENCE-MATRIX.md + reference-records.json",
+  "scope_note": "Every score below was verified against canonical evaluator/vendor page text fetched this pass (vals.ai raw SSR data; artificialanalysis.ai JSON-LD 'data' list; openai.com announcement tables). Values labeled 'mirror-only' were NOT verified on a canonical page and must stay flagged. 'not_found' means the canonical page has no row for the model — it is NOT zero and NOT a claim that no vendor publishes.",
+  "canonical_sources": {
+    "vals_mmlu_pro": "https://www.vals.ai/benchmarks/mmlu_pro (embedded SSR JSON: tasks.overall.<model-slug>.accuracy / .stderr)",
+    "vals_gpqa": "https://www.vals.ai/benchmarks/gpqa (embedded SSR JSON: tasks.overall.<model-slug>.accuracy / .stderr; benchmark marked 'Archived Benchmark ... Updated 9/1/2026')",
+    "aa_gpqa": "https://artificialanalysis.ai/evaluations/gpqa-diamond (JSON-LD data[] entries 'GPQA Diamond': fraction; leaderboard highlight text 'GPT-6 Astra (xhigh) scores the highest on GPQA with a score of 96.3%, followed by GPT-6 Astra (max) with a score of 96.1% and Gemini 3.8 Flash (high) with a score of 95.3%')",
+    "openai_astra_announcement": "https://openai.com/index/gpt-6-astra/ (Academic table)",
+    "openai_gpt56_announcement": "https://openai.com/index/gpt-5-6/ (Academic table)"
+  },
+  "protocol_metadata": {
+    "vals_mmlu_pro": {
+      "protocol": "5-shot Chain-of-Thought, 5 examples per category, step-by-step prompt; regex-graded; overall = average of 14 subject scores",
+      "exact_text": "All reported results use the 5-shot Chain-of-Thought prompting method, which included 5 examples per category in the prompt, as well as encouraging the models to think step by step. Few-shot CoT prompting is the approach used in the original paper.",
+      "jev_native_direct_compatible": false,
+      "note": "Jev native direct-answer (no few-shot exemplars, no CoT) is NOT protocol-compatible with any Vals MMLU-Pro row. Only a matched frozen-subset run under one shared harness is protocol-compatible."
+    },
+    "vals_gpqa": {
+      "protocol": "Diamond subset of 198 questions; two prompting approaches (zero-shot CoT, few-shot CoT); published 'overall' panel = derived average of the two CoT protocols (per Benchmark Atlas mirror description); canonical page shows separate diamond_zero_shot_cot / few-shot panels per model",
+      "exact_text": "As in the original paper, this benchmark uses two evaluation approaches: Zero-shot chain-of-thought ... Few-shot chain-of-thought ... We focus on the 'diamond' subset of 198 questions",
+      "status": "Archived 9/1/2026: 'Since performance on this benchmark has saturated, we no longer run this benchmark on new model releases.'",
+      "jev_native_direct_compatible": false
+    },
+    "aa_gpqa": {
+      "protocol": "Independent AA run on dedicated hardware; rows are effort-specific configurations (max/xhigh/high) with reasoning enabled; some rows are fallback-enabled ('max with fallback')",
+      "exact_text": "\"measurementTechnique\":\"Independent test run by Artificial Analysis on dedicated hardware.\"",
+      "jev_native_direct_compatible": false
+    }
+  },
+  "vals_mmlu_pro_overall": {
+    "anthropic_claude-fable-5-1": {"score_pct": 92.375, "stderr_pp": 0.266, "config": "compute_effort max, max_output_tokens 128000, temperature 1, provider Anthropic", "exact_text": "\"anthropic/claude-fable-5-1\":[0,{\"accuracy\":[0,92.375],\"latency\":[0,20.589],\"stderr\":[0,0.266],\"cost_per_test\":[0,0.097724]...", "provenance": "canonical-verified"},
+    "anthropic_claude-opus-5": {"score_pct": 91.591, "stderr_pp": 0.276, "config": "compute_effort max, max_output_tokens 128000, temperature 1", "exact_text": "\"anthropic/claude-opus-5\":[0,{\"accuracy\":[0,91.591],\"latency\":[0,9.6],\"stderr\":[0,0.276],\"cost_per_test\":[0,0.027843]...", "provenance": "canonical-verified", "fallback_note": "Vals: 'Counting fallback-assisted results as failures changes ... MMLU Pro from 91.59% to 91.58%' (vals.ai Opus 5 page)"},
+    "openai_gpt-5.6-sol": {"score_pct": 89.1, "stderr_pp": 0.308, "config": "reasoning_effort max, max_output_tokens 128000, provider OpenAI", "exact_text": "\"openai/gpt-5.6-sol\":[0,{\"accuracy\":[0,89.1],\"latency\":[0,15.654],\"stderr\":[0,0.308],\"cost_per_test\":[0,0.032087]...", "provenance": "canonical-verified"},
+    "alibaba_qwen3.8-max": {"score_pct": 88.602, "stderr_pp": 0.313, "config": "temperature 0.7, max_output_tokens 128000, provider Alibaba", "exact_text": "\"alibaba/qwen3.8-max\":[0,{\"accuracy\":[0,88.602],\"latency\":[0,63.576],\"stderr\":[0,0.313],\"cost_per_test\":[0,0.018585]...", "provenance": "canonical-verified"},
+    "zai_glm-5.3": {"score_pct": 86.77, "stderr_pp": 0.335, "config": "reasoning_effort max, provider Zhipu AI", "exact_text": "\"zai/glm-5.3\":[0,{\"accuracy\":[0,86.77],\"latency\":[0,61.783],\"stderr\":[0,0.335],\"cost_per_test\":[0,0.016639]...", "provenance": "canonical-verified", "correction": "matrix mirror value 86.8 confirmed as 86.77"},
+    "deepseek_deepseek-v4-flash-0731": {"score_pct": 86.206, "stderr_pp": 0.339, "config": "reasoning_effort high, max_output_tokens 256000, provider DeepSeek", "exact_text": "\"deepseek/deepseek-v4-flash-0731\":[0,{\"accuracy\":[0,86.206],\"latency\":[0,17.188],\"stderr\":[0,0.339],\"cost_per_test\":[0,0.00265]...", "provenance": "canonical-verified", "correction": "NEW: fills prior 'unknown' — Vals runs DeepSeek V4 Flash 0731 on MMLU-Pro; it was in the canonical page's 138-model list and data"},
+    "zai_glm-5.3-flash": {"score_pct": 86.059, "stderr_pp": 0.341, "config": "reasoning_effort max, top_p 0.95, provider Zhipu AI", "exact_text": "\"zai/glm-5.3-flash\":[0,{\"accuracy\":[0,86.059],\"latency\":[0,44.762],\"stderr\":[0,0.341],\"cost_per_test\":[0,0.001058]...", "provenance": "canonical-verified"},
+    "openai_gpt-6-astra": {"score_pct": null, "status": "not_found", "note": "string 'openai/gpt-6-astra' absent from canonical vals.ai/benchmarks/mmlu_pro page data (no Vals MMLU-Pro row); also no vendor MMLU-Pro row in fetched OpenAI announcement text (case-insensitive search for 'MMLU' found none)", "provenance": "not_found_on_canonical"},
+    "alibaba_qwen3.8-flash": {"score_pct": null, "status": "not_found", "note": "no qwen3.8-flash row on canonical vals.ai MMLU-Pro page (model list adjacent entries: alibaba/qwen3.8-27b, alibaba/qwen3.8-max); no vendor row found", "provenance": "not_found_on_canonical"}
+  },
+  "vals_gpqa_diamond_overall": {
+    "openai_gpt-5.6-sol": {"score_pct": 95.202, "stderr_pp": 1.074, "panels": {"diamond_zero_shot_cot": 95.455, "few_shot": 94.949}, "config": "reasoning_effort max", "exact_text": "\"openai/gpt-5.6-sol\":[0,{\"accuracy\":[0,95.202],\"latency\":[0,58.304],\"stderr\":[0,1.074]...", "provenance": "canonical-verified", "correction": "mirror said 95.2; canonical 95.202"},
+    "alibaba_qwen3.8-max": {"score_pct": 93.686, "stderr_pp": 1.221, "panels": {"zero_shot_cot": 92.424, "few_shot": 94.949}, "config": "temperature 0.7", "exact_text": "\"alibaba/qwen3.8-max\":[0,{\"accuracy\":[0,93.686],\"latency\":[0,266.606],\"stderr\":[0,1.221]...", "provenance": "canonical-verified", "correction": "mirror said 93.7; canonical 93.686"},
+    "anthropic_claude-fable-5-1": {"score_pct": 93.434, "stderr_pp": 1.863, "config": "compute_effort max, max_output_tokens 128000, temperature 1", "exact_text": "\"anthropic/claude-fable-5-1\":[0,{\"accuracy\":[0,93.434],\"latency\":[0,45.857],\"stderr\":[0,1.863]...", "provenance": "canonical-verified", "correction": "NEW canonical row (mirror coverage was absent 'by design'; row exists on archived page)"},
+    "anthropic_claude-opus-5": {"score_pct": 93.434, "stderr_pp": 1.244, "config": "temperature unset, max_output unset", "exact_text": "\"anthropic/claude-opus-5\":[0,{\"accuracy\":[0,93.434],\"latency\":[0,39.588],\"stderr\":[0,1.244]...", "provenance": "canonical-verified"},
+    "deepseek_deepseek-v4-flash-0731": {"score_pct": 89.899, "stderr_pp": 1.694, "config": "reasoning_effort high, max_output_tokens 256000", "exact_text": "\"deepseek/deepseek-v4-flash-0731\":[0,{\"accuracy\":[0,89.899],\"latency\":[0,79.956],\"stderr\":[0,1.694]...", "provenance": "canonical-verified", "correction": "NEW canonical row; supersedes reliance on WaitWhichModel relay of AA 90.8"},
+    "zai_glm-5.3": {"score_pct": 88.132, "stderr_pp": 1.851, "panels": {"zero_shot_cot": 88.889, "few_shot": 87.374}, "config": "reasoning_effort max", "exact_text": "\"zai/glm-5.3\":[0,{\"accuracy\":[0,88.132],\"latency\":[0,210.7],\"stderr\":[0,1.851]... (also vals.ai/models/zai_glm-5.3 row: data-target=\"88.13\" ±1.85)", "provenance": "canonical-verified", "correction": "mirror said 88.1; canonical 88.132"},
+    "zai_glm-5.3-flash": {"score_pct": 86.364, "stderr_pp": 2.126, "panels": {"zero_shot_cot": 87.374, "few_shot": 85.354}, "config": "reasoning_effort max", "exact_text": "\"zai/glm-5.3-flash\":[0,{\"accuracy\":[0,86.364],\"latency\":[0,131.004],\"stderr\":[0,2.126]...", "provenance": "canonical-verified", "correction": "mirror 86.364 confirmed"},
+    "openai_gpt-6-astra": {"score_pct": null, "status": "not_found", "note": "string 'openai/gpt-6-astra' absent from canonical vals.ai/benchmarks/gpqa page; benchmark archived 9/1/2026 (Astra announced 2026-09-03)", "provenance": "not_found_on_canonical"},
+    "alibaba_qwen3.8-flash": {"score_pct": null, "status": "not_found", "note": "no qwen3.8-flash row found on canonical vals.ai/benchmarks/gpqa page", "provenance": "not_found_on_canonical"}
+  },
+  "aa_gpqa_diamond": {
+    "openai_gpt-6-astra": {
+      "xhigh": {"score_pct": 96.26, "raw": "\"label\":\"GPT-6 Astra (xhigh)\",\"GPQA Diamond\":0.962626262626263", "provenance": "canonical-verified"},
+      "max": {"score_pct": 96.06, "raw": "\"label\":\"GPT-6 Astra (max)\",\"GPQA Diamond\":0.960606060606061", "provenance": "canonical-verified", "note": "canonical highlight text rounds to 96.1%"},
+      "high": {"score_pct": 94.95, "raw": "\"label\":\"GPT-6 Astra (high)\",\"GPQA Diamond\":0.94949494949495", "provenance": "canonical-verified"}
+    },
+    "openai_gpt-5.6-sol": {"max": {"score_pct": 94.14, "raw": "\"label\":\"GPT-5.6 Sol (max)\",\"GPQA Diamond\":0.941414141414141", "provenance": "canonical-verified"}},
+    "anthropic_claude-fable-5-1": {"max_with_fallback": {"score_pct": 93.74, "raw": "\"label\":\"Claude Fable 5.1 (max with fallback)\",\"GPQA Diamond\":0.937373737373737", "provenance": "canonical-verified", "note": "row is fallback-enabled by default; label per AA page"}},
+    "anthropic_claude-opus-5": {"max": {"score_pct": 93.23, "raw": "\"label\":\"Claude Opus 5 (max)\",\"GPQA Diamond\":0.932323232323232", "provenance": "canonical-verified", "correction": "BLOCKER FIXED: llmboard mirror said 93.74 — canonical AA is 93.23 (93.74 belongs to Fable 5.1, not Opus 5)"}},
+    "alibaba_qwen3.8-max": {"snapshot_0902": {"score_pct": 92.83, "raw": "\"label\":\"Qwen3.8 Max (0902)\",\"GPQA Diamond\":0.928282828282828,\"detailsUrl\":\"/models/qwen3-8-max\"", "provenance": "canonical-verified", "correction": "BLOCKER FIXED: mirrors said 92.7 (base) / 92.3 (0902); canonical AA carries only the 0902 snapshot at 92.83 and marks the 0803 base slug deprecated — no base row on the canonical page"}},
+    "zai_glm-5.3": {"max": {"score_pct": 91.72, "raw": "\"label\":\"GLM-5.3 (max)\",\"GPQA Diamond\":0.917171717171717", "provenance": "canonical-verified", "correction": "mirror 91.7 confirmed"}},
+    "zai_glm-5.3-flash": {"score_pct": 91.21, "raw": "\"label\":\"GLM-5.3-Flash\",\"GPQA Diamond\":0.912121212121212", "provenance": "canonical-verified", "correction": "mirror 91.2 confirmed"},
+    "deepseek_deepseek-v4-flash-0731": {"score_pct": null, "status": "not_found", "note": "canonical AA JSON-LD data[] list ends at GLM-5.3-Flash (20 entries); slug deepseek-v4-flash ('DeepSeek V4 Flash 0731') is marked \"deprecated\":true in the AA model registry and has no data[] entry → the WaitWhichModel '90.8' relay is NOT verifiable on the canonical AA page", "provenance": "not_found_on_canonical"},
+    "alibaba_qwen3.8-flash": {"score_pct": null, "status": "not_found", "note": "no Qwen3.8 Flash row in canonical AA data[] list; the 92.3% claim (ai-atlas/benchlm mirrors) stays mirror-only and unverified; Qwen3.8 2.4T A95B open-weights slug exists on AA but is a different artifact", "provenance": "not_found_on_canonical"}
+  },
+  "vendor_gpqa_diamond": {
+    "openai_gpt-6-astra": {"score_pct": 96.0, "exact_text": "OpenAI GPT-6 Astra announcement Academic table: 'GPQA Diamond 96.0% 94.6% 93.7% 92.6% 93.7% 95.3%' for columns [GPT-6 Astra, GPT-5.6 Sol, Claude Fable 5.1, Claude Fable 5, Claude Opus 5, Gemini 3.8 Flash]; protocol marker in table footer per matrix: 'Evaluation scores are the maximum at any effort.'", "provenance": "canonical-verified"},
+    "openai_gpt-5.6-sol": {"score_pct": 94.6, "exact_text": "OpenAI GPT-5.6 announcement Academic table: 'GPQA Diamond 94.6% 92.9% 92.3% 93.6% 94.1% 94.6% 92.6% 92% 94.3%' for columns [GPT-5.6 Sol, GPT-5.6 Terra, GPT-5.6 Luna, GPT-5.5, Claude Mythos 5, Claude Mythos Preview, Claude Fable 5, Claude Opus 4.8, Gemini 3.1 Pro Preview]", "provenance": "canonical-verified", "tier_anchors": {"gpt-5.6-terra": 92.9, "gpt-5.6-luna": 92.3}},
+    "anthropic_claude-fable-5-1": {"score_pct": 93.7, "provenance": "canonical-verified", "note": "value is from the OpenAI-run comparison table (different-vendor measurement), not an Anthropic self-published number; Anthropic's own announcement was not re-fetched this pass"},
+    "anthropic_claude-opus-5": {"score_pct": 93.7, "provenance": "canonical-verified", "note": "OpenAI-run comparison table; AA canonical independent value is 93.23"},
+    "alibaba_qwen3.8-max": {"score_pct": null, "status": "unverified", "note": "vendor 92.6 claim still rests on a tracker relay of an image-published Alibaba table (waitwhichmodel.fyi); column attribution remains unresolvable from text — stays mirror-only"},
+    "alibaba_qwen3.8-flash-next": {"score_pct": 91.7, "provenance": "vendor-primary-with-caveat", "note": "HF Qwen/Qwen3.8-Flash-Next README table fragment 'GPQA Diamond | 91.7 | 89.2 | 90.3 | 90.8 | 91.3' with unresolvable column headers — attribution caveat stands; NOT re-verified this pass (unchanged from matrix)"},
+    "zai_glm-5.3": {"score_pct": null, "status": "not_found", "note": "no GPQA row in GLM-5.3 HF README benchmark table (unchanged); Epoch '91' value remains aggregator-rounded, not verified this pass"},
+    "zai_glm-5.3-flash": {"score_pct": null, "status": "not_found", "note": "no GPQA row in GLM-5.3-Flash HF README (unchanged)"},
+    "deepseek_deepseek-v4-flash-0731": {"score_pct": null, "status": "not_found", "note": "no GPQA row in HF DeepSeek-V4-Flash-0731 README (unchanged)"}
+  },
+  "corrected_arithmetic": {
+    "glm_5_3_evaluator_gap": {"statement": "AA 91.72 vs Vals 88.132 → 3.6pp gap (91.72 − 88.132 = 3.588)", "matrix_error": "matrix §3 caveat 2 said 'a 7.2pp gap' — arithmetic wrong; 91.7 − 88.1 = 3.6"},
+    "glm_5_3_flash_evaluator_gap": {"statement": "AA 91.21 vs Vals 86.364 → 4.8pp gap", "matrix_error": "none stated, but worth recording"},
+    "mmlu_pro_subset_se": {
+      "n_2000_p_085": "SE = sqrt(0.85·0.15/2000) = 0.798pp ≈ 0.8pp",
+      "n_2000_p_090": "SE = sqrt(0.90·0.10/2000) = 0.671pp ≈ 0.67pp",
+      "matrix_error": "matrix §5 said n=2,000 stratified gives '~0.67pp SE' as if universal; 0.67pp holds only at p≈0.90. Near p=0.85 (the relevant regime for GLM-5.3/Flash-tier models) it is ≈0.8pp. SE must be computed at the expected p per model, not quoted as a constant.",
+      "n_198_gpqa_p_090": "SE = sqrt(0.90·0.10/198) = 2.13pp ≈ 2.1pp (matrix value correct)"
+    }
+  },
+  "additional_benchmarks_searched_not_found": {
+    "arc_challenge": "No canonical-source row found for any of the nine requested models. AI2's own leaderboard/leaderboard mirrors surfaced only pre-2026 models (Nemotron-H 56B, Llama 3.1 405B, GPT-4o etc.) and aggregator pages (pricepertoken, genailist, lmmarketcap) of mirror quality; no AA/Vals/vendor row found. Verdict: no verified modern finite-answer reference coverage; do not fill cells.",
+    "classic_mmlu": "No canonical-source row found for the requested models in this pass (aggregator pages only).",
+    "truthfulqa": "No canonical-source row found for the requested models (GitHub/leaderboard history only; TruthfulQA MC1/MC2 recommendation text retrieved but no modern-model scores)."
+  },
+  "mirror_only_stays_unverified": [
+    "Qwen3.8 Flash AA GPQA 92.3% (ai-atlas.co / benchlm mirrors) — not on canonical AA page",
+    "Qwen3.8-Max vendor GPQA 92.6% (image-published table, tracker relay) — attribution unresolvable",
+    "Qwen3.8-Flash-Next vendor GPQA 91.7% (HF README, column attribution caveat)",
+    "Epoch GLM-5.3 GPQA 91 (rounded aggregator) — epoch.ai model page not re-fetched this pass",
+    "WaitWhichModel DeepSeek AA GPQA 90.8 — not on canonical AA page (slug deprecated)",
+    "llmboard 'Claude Opus 5 93.74' — contradicted by canonical AA 93.23; do not use",
+    "DataLearner 'DeepSeek MMLU-Pro 86.40 (17/134)' — variant/protocol unverified; Vals canonical 86.206 now available instead"
+  ]
+}
