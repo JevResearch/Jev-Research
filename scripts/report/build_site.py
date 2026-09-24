@@ -9,7 +9,7 @@ available form of "every number traces to disk".
 Contents
   report/index.html        the page (also copied to bundle root for Pages)
   assets/                  standalone chart pages
-  src/ scripts/ tests/     the harness that ran everything (MIT)
+  src/ scripts/ tests/     the harness that ran everything (public domain)
   runs_benchmark*/         derived aggregates ONLY (per-item lists stripped)
                            + freeze records (frozen.json, preparation.json)
                            + per-stage usage_summary.json roll-ups
@@ -73,6 +73,7 @@ INCLUDE_FILES = [
     "docs/token-talk-findings.md",
     "docs/jev-talk-program-report.md",
     "docs/token-talk-plan.md",
+    "docs/ARCHITECTURE-ANALYSIS-PROMPT.md",
     "tests/conftest.py",
 ]
 INCLUDE_DIRS = [
@@ -146,8 +147,11 @@ def wanted(r: str) -> bool:
 def build() -> list[str]:
     notes: list[str] = []
     if BUNDLE.exists():
-        shutil.rmtree(BUNDLE)
-    BUNDLE.mkdir()
+        for child in BUNDLE.iterdir():          # preserve .git across rebuilds
+            if child.name == ".git":
+                continue
+            shutil.rmtree(child) if child.is_dir() else child.unlink()
+    BUNDLE.mkdir(exist_ok=True)
 
     for f in INCLUDE_FILES:
         src = ROOT / f
@@ -251,7 +255,7 @@ SECRET_PATTERNS = [
 
 def bundle_text(bundle: Path):
     for p in sorted(bundle.rglob("*")):
-        if not p.is_file():
+        if not p.is_file() or ".git" in p.parts:
             continue
         if p.suffix not in TEXT_SUFFIX and p.name not in {".gitignore", ".env.example"}:
             continue
@@ -271,177 +275,203 @@ def secret_scan(bundle: Path) -> list[str]:
 
 
 # ------------------------------------------------------------------ gate G3
-SHINGLE_WORDS = 10      # exact phrase length checked against the bundle
-BOILER_FRAC = 0.02      # a shingle in >2% of gated items is our own template
-BUNDLE_FILE_SPREAD = 3  # a shingle in >=3 bundle files is our own repeated text
+# Memory-bounded design (a previous unbounded version OOMed the host):
+#  * shingles are reduced to 8-byte blake2b digests; corpora are streamed
+#    per file/string with NO global dict of per-shingle containers
+#  * windows per string capped; per-source boilerplate filter only
+#  * the known-corpus pass runs ONLY if the bundle scan produced candidates
+#  * main() additionally pins RLIMIT_AS, so a logic bug fails with
+#    MemoryError instead of eating the machine
 
-# gated sources: real dataset files + the benchmark runs' outbound prompts.
-# Our synthetic probe items/specs (runs_live dated dirs, probes, fresh_capability
-# generators) are OUR authored text and ship verbatim - not gated.
+SHINGLE_WORDS = 10          # exact phrase length checked against the bundle
+BOILER_MAX_FRAC = 0.02      # per source: a window in >2% of items is our template
+CAP_WORDS_PER_STRING = 1200 # cap long generative inputs (HLE questions etc.)
+KEEP_BUDGET = 5_000_000     # regression guard: refuse to run a broken scan
+BUNDLE_FILE_SPREAD = 3      # window in >=3 bundle files is our repeated own-text
+
 GATED_GLOBS = ("runs_benchmark*/bench-*/items.jsonl",
                "runs_benchmark*/bench-*/spec.json",
                "boolq_spec.json", "boolq_paired_spec.json", "mmlu_pilot_spec.json")
 # Whitelist: our own authored prose (synthetic probe corpora, research docs).
-# A phrase only counts as a leak if it is NOT already in our public documents -
-# probe questions were authored for this project, not copied from datasets.
+# A phrase only counts as a leak if it is NOT already in our public documents.
 KNOWN_GLOBS = ("runs_live/*.json", "runs_live/*.md", "runs_live_spec_*.json",
                "runs_live/*/items.jsonl", "docs/**/*.md", "README.md",
                "research.md", "SOURCES.md", "IMPLEMENTATION.md", "DESIGN.md",
                "fresh_capability_spec.json", "runs_reviewed/*/items.jsonl",
                "runs_matched/**/items.jsonl")
 
+from hashlib import blake2b as _b2
 
-def _shingles(text: str, out: dict) -> None:
+
+def _wh(w: str) -> bytes:
+    return _b2(w.encode("utf-8", "ignore"), digest_size=8).digest()
+
+
+def _windows(text: str):
     toks = re.sub(r"\s+", " ", text).strip().split(" ")
-    if len(toks) < SHINGLE_WORDS:
+    n = min(len(toks), CAP_WORDS_PER_STRING)
+    for i in range(max(0, n - SHINGLE_WORDS + 1)):
+        yield " ".join(toks[i:i + SHINGLE_WORDS])
+
+
+def _outbound_windows(item) :
+    """Windows of the outbound prompt payload of an item/spec entry only
+    (state + question criteria) - spec metadata is our own prose."""
+    if not isinstance(item, dict):
         return
-    for i in range(len(toks) - SHINGLE_WORDS + 1):
-        sh = " ".join(toks[i:i + SHINGLE_WORDS])
-        out[sh] = out.get(sh, 0) + 1
+    st = item.get("state")
+    if isinstance(st, str):
+        yield from _windows(st)
+    qs = item.get("questions")
+    if isinstance(qs, dict):
+        for q in qs.values():
+            if isinstance(q, dict):
+                for v in q.values():
+                    if isinstance(v, str) and len(v) > 40:
+                        yield from _windows(v)
 
 
-def _add_strings(obj, out: dict) -> None:
-    """Walk a decoded json object; feed every prose string to _shingles."""
-    stack = [obj]
-    while stack:
-        x = stack.pop()
-        if isinstance(x, str):
-            if len(x) > 40:
-                _shingles(x, out)
-        elif isinstance(x, dict):
-            stack.extend(x.values())
-        elif isinstance(x, list):
-            stack.extend(x[:4000])
+def _rss_mb() -> int:
+    import resource
+    return resource.getrusage(resource.RUSAGE_SELF).ru_maxrss // 1024
 
 
-def _read_parquet_strings(f: Path, out: dict, cap_rows: int = 3000) -> None:
-    import pyarrow.parquet as pq
+def gated_hashes() -> set:
+    """Hash set of licensed-content windows, per-source boilerplate-filtered."""
+    keep: set[bytes] = set()
 
-    pf = pq.ParquetFile(f)
-    done = 0
-    for batch in pf.iter_batches(batch_size=250):
-        for col in batch.columns:
-            if col.type.__class__.__name__ not in ("string", "large_string"):
-                continue
-            for v in col.to_pylist():
-                if isinstance(v, str):
-                    _shingles(v, out)
-        done += len(batch)
-        if done >= cap_rows:
-            return
+    def filter_source(counts: dict, units: int) -> int:
+        th = max(2, int(BOILER_MAX_FRAC * max(1, units)))
+        keep.update(h for h, c in counts.items() if c <= th)
+        return th
 
-
-def _add_outbound_strings(spec: dict, out: dict) -> None:
-    """Feed only the outbound prompt payload of a spec (item states + question
-    criteria) - spec metadata is our own prose and must not gate our code."""
-    for item in spec.get("items", []):
-        if isinstance(item, dict):
-            st = item.get("state")
-            if isinstance(st, str):
-                _shingles(st, out)
-            for q in (item.get("questions") or {}).values():
-                if isinstance(q, dict):
-                    for v in q.values():
-                        if isinstance(v, str):
-                            _shingles(v, out)
-
-
-def known_shingles() -> set[str]:
-    out: dict[str, int] = {}
-    for pattern in KNOWN_GLOBS:
-        for f in sorted(ROOT.glob(pattern)):
-            try:
-                if f.suffix == ".json":
-                    _add_strings(json.loads(f.read_text(encoding="utf-8")), out)
-                else:
-                    _shingles(f.read_text(encoding="utf-8", errors="ignore"), out)
-            except Exception:
-                continue
-    print(f"[G3] whitelist shingles from our authored corpus: {len(out):,}")
-    return set(out)
-
-
-def gated_shingles() -> set[str]:
-    """Boilerplate-filtered shingle set of every licensed item we ingested.
-
-    Filtering is PER SOURCE FILE: our fixed instruction/rubric text repeats
-    across every item of one source and is dropped there; real item content
-    appears in exactly one item and survives.
-    """
-    keep: set[str] = set()
-
-    def flush(local: dict, label: str) -> None:
-        n = max(1, sum(local.values()) // 1)  # not item count; use entries:
-        keep_local = {sh for sh, c in local.items() if c <= thresh}
-        keep.update(keep_local)
-
-    def thresh_for(items: int) -> int:
-        return max(2, int(BOILER_FRAC * max(1, items)))
-
-    total = 0
+    total_items = 0
     for pattern in GATED_GLOBS:
         for f in sorted(ROOT.glob(pattern)):
-            local: dict[str, int] = {}
+            counts: dict[bytes, int] = {}
             units = 0
-            if f.name.endswith("items.jsonl") or (f.suffix == ".jsonl"):
+            if f.name.endswith("items.jsonl"):
                 for line in f.open(encoding="utf-8", errors="ignore"):
                     try:
-                        _add_outbound_strings(json.loads(line), local)
+                        item = json.loads(line)
                     except json.JSONDecodeError:
                         continue
                     units += 1
+                    for w in _outbound_windows(item):
+                        h = _wh(w)
+                        counts[h] = counts.get(h, 0) + 1
             else:
                 try:
-                    _add_outbound_strings(json.loads(f.read_text(encoding="utf-8")), local)
-                    units = len(json.loads(f.read_text(encoding="utf-8")).get("items", [])) or 1
+                    spec = json.loads(f.read_text(encoding="utf-8"))
                 except Exception as e:
                     print(f"  [G3] skip {f.name}: {e}")
-            th = thresh_for(units)
-            kept = {sh for sh, c in local.items() if c <= th}
-            keep |= kept
-            total += units
+                    continue
+                items = spec.get("items") if isinstance(spec, dict) else None
+                if isinstance(items, list):
+                    units = len(items)
+                    for item in items[:10000]:
+                        for w in _outbound_windows(item):
+                            h = _wh(w)
+                            counts[h] = counts.get(h, 0) + 1
+            filter_source(counts, units)
+            total_items += units
+            counts.clear()
 
     for f in sorted((ROOT / "data").iterdir()):
         name = f.name.lower()
-        local = {}
+        counts = {}
+        units = 0
         try:
             if name.endswith(".parquet"):
-                _read_parquet_strings(f, local)
+                import pyarrow.parquet as pq
+                pf = pq.ParquetFile(f)
+                rows = 0
+                for batch in pf.iter_batches(batch_size=250):
+                    for col in batch.columns:
+                        if col.type.__class__.__name__ not in ("string", "large_string"):
+                            continue
+                        for v in col.to_pylist():
+                            if isinstance(v, str) and len(v) > 40:
+                                units += 1
+                                for w in _windows(v):
+                                    h = _wh(w)
+                                    counts[h] = counts.get(h, 0) + 1
+                    rows += len(batch)
+                    if rows >= 3000:
+                        break
             elif name.endswith((".csv", ".jsonl", ".txt")):
-                _add_strings(f.read_text(encoding="utf-8", errors="ignore"), local)
+                for line in f.open(encoding="utf-8", errors="ignore"):
+                    for cell in (line.split(",") if name.endswith(".csv") else [line]):
+                        cell = cell.strip('" ')
+                        if len(cell) > 40:
+                            units += 1
+                            for w in _windows(cell):
+                                h = _wh(w)
+                                counts[h] = counts.get(h, 0) + 1
             else:
                 continue
-            units = max(1, len(local) // 10)
-            keep |= {sh for sh, c in local.items() if c <= max(2, len(local) // 12)}
-            total += units
         except Exception as e:
             print(f"  [G3] data skip {f.name}: {e}")
+            continue
+        filter_source(counts, units)
+        total_items += units
+        counts.clear()
 
-    print(f"[G3] {total:,} gated items -> {len(keep):,} content shingles "
-          f"(per-source boilerplate filter)")
+    if len(keep) > KEEP_BUDGET:
+        raise SystemExit(f"[G3] gated set {len(keep)} exceeds budget - scan regressed")
+    print(f"[G3] {total_items:,} gated strings -> {len(keep):,} content windows "
+          f"(per-source boilerplate filter) | RSS {_rss_mb()} MB")
     return keep
 
 
-def bundle_shingles(bundle: Path) -> tuple[dict, dict]:
-    """(shingle -> set(files), file count) over the bundle's text corpus."""
-    spread: dict[str, set] = {}
+def _bundle_windows(bundle: Path, gated: set):
+    """Yield (hash, window-text, file) for every bundle window whose hash is in
+    gated. Streams file-by-file; only per-file hit SETS of hashes are kept."""
     for p, text in bundle_text(bundle):
         name = str(p.relative_to(bundle))
-        toks = re.sub(r"\s+", " ", text).strip().split(" ")
-        for i in range(len(toks) - SHINGLE_WORDS + 1):
-            sh = " ".join(toks[i:i + SHINGLE_WORDS])
-            spread.setdefault(sh, set()).add(name)
-    return spread, {}
+        local = set()
+        for w in _windows(text):
+            h = _wh(w)
+            if h in gated:
+                local.add((h, w))
+        for h, w in local:
+            yield h, w, name
 
 
 def licensed_scan(bundle: Path) -> list[str]:
-    gated = gated_shingles() - known_shingles()
-    spread, _ = bundle_shingles(bundle)
-    hits = []
-    for sh, files in spread.items():
-        if sh in gated and len(files) < BUNDLE_FILE_SPREAD:
-            hits.append(f"G3 licensed shingle in {sorted(files)[0]}: {sh[:70]}...")
-    return sorted(hits)[:200]
+    gated = gated_hashes()
+    if not gated:
+        return ["G3 gated set empty - scan is broken, failing closed"]
+
+    spread: dict[bytes, set] = {}
+    sample: dict[bytes, str] = {}
+    for h, w, name in _bundle_windows(bundle, gated):
+        spread.setdefault(h, set()).add(name)
+        sample.setdefault(h, w)
+    print(f"[G3] bundle windows matched gated content: {len(spread)} | RSS {_rss_mb()} MB")
+
+    candidates = {h: fs for h, fs in spread.items() if len(fs) < BUNDLE_FILE_SPREAD}
+    problems = []
+    if candidates:
+        # lazy known-corpus pass: only run when we actually have candidates
+        targets = set(candidates)
+        for pattern in KNOWN_GLOBS:
+            if not targets:
+                break
+            for f in sorted(ROOT.glob(pattern)):
+                try:
+                    text = f.read_text(encoding="utf-8", errors="ignore")
+                except Exception:
+                    continue
+                for w in _windows(text):
+                    h = _wh(w)
+                    if h in targets:
+                        targets.discard(h)
+        for h in sorted(targets):
+            files = ", ".join(sorted(spread[h]))
+            problems.append(f"G3 licensed window in {files}: {sample[h][:70]}...")
+    print(f"[G3] done | RSS {_rss_mb()} MB")
+    return problems
 
 
 # ------------------------------------------------------------------ gate G4
@@ -480,7 +510,7 @@ def write_scaffolding() -> None:
 def manifest() -> int:
     rows = []
     for p in sorted(BUNDLE.rglob("*")):
-        if p.is_file() and p.name != "BUNDLE.sha256":
+        if p.is_file() and ".git" not in p.parts and p.name != "BUNDLE.sha256":
             h = hashlib.sha256(p.read_bytes()).hexdigest()
             rows.append(f"{h}  {p.relative_to(BUNDLE).as_posix()}")
     (BUNDLE / "BUNDLE.sha256").write_text("\n".join(rows) + "\n")
@@ -508,7 +538,7 @@ head, not a frontier system.
 |---|---|
 | `index.html`, `report/` | the report (single page, figures embedded) |
 | `assets/` | standalone chart pages (same figures, un-embedded) |
-| `src/`, `scripts/`, `tests/` | the harness that ran everything (MIT) |
+| `src/`, `scripts/`, `tests/` | the harness that ran everything (public domain) |
 | `runs_benchmark*/` | per-stage derived aggregates (scores, weighted scores, calibration, usage) + freeze manifests with SHA-256 of every input |
 | `runs_archprobe/` | architecture-probe analysis, per-call rows, tokenizer studies, billing |
 | `runs_live/` | Talk-to-Jev traces (character / vocabulary-menu / token programs), probes, billing, findings |
@@ -552,9 +582,12 @@ and access dates are recorded in `docs/modern-comparison/canonical/` and
 
 ## License
 
-Code (`src/`, `scripts/`, `tests/`) is MIT-licensed; report prose and derived
-data tables are CC-BY-4.0 (see `LICENSE`). Jev is a trademark of TypeSafe AI;
-this project is independent and unaffiliated - see `NOTICE.md`.
+Everything in this repository - code, report text, figures, and derived data
+tables - is dedicated to the public domain under the Unlicense (see `LICENSE`).
+No attribution is required or requested; no rights are reserved. Third-party
+benchmark datasets referenced by our measurements remain under their own
+licenses, and no dataset item text is redistributed here. Jev is a trademark of
+TypeSafe AI; this project is independent and unaffiliated (see `NOTICE.md`).
 """
 
 NOTICE_TEXT = """# Notice
@@ -593,42 +626,54 @@ Raw per-request logs containing third-party licensed prompt text are held
 privately; the freeze hashes in `runs_benchmark*/freeze/` pin them exactly.
 """
 
-LICENSE_TEXT = """MIT License (code)
+LICENSE_TEXT = """This is free and unencumbered software released into the public domain.
 
-Copyright (c) 2026 Jev Observatory contributors
+Anyone is free to copy, modify, publish, use, compile, sell, or
+distribute this software, either in source code form or as a compiled
+binary, for any purpose, commercial or non-commercial, and by any
+means.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+In jurisdictions that recognize copyright laws, the author or authors
+of this software dedicate any and all copyright interest in the
+software to the public domain. We make this dedication for the benefit
+of the public at large and to the detriment of our heirs and
+successors. We intend this dedication to be an overt act of
+relinquishment in perpetuity of all present and future rights to this
+software under copyright law.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+For more information, please refer to <https://unlicense.org>
 
 ---
 
-Report text, figures, and derived data tables (everything outside src/,
-scripts/, and tests/) are licensed under Creative Commons Attribution 4.0
-International (CC-BY-4.0):
-https://creativecommons.org/licenses/by/4.0/legalcode
-
-Third-party benchmark datasets referenced by these measurements remain under
-their own licenses; no item text is redistributed here.
+Third-party benchmark datasets referenced by these measurements remain
+under their own licenses (see docs/ and the freeze records); no item text
+is redistributed here.
 """
 
 
 # ------------------------------------------------------------------ pipeline
+def _cap_memory(mb: int = 8192) -> None:
+    """Hard ceiling: a logic bug must raise MemoryError in THIS process
+    rather than OOM the machine."""
+    import resource
+    limit = mb * 1024 * 1024
+    soft, hard = resource.getrlimit(resource.RLIMIT_AS)
+    try:
+        resource.setrlimit(resource.RLIMIT_AS, (limit, min(hard, limit) if hard != -1 else limit))
+    except (ValueError, OSError):
+        pass
+
+
 def main() -> None:
+    _cap_memory()
     for need in ("data_report/costs.json", "data_report/billing_totals.json",
                  "data_report/aborted_stage_usage.json",
                  "runs_benchmark/freeze/frozen.json"):

@@ -18,7 +18,7 @@ head, not a frontier system.
 |---|---|
 | `index.html`, `report/` | the report (single page, figures embedded) |
 | `assets/` | standalone chart pages (same figures, un-embedded) |
-| `src/`, `scripts/`, `tests/` | the harness that ran everything (MIT) |
+| `src/`, `scripts/`, `tests/` | the harness that ran everything (public domain) |
 | `runs_benchmark*/` | per-stage derived aggregates (scores, weighted scores, calibration, usage) + freeze manifests with SHA-256 of every input |
 | `runs_archprobe/` | architecture-probe analysis, per-call rows, tokenizer studies, billing |
 | `runs_live/` | Talk-to-Jev traces (character / vocabulary-menu / token programs), probes, billing, findings |
@@ -62,6 +62,9 @@ and access dates are recorded in `docs/modern-comparison/canonical/` and
 
 ## License
 
-Code (`src/`, `scripts/`, `tests/`) is MIT-licensed; report prose and derived
-data tables are CC-BY-4.0 (see `LICENSE`). Jev is a trademark of TypeSafe AI;
-this project is independent and unaffiliated - see `NOTICE.md`.
+Everything in this repository - code, report text, figures, and derived data
+tables - is dedicated to the public domain under the Unlicense (see `LICENSE`).
+No attribution is required or requested; no rights are reserved. Third-party
+benchmark datasets referenced by our measurements remain under their own
+licenses, and no dataset item text is redistributed here. Jev is a trademark of
+TypeSafe AI; this project is independent and unaffiliated (see `NOTICE.md`).
