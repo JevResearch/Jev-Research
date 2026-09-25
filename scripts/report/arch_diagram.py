@@ -1,27 +1,26 @@
 #!/usr/bin/env python3
 """Generate the architecture diagram page: docs/modern-comparison/architecture-diagram.html
 
-One <svg> that build_report.py lifts into the report's "What Jev appears to be"
-section. Numeric labels are read from on-disk artifacts at render time
-(runs_archprobe/analysis.json, data_report/arch_audits.json,
-data_report/lattice_forensics.json, data_report/costs.json, the benchmark
-score roll-ups, and runs_live/token_talk_orderprobe.json), so the picture
-cannot drift from the data. A small number of prose-quoted statistics
-(abstention 0.71, fictional-origin 0.97, 173 tokenizer signatures) are cited
-verbatim from runs_live/FINDINGS.md and docs/modern-comparison/
-ARCHITECTURE-PROBES.md and marked as such in the provenance line.
+A clean transformer-style schematic: the canonical left-to-right stack
+(embeddings -> N x [attention, MLP] -> read-out) with only Jev's two real
+modifications drawn at the ends - the serving-path input stage and the
+option read-out / display pipeline that replaces the language head. Short
+labels only; every measurement lives in the report prose and
+ARCHITECTURE-ANALYSIS.md, and the few numbers shown here render from the
+on-disk artifacts at build time.
 
-Honesty legend, matching ARCHITECTURE-ANALYSIS.md:
-  solid teal   = confident (measured, adequate n, above the noise floor)
-  dashed amber = plausible (best explanation; rivals not excluded)
+Honesty styling, matching ARCHITECTURE-ANALYSIS.md:
+  solid teal   = confident / measured
+  dashed amber = plausible (best explanation)
   dotted grey  = NOT IDENTIFIED (we do not guess)
+
+One <svg>; build_report.py lifts it into the report's architecture section.
 
   python scripts/report/arch_diagram.py
 """
 
 from __future__ import annotations
 
-import glob
 import json
 from pathlib import Path
 
@@ -36,235 +35,196 @@ TEAL = "#38e1c8"
 AMBER = "#f5b342"
 PERI = "#7d8cff"
 
+W, H = 980, 620
+
 
 def jload(rel: str):
     return json.loads((ROOT / rel).read_text(encoding="utf-8"))
-
-
-def first_glob(pattern: str) -> dict:
-    hit = sorted(glob.glob(str(ROOT / pattern)))[0]
-    return json.loads(Path(hit).read_text(encoding="utf-8"))
 
 
 def esc(s: str) -> str:
     return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 
-def box(x: int, y: int, w: int, h: int, title: str, lines: list[str],
-        stroke: str, dash: str | None = None) -> str:
+def box(x, y, w, h, fill=PANEL, stroke=TEAL, sw=1.6, dash=None, rx=10):
     da = f' stroke-dasharray="{dash}"' if dash else ""
-    p = [f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="10" fill="{PANEL}" '
-         f'stroke="{stroke}" stroke-width="1.6"{da}/>',
-         f'<text x="{x+12}" y="{y+22}" fill="{stroke}" font-size="11.6" '
-         f'font-weight="700" letter-spacing="0.04em">{esc(title)}</text>']
-    ty = y + 42
-    for ln in lines:
-        fill = INK if ln.startswith("!") else MUT
-        txt = ln[1:] if ln.startswith("!") else ln
-        weight = ' font-weight="600"' if ln.startswith("!") else ""
-        p.append(f'<text x="{x+12}" y="{ty}" fill="{fill}" font-size="10.2"{weight}>'
-                 f'{esc(txt)}</text>')
-        ty += 15.5
-    return "".join(p)
+    return (f'<rect x="{x:.0f}" y="{y:.0f}" width="{w:.0f}" height="{h:.0f}" rx="{rx}" '
+            f'fill="{fill}" stroke="{stroke}" stroke-width="{sw}"{da}/>')
 
 
-def arrow(x1: int, y1: int, x2: int, y2: int, color: str = PERI) -> str:
-    return (f'<line x1="{x1}" y1="{y1}" x2="{x2-8}" y2="{y2}" stroke="{color}" '
-            f'stroke-width="1.8"/>'
-            f'<polygon points="{x2},{y2} {x2-8},{y2-4.5} {x2-8},{y2+4.5}" fill="{color}"/>')
+def txt(x, y, s, fill=MUT, size=11.5, anchor="middle", weight=None):
+    w = f' font-weight="{weight}"' if weight else ""
+    return (f'<text x="{x:.0f}" y="{y:.0f}" fill="{fill}" font-size="{size}"{w} '
+            f'text-anchor="{anchor}">{esc(s)}</text>')
+
+
+def arrow(x1, y1, x2, y2, color=PERI, sw=2.0):
+    return (f'<line x1="{x1:.0f}" y1="{y1:.0f}" x2="{x2:.0f}" y2="{y2:.0f}" stroke="{color}" '
+            f'stroke-width="{sw}"/>'
+            f'<polygon points="{x2:.0f},{y2:.0f} {x2-9:.0f},{y2-5:.0f} {x2-9:.0f},{y2+5:.0f}" fill="{color}"/>')
 
 
 def build_svg() -> str:
     A = jload("runs_archprobe/analysis.json")
-    AU = jload("data_report/arch_audits.json")
     LF = jload("data_report/lattice_forensics.json")
-    COSTS = jload("data_report/costs.json")
-    SC = {k: first_glob(p) for k, p in {
-        "mmlu": "runs_benchmark/bench-mmlu_full-*/derived/score.json",
-        "gpqa": "runs_benchmark_ext2/bench-gpqa_diamond-*/derived/score.json",
-        "hle": "runs_benchmark_ext2/bench-hle_text_mc-*/derived/score.json",
-        "math_c": "runs_benchmark_ext/bench-math500_choice-*/derived/score.json",
-        "math_s": "runs_benchmark_ext/bench-math500_score-*/derived/score.json",
-        "agi": "runs_benchmark_ext/bench-arc_agi2_choice-*/derived/score.json",
-    }.items()}
-    OP = jload("runs_live/token_talk_orderprobe.json")
-    tvds = [v for c in OP["contexts"].values() for v in c["repeat_tvd"].values()]
-    tvd_lo, tvd_hi = min(tvds), max(tvds)
 
-    pf = A["prefill"]; hc = A["headcount"]; oc = A["optioncount"]
-    conc = A["concurrency"]["per_call_wall"]
-    anc = A["ancestry"]; mass = anc["family_mass"]; votes = anc["greedy_votes"]
-    openai_votes = sum(votes.get(k, 0) for k in ("OpenAI", "GPT", "ChatGPT"))
-    cf = AU["confidence_formula"]["choice"]
-    mcq = AU["marginal_cost"]["per_question"]; mco = AU["marginal_cost"]["per_option"]
-    n_values = sum(c["n_values"] for c in LF["corpora"].values())
+    pf = A["prefill"]
+    floor = f"{pf['fixed_floor_ms']:.0f}"
+    slope = f"{pf['ms_per_1k_input_tokens']:.1f}"
+    mq = A["headcount"]["marginal_ms_per_question"]
+    mo = A["optioncount"]["marginal_ms_per_option"]
+    n_val = sum(c["n_values"] for c in LF["corpora"].values())
     n_vec = sum(c["n_vectors"] for c in LF["corpora"].values())
-    offgrid = sum(c["n_offgrid"] for c in LF["corpora"].values())
-    n_mismatch = sum(c["n_choice_not_table_argmax"] for c in LF["corpora"].values())
-    big = LF["corpora"]["talk_ensemble_raw"]["by_k_bucket"]["65-255"]
-    frac99 = big["sum_dev_sign_counts"]["le_-0.005"] / big["n_vectors"]
-    signs_pos = sum(b["sum_dev_sign_counts"]["ge_+0.005"]
-                    for c in LF["corpora"].values() for b in c["by_k_bucket"].values())
-    jp = COSTS["prices_usd_per_M"]["Jev"]
-    pct = lambda x: f"{100*x:.1f}%"
+    n_mis = sum(c["n_choice_not_table_argmax"] for c in LF["corpora"].values())
 
-    W, H = 980, 740
+    cx = 470            # trunk centerline
+    tw = 250            # trunk inner width
+    ty0 = 92            # trunk top
     p = [f'<svg viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" '
          f'font-family="system-ui,sans-serif" role="img" '
-         f'aria-label="Jev architecture reconstruction diagram">',
+         f'aria-label="Jev architecture: transformer schematic with modified '
+         f'input stage and option read-out">',
          f'<rect width="{W}" height="{H}" fill="{BG}" rx="14"/>',
-         f'<text x="24" y="30" fill="{INK}" font-size="16" font-weight="700">'
-         'The operating premise, drawn</text>',
-         f'<text x="24" y="48" fill="{MUT}" font-size="11">'
-         'behavioral evidence only - what one request does, left to right; what produced the weights, below</text>']
+         txt(W // 2, 28, "One request through Jev", INK, 15.5, weight="700"),
+         txt(W // 2, 46, "a transformer stack, drawn plain - with the two modifications the evidence actually shows",
+             MUT, 10.5)]
 
-    # ---- top row: request -> serving path -> one pass -> read-out -> response
-    ty, th = 64, 268
-    bw = 182
-    xs = [12, 208, 404, 600, 796]
+    # ---------------- INPUT column (left) ----------------
+    ix, iw = 24, 208
+    p.append(box(ix, 78, iw, 118))
+    p.append(txt(ix + iw / 2, 98, "REQUEST", TEAL, 11, weight="700"))
+    p.append(txt(ix + iw / 2, 120, "state + questions", INK, 11.5))
+    p.append(txt(ix + iw / 2, 138, "options: 255 or fewer each", MUT, 11))
+    p.append(txt(ix + iw / 2, 156, "choice / score / noul", MUT, 11))
+    p.append(txt(ix + iw / 2, 178, "POST /v1/systemone", MUT, 9.5))
 
-    p.append(box(xs[0], ty, bw, th, "1 - REQUEST", [
-        "!POST /v1/systemone",
-        "state <= 32k tokens",
-        "Q questions x K options",
-        "choice: <= 255 options",
-        "score: 2-10 rubric levels",
-        "noul: one yes-scalar",
-        "model pinned jev-1.13.0",
-        "",
-        "question IDs never reach",
-        "inference: vendor claim,",
-        "not established by us",
-    ], TEAL))
+    p.append(arrow(ix + iw / 2, 196, ix + iw / 2, 224))
 
-    p.append(box(xs[1], ty, bw, th, "2 - SERVING PATH", [
-        "!whitespace normalizer",
-        "whitespace runs -> 0 tok",
-        f"fixed template ~{AU['battery_power']['mergerate_baseline_tokens']} tok",
-        "!vendor's own BPE tokenizer:",
-        "Latin: 0.15-0.26 tok/char",
-        "non-Latin ~1 tok/codepoint",
-        "digits ~1; rare chars ~2",
-        "(byte-level fallback)",
-        "no match among 173 open",
-        "signatures (1,215 repos)",
-    ], TEAL))
+    p.append(box(ix, 226, iw, 150))
+    p.append(txt(ix + iw / 2, 246, "SERVING PATH", TEAL, 11, weight="700"))
+    p.append(txt(ix + iw / 2, 268, "whitespace normalizer", INK, 11.5))
+    p.append(txt(ix + iw / 2, 286, "fixed template, ~316 tok", MUT, 11))
+    p.append(txt(ix + iw / 2, 306, "vendor's own tokenizer", INK, 11.5))
+    p.append(txt(ix + iw / 2, 324, "Latin-centric BPE,", MUT, 11))
+    p.append(txt(ix + iw / 2, 340, "byte-level fallback,", MUT, 11))
+    p.append(txt(ix + iw / 2, 356, "~1 tok per non-Latin char", MUT, 11))
 
-    p.append(box(xs[2], ty, bw, th, "3 - ONE FORWARD PASS", [
-        "!prefill only; no decode",
-        f"{pf['fixed_floor_ms']:.0f} ms floor + {pf['ms_per_1k_input_tokens']:.1f} ms/1k tok",
-        f"linear to {pf['token_range'][1]/1000:.0f}k, no blowup",
-        "all Q x K from one pass",
-        f"+{hc['marginal_ms_per_question']:.2f} ms/question,",
-        f"+{oc['marginal_ms_per_option']:.2f} ms/option - both",
-        "= their own tokens' prefill",
-        "continuous batching:",
-        f"upstream flat {conc['1']['median_upstream_ms']:.0f}->{conc['32']['median_upstream_ms']:.0f} ms",
-        "at c=1->32",
-    ], TEAL))
+    # serving path -> trunk: clean horizontal into the pass frame
+    p.append(arrow(ix + iw + 2, 301, cx - tw / 2 - 18, 301))
 
-    ix, iy, iw, ih = xs[2] + 10, ty + th - 62, bw - 20, 52
-    p.append(f'<rect x="{ix}" y="{iy}" width="{iw}" height="{ih}" rx="8" fill="{BG}" '
-             f'stroke="{MUT}" stroke-width="1.2" stroke-dasharray="2 3"/>')
-    p.append(f'<text x="{ix+9}" y="{iy+16}" fill="{MUT}" font-size="9.8">core: transformer-family</text>')
-    p.append(f'<text x="{ix+9}" y="{iy+30}" fill="{MUT}" font-size="9.8">(plausible); size, dense/</text>')
-    p.append(f'<text x="{ix+9}" y="{iy+44}" fill="{MUT}" font-size="9.8">MoE, attention: NOT IDENT.</text>')
+    # ---------------- TRUNK (center) ----------------
+    p.append(box(cx - tw / 2 - 16, ty0 - 14, tw + 32, 386, sw=1.4))
+    p.append(txt(cx, ty0 + 6, "ONE FORWARD PASS  (prefill only)", TEAL, 11.5, weight="700"))
 
-    p.append(box(xs[3], ty, bw, th, "4 - READ-OUT", [
-        "!trained head, not text",
-        "probs over YOUR options",
-        f"0.01 grid: {n_values:,} values,",
-        f"{offgrid} off-grid ({n_vec:,} vectors)",
-        "sums 0.99/1.00, never >1",
-        f"{pct(frac99)} of K~255 vectors",
-        "  land 0.01 short",
-        "decision = pre-rounding",
-        f"argmax ({n_mismatch} tables differ,",
-        "  all by exactly 1q)",
-        "confidence formula fits:",
-        "(pmax-1/K)/(1-1/K)",
-        f"{cf['exact']:,} exact; {cf['within_1_quantum'] + cf['within_2_quanta']} <=2q;",
-        "none beyond",
-        f"decision cost <= {mcq['residual_ms_per_unit']:.2f} ms/q",
-    ], TEAL))
+    p.append(box(cx - tw / 2, ty0 + 22, tw, 40))
+    p.append(txt(cx, ty0 + 47, "token embeddings", INK, 12))
 
-    p.append(box(xs[4], ty, bw - 10, th, "5 - RESPONSE", [
-        "!serialized JSON, no prose",
-        f"~{hc['marginal_output_tokens_per_question']:.0f} output tok/question",
-        f"~{oc['marginal_output_tokens_per_option']:.1f} output tok/option",
-        "output billed $0",
-        f"input ${jp['input']:.3f}/M tokens",
-        "schema-invalid: 19 of",
-        "  ~16k requests",
-        "",
-        "nondeterminism: TVD",
-        f"{tvd_lo:.2f}-{tvd_hi:.2f} on flat menus",
-        "(the noise floor for",
-        " all of the above)",
-    ], TEAL))
+    p.append(arrow(cx, ty0 + 62, cx, ty0 + 84))
 
-    for i in range(4):
-        p.append(arrow(xs[i] + bw + 1, ty + th // 2,
-                       xs[i + 1] - 1, ty + th // 2))
+    # N x [attention, feed-forward]
+    p.append(box(cx - tw / 2, ty0 + 86, tw, 132, sw=1.2))
+    p.append(box(cx - tw / 2 + 14, ty0 + 100, tw - 28, 44))
+    p.append(txt(cx, ty0 + 127, "attention", INK, 12))
+    p.append(box(cx - tw / 2 + 14, ty0 + 158, tw - 28, 44))
+    p.append(txt(cx, ty0 + 185, "feed-forward", INK, 12))
+    p.append(txt(cx + tw / 2 + 24, ty0 + 157, "\u00d7 N", INK, 13, anchor="start", weight="700"))
 
-    # ---- bottom row: training history (plausible) + not identified
-    by, bh = 366, 268
-    p.append(box(16, by, 470, bh, "TRAINING HISTORY - inferred (plausible)", [
-        "!pretraining: English-dominant corpus",
-        "   per-script tokenizer coverage is the fossil record:",
-        "   small script blocks covered char-by-char, CJK only common chars",
-        "!knowledge horizon: late 2024",
-        "   2022-24 facts at p~0.97-1.0; Nov-2024 election known;",
-        "   fictional events refused closed-book (FINDINGS.md S5)",
-        "!post-training: judgement format (vendor name: 'RLCD')",
-        "   schema perfection; trained abstention (0.71 'cannot say' on an",
-        "   item it answers at 0.98 forced); semantic END on short answers;",
-        f"   recognition >> production (MATH-500: {pct(SC['math_c']['accuracy'])} as MCQ",
-        f"   vs {pct(SC['math_s']['accuracy'])} read out per digit)",
-        "!brand prior: OpenAI-shaped learned text - NOT lineage",
-        f"   {mass['openai']:.2f} family mass; {openai_votes}/{anc['n_frames_with_probs']} greedy votes; own name never",
-        "   chosen at parity; fictional origin accepted at 0.97",
-        "!frontier-teacher (distillation) share: not identifiable",
-    ], AMBER, dash="6 4"))
+    # loop-back arrow (residual repetition of the block), drawn in the
+    # corridor between the inner block and the pass frame
+    lx = cx - tw / 2 - 8
+    p.append(f'<path d="M {cx - tw/2:.0f} {ty0+152} L {lx:.0f} {ty0+152} L {lx:.0f} {ty0+42:.0f} '
+             f'L {cx - tw/2:.0f} {ty0+42:.0f}" fill="none" stroke="{MUT}" stroke-width="1.4"/>'
+             f'<polygon points="{cx - tw/2 + 1:.0f},{ty0+42:.0f} {cx - tw/2 - 8:.0f},{ty0+37.5:.0f} '
+             f'{cx - tw/2 - 8:.0f},{ty0+46.5:.0f}" fill="{MUT}"/>')
 
-    p.append(box(502, by, 462, bh, "NOT IDENTIFIED - and what could move it", [
-        "!parameter count: no honest number exists",
-        "   capability band only: 2025-era small-instruct class on",
-        f"   knowledge MCQ (MMLU-Pro {pct(SC['mmlu']['accuracy'])} / GPQA {pct(SC['gpqa']['accuracy'])}, direct",
-        f"   one-shot); HLE {pct(SC['hle']['accuracy'])} and ARC-AGI-2 {SC['agi']['tasks_solved']}/{SC['agi']['n_tasks']} exact",
-        "   say 'not frontier'",
-        "!dense vs MoE: unconstrained by any API-visible signal",
-        f"   (prefill-only small-dense serving already explains ${jp['input']:.3f}/M)",
-        "!distillation vs on-policy: every discriminator confounded",
-        "!exact rule of the 0.01 lattice: bounded + one-sided",
-        f"   (never >1.00; {pct(frac99)} of flat K~255 vectors land 0.01 short)",
-        "",
-        "!battery P1-P5 STAGED, dry-run-validated (3,331 calls ~ $0.10):",
-        "   fallback granularity - option-cost decoupling - calibration vs K -",
-        "   lattice rule on identical options - horizon bisection. Dispatch gated",
-        "   on TYPESAFE_API_KEY (scripts/benchmark/run_probe_battery2.py).",
-    ], MUT, dash="2 3"))
+    p.append(arrow(cx, ty0 + 218, cx, ty0 + 244))
+    p.append(box(cx - tw / 2, ty0 + 246, tw, 40))
+    p.append(txt(cx, ty0 + 271, "final hidden states h", INK, 12))
+    p.append(txt(cx, ty0 + 310, "every question + option reads from this one pass",
+                 MUT, 10.5))
+    p.append(txt(cx, ty0 + 326, f"compute: {floor} ms floor + {slope} ms per 1k tokens",
+                 MUT, 10.5))
+    p.append(txt(cx, ty0 + 342, "linear to 29k; deciding adds <= 0.11 ms/question",
+                 MUT, 10.5))
 
-    # arrow: training -> weights (into box 3)
-    p.append(f'<line x1="251" y1="{by}" x2="492" y2="{ty+th+6}" stroke="{AMBER}" '
-             f'stroke-width="1.4" stroke-dasharray="6 4"/>')
-    p.append(f'<polygon points="496,{ty+th+2} 485,{ty+th+2} 490,{ty+th+11}" fill="{AMBER}"/>')
-    p.append(f'<text x="308" y="{by-8}" fill="{AMBER}" font-size="10">produced the weights</text>')
+    # not-identified inset (dotted grey), inside the trunk frame
+    p.append(box(cx - tw / 2 + 8, ty0 + 352, tw - 16, 30, fill=BG, stroke=MUT,
+                 sw=1.1, dash="2 3", rx=8))
+    p.append(txt(cx, ty0 + 371, "N, width, size, dense/MoE: NOT IDENTIFIED", MUT, 9.8))
 
-    # ---- legend + provenance
-    ly = by + bh + 32
-    p.append(f'<line x1="20" y1="{ly}" x2="52" y2="{ly}" stroke="{TEAL}" stroke-width="2.4"/>')
-    p.append(f'<text x="58" y="{ly+4}" fill="{MUT}" font-size="10.5">confident - measured, above the noise floor</text>')
-    p.append(f'<line x1="310" y1="{ly}" x2="342" y2="{ly}" stroke="{AMBER}" stroke-width="2.4" stroke-dasharray="6 4"/>')
-    p.append(f'<text x="348" y="{ly+4}" fill="{MUT}" font-size="10.5">plausible - best explanation, rivals not excluded</text>')
-    p.append(f'<line x1="640" y1="{ly}" x2="672" y2="{ly}" stroke="{MUT}" stroke-width="2.4" stroke-dasharray="2 3"/>')
-    p.append(f'<text x="678" y="{ly+4}" fill="{MUT}" font-size="10.5">not identified - we do not guess</text>')
-    p.append(f'<text x="20" y="{ly+24}" fill="{MUT}" font-size="9.8">'
-             'numbers render at build time from runs_archprobe/analysis.json, data_report/arch_audits.json, data_report/lattice_forensics.json,</text>')
-    p.append(f'<text x="20" y="{ly+38}" fill="{MUT}" font-size="9.8">'
-             'data_report/costs.json, runs_benchmark*/derived/score.json, runs_live/token_talk_orderprobe.json; prose-quoted statistics cite runs_live/FINDINGS.md</text>')
-    p.append(f'<text x="20" y="{ly+52}" fill="{MUT}" font-size="9.8">'
-             'and docs/modern-comparison/ARCHITECTURE-PROBES.md. Across all corpora, not one displayed vector sums above 1.00 (positive deviations found: ' + str(signs_pos) + ').</text>')
+    # final hidden states -> read-out head: elbow out of the frame and up
+    p.append(f'<path d="M {cx + tw / 2:.0f} 358 L 672 358 L 672 202 L 738 202" '
+             f'fill="none" stroke="{PERI}" stroke-width="2"/>')
+    p.append(arrow(738, 202, 746, 202))
+
+    # ---------------- READ-OUT column (right) ----------------
+    rx0, rw = 748, 208
+    p.append(box(rx0, 118, rw, 168))
+    p.append(txt(rx0 + rw / 2, 138, "READ-OUT HEAD", TEAL, 11, weight="700"))
+    p.append(txt(rx0 + rw / 2, 160, "replaces the language head", MUT, 11))
+    p.append(txt(rx0 + rw / 2, 182, "scores caller options", INK, 11.5))
+    p.append(txt(rx0 + rw / 2, 200, "distribution per question", MUT, 11))
+    p.append(txt(rx0 + rw / 2, 226, f"+{mq:.2f} ms / question", MUT, 10.5))
+    p.append(txt(rx0 + rw / 2, 242, f"+{mo:.2f} ms / option", MUT, 10.5))
+    p.append(txt(rx0 + rw / 2, 260, "= their own tokens' prefill", MUT, 10.5))
+
+    p.append(arrow(rx0 + rw / 2, 286, rx0 + rw / 2, 314))
+
+    p.append(box(rx0, 316, rw, 120))
+    p.append(txt(rx0 + rw / 2, 336, "DISPLAY PIPELINE", TEAL, 11, weight="700"))
+    p.append(txt(rx0 + rw / 2, 358, "argmax before rounding", INK, 11.5))
+    p.append(txt(rx0 + rw / 2, 376, "probs onto the 0.01 grid", MUT, 11))
+    p.append(txt(rx0 + rw / 2, 394, "sums 0.99 / 1.00, never >1", MUT, 11))
+    p.append(txt(rx0 + rw / 2, 412, "confidence: shape-derived", MUT, 11))
+    p.append(txt(rx0 + rw / 2, 428, f"{n_mis} choice-vs-table seams, all 1q", MUT, 9.8))
+
+    p.append(arrow(rx0 + rw / 2, 436, rx0 + rw / 2, 484))
+
+    p.append(box(rx0, 486, rw, 76))
+    p.append(txt(rx0 + rw / 2, 506, "RESPONSE JSON", TEAL, 11, weight="700"))
+    p.append(txt(rx0 + rw / 2, 528, "serialized vectors;", INK, 11.5))
+    p.append(txt(rx0 + rw / 2, 546, "output billed $0", MUT, 11))
+
+    # ---------------- bottom band ----------------
+    yb = 486
+    p.append(box(24, yb, 424, 104, stroke=AMBER, dash="6 4"))
+    p.append(txt(36, yb + 20, "WHAT MADE THE WEIGHTS (inferred - plausible)", AMBER,
+                 10.8, anchor="start", weight="700"))
+    p.append(txt(36, yb + 42, "English-dominant pretraining; horizon late 2024",
+                 INK, 11, anchor="start"))
+    p.append(txt(36, yb + 60, "judgement-format post-training (vendor: RLCD);",
+                 MUT, 11, anchor="start"))
+    p.append(txt(36, yb + 76, "OpenAI-shaped brand prior = learned text, not lineage",
+                 MUT, 11, anchor="start"))
+    p.append(txt(36, yb + 94, "frontier-teacher contribution: not identifiable",
+                 MUT, 11, anchor="start"))
+    # dashed arrow up into the trunk
+    p.append(f'<line x1="236" y1="{yb}" x2="374" y2="{ty0 + 392}" stroke="{AMBER}" '
+             f'stroke-width="1.3" stroke-dasharray="6 4"/>')
+    p.append(f'<polygon points="378,{ty0 + 388} 366,{ty0 + 388} 372,{ty0 + 397}" fill="{AMBER}"/>')
+
+    p.append(box(466, yb, 250, 104, stroke=MUT, dash="2 3"))
+    p.append(txt(478, yb + 20, "NOT IDENTIFIED", MUT, 10.8, anchor="start", weight="700"))
+    p.append(txt(478, yb + 42, "parameter count (banded in report)", MUT, 11, anchor="start"))
+    p.append(txt(478, yb + 60, "dense vs MoE; attention type", MUT, 11, anchor="start"))
+    p.append(txt(478, yb + 78, "distillation vs on-policy", MUT, 11, anchor="start"))
+    p.append(txt(478, yb + 96, "exact lattice rounding rule", MUT, 11, anchor="start"))
+
+    # legend row: between trunk bottom (~464) and bottom band (486)
+    ly = 478
+    p.append(f'<line x1="238" y1="{ly}" x2="266" y2="{ly}" stroke="{TEAL}" stroke-width="2.4"/>')
+    p.append(txt(274, ly + 4, "measured / confident", MUT, 10, anchor="start"))
+    p.append(f'<line x1="424" y1="{ly}" x2="452" y2="{ly}" stroke="{AMBER}" stroke-width="2.4" stroke-dasharray="6 4"/>')
+    p.append(txt(460, ly + 4, "plausible (inferred)", MUT, 10, anchor="start"))
+    p.append(f'<line x1="608" y1="{ly}" x2="636" y2="{ly}" stroke="{MUT}" stroke-width="2.4" stroke-dasharray="2 3"/>')
+    p.append(txt(644, ly + 4, "not identified", MUT, 10, anchor="start"))
+
+    # provenance, in the left column's dead space above the amber panel
+    p.append(txt(28, 408, f"lattice: {n_val:,} values / {n_vec:,} vectors,",
+                 MUT, 9.3, anchor="start"))
+    p.append(txt(28, 422, "zero off-grid (lattice_forensics.json)",
+                 MUT, 9.3, anchor="start"))
+
     p.append("</svg>")
     return "".join(p)
 
@@ -276,18 +236,20 @@ def main() -> int:
         '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
         '<title>Jev architecture diagram</title><style>\n'
         f' body {{ background:{BG}; color:{INK}; font-family: system-ui, sans-serif;\n'
-        '        max-width:1000px; margin:2rem auto; padding:0 1rem; line-height:1.5; }\n'
+        '        max-width:1000px; margin:2rem auto; padding:0 1rem; line-height:1.5; }}\n'
         ' h1 { font-size:24px; }\n'
         ' svg { width:100%; height:auto; display:block; margin:.4rem 0 1rem; }\n'
         f' p.lead {{ color:{MUT}; font-size:14px; max-width:80ch; }}\n'
         '</style></head><body>\n'
         '<h1>What Jev appears to be, drawn</h1>\n'
-        '<p class="lead">The operating premise from the report\u2019s architecture section: '
-        'one request\u2019s path left to right (teal = measured), the training history that '
-        'produced the weights (amber = best explanation), and the parts no API-visible '
-        'signal can reach (grey dotted = not identified). Generated by '
-        'scripts/report/arch_diagram.py from the published artifacts at build time; '
-        'behavioral evidence only.</p>\n'
+        '<p class="lead">The canonical transformer stack, drawn plain, with the '
+        'two modifications the evidence actually shows: a serving-path input '
+        'stage (normalizer, fixed template, vendor tokenizer) and an option '
+        'read-out with a quantized display pipeline in place of the language '
+        'head. Solid teal = measured; dashed amber = inferred; dotted grey = '
+        'not identified. Detail and derivation: the report\u2019s architecture '
+        'section and ARCHITECTURE-ANALYSIS.md. Generated by '
+        'scripts/report/arch_diagram.py from the published artifacts.</p>\n'
         + svg + '\n'
         '</body></html>\n'
     )

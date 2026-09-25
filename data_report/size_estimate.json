@@ -1,0 +1,103 @@
+{
+ "generated_by": "scripts/report/size_estimate.py (offline; assumptions explicit)",
+ "claim_level": "speculative band under stated assumptions; NOT an identification",
+ "prefill_angle": {
+  "method": "N_active <= MFU * peak * S / (2 * R); R from the measured marginal prefill slope",
+  "marginal_prefill_rate_tok_s": 165207,
+  "assumptions": {
+   "MFU": [
+    0.25,
+    0.45
+   ],
+   "peak_TFLOPS_bf16_per_device": [
+    250,
+    500
+   ],
+   "shard_count_S": [
+    1,
+    2,
+    4
+   ],
+   "flops_per_token": "2 * N_active (attention/overhead excluded; adds <= ~15% at <=29k ctx)",
+   "concurrent_streams_B": "1 (conservative: batching with other tenants only lowers the per-stream bound)",
+   "regime": "compute-bound batched prefill (165k tok/s marginal is far above memory-bound decode rates)"
+  },
+  "active_params_B_range": [
+   0.19,
+   2.72
+  ],
+  "central_case_B": 0.74,
+  "reading": "Any architecture - dense or MoE - serving this marginal prefill rate on 1-4 modern accelerators at ordinary efficiency has an ACTIVE footprint of roughly 0.2-2.7B parameters; multi-tenant sharing, not less, is the honest direction of error."
+ },
+ "capability_angle": {
+  "nearest_published_neighbors": {
+   "Qwen 3.5 9B": {
+    "mmlu_pro": 0.825,
+    "gpqa": 0.776,
+    "protocol": "reasoning (aggregator)"
+   },
+   "Claude 3.7 Sonnet (no thinking)": {
+    "mmlu_pro": 0.807,
+    "gpqa": 0.768,
+    "protocol": "direct"
+   },
+   "Qwen3.8-27B": {
+    "mmlu_pro": 0.843,
+    "gpqa": 0.822,
+    "protocol": "cot_5shot / reasoning"
+   }
+  },
+  "jev": {
+   "mmlu_pro": 0.8282,
+   "gpqa": 0.7653,
+   "protocol": "direct, one-shot, no CoT"
+  },
+  "band_dense_equivalent_b": [
+   4.0,
+   14.0
+  ],
+  "basis": "Jev's direct-answer MMLU-Pro/GPQA sit at/above the no-thinking Claude 3.7 row and beside Qwen 3.5 9B's reasoning-protocol scores; a 2025-era ~9B-class instruct model is the nearest published analog, with a 4-14B dense-equivalent band to absorb protocol mismatch and vintage effects. HLE 21.9% and ARC-AGI-2 0/120 exact cap it far below frontier sizes.",
+  "caveats": [
+   "capability bands are loose: hundreds of models share this band",
+   "distillation shifts capability-per-parameter upward (a distilled 1-4B can sit in this band on knowledge MCQs)",
+   "MoE models are sized by ACTIVE parameters in this band too"
+  ]
+ },
+ "conventions_note": "2N FLOPs/token counts weight matmuls only; attention adds ~2*L*d_model per token per layer, which at <=29k context and typical small-model widths is <15% of the total - inside the assumption ranges.",
+ "reconciliation": {
+  "tension": "prefill-throughput angle: <= 0.2-2.7B ACTIVE parameters (B=1 conservative). capability angle: 4-14B dense-equivalent. The two overlap only at the top of the throughput band and the bottom of the capability band.",
+  "readings_that_reconcile_both": [
+   {
+    "reading": "MoE",
+    "statement": "active ~0.2-2.7B with a larger total (e.g. a ~15-40B-total MoE at 10-20% activation) satisfies the throughput bound while carrying 9B-class knowledge",
+    "independent_evidence": "none - the API cannot see expert structure (ARCHITECTURE-ANALYSIS.md sec.5)"
+   },
+   {
+    "reading": "quantized serving",
+    "statement": "fp8/int4 weights+math raise effective peak 2-4x, moving the throughput band to ~0.4-10B active; a dense 4-8B served at int4 fits both angles",
+    "independent_evidence": "none directly; the $0.042/M price is consistent with aggressive cost engineering"
+   },
+   {
+    "reading": "distilled small dense",
+    "statement": "a distilled 1-4B dense model can reach the BOTTOM of the 4-14B capability band on knowledge MCQs (teacher labels transfer knowledge, not reasoning) - and Jev's recognition>>production asymmetry is exactly that shape",
+    "independent_evidence": "weak/indirect: generation tax (83.1% MCQ vs 13.6% digit read-out), HLE near floor, brand prior (ARCHITECTURE-ANALYSIS.md sec.6)"
+   },
+   {
+    "reading": "throughput band is soft at the top",
+    "statement": "B>1 amortization, higher MFU, or larger shards than assumed push the active bound up toward 4B",
+    "independent_evidence": "ground rule 4 itself: marginal ms under shared batching is a scheduling artifact"
+   }
+  ],
+  "converged_statement": "Two-sided best guess: ACTIVE parameters of order 0.5-4B (throughput bound at the top under conservative assumptions, capability band at the bottom once distillation/MoE are admitted); TOTAL parameters unconstrained (MoE would hide them). If forced to one dense-equivalent number: order 1-9B, i.e. a 2025-era small model - NOT a parameter claim from latency alone (ground rule 4 is respected: the throughput angle is an explicit-assumptions bound, not a slope-to-size conversion).",
+  "what_would_tighten_it": [
+   "vendor disclosure (trivially)",
+   "a matched-protocol capability evaluation (removes band looseness)",
+   "the staged P2 option-cost probe at large K under load (bounds per-token marginal compute more tightly)"
+  ]
+ },
+ "provenance": [
+  "runs_archprobe/analysis.json",
+  "docs/modern-comparison/canonical/comparable-scores.json",
+  "runs_benchmark*/bench-*/derived/score.json"
+ ]
+}

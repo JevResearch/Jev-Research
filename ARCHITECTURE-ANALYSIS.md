@@ -8,6 +8,7 @@
 audits cited below are re-derived from published artifacts by
 `scripts/report/arch_audits.py` → `data_report/arch_audits.json` and
 `scripts/report/lattice_forensics.py` → `data_report/lattice_forensics.json`
+and `scripts/report/size_estimate.py` → `data_report/size_estimate.json`
 (offline; no network, no live calls). The §10 follow-up battery is **built and
 dry-run-validated but NOT dispatched**: this environment holds no working
 `TYPESAFE_API_KEY` (the documented fallback key returns 401 against the live
@@ -58,7 +59,7 @@ would force us to abandon or materially rewrite the row.
 | Tokenizer | Vendor's own **English/Latin-centric BPE**: heavy Latin/punctuation merges; ~1 token per codepoint for Cyrillic, Greek, Arabic, Hebrew, Thai, Devanagari, Hangul, kana, common CJK; digits ~1 each; **sub-codepoint (byte-level) fallback** for uncovered chars (~2 tokens per uncovered 3-byte char; ~1.7–3 per astral); no match among 173 open signatures | plausible (strong) | `runs_archprobe/tokens_per_char_compare.json`, `tokenizer_perscript.json` (best of 88 candidates at RMSE 20.6 with systematic per-script sign errors), `tokenizer_broadscan.json` (1,215 repos → 173 signatures → 128 scored), `docs/modern-comparison/ARCHITECTURE-PROBES.md` §5b–5c | A tokenizer reproducing the whitespace-free per-script table within ~1 token/sample |
 | Core model class | Transformer-family decoder LM | plausible | LM-like token behavior in Talk traces; linear prefill; capability profile; the vendor's own primer narrative (`SOURCES.md` S10) — no API signal separates attention variants at ≤29k | — (not falsifiable from this API; see §5) |
 | Dense vs MoE | **Not constrained.** Nothing API-visible separates them; the economics do not require MoE | — | §5 | — |
-| Size | **No parameter count is identified** (ground rule 4). Capability band: knowledge-MCQ performance alongside 2025-era ~9B-class instruct models; expert-frontier and sequential-generation performance far below any frontier | confident (the refusal) / speculative (the band) | §2D, §4; `docs/modern-comparison/canonical/comparable-scores.json` | A protocol-matched evaluation placing Jev consistently outside the band |
+| Size | **No point estimate — a two-angle band.** Throughput angle: ≤ ~0.2–2.7B *active* parameters (explicit serving assumptions; tenant-sharing only lowers the bound). Capability angle: ~4–14B dense-equivalent (2025-era small-instruct band). Converged: **~0.5–4B active, total unconstrained** (MoE / quantization / distillation reconcile the angles) | speculative (band); assumptions stated | §4; `data_report/size_estimate.json`; `docs/modern-comparison/canonical/comparable-scores.json` | Vendor disclosure; a matched-protocol evaluation outside the band; the staged P2 probe tightening per-token marginal compute |
 | Training history | English-dominant pretraining corpus (the tokenizer's per-script coverage is its fossil record); knowledge horizon **late 2024**; assistant-shaped **judgement-format post-training** (schema perfection under load, trained abstention, shape-derived confidence); OpenAI-flavored **brand prior inherited from training text** | plausible | §2F, §2G; `runs_live/FINDINGS.md` §5; `runs_archprobe/analysis.json → ancestry`; `docs/token-talk-findings.md` §9, §15 | Verifiably post-cutoff events answered correctly closed-book; identity answers that track deployment facts rather than internet priors |
 | Frontier-teacher distillation | Possible contributor to post-training; **not identifiable** from any API-visible signal we can construct | speculative | §6 | — (under-determined; §6 lists the weak discriminators and their power) |
 | What it is not | Not a frontier model; not retrieval- or cache-assisted; not a wrapper around another vendor's API; not a relabeled *open* model | confident | §7 | One clean counter-instance each (e.g., a post-cutoff fact closed-book; a cache-flat latency component; an upstream round-trip signature; an exact open-tokenizer match) |
@@ -409,35 +410,80 @@ deciding.
 
 ---
 
-## 4. Size: what we refuse to say, and the band we will
+## 4. Size: two angles that converge on a band
 
-Ground rule 4 forbids converting latency slopes to parameter counts, and the
-data illustrates why: the marginal prefill rate (~6.0 ms/ktok ≈ 165k tok/s
-per stream) is measured while the server batches our tokens with other
-tenants', so it bounds nothing about per-device throughput; `docs/modern-
-comparison/ARCHITECTURE-PROBES.md` §6 declines the estimate explicitly, as
-does `docs/review-gate/batching-plan.md`. The vendor advertises 250k tok/s
-(`SOURCES.md` S8) — same order as our marginal slope; the two numbers measure
-different things and agree about nothing deeper.
+Ground rule 4 forbids reading a parameter count *off a latency slope*, and for
+good reason: the marginal prefill rate is measured while the server batches our
+tokens with other tenants', so a naive slope→size conversion would be a
+scheduling artifact. But "do not convert the slope" is not "do not estimate."
+There are two independent angles, each with explicit assumptions, and they
+overlap — so we give a band and show the arithmetic.
 
-What the *capability* evidence licenses, as a band and not a count:
+### Angle 1 — prefill throughput (an upper bound on *active* parameters)
 
-* Knowledge-MCQ positioning (§2D) matches 2025-era instruct models around
-  the ~9B dense mark (Qwen 3.5 9B is the nearest published neighbor on both
-  MMLU-Pro and GPQA), with the protocol caveat cutting in Jev's favor.
-* HLE near-floor, ARC-AGI-2 zero-exact, and the generation ladder collapse
-  put a ceiling well below anything frontier-sized.
-* A small *active* footprint with a larger total (MoE) would produce the same
-  band. So would a 2024-vintage mid-size dense model with strong
-  judgement-format post-training.
+The measured marginal prefill rate is 6.053 ms per 1k input tokens
+(`runs_archprobe/analysis.json`) = **R ≈ 165,000 tokens/s** of incremental
+server compute. Batched prefill is compute-bound (165k tok/s is far above
+memory-bound decode rates), and a forward pass costs ≈ 2·N_active FLOPs per
+token (the Kaplan/Chinchilla convention; attention adds ≲15% at ≤29k context,
+inside the assumption range). If the accelerator delivers MFU × peak FLOPS,
+then sustaining R tokens/s needs
 
-**Band statement [speculative]:** order 10⁹–10¹⁰ active parameters,
-dense-equivalent; total parameters unconstrained. We attach no confidence
-interval to this and no measurement in the repo can tighten it; it is a
-positioning statement for buyers ("think 2025 small-model class, not
-frontier"), not an architecture finding. **Falsified by** any credible
-vendor disclosure or protocol-matched evaluation placing Jev outside the
-band.
+> N_active ≤ MFU × peak × shards ÷ (2R)
+
+Across an honest grid — MFU 0.25–0.45 (achieved utilization on large-batch
+prefill), 250–500 TFLOPS bf16 per device (A100-class to H100-class dense),
+1–4 devices per pass — this bounds the **active footprint at ≈ 0.2–2.7B
+parameters, central case ≈ 0.7B** (`data_report/size_estimate.json`). Two
+honesty notes: (a) concurrent streams B>1 sharing weight fetches only *lower*
+the per-stream bound, so B=1 is the conservative direction; (b) the MFU/peak
+ranges are industry-standard serving assumptions, not repo measurements. This
+is an explicit-assumptions bound, not the forbidden slope→size conversion.
+The vendor's advertised 250k tok/s (`SOURCES.md` S8) is the same order as our
+R — consistent, and equally not a size.
+
+### Angle 2 — capability band (a dense-equivalent range)
+
+Direct-answer MMLU-Pro 82.8 / GPQA 76.5 sit beside Qwen 3.5 9B (82.5 / 77.6,
+reasoning protocol) and above Claude 3.7 Sonnet no-thinking (80.7 / 76.8,
+direct); the next rung up (Qwen3.8-27B, 84.3 / 82.2) is clearly above Jev
+(`docs/modern-comparison/canonical/comparable-scores.json`). HLE 21.9 and
+ARC-AGI-2 0/120 exact cap it far below frontier sizes. That places Jev in a
+**~4–14B dense-equivalent** band, nearest-analog ~9B-class, with the protocol
+mismatch (several comparators used CoT; Jev never does) cutting in Jev's
+favor. Capability bands are loose — hundreds of models share this one — and
+distillation shifts capability-per-parameter upward.
+
+### Where the two angles meet
+
+They overlap only at the top of the throughput bound and the bottom of the
+capability band. That gap is itself informative — something must reconcile a
+≤2.7B *active* footprint with ~9B-class *knowledge*:
+
+1. **MoE**: active ≪ total. The throughput angle bounds *active* parameters
+   only; a ~15–40B-total MoE at 10–20% activation satisfies it while carrying
+   9B-class knowledge. (The API cannot see expert structure — §5.)
+2. **Quantized serving**: fp8/int4 weights and math raise effective peak 2–4×,
+   moving the throughput band to ~0.4–10B active; a dense 4–8B served at int4
+   fits both angles. Consistent with the aggressive $0.042/M price.
+3. **Distilled small dense**: teacher labels lift a 1–4B dense model into the
+   bottom of the capability band on knowledge MCQs (transferring knowledge,
+   not multi-step reasoning) — and Jev's recognition ≫ production asymmetry
+   (83.1% MCQ vs 13.6% digit read-out, §2D) is exactly that shape. This is
+   weak, indirect support for the distillation hypothesis (§6).
+4. **Soft band top**: B>1 amortization, higher MFU, or more shards than assumed
+   push the active bound up toward ~4B.
+
+**Converged statement [speculative]:** ACTIVE parameters of order **0.5–4B**;
+TOTAL parameters **unconstrained** (an MoE would hide them). Forced to a single
+dense-equivalent order: **1–9B** — a 2025-era small model. This respects ground
+rule 4: the throughput angle is an explicit-assumptions bound, not a
+slope-to-size conversion, and the capability angle is positioning under
+protocol mismatch. **Falsified / tightened by**: vendor disclosure (trivially);
+a matched-protocol capability evaluation (removes capability-band looseness);
+or the staged P2 option-cost probe at large K under load, which bounds
+per-token marginal compute more tightly than the prefill sweep
+(`data_report/size_estimate.json → reconciliation.what_would_tighten_it`).
 
 ---
 
@@ -471,8 +517,13 @@ prior about the industry, not a measurement of Jev.
 ## 6. Distillation from a frontier teacher: can the API tell?
 
 Short answer: **no clean signal exists; we assign it a meaningful but
-unresolved probability (~0.35 that teacher-generated data contributed
-materially to post-training) and say why.**
+unresolved probability (~0.40 that teacher-generated data contributed
+materially to post-training) and say why.** The two-angle size estimate (§4)
+added a soft argument since the first pass: the throughput bound caps *active*
+parameters at ~0.2–2.7B while the capability band wants ~4–14B
+dense-equivalent, and distillation is one of only a few mechanisms that
+reconcile the two (it raises capability per active parameter) — hence 0.35 →
+0.40. Still not identifiable, still speculative.
 
 Candidate discriminators and their actual power:
 
@@ -590,8 +641,8 @@ the single cheapest measurement with real power.
 | H3 | Relabeled **private/internal** base from another lab (not in any scan) | Counts cannot see private vocabularies; brand prior is OpenAI-flavored | Must still explain the unmatched per-script profile, the whitespace normalizer, and the read-out post-processing — i.e., it converges to H1 with extra steps | **0.10** | P1: a private vocab is still a vocab — fallback-granularity + merge-boundary behavior narrows the space even without a match |
 | H4 | Wrapper/ensemble around external frontier API(s) | None positive; only the brand prior | §7 timing, tokenizer, and economics arguments; flat upstream at c=32 | **0.02** | Any upstream-latency signature inside the 73 ms floor under load (none in 987 calls) |
 | H5 | Retrieval- or cache-assisted answering | 82.8% MMLU-Pro is high for the band, inviting a memorization story | §7 items (a)–(e) | **0.03** | P5 (horizon bisection): a sharp parametric cliff vs gradual/retrieval-shaped horizon |
-| H6 | Frontier-teacher **distillation** contributed materially to post-training | Brand prior; recognition≫production; vendor comfort with teacher labels (S1) | Not identifiable; every signal is confounded (§6) | **0.35** | P6 (error-sharing correlation) — low power, the only direct-ish API probe |
-| H7 | **MoE** (small active, larger total) | Cost point typical of 2026 small-active MoE serving | Nothing requires it; prefill-only small dense is this cheap | **0.35** (unconstrained; prior-driven) | None exists at this API surface; declare unconstrained |
+| H6 | Frontier-teacher **distillation** contributed materially to post-training | Brand prior; recognition≫production; vendor comfort with teacher labels (S1); one of the few readings reconciling the §4 size tension | Not identifiable; every signal is confounded (§6) | **0.40** | P6 (error-sharing correlation) — low power, the only direct-ish API probe |
+| H7 | **MoE** (small active, larger total) | Cost point typical of 2026 small-active MoE serving; one of the few readings reconciling the §4 throughput bound (≤2.7B active) with the ~9B-class capability band | Nothing requires it; prefill-only small dense is this cheap | **0.45** (unconstrained directly; prior + §4 tension) | None exists at this API surface; declare unconstrained |
 | H8 | Non-transformer core (SSM/linear-attention/hybrid) | No quadratic signature to 29k (weak) | Population prior; capability profile is LM-typical; ΔR² test can't separate at these lengths | **0.10** (unconstrained) | Longer-context curvature probes are blocked by the 32k state cap; unconstrained |
 | H9 | Headline capability materially inflated by **benchmark contamination** | MMLU-Pro/ARC are years public; 82.8 is strong for the band | HLE near-floor and ARC-AGI-2 zero-exact are contamination-resistant and weak; rotation audit shows content-driven answers; fresh generators 450/450 (easy, templated — weak) | **0.15** | A *hard* fresh-item suite (post-2024 exam material, private holdout) at MMLU-Pro difficulty — the only real test |
 | H10 | Multiple heterogeneous models routed behind one endpoint (model field stable) | Nondeterminism is large-ish | Single stable `jev-1.13.0` across 482+ calls; tokenizer counts homogeneous; timing unimodal; batch numerics explain nondeterminism | **0.03** | Bimodality in upstream-latency or token-count distributions at n≫987 (none observed) |
@@ -814,6 +865,15 @@ prior documents and in this analysis:
     correct zero-off-grid totals for their corpora; quote the corpus with
     the number. The one-sided bounded-sum result (§2A) needs the large-K
     ensemble corpus — the smaller corpora alone cannot see it.
+18. **The §4 size estimate's assumption grid is external**: MFU 0.25–0.45,
+    accelerator peak 250–500 TFLOPS bf16, shard count 1–4, and the
+    2·N_active-FLOPs/token convention are industry-standard serving
+    assumptions, not repo measurements — the band is only as good as they
+    are, and it is labeled speculative everywhere it appears. The B=1
+    (single-stream) choice is the conservative direction under multi-tenant
+    batching (sharing lowers the per-stream bound). Anyone re-deriving §4
+    should re-run `scripts/report/size_estimate.py` with their own grid
+    rather than trusting ours.
 
 ---
 
@@ -823,6 +883,7 @@ prior documents and in this analysis:
 # secondary audits cited above (offline, published artifacts only):
 .venv/bin/python scripts/report/arch_audits.py        # -> data_report/arch_audits.json
 .venv/bin/python scripts/report/lattice_forensics.py  # -> data_report/lattice_forensics.json
+.venv/bin/python scripts/report/size_estimate.py      # -> data_report/size_estimate.json
 
 # staged follow-up battery (offline modes are ungated and free):
 .venv/bin/python scripts/benchmark/run_probe_battery2.py --plan     # -> call+cost plan

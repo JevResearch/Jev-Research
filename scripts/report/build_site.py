@@ -72,6 +72,7 @@ INCLUDE_FILES = [
     "data_report/arch_audits.json",
     "data_report/lattice_forensics.json",
     "data_report/probe2_plan.json",
+    "data_report/size_estimate.json",
     "runs_live/BILLING.json",
     "runs_live/FINDINGS.md",
     "docs/token-talk-findings.md",
@@ -688,6 +689,7 @@ def main() -> None:
                  "data_report/arch_audits.json",
                  "data_report/lattice_forensics.json",
                  "data_report/probe2_plan.json",
+                 "data_report/size_estimate.json",
                  "runs_benchmark/freeze/frozen.json"):
         if not (ROOT / need).exists():
             raise SystemExit(f"[bundle] run prerequisite first: {need} missing")

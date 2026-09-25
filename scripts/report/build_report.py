@@ -111,6 +111,11 @@ try:
 except FileNotFoundError:
     raise SystemExit("data_report/probe2_plan.json missing - run "
                      "scripts/benchmark/run_probe_battery2.py --plan first")
+try:
+    SIZE = jload("data_report/size_estimate.json")
+except FileNotFoundError:
+    raise SystemExit("data_report/size_estimate.json missing - run "
+                     "scripts/report/size_estimate.py first")
 
 # Jev per-benchmark cost: measured from the runs' own billing usage summaries
 JEV_COST = {b: SC[s]["attempts_summary"]["usage_input_tokens_sum"] * 0.042 / 1e6
@@ -145,19 +150,28 @@ def fig(key: str, caption: str) -> str:
 
 # ------------------------------------------------------------------- footnotes
 NOTES: dict[str, str] = {
-    "almeida": "Diogo Almeida led the InstructGPT work, which is a direct "
-        "methodological ancestor of ChatGPT. Two caveats the marketing "
-        "collapses: RLHF was not invented there (it predates InstructGPT), "
-        "and ChatGPT has many parents - GPT-3.5, RLHF, code-as-reasoning, "
-        "tool use, decades of prior work. The accurate reading is a "
-        "researcher whose earlier model is one of ChatGPT's several "
-        "ancestors, which is still a credential. It is not an architecture "
-        "claim - and, as it turned out, not a provenance claim either.",
-    "nohalluc": "Being unable to emit free text is not the same as being "
-        "unable to be wrong. Jev is wrong about a quarter of the time on "
-        "graduate-level science questions, and every wrong answer arrived "
-        "beautifully formatted. The guarantee is about the output envelope, "
-        "not the reliability of the content.",
+    "almeida": "InstructGPT, of which Almeida was a coauthor, is best known "
+        "for applying RLHF to GPT-3 and establishing a standard three-stage "
+        "training pipeline, subsequently used in ChatGPT. However, RLHF did "
+        "not originate with InstructGPT. It was first formulated by Russell "
+        "and Ng (1998-2000), demonstrated through TAMER (2008-2012), PbRL "
+        "(2011-2012), advanced with the 2017 seminal &ldquo;Deep "
+        "Reinforcement Learning from Human Preferences&rdquo; (Paul "
+        "Christiano, Jan Leike, Tom Brown, Miljan Martic, Shane Legg, and "
+        "Dario Amodei), transitioning to natural language in Zeigler et al "
+        "(2019) and Stiennon et al (2020), before being applied to GPT-3 "
+        "with InstructGPT. GPT-3 in turn was enabled by numerous "
+        "technologies: dense vector representations (Word2Vec, GloVe), "
+        "subword tokenization / BPE, contextualized embeddings (ELMo), "
+        "recurrent neural networks themselves, LSTMs and GRUs to solve the "
+        "vanishing gradient problem, seq2seq, additive and scaled attention, "
+        "the seminal work on Transformers (2017), autoregressive decoder "
+        "models, self-supervised pretraining, transfer learning, empirical "
+        "scaling laws, in-context learning / few-shot prompting, SFT, GPU "
+        "computing and CUDA, mixed-precision training, distributed "
+        "parallelism frameworks (Megatron-LM, pipeline parallelism, ZeRO / "
+        "DeepSpeed), and many more. &ldquo;I co-invented&rdquo; implies one "
+        "of a small subset; ChatGPT has thousands of fathers.",
     "jevfree": "Jev's output tokens are server-reported but billed at zero. "
         "Every Jev dollar figure in this report is measured from billing "
         "usage in the published run artifacts, not estimated.",
@@ -228,13 +242,23 @@ NOTES: dict[str, str] = {
         "guess them: dense vs mixture-of-experts (both prefill identically "
         "under batching, and the economics require neither); whether "
         "frontier-teacher distillation contributed to training (every "
-        "API-visible signal we can construct is confounded); and parameter "
-        "count (the latency slopes are scheduling artifacts under "
-        "shared batching). The capability band - 2025-era small instruct "
-        "model class on knowledge multiple-choice, far below frontier on "
-        "anything multi-step - is positioning under protocol mismatch, not a "
-        "size measurement. The full ledger, with probabilities and "
-        "falsifiers per claim, lives in ARCHITECTURE-ANALYSIS.md.",
+        "API-visible signal we can construct is confounded); and any exact "
+        "parameter count or hidden dimension. The banded size estimate is "
+        "an explicit-assumptions bound, not a slope-to-size conversion: the "
+        "ground rule (marginal milliseconds under shared batching are a "
+        "scheduling artifact) still stands, and the capability band is "
+        "positioning under protocol mismatch. Full ledger: "
+        "ARCHITECTURE-ANALYSIS.md; size machinery: "
+        "data_report/size_estimate.json.",
+    "sizeest": "The size-estimate machinery lives in "
+        "data_report/size_estimate.json (scripts/report/size_estimate.py): "
+        "both angles, the full assumption grid (MFU 0.25-0.45; bf16 peak "
+        "250-500 TFLOPS per device; 1-4 shards; FLOPs = 2*N_active per "
+        "token, attention adding ~15% or less at these lengths; single-stream "
+        "conservative), the four reconciling readings (MoE, quantized "
+        "serving, distilled small dense, soft band top), and what would "
+        "tighten each. The MFU/peak ranges are industry-standard serving "
+        "assumptions, not repo measurements, and are labeled as such.",
     "lattice": "Full lattice forensics: scripts/report/lattice_forensics.py "
         "-&gt; data_report/lattice_forensics.json, over 704,277 values in 7,887 "
         "published vectors at K=2..255 (probe rows, phase-1 raws, and the "
@@ -306,8 +330,8 @@ main{max-width:880px;margin:0 auto;padding:0 1.4rem 6rem}
 h1{font-size:2.3rem;line-height:1.15;margin:3.4rem 0 .35rem;letter-spacing:-.015em}
 h2{font-size:1.45rem;margin:3.6rem 0 .6rem;border-bottom:1px solid var(--line);padding-bottom:.35rem}
 h3{font-size:1.1rem;margin:2rem 0 .4rem}
-p,li{max-width:70ch}a{color:var(--peri)}
-.sub{color:var(--mut);font-size:1.05rem;max-width:62ch}
+p,li{max-width:none}a{color:var(--peri)}
+.sub{color:var(--mut);font-size:1.05rem;max-width:none}
 .chip{display:inline-block;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--teal);border:1px solid var(--teal);border-radius:999px;padding:.1rem .6rem;margin-bottom:1.1rem}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.05rem 1.3rem;margin:1.1rem 0}
 .pitch{font-size:1.16rem;font-style:italic;border-left:3px solid var(--amber);padding-left:1.1rem;margin:1.1rem 0}
@@ -317,7 +341,7 @@ table{border-collapse:collapse;width:100%;font-size:.92rem;margin:1rem 0}
 th,td{text-align:left;padding:.45rem .6rem;border-bottom:1px solid var(--line)}
 th{color:var(--mut);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}
 td.n{text-align:right;font-variant-numeric:tabular-nums}
-.cap{color:var(--mut);font-size:.88rem;max-width:74ch}
+.cap{color:var(--mut);font-size:.88rem;max-width:none}
 .note{border-left:3px solid var(--amber);background:var(--panel);border-radius:0 12px 12px 0;padding:.9rem 1.1rem;margin:1.2rem 0}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:.9rem;margin:1.2rem 0}
 .stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:.8rem 1rem}
@@ -332,6 +356,12 @@ nav.toc a{margin:0 .15rem}
 .tldr{border-left:3px solid var(--teal)}
 table.wide{font-size:.78rem;min-width:720px}
 table.wide th{font-size:.66rem}
+.carousel{overflow:hidden;border-radius:14px;margin:1rem 0}
+.carousel .track{display:flex;width:700%;animation:chartcycle 49s cubic-bezier(.4,0,.2,1) infinite}
+.carousel:hover .track{animation-play-state:paused}
+.carousel figure{width:14.285714%;flex:0 0 auto;margin:0}
+.carousel svg{margin:.4rem 0}
+@keyframes chartcycle{0%,12.6%{transform:translateX(0)}14.3%,26.9%{transform:translateX(-14.2857%)}28.6%,41.2%{transform:translateX(-28.5714%)}42.9%,55.5%{transform:translateX(-42.8571%)}57.1%,69.8%{transform:translateX(-57.1429%)}71.4%,84.1%{transform:translateX(-71.4286%)}85.7%,100%{transform:translateX(-85.7143%)}}
 """
 
 
@@ -346,7 +376,7 @@ def hero() -> str:
 <div class="chip">An independent, hands-on evaluation</div>
 <h1>Jev: Not Frontier, But Still Worth Your Attention</h1>
 <p class="sub">TypeSafe AI sells Jev as a frontier-class reasoner that cannot
-hallucinate, built by a coauthor of ChatGPT - fast, and almost free. We ran it
+hallucinate, built by the co-inventor of ChatGPT - fast, and almost free. We ran it
 live on {TOTAL_REQUESTS:,} benchmark requests, measured its latency and billing,
 and probed what it is underneath. The result is a smaller, humbler model that
 is genuinely useful for a job nobody else serves quite this way.</p>
@@ -369,10 +399,10 @@ is genuinely useful for a job nobody else serves quite this way.</p>
 <a href="#refs">Notes</a></nav>
 <div class="card tldr"><b>TL;DR.</b> Jev is not a frontier model: it misses
 about a quarter of graduate science and its self-narrative is internet prior,
-not lineage{fn('behavioronly')}. It is also not a toy: {mmlu} MMLU-Pro,
+not lineage{fn('behavioronly')}. It nonetheless is also not a toy: {mmlu} MMLU-Pro,
 {gpqa} GPQA, ~{ARCH['prefill']['fixed_floor_ms']:.0f} ms of server compute per
 question, and a full graduate-scale benchmark run for cents. The honest
-category is <i>cheap real-time judgement</i> - routing, rubric grading,
+category is <i>cheap real-time sub-frontier judgement</i> - routing, rubric grading,
 control-plane decisions - where nothing else on the market combines this
 latency, this price, and probability vectors that never drift schema.</div>"""
 
@@ -473,6 +503,10 @@ def architecture(v: dict) -> str:
     probe_calls = sum(f["calls"] for f in PROBEPLAN["plan"]["per_family"].values())
     probe_cost = PROBEPLAN["plan"]["est_cost_usd_at_0p042_per_M_in"]
     probe_tok = PROBEPLAN["plan"]["est_input_tokens_total"]
+    sza = SIZE["prefill_angle"]; szc = SIZE["capability_angle"]
+    sz_lo, sz_hi = sza["active_params_B_range"]
+    szc_lo, szc_hi = szc["band_dense_equivalent_b"]
+    sz_R = sza["marginal_prefill_rate_tok_s"]
     ev = "".join(f"<tr><td>{a}</td><td class='cap'>{b}</td></tr>"
                  for a, b in ARCH_EVIDENCE)
     return f"""
@@ -517,10 +551,11 @@ signatures</td><td>plausible (strong)</td></tr>
 <tr><td>Core</td><td class='cap'>transformer-family decoder LM; dense vs MoE unknown;
 attention variant unknown and unknowable at these context
 lengths</td><td>plausible / open</td></tr>
-<tr><td>Size</td><td class='cap'>no parameter count is identified - the slopes are
-scheduling artifacts under shared batching. Capability band: a 2025-era
-small (~9B-class) instruct model on knowledge multiple-choice; far below
-frontier on anything multi-step</td><td>band: speculative</td></tr>
+<tr><td>Size</td><td class='cap'>no point estimate - a two-angle band: ~{sz_lo:.1f}-{sz_hi:.1f}B
+active parameters from the prefill-throughput bound (explicit serving
+assumptions), {szc_lo:.0f}-{szc_hi:.0f}B dense-equivalent from the capability band;
+converged guess ~0.5-4B active, total unconstrained (MoE, quantization or
+distillation reconcile the angles)</td><td>speculative</td></tr>
 <tr><td>Training</td><td class='cap'>English-dominant pretraining; knowledge horizon late
 2024; judgement-format assistant post-training; OpenAI-flavored brand prior
 inherited from training text; frontier-teacher contribution
@@ -597,10 +632,8 @@ incidental multilingual exposure, vendor's own vocabulary. That is what makes
 Jev a <i>new foundation</i> rather than a relabeled one.</p>
 
 <h3>Small, in a particular way</h3>
-<p>We decline a parameter count: the server batches our requests with
-everyone else's, so marginal milliseconds are a scheduling artifact as much
-as a compute artifact. The honest size signal is the capability profile, and
-it has a particular shape. On one-shot knowledge multiple-choice Jev sits in
+<p>The capability profile has a particular shape. On one-shot knowledge
+multiple-choice Jev sits in
 the band of 2025-era small instruct models - {pct(SC['mmlu']['accuracy'])} MMLU-Pro
 where Claude 3.7 Sonnet scored 80.7 without thinking and Qwen 3.5 9B 82.5,
 {pct(SC['gpqa']['accuracy'])} GPQA where they scored 76.8 and 77.6 - positioning, not a matched
@@ -617,6 +650,27 @@ effects are real but unbiased where content lives: re-running 419 items with
 shuffled option order flips {pct(rp['flip_rate'])} of answers with no net accuracy change
 (exact McNemar p = {rp['mcnemar_exact_p']:.2f}) - an in-context list reader, not a per-option
 oracle.</p>
+<p><b>How big is it?</b> A slope alone is not a size - the server batches our
+tokens with everyone else's - but two angles converge on a band, and stating
+assumptions explicitly is not the same as refusing to estimate. From the
+throughput side: the marginal prefill rate is ~{sz_R:,} tokens/s; batched
+prefill is compute-bound and costs about 2&middot;N<sub>active</sub> FLOPs per
+token, so N<sub>active</sub> &le; MFU &times; peak &times; shards &divide; 2R.
+Across an honest assumption grid (25-45% model-FLOPs utilization, 250-500
+TFLOPS bf16 per device, 1-4 devices) that bounds the <i>active</i> footprint
+at ~{sz_lo:.1f}-{sz_hi:.1f}B parameters, central case ~{sza['central_case_B']:.1f}B - and
+sharing the machine with other tenants only lowers the bound. From the
+capability side: the neighbors above put it at {szc_lo:.0f}-{szc_hi:.0f}B dense-equivalent.
+The angles overlap only if something hides the difference: an MoE (active
+&ll; total - the throughput bound sees active parameters only), aggressive
+quantization (fp8/int4 lifts the throughput band to ~0.4-10B), or
+distillation (teacher labels lift a 1-4B model into the bottom of the
+capability band on knowledge multiple-choice - and Jev's
+recognition-far-exceeds-production asymmetry is exactly that shape).
+Converged best guess: <b>~0.5-4B active parameters, total
+unconstrained</b>; forced to a single dense-equivalent order, 1-9B - a
+2025-era small model, which is what the benchmarks said all
+along.{fn('sizeest')}</p>
 
 <h3>What it is not</h3>
 <p>Four negations, each a measurement rather than a vibe.{fn('notwrapper')}
@@ -642,9 +696,11 @@ OpenAI or Qwen provenance.</p>
 the transformer is dense or mixture-of-experts; whether a frontier teacher
 produced any of the training signal (every discriminator we can construct is
 confounded, including the OpenAI-shaped brand prior, which the open
-assistant-text ecosystem produces on its own); and any parameter count or
-hidden dimension beyond the documented interface (32k-token state, 64k
-total, ≤255 options, 2-10 rubric levels).{fn('sizelimits')}</p>
+assistant-text ecosystem produces on its own); and any exact parameter count
+or hidden dimension - the two-angle estimate above bands the active size
+(~0.5-4B) but identification is beyond this API, which documents nothing
+past 32k-token state, 64k total, ≤255 options, 2-10 rubric
+levels.{fn('sizelimits')}</p>
 <p>The follow-up probes are built, not just wished for. Five families that
 could move these questions - tokenizer fallback granularity, option-cost
 decoupling, calibration under option-count scaling, the lattice rule on
@@ -671,13 +727,7 @@ do.</p>
 
 
 def pitch() -> str:
-    cf = SC["mmlu"]["strict_format_failures"]
-    others = sum((SC[s].get("strict_format_failures") or 0)
-                 for s in SC if s != "mmlu")
-    mn = SC["mmlu"]["n_expected"]
     wrong_gpqa = pct(1 - SC["gpqa"]["accuracy"])
-    jp = COSTS["prices_usd_per_M"]["Jev"]
-    cost_mmlu = f"${JEV_COST['mmlu_pro']:.2f}"
     arc_pct = pct(SC["arc"]["accuracy"])
     return f"""
 <section id="pitch">
@@ -687,31 +737,30 @@ performance</b>, built by a <b>coauthor of ChatGPT</b> - incredibly fast,
 incredibly cheap, with <b>free output</b>.&rdquo;</p>
 <p>Each clause is technically defensible in a narrow sense and misleading in the
 sense a buyer will hear. Take them one at a time.</p>
-<p><b>The authorship claim.</b> The phrase does a lot of quiet work. ChatGPT has
-hundreds of parents; naming one person as its coauthor compresses a lineage of
-RLHF, instruction tuning, code-as-reasoning and decades of prior work into a
-founding myth.{fn('almeida')} It is a real credential. It is not an
-architecture claim - and, as it turned out, not a provenance claim either.</p>
+<p><b>The co-inventor of ChatGPT.</b> Almeida certainly deserves credit, but
+saying &ldquo;I co-invented ChatGPT&rdquo; overassigns credit - as one of the
+eight primary authors on InstructGPT, whose work was on learned optimizers,
+and as one of 88 people thanked in the initial release of ChatGPT - from the
+work of thousands of people; see the footnote.{fn('almeida')} It is a real
+credential. It is not an architecture claim - and, as it turned out, not a
+provenance claim either.</p>
 <p><b>Cannot hallucinate.</b> What Jev actually cannot do is emit free text. It
 returns one option from a fixed menu, inside a schema that is always
-well-formed, and that guarantee held under load: {cf} malformed outputs across
-{mn:,} MMLU-Pro items and {others} more in the entire rest of the benchmark
-program. But a schema-valid answer is
+well-formed. But a schema-valid answer is
 not a true answer. Jev is wrong {wrong_gpqa} of the time on graduate science,
 and every one of those wrong answers arrived beautifully formatted. A model
 that cannot write prose has not solved hallucination; it has made hallucination
-hard to notice.{fn('nohalluc')}</p>
+hard to notice.</p>
 <p><b>Fast and cheap.</b> Both true, and explainable in one sentence: Jev never
-runs a decode loop. It reads the prompt once and reads off a vector, which is
-why the bill is ${jp['input']:.3f} per million input tokens with output free,
-and why a full {mn:,}-question MMLU-Pro run cost {cost_mmlu}.{fn('jevfree')}
+runs a decode loop. It reads the prompt once and reads off a
+vector.{fn('jevfree')}
 Speed and price are properties of the <i>task</i> being prefill-only, not of
 frontier economics.</p>
 <p><b>Frontier-level.</b> This one simply does not survive. Jev is good, and
 &ldquo;good&rdquo; will turn out to mean something genuinely useful here - but
 it is not a frontier model by any late-2026 standard, and where it looks
-frontier-like ({arc_pct} on ARC-Challenge) the whole field finished that race
-years ago. Everything below is the evidence.</p>
+frontier-like ({arc_pct} on ARC-Challenge), that's only on a race that
+finished years ago. Everything below is the evidence.</p>
 </section>"""
 
 
@@ -752,7 +801,7 @@ def benchmarks() -> str:
         f"<tr><td>{n}</td><td class='n'>{c:,}</td><td class='n'><b>{a}</b></td>"
         f"<td class='n'>{w}</td><td class='n'>{ww}</td><td class='cap'>{t}</td></tr>"
         for n, c, a, w, ww, t in rows)
-    figs = "".join([
+    fig_list = [
         fig("mmlu_pro", "Broad knowledge. Jev's direct-answer score sits near a "
             "2025-era small model; the frontier bars had chain-of-thought."),
         fig("gpqa", "Graduate science. Jev lands near Claude 3.7 Sonnet without "
@@ -765,7 +814,8 @@ def benchmarks() -> str:
             "cell by cell and solves zero tasks outright - shown for shape, not rank."),
         fig("hle", "Expert frontier exam, multiple-choice subset. Close to the "
             "guessing floor; the external bars are reasoning-enabled on a wider set."),
-    ])
+    ]
+    figs = "".join(fig_list) + fig_list[0]  # clone slide 1 for a seamless loop
     return f"""
 <section id="benchmarks">
 <h2>Benchmarks: where it actually lands</h2>
@@ -786,8 +836,13 @@ runs.{fn('mathadapt')} The rotation audit re-ran items with option order
 shuffled.{fn('rotations')}</p>
 <h3>The charts</h3>
 <p>Teal is Jev's greedy score, amber is Jev's probability-weighted score, and
-every other bar is a published number we fetched - not a model we ran.</p>
+every other bar is a published number we fetched - not a model we ran. All six
+chart stages rotate below, one at a time - hover to pause. The table above is
+the complete result set; the rotation is a viewing convenience, not a
+selection.</p>
+<div class="carousel"><div class="track">
 {figs}
+</div></div>
 </section>"""
 
 
