@@ -62,12 +62,16 @@ INCLUDE_FILES = [
     "DESIGN.md",
     "SOURCES.md",
     "IMPLEMENTATION.md",
+    "ARCHITECTURE-ANALYSIS.md",
     "pyproject.toml",
     "requirements.lock",
     ".env.example",
     "data_report/costs.json",
     "data_report/billing_totals.json",
     "data_report/aborted_stage_usage.json",
+    "data_report/arch_audits.json",
+    "data_report/lattice_forensics.json",
+    "data_report/probe2_plan.json",
     "runs_live/BILLING.json",
     "runs_live/FINDINGS.md",
     "docs/token-talk-findings.md",
@@ -87,6 +91,7 @@ INCLUDE_DIRS = [
 DOCS_ALLOW = {  # only these survive under docs/modern-comparison/
     "ARCHITECTURE-PROBES.md", "COMPARABLE-SCORES.md", "REFERENCE-MATRIX.md",
     "comparison-graphs.html", "pareto-frontiers.html", "architecture-evidence.html",
+    "architecture-diagram.html",
     "canonical",
 }
 # Internal synthetic specs the published harness loads at runtime (generator
@@ -500,7 +505,7 @@ def write_scaffolding() -> None:
     (BUNDLE / ".nojekyll").write_text("", encoding="utf-8")
     (BUNDLE / "assets").mkdir(exist_ok=True)
     for name in ("comparison-graphs.html", "pareto-frontiers.html",
-                 "architecture-evidence.html"):
+                 "architecture-evidence.html", "architecture-diagram.html"):
         src = BUNDLE / "docs/modern-comparison" / name
         if src.exists():
             shutil.copy2(src, BUNDLE / "assets" / name)
@@ -542,8 +547,9 @@ head, not a frontier system.
 | `runs_benchmark*/` | per-stage derived aggregates (scores, weighted scores, calibration, usage) + freeze manifests with SHA-256 of every input |
 | `runs_archprobe/` | architecture-probe analysis, per-call rows, tokenizer studies, billing |
 | `runs_live/` | Talk-to-Jev traces (character / vocabulary-menu / token programs), probes, billing, findings |
-| `data_report/` | cost model, billing roll-up, aborted-stage usage |
+| `data_report/` | cost model, billing roll-up, aborted-stage usage, architecture audits |
 | `docs/` | research write-ups: architecture probes, comparable scores, the Talk program |
+| `ARCHITECTURE-ANALYSIS.md` | the full architecture reconstruction: card, evidence, alternatives ledger, next probes |
 
 ## Reproducing the page from the data
 
@@ -557,7 +563,10 @@ python3 -m venv .venv && .venv/bin/pip install -e ".[dev]"
 The page embeds no hardcoded results: `build_report.py` reads every number
 from the JSON aggregates above at render time, and the CI gate in
 `scripts/report/build_site.py` verified this bundle re-renders byte-for-byte
-from published data alone. Re-running the *live* experiments requires your own
+from published data alone. `data_report/arch_audits.json` and
+`data_report/lattice_forensics.json` ship precomputed; re-running their
+generators needs the full working tree (the dated `runs_live/` raw response
+dirs and benchmark per-item lists are not bundled). Re-running the *live* experiments requires your own
 `TYPESAFE_API_KEY` (see `.env.example`) and hits the paid API; the freeze
 manifests pin exactly what we ran.
 
@@ -676,6 +685,9 @@ def main() -> None:
     _cap_memory()
     for need in ("data_report/costs.json", "data_report/billing_totals.json",
                  "data_report/aborted_stage_usage.json",
+                 "data_report/arch_audits.json",
+                 "data_report/lattice_forensics.json",
+                 "data_report/probe2_plan.json",
                  "runs_benchmark/freeze/frozen.json"):
         if not (ROOT / need).exists():
             raise SystemExit(f"[bundle] run prerequisite first: {need} missing")

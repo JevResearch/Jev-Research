@@ -1,0 +1,132 @@
+{
+ "generated_by": "scripts/report/arch_audits.py (offline; published artifacts only)",
+ "claim_level": "behavioral evidence; API-visible signals only",
+ "quantization": {
+  "method": "grid = 0.01; a value is off-grid if round(v,2) != v; choice-vs-table mismatch = displayed choice probability < displayed max",
+  "archprobe_rows": {
+   "n_vectors": 987,
+   "n_values": 12584,
+   "n_offgrid": 0,
+   "n_distinct_levels": 86,
+   "sum_dev_max_abs": 0.01,
+   "n_sum_dev_gt_half_quantum": 19,
+   "n_choice_not_table_argmax": 3,
+   "choice_argmax_max_gap": 0.01
+  },
+  "runs_live_raw": {
+   "n_vectors": 2410,
+   "n_values": 15026,
+   "n_offgrid": 0,
+   "n_distinct_levels": 101,
+   "sum_dev_max_abs": 0.01,
+   "n_sum_dev_gt_half_quantum": 24,
+   "n_choice_not_table_argmax": 6,
+   "choice_argmax_max_gap": 0.01
+  },
+  "provenance": [
+   "runs_archprobe/rows.jsonl",
+   "runs_live/2026-09-18-*/raw/*.response.json"
+  ]
+ },
+ "confidence_formula": {
+  "formula_tested": "confidence == round((p_max_displayed - 1/K) / (1 - 1/K), 2)",
+  "note": "chance-corrected top-probability (kappa-style). Residuals of 1-2 display quanta are expected when confidence is computed on the pre-quantization distribution while the table is rounded separately (see quantization audit: choice/table argmax mismatches at exactly one quantum).",
+  "choice": {
+   "n": 2289,
+   "exact": 1405,
+   "within_1_quantum": 822,
+   "within_2_quanta": 62,
+   "beyond_2_quanta": 0,
+   "max_abs_diff": 0.02
+  },
+  "score_same_formula": {
+   "n": 121,
+   "exact": 9,
+   "within_1_quantum": 6,
+   "within_2_quanta": 6,
+   "beyond_2_quanta": 100,
+   "max_abs_diff": 0.48
+  },
+  "noul_answers": 963,
+  "noul_with_confidence_field": 0,
+  "provenance": [
+   "runs_live/2026-09-18-*/raw/*.response.json"
+  ]
+ },
+ "marginal_cost": {
+  "method": "marginal latency per question/option (analysis.json) vs the prefill cost of the tokens that unit adds to the request (rows.jsonl usage deltas x prefill slope). residual = everything else (read-out, serialization, noise).",
+  "per_question": {
+   "units": "1->192",
+   "input_tokens_per_unit": 55.4,
+   "output_tokens_per_unit": 33.4,
+   "prefill_predicted_ms_per_unit": 0.336,
+   "measured_marginal_ms_per_unit": 0.4417,
+   "residual_ms_per_unit": 0.106
+  },
+  "per_option": {
+   "units": "2->255",
+   "input_tokens_per_unit": 18.2,
+   "output_tokens_per_unit": 9.6,
+   "prefill_predicted_ms_per_unit": 0.11,
+   "measured_marginal_ms_per_unit": 0.102,
+   "residual_ms_per_unit": -0.008
+  },
+  "prefill_slope_ms_per_1k": 6.053,
+  "provenance": [
+   "runs_archprobe/rows.jsonl",
+   "runs_archprobe/analysis.json"
+  ]
+ },
+ "battery_power": {
+  "method": "discriminating information per probe = reported tokens above the empty-template baseline. The short battery's deltas are a few tokens wide; the whitespace-free mergerate samples are one to two orders of magnitude wider.",
+  "short_battery_reported_token_range": [
+   313,
+   330
+  ],
+  "short_battery_max_delta_over_baseline": 14,
+  "mergerate_baseline_tokens": 316,
+  "mergerate_delta_range": [
+   2,
+   315
+  ],
+  "provenance": [
+   "runs_archprobe/rows.jsonl",
+   "runs_archprobe/cleanrun_jev.json"
+  ]
+ },
+ "rotation_pairs": {
+  "method": "pair rotation-audit items to their native-order results by base item id (rotation ids carry a :permN suffix); exact two-sided McNemar on discordant pairs. Wilson CIs in score.json are item-sampling diagnostics.",
+  "n_paired": 419,
+  "both_correct": 351,
+  "native_only": 12,
+  "rotated_only": 10,
+  "neither": 46,
+  "native_acc_on_subset": 0.8663,
+  "rotated_acc": 0.8616,
+  "flip_rate": 0.05251,
+  "mcnemar_exact_p": 0.832,
+  "provenance": [
+   "runs_benchmark/bench-mmlu_full-*/derived/score.json (per_item)",
+   "runs_benchmark/bench-option_rotations-*/derived/score.json (per_item)"
+  ]
+ },
+ "prefill_shape": {
+  "method": "refit of upstream_ms (x-envoy-upstream-service-time) vs server-reported input tokens; residual check at the longest prompts bounds any attention quadratic. Slopes are scheduling-inclusive marginal costs under shared batching - NOT parameter-count evidence.",
+  "n_configs": 35,
+  "token_range": [
+   859,
+   28859
+  ],
+  "linear_floor_ms": 73.11,
+  "linear_ms_per_1k": 6.053,
+  "linear_r2": 0.857,
+  "quadratic_ms_per_1k2": 0.0756,
+  "quadratic_r2": 0.864,
+  "r2_gain_from_quadratic": 0.008,
+  "n_top_bin": 5,
+  "top_bin_mean_residual_vs_linear_ms": 4.8,
+  "provenance": [
+   "runs_archprobe/rows.jsonl"
+  ]
+ }
+}

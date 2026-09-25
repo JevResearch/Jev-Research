@@ -1,0 +1,280 @@
+{
+ "generated_by": "scripts/report/lattice_forensics.py (offline; published artifacts only)",
+ "claim_level": "behavioral evidence; display-precision facts only (ground rule 3)",
+ "method_note": "ensemble corpus = per-rotation RAW server distributions from nodes[*].ensemble_raw in published Talk traces; harness-transformed or page-combined vectors are excluded. independent-rounding sigma = 0.01*sqrt(K/12) assumes per-value round-to-nearest with no cross-value correction.",
+ "corpora": {
+  "archprobe_rows": {
+   "n_vectors": 987,
+   "n_values": 12584,
+   "n_offgrid": 0,
+   "n_choice_not_table_argmax": 3,
+   "choice_argmax_max_gap": 0.01,
+   "by_k_bucket": {
+    "17-64": {
+     "n_vectors": 370,
+     "n_values": 9120,
+     "mean_k": 24.6,
+     "distinct_levels": 61,
+     "mean_distinct_levels_per_vector": 9.3,
+     "frac_values_at_0.00": 0.181,
+     "frac_values_at_0.01": 0.305,
+     "sum_dev_mean": -0.00051,
+     "sum_dev_sd": 0.00221,
+     "sum_dev_max_abs": 0.01,
+     "sum_dev_sign_counts": {
+      "le_-0.005": 19,
+      "near_0": 351,
+      "ge_+0.005": 0
+     },
+     "independent_rounding_sd_predicted": 0.01433,
+     "observed_over_predicted_sd": 0.154
+    },
+    "2": {
+     "n_vectors": 562,
+     "n_values": 1124,
+     "mean_k": 2.0,
+     "distinct_levels": 59,
+     "mean_distinct_levels_per_vector": 2.0,
+     "frac_values_at_0.00": 0.178,
+     "frac_values_at_0.01": 0.226,
+     "sum_dev_mean": 0.0,
+     "sum_dev_sd": 0.0,
+     "sum_dev_max_abs": 0.0,
+     "sum_dev_sign_counts": {
+      "le_-0.005": 0,
+      "near_0": 562,
+      "ge_+0.005": 0
+     },
+     "independent_rounding_sd_predicted": 0.00408,
+     "observed_over_predicted_sd": 0.0
+    },
+    "5-16": {
+     "n_vectors": 45,
+     "n_values": 425,
+     "mean_k": 9.4,
+     "distinct_levels": 7,
+     "mean_distinct_levels_per_vector": 2.7,
+     "frac_values_at_0.00": 0.804,
+     "frac_values_at_0.01": 0.049,
+     "sum_dev_mean": 0.0,
+     "sum_dev_sd": 0.0,
+     "sum_dev_max_abs": 0.0,
+     "sum_dev_sign_counts": {
+      "le_-0.005": 0,
+      "near_0": 45,
+      "ge_+0.005": 0
+     },
+     "independent_rounding_sd_predicted": 0.00887,
+     "observed_over_predicted_sd": 0.0
+    },
+    "65-255": {
+     "n_vectors": 10,
+     "n_values": 1915,
+     "mean_k": 191.5,
+     "distinct_levels": 2,
+     "mean_distinct_levels_per_vector": 2.0,
+     "frac_values_at_0.00": 0.994,
+     "frac_values_at_0.01": 0.0,
+     "sum_dev_mean": 0.0,
+     "sum_dev_sd": 0.0,
+     "sum_dev_max_abs": 0.0,
+     "sum_dev_sign_counts": {
+      "le_-0.005": 0,
+      "near_0": 10,
+      "ge_+0.005": 0
+     },
+     "independent_rounding_sd_predicted": 0.03995,
+     "observed_over_predicted_sd": 0.0
+    }
+   }
+  },
+  "live_raw_responses": {
+   "n_vectors": 2410,
+   "n_values": 15026,
+   "n_offgrid": 0,
+   "n_choice_not_table_argmax": 6,
+   "choice_argmax_max_gap": 0.01,
+   "by_k_bucket": {
+    "17-64": {
+     "n_vectors": 40,
+     "n_values": 2560,
+     "mean_k": 64.0,
+     "distinct_levels": 24,
+     "mean_distinct_levels_per_vector": 9.2,
+     "frac_values_at_0.00": 0.368,
+     "frac_values_at_0.01": 0.405,
+     "sum_dev_mean": -0.002,
+     "sum_dev_sd": 0.004,
+     "sum_dev_max_abs": 0.01,
+     "sum_dev_sign_counts": {
+      "le_-0.005": 8,
+      "near_0": 32,
+      "ge_+0.005": 0
+     },
+     "independent_rounding_sd_predicted": 0.02309,
+     "observed_over_predicted_sd": 0.173
+    },
+    "2": {
+     "n_vectors": 927,
+     "n_values": 1854,
+     "mean_k": 2.0,
+     "distinct_levels": 99,
+     "mean_distinct_levels_per_vector": 2.0,
+     "frac_values_at_0.00": 0.304,
+     "frac_values_at_0.01": 0.044,
+     "sum_dev_mean": 0.0,
+     "sum_dev_sd": 0.0,
+     "sum_dev_max_abs": 0.0,
+     "sum_dev_sign_counts": {
+      "le_-0.005": 0,
+      "near_0": 927,
+      "ge_+0.005": 0
+     },
+     "independent_rounding_sd_predicted": 0.00408,
+     "observed_over_predicted_sd": 0.0
+    },
+    "3-4": {
+     "n_vectors": 668,
+     "n_values": 2167,
+     "mean_k": 3.2,
+     "distinct_levels": 97,
+     "mean_distinct_levels_per_vector": 2.6,
+     "frac_values_at_0.00": 0.313,
+     "frac_values_at_0.01": 0.02,
+     "sum_dev_mean": -3e-05,
+     "sum_dev_sd": 0.00055,
+     "sum_dev_max_abs": 0.01,
+     "sum_dev_sign_counts": {
+      "le_-0.005": 2,
+      "near_0": 666,
+      "ge_+0.005": 0
+     },
+     "independent_rounding_sd_predicted": 0.0052,
+     "observed_over_predicted_sd": 0.105
+    },
+    "5-16": {
+     "n_vectors": 767,
+     "n_values": 6405,
+     "mean_k": 8.4,
+     "distinct_levels": 100,
+     "mean_distinct_levels_per_vector": 5.8,
+     "frac_values_at_0.00": 0.183,
+     "frac_values_at_0.01": 0.077,
+     "sum_dev_mean": -0.00018,
+     "sum_dev_sd": 0.00134,
+     "sum_dev_max_abs": 0.01,
+     "sum_dev_sign_counts": {
+      "le_-0.005": 14,
+      "near_0": 753,
+      "ge_+0.005": 0
+     },
+     "independent_rounding_sd_predicted": 0.00834,
+     "observed_over_predicted_sd": 0.16
+    },
+    "65-255": {
+     "n_vectors": 8,
+     "n_values": 2040,
+     "mean_k": 255.0,
+     "distinct_levels": 14,
+     "mean_distinct_levels_per_vector": 7.0,
+     "frac_values_at_0.00": 0.841,
+     "frac_values_at_0.01": 0.029,
+     "sum_dev_mean": 0.0,
+     "sum_dev_sd": 0.0,
+     "sum_dev_max_abs": 0.0,
+     "sum_dev_sign_counts": {
+      "le_-0.005": 0,
+      "near_0": 8,
+      "ge_+0.005": 0
+     },
+     "independent_rounding_sd_predicted": 0.0461,
+     "observed_over_predicted_sd": 0.0
+    }
+   }
+  },
+  "talk_ensemble_raw": {
+   "n_vectors": 4490,
+   "n_values": 676667,
+   "n_offgrid": 0,
+   "n_choice_not_table_argmax": 0,
+   "choice_argmax_max_gap": 0.0,
+   "by_k_bucket": {
+    "17-64": {
+     "n_vectors": 424,
+     "n_values": 17520,
+     "mean_k": 41.3,
+     "distinct_levels": 69,
+     "mean_distinct_levels_per_vector": 8.8,
+     "frac_values_at_0.00": 0.445,
+     "frac_values_at_0.01": 0.283,
+     "sum_dev_mean": -0.00349,
+     "sum_dev_sd": 0.00477,
+     "sum_dev_max_abs": 0.01,
+     "sum_dev_sign_counts": {
+      "le_-0.005": 148,
+      "near_0": 276,
+      "ge_+0.005": 0
+     },
+     "independent_rounding_sd_predicted": 0.01856,
+     "observed_over_predicted_sd": 0.257
+    },
+    "65-255": {
+     "n_vectors": 4066,
+     "n_values": 659147,
+     "mean_k": 162.1,
+     "distinct_levels": 69,
+     "mean_distinct_levels_per_vector": 8.3,
+     "frac_values_at_0.00": 0.698,
+     "frac_values_at_0.01": 0.158,
+     "sum_dev_mean": -0.00464,
+     "sum_dev_sd": 0.00499,
+     "sum_dev_max_abs": 0.01,
+     "sum_dev_sign_counts": {
+      "le_-0.005": 1886,
+      "near_0": 2180,
+      "ge_+0.005": 0
+     },
+     "independent_rounding_sd_predicted": 0.03676,
+     "observed_over_predicted_sd": 0.136
+    }
+   }
+  }
+ },
+ "confidence_residual_by_k": {
+  "2": {
+   "n": 927,
+   "max_diff": 0.01,
+   "beyond_2q": 0
+  },
+  "3-4": {
+   "n": 547,
+   "max_diff": 0.02,
+   "beyond_2q": 0
+  },
+  "5-16": {
+   "n": 767,
+   "max_diff": 0.02,
+   "beyond_2q": 0
+  },
+  "17-64": {
+   "n": 40,
+   "max_diff": 0.02,
+   "beyond_2q": 0
+  },
+  "65-255": {
+   "n": 8,
+   "max_diff": 0.02,
+   "beyond_2q": 0
+  }
+ },
+ "displayed_ties": {
+  "n_vectors_with_displayed_tie_at_max": 35,
+  "choice_among_tied_maxima": 34,
+  "choice_not_at_displayed_max": 1
+ },
+ "provenance": [
+  "runs_archprobe/rows.jsonl",
+  "runs_live/2026-09-18-*/raw/*.response.json",
+  "runs_live/*.json (nodes[*].ensemble_raw)"
+ ]
+}

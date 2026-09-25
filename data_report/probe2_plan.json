@@ -1,0 +1,40 @@
+{
+  "plan": {
+    "per_family": {
+      "p1_fallback": {
+        "calls": 113,
+        "est_input_tokens": 43850
+      },
+      "p1_merge": {
+        "calls": 66,
+        "est_input_tokens": 27054
+      },
+      "p2_grid": {
+        "calls": 60,
+        "est_input_tokens": 70797
+      },
+      "p3_kcal": {
+        "calls": 2904,
+        "est_input_tokens": 2245616
+      },
+      "p4_lattice": {
+        "calls": 84,
+        "est_input_tokens": 39484
+      },
+      "p5_horizon": {
+        "calls": 104,
+        "est_input_tokens": 41864
+      }
+    },
+    "est_input_tokens_total": 2468665,
+    "est_cost_usd_at_0p042_per_M_in": 0.1037
+  },
+  "families": [
+    "p1_fallback",
+    "p1_merge",
+    "p2_grid",
+    "p3_kcal",
+    "p4_lattice",
+    "p5_horizon"
+  ]
+}

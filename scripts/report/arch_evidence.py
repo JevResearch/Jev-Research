@@ -50,7 +50,7 @@ def prefill_chart(a):
     ys = [r["upstream_ms"] for r in pf]
     xmx = max(xs) * 1.05
     ymx = max(ys) * 1.1
-    b0, b1 = np.polyfit(xs, ys, 1)
+    b1, b0 = np.polyfit(xs, ys, 1)  # polyfit returns [slope, intercept]
     p = [_svg_open(W, H)]
     p.append(f'<text x="24" y="30" fill="{TEXT}" font-size="17" font-weight="600">'
              'Prefill: server compute vs input tokens</text>')
@@ -288,17 +288,20 @@ and self-batched answers. Read with the caveats in the paired findings document:
 this is behavioral evidence consistent with an architecture, not a proof of one,
 and it does not identify weights or provenance.</p>
 <h2>1. Prefill cost</h2>{st(prefill_chart(a))}
-<p class="cap">Server compute (the queue-free x-envoy header) grows ~5 ms per
-1k input tokens on top of a ~66 ms floor. A fixed floor plus a linear
-per-token term is what transformer prefill looks like; there is no large
-quadratic term at these lengths. The floor is per-request serving overhead, not
-the model itself.</p>
+<p class="cap">Server compute (the queue-free x-envoy header) grows
+~{a['prefill']['ms_per_1k_input_tokens']:.1f} ms per 1k input tokens on top of a
+~{a['prefill']['fixed_floor_ms']:.0f} ms floor (R² {a['prefill']['r2_linear']:.2f},
+{a['prefill']['token_range'][0]/1000:.0f}k-{a['prefill']['token_range'][1]/1000:.0f}k tokens).
+A fixed floor plus a linear per-token term is what transformer prefill looks
+like; there is no large quadratic term at these lengths. The floor is
+per-request serving overhead, not the model itself.</p>
 <h2>2. Self-batched compute (headcount)</h2>
 <p class="cap">Packing up to 192 questions into one request barely moves server
-compute (median upstream stays in the tens of ms) while billed output tokens
-grow proportionally to questions &times; options. Many questions read out of one
-forward pass, then all the distributions are serialized — the self-batch
-signature.</p>
+compute (+{a['headcount']['marginal_ms_per_question']:.2f} ms per extra question - about what its own
+~55 added input tokens cost at the prefill slope) while billed output tokens
+grow ~{a['headcount']['marginal_output_tokens_per_question']:.0f} per question and ~{a['optioncount']['marginal_output_tokens_per_option']:.1f} per option: the response is every
+distribution serialized. Many questions read out of one forward pass - the
+self-batch signature.</p>
 <h2>3. Output = probabilities</h2>{st(output_chart_h(a))}
 <p class="cap">Each candidate costs about 9-10 output tokens: the response is the
 full probability vector, not generated text. This is the generation head
@@ -311,10 +314,14 @@ past c=16 is our own connection pool, not the server.</p>
 <h2>6. Per-script token rate</h2>{st(perscript_chart())}
 <p class="cap">Offered a parity list of model/provider names that always
 includes Typesafe and Jev, and with cyclic rotations that cancel the known
-serial-position bias, Jev attributes itself overwhelmingly to the OpenAI family.
-But its tokenizer fingerprints to Qwen, not OpenAI. The OpenAI pull is a
-post-training/self-report prior; the tokenizer is an architectural fingerprint.
-They disagree, which is itself the interesting result.</p>
+serial-position bias, Jev attributes itself overwhelmingly to the OpenAI
+family. But the tokenizer - the architectural fingerprint - matches no open
+model at all: the early short-string &ldquo;Qwen&rdquo; fit dissolved under the
+template-free per-script test (Qwen merges Cyrillic and CJK at 0.34-0.68
+tokens/char; Jev spends ~0.92-0.96). So the OpenAI pull is a learned
+brand prior from assistant-shaped training text, not lineage, and the
+vocabulary is most plausibly the vendor's own. See
+ARCHITECTURE-PROBES.md §5b-5c for the full walk-through.</p>
 </body></html>"""
     OUT.write_text(html, encoding="utf-8")
     print(f"[ok] wrote {OUT} ({OUT.stat().st_size} bytes)")

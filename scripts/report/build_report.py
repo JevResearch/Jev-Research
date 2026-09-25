@@ -78,6 +78,11 @@ WD = {s: score(p) for s, p in {
 }.items()}
 ARCAGI = score("runs_benchmark_ext/bench-arc_agi2_choice-*/derived/score.json")
 ARCAGI_T = score("runs_benchmark_ext/bench-arc_agi2_task-*/derived/score.json")
+ARCAGI_S = score("runs_benchmark_ext/bench-arc_agi2_score-*/derived/score.json")
+# Cell-level contract failures in the multi-question ARC-AGI stages (the
+# per-item strict_format_failure keys there are definitional, not violations;
+# see the note_on_strict_format fields and ARCHITECTURE-ANALYSIS.md §11.15).
+AGI_UNUSABLE = sum(s.get("cells_unusable", 0) for s in (ARCAGI, ARCAGI_T, ARCAGI_S))
 try:
     BILLING = jload("data_report/billing_totals.json")
 except FileNotFoundError:
@@ -91,6 +96,21 @@ ARCH = jload("runs_archprobe/analysis.json")
 PCC = jload("runs_archprobe/tokens_per_char_compare.json")
 FINGER = jload("runs_archprobe/tokenizer_fingerprint.json")
 COSTS = jload("data_report/costs.json")
+try:
+    AUDITS = jload("data_report/arch_audits.json")
+except FileNotFoundError:
+    raise SystemExit("data_report/arch_audits.json missing - run "
+                     "scripts/report/arch_audits.py first")
+try:
+    LATTICE = jload("data_report/lattice_forensics.json")
+except FileNotFoundError:
+    raise SystemExit("data_report/lattice_forensics.json missing - run "
+                     "scripts/report/lattice_forensics.py first")
+try:
+    PROBEPLAN = jload("data_report/probe2_plan.json")
+except FileNotFoundError:
+    raise SystemExit("data_report/probe2_plan.json missing - run "
+                     "scripts/benchmark/run_probe_battery2.py --plan first")
 
 # Jev per-benchmark cost: measured from the runs' own billing usage summaries
 JEV_COST = {b: SC[s]["attempts_summary"]["usage_input_tokens_sum"] * 0.042 / 1e6
@@ -101,6 +121,7 @@ _BENCH_SVGS = svgs_of("docs/modern-comparison/comparison-graphs.html")
 CHARTS = dict(zip(["mmlu_pro", "gpqa", "arc", "math500", "arc_agi2", "hle"], _BENCH_SVGS))
 PARETO = svgs_of("docs/modern-comparison/pareto-frontiers.html")
 EVID = svgs_of("docs/modern-comparison/architecture-evidence.html")
+ARCHDIAG = svgs_of("docs/modern-comparison/architecture-diagram.html")
 
 
 
@@ -184,6 +205,77 @@ NOTES: dict[str, str] = {
         "compute time (tens of milliseconds), while output tokens grow in "
         "proportion to questions times options. One forward pass over the "
         "state, many read-outs, all serialized - the self-batched signature.",
+    "readout": "The probability surface is post-processed, not raw. Every "
+        "value sits on the 0.01 grid; nine published vectors return a choice "
+        "that is not the argmax of their own displayed table, always at "
+        "exactly one quantum - round-to-nearest cannot reorder options, so "
+        "the decision is computed at pre-display precision; and across 2,289 "
+        "published choice vectors the confidence field equals the "
+        "chance-corrected top probability (p_max - 1/K) / (1 - 1/K) to within "
+        "two quanta (1,405 exactly, none beyond). Score answers use a "
+        "different shape statistic; noul answers carry no confidence at all. "
+        "Re-derived from the published raw responses by "
+        "scripts/report/arch_audits.py -&gt; data_report/arch_audits.json.",
+    "marginal": "The decomposition: each packed question adds ~55 input "
+        "tokens to the shared prompt and +0.44 ms of server compute; at the "
+        "measured prefill slope those tokens alone account for +0.34 ms, "
+        "leaving under 0.11 ms for the decision itself. Each option adds ~18 "
+        "tokens and +0.10 ms - fully accounted for by its own tokens "
+        "(+0.11 ms predicted). The read-out's compute is invisible inside "
+        "latency noise. Source: runs_archprobe/rows.jsonl + analysis.json; "
+        "audit: data_report/arch_audits.json.",
+    "sizelimits": "Three things this API cannot tell us, and we do not "
+        "guess them: dense vs mixture-of-experts (both prefill identically "
+        "under batching, and the economics require neither); whether "
+        "frontier-teacher distillation contributed to training (every "
+        "API-visible signal we can construct is confounded); and parameter "
+        "count (the latency slopes are scheduling artifacts under "
+        "shared batching). The capability band - 2025-era small instruct "
+        "model class on knowledge multiple-choice, far below frontier on "
+        "anything multi-step - is positioning under protocol mismatch, not a "
+        "size measurement. The full ledger, with probabilities and "
+        "falsifiers per claim, lives in ARCHITECTURE-ANALYSIS.md.",
+    "lattice": "Full lattice forensics: scripts/report/lattice_forensics.py "
+        "-&gt; data_report/lattice_forensics.json, over 704,277 values in 7,887 "
+        "published vectors at K=2..255 (probe rows, phase-1 raws, and the "
+        "Talk program's per-rotation large-menu distributions). Zero "
+        "off-grid values; displayed sums are only ever 0.99 or 1.00 and "
+        "never exceed 1.00, against the +-0.04 scatter independent per-value "
+        "rounding would give at K=255 - so the display pipeline applies a "
+        "bounded one-sided correction (or apportions integer hundredths), "
+        "leaving a 0.01 shortfall on ~46% of flat large-K vectors. Every "
+        "two-option vector sums to exactly 1.000 (complement emission). No "
+        "probability floor exists: exact 0.00 values are common. The precise "
+        "rule is what the staged P4 probe settles deterministically.",
+    "probestaged": "The follow-up battery P1-P5 "
+        "(scripts/benchmark/run_probe_battery2.py) sits behind the same "
+        "live-call gate as every runner in this repo (JEVO_ALLOW_LIVE=1 + "
+        "TYPESAFE_API_KEY from the environment, never stored in artifacts). "
+        "At the time of writing no key is provisioned here: the endpoint is "
+        "reachable (anonymous requests get 403), the documented fallback key "
+        "returns 401, so nothing was dispatched and no live probe result "
+        "appears in this report. What has run: plan mode (3,331 calls, "
+        "~2.47M input tokens, ~$0.10 at the measured rate; "
+        "data_report/probe2_plan.json) and a dry run exercising every "
+        "builder and analyzer against synthetic responses with planted "
+        "ground truth - the analyzers recover a planted 2024-11 knowledge "
+        "cutoff, a planted Luce dilution law, and a planted display "
+        "apportionment rule, which validates the instruments, not any "
+        "claim about Jev.",
+    "notwrapper": "Each negation is a measurement, not a vibe. Compute grows "
+        "linearly with prompt tokens - a cache would not prefill - and the "
+        "knowledge horizon stops at late 2024, which a live retriever would "
+        "not. Repeats of identical payloads differ (TVD 0.03-0.12), which a "
+        "lookup would not. Server compute stays 73-86 ms from concurrency "
+        "1-32, and four batched questions answer in ~261 ms vs ~1,117 ms "
+        "separately - no upstream API round trip fits inside either. The "
+        "usage counter follows a tokenizer matching none of 173 open "
+        "signatures, including both OpenAI encodings. And $0.042/M with free "
+        "output sits one to two orders of magnitude below every 2026 "
+        "flagship's input list price (roughly 30-240x, before counting "
+        "output they bill at 4-5x their input); reselling frontier inference "
+        "on those terms does not survive. Paths: "
+        "runs_archprobe/, runs_live/FINDINGS.md, data_report/costs.json.",
 }
 _NUM: dict[str, int] = {}
 _OCC: dict[str, int] = {}
@@ -324,63 +416,264 @@ the model.</p>
 </section>"""
 
 
-ARCH_MANIFEST = [
-    ("The hypothesis", "What we think Jev is under the hood, stated up front: a pre-existing "
-     "language model, post-trained, with the generation head replaced by a "
-     "choice/score/noul read-out, and all outputs computed in one batched pass."),
-    ("Benchmark evidence", "runs_benchmark/, runs_benchmark_ext/, "
-     "runs_benchmark_ext2/ - derived score/weighted-score JSON per stage "
-     "(aggregate; per-item lists stripped), freeze manifests (frozen.json, "
-     "preparation.json) with SHA-256 hashes of every input, and per-stage "
-     "usage summaries. Gated dataset item text is not republished; the hashes "
-     "pin it."),
-    ("Latency and self-batching", "runs_archprobe/analysis.json + rows.jsonl - "
-     "prefill slope, per-question and per-option marginal cost, cold vs warm "
-     "connection, in-flight concurrency curves. Charts: "
-     "docs/modern-comparison/architecture-evidence.html."),
-    ("Tokenization fingerprint", "runs_archprobe/tokenizer_fingerprint.json (short-string "
-     "affine fit), tokenizer_perscript.json (per-script residual fit), "
-     "tokens_per_char_compare.json (whitespace-free marginal cost table), "
-     "tokenizer_broadscan.json (1,215 repos -> 173 unique tokenizer signatures)."),
-    ("Talk-to-Jev program", "docs/token-talk-findings.md (sections 1-15), "
-     "docs/jev-talk-program-report.md, runs_live/ traces - the option-ladder "
-     "result (character / vocabulary-menu / token+local-LM), ordering probe, "
-     "ensemble probes, identity interventions."),
-    ("Key behavioral conclusions", "Greedy accuracy exceeds probability-weighted accuracy on "
-     "nearly every benchmark (over-dispersed distributions); every probability "
-     "lands on a 0.01 grid; server compute is a fixed floor plus ~5-6 ms per "
-     "1k input tokens with negligible quadratic term; additional questions "
-     "inside one request are near-free; concurrency scales throughput ~10x "
-     "without hurting server latency; identity prior points at OpenAI; the "
-     "whitespace-free tokenizer profile matches no open model."),
-    ("Reproducibility", "scripts/ + src/ in this repo, deterministic seeds and "
-     "freeze hashes in every runs_* dir; the same commands that produced these "
-     "figures are listed in the data section."),
+# Claim-area -> on-disk artifact map for the architecture section. The full
+# ledger (alternatives, probabilities, falsifiers, next probes) lives in
+# ARCHITECTURE-ANALYSIS.md at the repo root; this table is the short form.
+ARCH_EVIDENCE = [
+    ("Serving shape and latency", "runs_archprobe/analysis.json + rows.jsonl (987 calls, "
+     "0 errors); charts: docs/modern-comparison/architecture-evidence.html"),
+    ("Read-out post-processing", "data_report/arch_audits.json (re-derived offline by "
+     "scripts/report/arch_audits.py); src/jev_observatory/validation.py"),
+    ("Tokenizer profile", "runs_archprobe/tokenizer_fingerprint.json, tokenizer_perscript.json, "
+     "tokenizer_broadscan.json, tokens_per_char_compare.json, cleanrun_jev.json; "
+     "docs/modern-comparison/ARCHITECTURE-PROBES.md"),
+    ("Capability and calibration", "runs_benchmark*/bench-*/derived/score.json + "
+     "weighted_score.json, freeze manifests; "
+     "docs/modern-comparison/canonical/comparable-scores.json"),
+    ("Identity, horizon, abstention", "runs_archprobe/analysis.json (ancestry); "
+     "runs_live/FINDINGS.md; runs_live/identity_parity_*.json; "
+     "docs/token-talk-findings.md"),
+    ("Generation ladder (Jev-only rungs)", "docs/jev-talk-program-report.md; "
+     "docs/token-talk-findings.md; runs_live/ traces"),
+    ("Lattice forensics + staged probe battery", "scripts/report/lattice_forensics.py -> "
+     "data_report/lattice_forensics.json; scripts/benchmark/run_probe_battery2.py "
+     "(P1-P5, dry-run validated; live dispatch gated on the API key)"),
+    ("Economics", "data_report/costs.json, data_report/billing_totals.json"),
+    ("Full ledger and next probes", "ARCHITECTURE-ANALYSIS.md"),
 ]
 
 
 def architecture(v: dict) -> str:
-    rows = "".join(f"<li><b>{t}</b> - {d}</li>" for t, d in ARCH_MANIFEST)
+    p = ARCH["prefill"]; h = ARCH["headcount"]; o = ARCH["optioncount"]
+    floor = p["fixed_floor_ms"]; slope = p["ms_per_1k_input_tokens"]
+    mq = h["marginal_ms_per_question"]; mo = o["marginal_ms_per_option"]
+    fq = h["marginal_output_tokens_per_question"]
+    fo = o["marginal_output_tokens_per_option"]
+    c1 = ARCH["concurrency"]["per_call_wall"]["1"]
+    c32 = ARCH["concurrency"]["per_call_wall"]["32"]
+    anc = ARCH["ancestry"]; mass = anc["family_mass"]; votes = anc["greedy_votes"]
+    openai_votes = sum(votes.get(k, 0) for k in ("OpenAI", "GPT", "ChatGPT"))
+    qa = AUDITS["quantization"]["archprobe_rows"]
+    ql = AUDITS["quantization"]["runs_live_raw"]
+    n_values = qa["n_values"] + ql["n_values"]
+    n_mismatch = qa["n_choice_not_table_argmax"] + ql["n_choice_not_table_argmax"]
+    cfc = AUDITS["confidence_formula"]["choice"]
+    mcq = AUDITS["marginal_cost"]["per_question"]
+    mco = AUDITS["marginal_cost"]["per_option"]
+    bp = AUDITS["battery_power"]
+    rp = AUDITS["rotation_pairs"]
+    lat_vals = sum(c["n_values"] for c in LATTICE["corpora"].values())
+    lat_vecs = sum(c["n_vectors"] for c in LATTICE["corpora"].values())
+    lat_big = LATTICE["corpora"]["talk_ensemble_raw"]["by_k_bucket"]["65-255"]
+    lat_frac99 = (lat_big["sum_dev_sign_counts"]["le_-0.005"]
+                  / max(lat_big["n_vectors"], 1))
+    fmt_total = sum((SC[s].get("strict_format_failures") or 0) for s in SC)
+    wmmlu = WD["mmlu"]
+    jp = COSTS["prices_usd_per_M"]["Jev"]
+    probe_calls = sum(f["calls"] for f in PROBEPLAN["plan"]["per_family"].values())
+    probe_cost = PROBEPLAN["plan"]["est_cost_usd_at_0p042_per_M_in"]
+    probe_tok = PROBEPLAN["plan"]["est_input_tokens_total"]
+    ev = "".join(f"<tr><td>{a}</td><td class='cap'>{b}</td></tr>"
+                 for a, b in ARCH_EVIDENCE)
     return f"""
 <section id="arch">
 <h2>What Jev appears to be</h2>
-<div class="note"><b>Drafting note.</b> This section is deliberately a
-placeholder. The prose and figures for it are being authored separately; the
-list below is the complete inventory of published evidence it should draw on,
-with paths. Until then, treat the summary bullets as the claim:</div>
-<p><i>Working picture:</i> Jev looks like a small, English-centric language
-model whose output side has been converted into a probability read-out over
-caller-supplied options, with every question in a request scored from one
-forward pass. It is not a frontier model, not a retrieval cache, and not a
-wrapper around a bigger vendor - and the OpenAI-shaped answers in our identity
-probes are almost certainly a training-data artifact, not lineage.</p>
-<h3>Evidence inventory for the write-up</h3>
-<ul>{rows}</ul>
+<p>This section is inference, not disclosure: no weights, gradients, or
+serving internals were ever touched{fn('behavioronly')} - what follows is
+assembled from answers, probability vectors, token counts, timing headers and
+bills, and it is our <i>operating premise</i>: every other section reads
+Jev's behavior through the model stated here. The full ledger - alternative
+hypotheses with probabilities, a falsifier per load-bearing claim, and six
+cheap discriminating probes - lives in <code>ARCHITECTURE-ANALYSIS.md</code>
+in the repository.</p>
+<div class="card">In one sentence: Jev looks like a <b>small,
+English-centric transformer language model</b>, post-trained for judgement
+rather than conversation, served with its <b>generation head replaced by a
+probability read-out</b> over caller-supplied options - every question in a
+request scored from <b>one batched prefill pass</b>, which is why it is fast,
+why its output is free, and why it cannot write you a poem.</div>
+<figure>{strip_titles(ARCHDIAG[0])}<figcaption>The operating premise, drawn:
+one request's journey left to right (teal = measured), the training history
+that produced the weights (amber = best explanation), and what no API-visible
+signal reaches (dotted = not identified). Generated from the artifacts by
+<code>scripts/report/arch_diagram.py</code>; standalone page:
+<code>docs/modern-comparison/architecture-diagram.html</code>.</figcaption></figure>
+<table>
+<tr><th>Component</th><th>Best guess</th><th>Confidence</th></tr>
+<tr><td>Output side</td><td class='cap'>a trained probability read-out over the caller's
+options - a discriminative head where a language head usually goes, with
+choice / score / noul as its three exposed shapes</td><td>confident</td></tr>
+<tr><td>Serving</td><td class='cap'>one forward pass per request; all questions and options
+scored from it; continuous batching across tenants; no decode loop</td><td>confident</td></tr>
+<tr><td>Compute profile</td><td class='cap'>~{floor:.0f} ms fixed floor + ~{slope:.0f} ms per 1k input
+tokens, linear to 29k tokens; no large quadratic (attention-blowup)
+signature</td><td>confident (measured)</td></tr>
+<tr><td>Input pipeline</td><td class='cap'>a whitespace normalizer plus a fixed ~{bp['mergerate_baseline_tokens']}-token
+template run ahead of the model's own tokenizer</td><td>confident / plausible</td></tr>
+<tr><td>Tokenizer</td><td class='cap'>the vendor's own English/Latin-centric BPE: heavy Latin
+merges, ~1 token per codepoint for the major non-Latin scripts, byte-level
+fallback for uncovered characters, no match among 173 open
+signatures</td><td>plausible (strong)</td></tr>
+<tr><td>Core</td><td class='cap'>transformer-family decoder LM; dense vs MoE unknown;
+attention variant unknown and unknowable at these context
+lengths</td><td>plausible / open</td></tr>
+<tr><td>Size</td><td class='cap'>no parameter count is identified - the slopes are
+scheduling artifacts under shared batching. Capability band: a 2025-era
+small (~9B-class) instruct model on knowledge multiple-choice; far below
+frontier on anything multi-step</td><td>band: speculative</td></tr>
+<tr><td>Training</td><td class='cap'>English-dominant pretraining; knowledge horizon late
+2024; judgement-format assistant post-training; OpenAI-flavored brand prior
+inherited from training text; frontier-teacher contribution
+unknowable</td><td>plausible</td></tr>
+<tr><td>What it is not</td><td class='cap'>not frontier, not retrieval- or cache-assisted,
+not a wrapper around another vendor's API, not a relabeled open
+model</td><td>confident</td></tr>
+</table>
+<p class="cap">&ldquo;Confident&rdquo; = directly measured, adequate n,
+robust to the noise floor. &ldquo;Plausible&rdquo; = best explanation of the
+measurements, rivals not excluded. &ldquo;Speculative&rdquo; = reasoned
+guess; the evidence under-determines it. Every row's evidence and its
+falsifier: <code>ARCHITECTURE-ANALYSIS.md</code> §1.</p>
+
+<h3>One pass, many read-outs</h3>
+<p>The latency section below carries the measurements; the architectural
+content is this. Server compute is a fixed floor plus a linear prefill term
+(~{slope:.0f} ms per 1k input tokens), and the decisive numbers are the
+marginals. Packing one more question into a request costs +{mq:.2f} ms - and
+the ~{mcq['input_tokens_per_unit']:.0f} input tokens that question adds predict +{mcq['prefill_predicted_ms_per_unit']:.2f} ms at the
+prefill slope, so the decision itself hides in a residual under
+{mcq['residual_ms_per_unit']:.2f} ms. One more option costs +{mo:.2f} ms against the +{mco['prefill_predicted_ms_per_unit']:.2f} ms its own ~{mco['input_tokens_per_unit']:.0f} tokens predict: the
+read-out's compute is indistinguishable from zero.{fn('marginal')} Billed
+output grows ~{fq:.0f} tokens per question and ~{fo:.1f} per option - that is
+the response JSON serializing itself, which is exactly why output can be
+free: nothing is ever decoded. Upstream compute stays flat
+({c1['median_upstream_ms']:.0f} ms at concurrency 1, {c32['median_upstream_ms']:.0f} ms at 32) while our own wall time bends, so
+independent requests share a batched path; and a four-question batch answers
+in ~261 ms where the same four questions separately take ~1,117 ms - there is
+no hidden per-question round trip anywhere.{fn('selfbatch')} &ldquo;System
+one&rdquo;, under this reading, is as much a serving description as a
+psychological one: prefill, read out, done.</p>
+
+<h3>Fingerprints on the read-out</h3>
+<p>Every one of the {lat_vals:,} probability values published in this
+repository - {lat_vecs:,} vectors spanning the probe battery, the phase-1 raw
+responses, and the Talk program's large-menu traces - sits on the 0.01
+grid.{fn('quantization')} The lattice has more structure than
+&ldquo;rounded&rdquo;: displayed sums are 0.99 or 1.00 and <b>never exceed
+1.00</b>, in any corpus, at any K up to 255 - independent per-value rounding
+would scatter sums by ±0.04 at K=255, so a bounded one-sided correction runs
+after rounding ({pct(lat_frac99)} of flat K≈255 vectors land 0.01 short; every
+published two-option vector sums to exactly 1.000).{fn('lattice')} Two more
+seams are visible. In {n_mismatch} vectors the
+returned choice is not the argmax of its own displayed table - always at
+exactly one quantum, which monotone rounding cannot produce, so the decision
+is computed at pre-display precision while the table is rounded separately.
+And the choice <code>confidence</code> field is recoverable: it is the
+chance-corrected top probability, (p_max - 1/K)/(1 - 1/K) - {cfc['exact']:,} of
+{cfc['n']:,} published choice vectors match it exactly against the displayed
+table, {cfc['within_1_quantum']:,} within one quantum, {cfc['within_2_quanta']} within two, none
+beyond.{fn('readout')} Buyer's note: choice confidence is a deterministic
+function of the vector you were already handed, not a second opinion. Score
+answers use a different shape statistic, noul answers carry no confidence at
+all, and schema perfection under load ({fmt_total} contract-invalid responses
+across the text stages, {AGI_UNUSABLE} unusable cells in the multi-question
+ARC-AGI stages) completes the picture: a serializer over
+a trained discriminative head, not generated text parsed into numbers.</p>
+
+<h3>A tokenizer nobody recognizes</h3>
+<p>The probing section below tells the full story, including both false
+leads. The architectural content: Jev's counter merges English text and
+punctuation hard, spends ~1 token per codepoint on Cyrillic, Greek, Arabic,
+Hebrew, Thai, Devanagari, Hangul, kana and common CJK, ~1 per digit, and ~2
+per uncovered rare character - byte-level-fallback territory - and it
+collapses pure whitespace to zero, so a normalizer runs in the serving path
+before tokenization. None of the 173 open tokenizer signatures across 1,215
+scanned repositories reproduces that combination, and the short-string
+battery that once &ldquo;matched&rdquo; Qwen2.5 at RMSE ~1 token carries at
+most {bp['short_battery_max_delta_over_baseline']} tokens of discriminating information per probe against a
+~{bp['mergerate_baseline_tokens']}-token template - a trap, not a match. Per-script coverage is a
+pretraining-corpus fossil record, and this one says: English-dominant diet,
+incidental multilingual exposure, vendor's own vocabulary. That is what makes
+Jev a <i>new foundation</i> rather than a relabeled one.</p>
+
+<h3>Small, in a particular way</h3>
+<p>We decline a parameter count: the server batches our requests with
+everyone else's, so marginal milliseconds are a scheduling artifact as much
+as a compute artifact. The honest size signal is the capability profile, and
+it has a particular shape. On one-shot knowledge multiple-choice Jev sits in
+the band of 2025-era small instruct models - {pct(SC['mmlu']['accuracy'])} MMLU-Pro
+where Claude 3.7 Sonnet scored 80.7 without thinking and Qwen 3.5 9B 82.5,
+{pct(SC['gpqa']['accuracy'])} GPQA where they scored 76.8 and 77.6 - positioning, not a matched
+race.{fn('protocol')} On anything multi-step it falls off a cliff:
+{pct(SC['hle']['accuracy'])} on HLE, zero exact grids on ARC-AGI-2, and the generation tax -
+{pct(SC['math_c']['accuracy'])} on MATH-500 items when the answer is an option to pick,
+{pct(SC['math_s']['accuracy'])} when the same answers must be read off digit by digit.
+Recognition far exceeds production, which is what judgement-heavy
+post-training on a small model produces. The distributions are shaped the
+same way: the median MMLU-Pro item carries p(gold) = {wmmlu['weighted_accuracy_p50']:.2f} against a
+mean of {pct(wmmlu['weighted_accuracy_mean'])}, and {SC['mmlu']['zero_probability_gold']} items put exactly 0.00 on the gold answer -
+near-decisive where it knows, confidently wrong on a hard tail. Position
+effects are real but unbiased where content lives: re-running 419 items with
+shuffled option order flips {pct(rp['flip_rate'])} of answers with no net accuracy change
+(exact McNemar p = {rp['mcnemar_exact_p']:.2f}) - an in-context list reader, not a per-option
+oracle.</p>
+
+<h3>What it is not</h3>
+<p>Four negations, each a measurement rather than a vibe.{fn('notwrapper')}
+Not retrieval or cache: compute grows linearly in prompt tokens - a cache
+would not prefill - the knowledge horizon stops at late 2024, repeats of
+identical payloads differ, and {SC['mmlu']['zero_probability_gold']} zero-probability gold answers on
+<i>public</i> benchmark text is not what a lookup produces. Not a wrapper
+around a frontier API: {c1['median_upstream_ms']:.0f}-{c32['median_upstream_ms']:.0f} ms of upstream compute leaves no room
+inside for anyone else's round trip, and the price sits one to two orders of
+magnitude below flagship input lists. Not a relabeled open model: the
+tokenizer scan says so, and both historical leads dissolved as template
+artifacts. Not frontier: the benchmark section says so six ways. And the
+brand prior is not lineage - asked to name its maker from a
+position-controlled menu that includes that maker, Jev says an OpenAI-family
+name {openai_votes} times out of {anc['n_frames_with_probs']} ({pct(mass['openai'])} of probability mass), with
+&ldquo;Typesafe&rdquo; at the quantization floor; injected &ldquo;Jev&rdquo;
+spellings at probability parity are never chosen. Learned text about who
+makes assistants - which the token counts independently contradict as actual
+OpenAI or Qwen provenance.</p>
+
+<h3>What stays open</h3>
+<p>Three things this API cannot tell us, and we do not guess them: whether
+the transformer is dense or mixture-of-experts; whether a frontier teacher
+produced any of the training signal (every discriminator we can construct is
+confounded, including the OpenAI-shaped brand prior, which the open
+assistant-text ecosystem produces on its own); and any parameter count or
+hidden dimension beyond the documented interface (32k-token state, 64k
+total, ≤255 options, 2-10 rubric levels).{fn('sizelimits')}</p>
+<p>The follow-up probes are built, not just wished for. Five families that
+could move these questions - tokenizer fallback granularity, option-cost
+decoupling, calibration under option-count scaling, the lattice rule on
+identical options, and a knowledge-horizon bisection - are implemented in
+<code>scripts/benchmark/run_probe_battery2.py</code>, validated end-to-end by
+a dry run against synthetic responses with planted ground truth, and planned
+at {probe_calls:,} calls (~{probe_tok/1e6:.1f}M input tokens ≈
+${probe_cost:.2f} at the measured rate). Live dispatch is gated on a working
+<code>TYPESAFE_API_KEY</code>, which this environment does not have: nothing
+was sent, and no live probe result appears anywhere in this
+report.{fn('probestaged')} The offline arm of the lattice probe <i>has</i>
+run - that is the bounded-sums result above - and its live arm is what
+settles the exact apportionment rule deterministically.</p>
+
+<p>Everything above re-derives from published artifacts:</p>
+<table><tr><th>Claim area</th><th>Where it lives</th></tr>{ev}</table>
+<p>If TypeSafe published a model card tomorrow that said <i>&ldquo;small
+English-centric transformer, judgement-tuned, prefill-only serving&rdquo;</i>,
+nothing in this section would need rewriting. If it said <i>&ldquo;rebadged
+Qwen&rdquo;</i> or <i>&ldquo;a GPT behind a curtain&rdquo;</i>, the token
+counts and the millisecond headers would have a great deal of explaining to
+do.</p>
 </section>"""
 
 
 def pitch() -> str:
     cf = SC["mmlu"]["strict_format_failures"]
+    others = sum((SC[s].get("strict_format_failures") or 0)
+                 for s in SC if s != "mmlu")
     mn = SC["mmlu"]["n_expected"]
     wrong_gpqa = pct(1 - SC["gpqa"]["accuracy"])
     jp = COSTS["prices_usd_per_M"]["Jev"]
@@ -402,7 +695,8 @@ architecture claim - and, as it turned out, not a provenance claim either.</p>
 <p><b>Cannot hallucinate.</b> What Jev actually cannot do is emit free text. It
 returns one option from a fixed menu, inside a schema that is always
 well-formed, and that guarantee held under load: {cf} malformed outputs across
-{mn:,} MMLU-Pro items and zero everywhere else. But a schema-valid answer is
+{mn:,} MMLU-Pro items and {others} more in the entire rest of the benchmark
+program. But a schema-valid answer is
 not a true answer. Jev is wrong {wrong_gpqa} of the time on graduate science,
 and every one of those wrong answers arrived beautifully formatted. A model
 that cannot write prose has not solved hallucination; it has made hallucination
