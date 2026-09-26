@@ -1,0 +1,638 @@
+{
+ "claim_level": "exploratory_architecture_evidence",
+ "n_rows": 3331,
+ "n_errors": 1,
+ "p1_fallback": {
+  "baseline_tokens": 322.0,
+  "classes": {
+   "cjk_ext_a": {
+    "n": 4,
+    "median_reported_in": 501.0,
+    "tokens_over_baseline": 179.0,
+    "chars": 60,
+    "bytes": 180,
+    "tokens_per_char": 2.983,
+    "tokens_per_utf8_byte": 0.994
+   },
+   "bom_run": {
+    "n": 4,
+    "median_reported_in": 443.0,
+    "tokens_over_baseline": 121.0,
+    "chars": 60,
+    "bytes": 180,
+    "tokens_per_char": 2.017,
+    "tokens_per_utf8_byte": 0.672
+   },
+   "cjk_compat_ideo": {
+    "n": 4,
+    "median_reported_in": 420.0,
+    "tokens_over_baseline": 98.0,
+    "chars": 60,
+    "bytes": 180,
+    "tokens_per_char": 1.633,
+    "tokens_per_utf8_byte": 0.544
+   },
+   "tab_run": {
+    "n": 4,
+    "median_reported_in": 328.0,
+    "tokens_over_baseline": 6.0,
+    "chars": 60,
+    "bytes": 60,
+    "tokens_per_char": 0.1,
+    "tokens_per_utf8_byte": 0.1
+   },
+   "cjk_ext_b": {
+    "n": 4,
+    "median_reported_in": 481.0,
+    "tokens_over_baseline": 159.0,
+    "chars": 40,
+    "bytes": 160,
+    "tokens_per_char": 3.975,
+    "tokens_per_utf8_byte": 0.994
+   },
+   "combining_decomposed": {
+    "n": 4,
+    "median_reported_in": 363.0,
+    "tokens_over_baseline": 41.0,
+    "chars": 80,
+    "bytes": 120,
+    "tokens_per_char": 0.512,
+    "tokens_per_utf8_byte": 0.342
+   },
+   "soft_hyphen_run": {
+    "n": 4,
+    "median_reported_in": 383.0,
+    "tokens_over_baseline": 61.0,
+    "chars": 60,
+    "bytes": 120,
+    "tokens_per_char": 1.017,
+    "tokens_per_utf8_byte": 0.508
+   },
+   "baseline_empty": {
+    "n": 4,
+    "median_reported_in": 322.0,
+    "tokens_over_baseline": 0.0,
+    "chars": 0,
+    "bytes": 0,
+    "tokens_per_char": null,
+    "tokens_per_utf8_byte": null
+   },
+   "cherokee": {
+    "n": 4,
+    "median_reported_in": 503.0,
+    "tokens_over_baseline": 181.0,
+    "chars": 60,
+    "bytes": 180,
+    "tokens_per_char": 3.017,
+    "tokens_per_utf8_byte": 1.006
+   },
+   "ideographic_space_run": {
+    "n": 4,
+    "median_reported_in": 383.0,
+    "tokens_over_baseline": 61.0,
+    "chars": 60,
+    "bytes": 180,
+    "tokens_per_char": 1.017,
+    "tokens_per_utf8_byte": 0.339
+   },
+   "combining_precomposed": {
+    "n": 4,
+    "median_reported_in": 363.0,
+    "tokens_over_baseline": 41.0,
+    "chars": 40,
+    "bytes": 80,
+    "tokens_per_char": 1.025,
+    "tokens_per_utf8_byte": 0.512
+   },
+   "yi_syllables": {
+    "n": 4,
+    "median_reported_in": 503.0,
+    "tokens_over_baseline": 181.0,
+    "chars": 60,
+    "bytes": 180,
+    "tokens_per_char": 3.017,
+    "tokens_per_utf8_byte": 1.006
+   },
+   "zwj_run": {
+    "n": 4,
+    "median_reported_in": 383.0,
+    "tokens_over_baseline": 61.0,
+    "chars": 60,
+    "bytes": 180,
+    "tokens_per_char": 1.017,
+    "tokens_per_utf8_byte": 0.339
+   },
+   "math_bold": {
+    "n": 4,
+    "median_reported_in": 439.0,
+    "tokens_over_baseline": 117.0,
+    "chars": 40,
+    "bytes": 160,
+    "tokens_per_char": 2.925,
+    "tokens_per_utf8_byte": 0.731
+   },
+   "baseline_spaces": {
+    "n": 4,
+    "median_reported_in": 324.0,
+    "tokens_over_baseline": 2.0,
+    "chars": 60,
+    "bytes": 60,
+    "tokens_per_char": 0.033,
+    "tokens_per_utf8_byte": 0.033
+   },
+   "double_spaces_between_words": {
+    "n": 4,
+    "median_reported_in": 402.0,
+    "tokens_over_baseline": 80.0,
+    "chars": 238,
+    "bytes": 238,
+    "tokens_per_char": 0.336,
+    "tokens_per_utf8_byte": 0.336
+   },
+   "hangul_rare": {
+    "n": 4,
+    "median_reported_in": 453.0,
+    "tokens_over_baseline": 131.0,
+    "chars": 60,
+    "bytes": 180,
+    "tokens_per_char": 2.183,
+    "tokens_per_utf8_byte": 0.728
+   },
+   "single_spaces_between_words": {
+    "n": 4,
+    "median_reported_in": 363.0,
+    "tokens_over_baseline": 41.0,
+    "chars": 199,
+    "bytes": 199,
+    "tokens_per_char": 0.206,
+    "tokens_per_utf8_byte": 0.206
+   },
+   "regional_pairs": {
+    "n": 4,
+    "median_reported_in": 419.0,
+    "tokens_over_baseline": 97.0,
+    "chars": 48,
+    "bytes": 192,
+    "tokens_per_char": 2.021,
+    "tokens_per_utf8_byte": 0.505
+   },
+   "newline_run": {
+    "n": 4,
+    "median_reported_in": 331.0,
+    "tokens_over_baseline": 9.0,
+    "chars": 60,
+    "bytes": 60,
+    "tokens_per_char": 0.15,
+    "tokens_per_utf8_byte": 0.15
+   },
+   "zwnj_run": {
+    "n": 4,
+    "median_reported_in": 383.0,
+    "tokens_over_baseline": 61.0,
+    "chars": 60,
+    "bytes": 180,
+    "tokens_per_char": 1.017,
+    "tokens_per_utf8_byte": 0.339
+   },
+   "mixed_space_kinds": {
+    "n": 4,
+    "median_reported_in": 363.0,
+    "tokens_over_baseline": 41.0,
+    "chars": 80,
+    "bytes": 100,
+    "tokens_per_char": 0.512,
+    "tokens_per_utf8_byte": 0.41
+   },
+   "nbsp_run": {
+    "n": 4,
+    "median_reported_in": 383.0,
+    "tokens_over_baseline": 61.0,
+    "chars": 60,
+    "bytes": 120,
+    "tokens_per_char": 1.017,
+    "tokens_per_utf8_byte": 0.508
+   },
+   "ethiopic": {
+    "n": 4,
+    "median_reported_in": 443.0,
+    "tokens_over_baseline": 121.0,
+    "chars": 60,
+    "bytes": 180,
+    "tokens_per_char": 2.017,
+    "tokens_per_utf8_byte": 0.672
+   },
+   "ctrl_cyrillic": {
+    "n": 4,
+    "median_reported_in": 383.0,
+    "tokens_over_baseline": 61.0,
+    "chars": 60,
+    "bytes": 120,
+    "tokens_per_char": 1.017,
+    "tokens_per_utf8_byte": 0.508
+   },
+   "devanagari_conjunct": {
+    "n": 4,
+    "median_reported_in": 383.0,
+    "tokens_over_baseline": 61.0,
+    "chars": 60,
+    "bytes": 180,
+    "tokens_per_char": 1.017,
+    "tokens_per_utf8_byte": 0.339
+   },
+   "emoji_rare": {
+    "n": 4,
+    "median_reported_in": 430.0,
+    "tokens_over_baseline": 108.0,
+    "chars": 40,
+    "bytes": 160,
+    "tokens_per_char": 2.7,
+    "tokens_per_utf8_byte": 0.675
+   },
+   "ctrl_cjk_common": {
+    "n": 4,
+    "median_reported_in": 383.0,
+    "tokens_over_baseline": 61.0,
+    "chars": 60,
+    "bytes": 180,
+    "tokens_per_char": 1.017,
+    "tokens_per_utf8_byte": 0.339
+   },
+   "lone_surrogate": {
+    "n": 0,
+    "errors": 1
+   }
+  },
+  "reading": "tokens_per_char ~1 => codepoint-level entry; ~1.5-2 for 3-byte chars and ~2-3 for 4-byte chars => byte-level BPE fallback with partial byte-n-gram merges; <=2 uniformly for astral => UTF-16 code-unit fallback; combining vs precomposed equality => NFC normalization; whitespace-class rows map the serving normalizer."
+ },
+ "p1_merge": {
+  "median_tokens": {
+   "a_ba59_b": 353,
+   "bridge_word-word": 367,
+   "th_x80": 403,
+   "case_AA60": 353,
+   "hello_x10": 333,
+   "case_aa60": 353,
+   "bridge_wordword": 353,
+   "t80_h80": 384,
+   "bridge_word_word": 353,
+   "digit7_x40": 363,
+   "bridge_word.word": 367,
+   "hello_x160": 484,
+   "dash_x40": 326,
+   "hello_x80": 403,
+   "case_aA60": 384,
+   "hello_x40": 363,
+   "digit7_x160": 483,
+   "ab_x60": 353,
+   "hello_x20": 343,
+   "digit7_x10": 333,
+   "dash_x160": 333,
+   "a60_b60": 354
+  },
+  "contrasts": {
+   "ab_vs_aabb": -1,
+   "hello_saturation": [
+    333,
+    343,
+    363,
+    403,
+    484
+   ],
+   "case_seam_aa_minus_aA": -31,
+   "bridge_dot_minus_none": 14
+  }
+ },
+ "p2_grid": {
+  "n": 60,
+  "ols_intercept_ms": 61.48,
+  "ols_ms_per_1k_input_tokens": 3.955,
+  "ols_ms_per_100_options_beyond_tokens": -0.786,
+  "residual_sd_ms": 20.5,
+  "reading": "a K-coefficient within +-residual_sd of 0 supports single-trunk in-context scoring; a positive K-coefficient several x residual_sd indicates per-option work beyond prefill."
+ },
+ "p3_kcal": {
+  "by_K": {
+   "2": {
+    "n": 132,
+    "mean_p_gold": 1.0,
+    "accuracy": 1.0,
+    "mean_frac_at_0.00": 0.5,
+    "mean_frac_at_0.01": 0.0
+   },
+   "4": {
+    "n": 396,
+    "mean_p_gold": 0.997,
+    "accuracy": 1.0,
+    "mean_frac_at_0.00": 0.703,
+    "mean_frac_at_0.01": 0.022
+   },
+   "8": {
+    "n": 396,
+    "mean_p_gold": 0.998,
+    "accuracy": 1.0,
+    "mean_frac_at_0.00": 0.853,
+    "mean_frac_at_0.01": 0.019
+   },
+   "16": {
+    "n": 396,
+    "mean_p_gold": 0.9976,
+    "accuracy": 1.0,
+    "mean_frac_at_0.00": 0.926,
+    "mean_frac_at_0.01": 0.009
+   },
+   "32": {
+    "n": 396,
+    "mean_p_gold": 0.9982,
+    "accuracy": 1.0,
+    "mean_frac_at_0.00": 0.963,
+    "mean_frac_at_0.01": 0.005
+   },
+   "64": {
+    "n": 396,
+    "mean_p_gold": 0.9981,
+    "accuracy": 1.0,
+    "mean_frac_at_0.00": 0.981,
+    "mean_frac_at_0.01": 0.003
+   },
+   "128": {
+    "n": 396,
+    "mean_p_gold": 0.9964,
+    "accuracy": 1.0,
+    "mean_frac_at_0.00": 0.99,
+    "mean_frac_at_0.01": 0.002
+   },
+   "255": {
+    "n": 396,
+    "mean_p_gold": 0.9923,
+    "accuracy": 1.0,
+    "mean_frac_at_0.00": 0.994,
+    "mean_frac_at_0.01": 0.002
+   }
+  },
+  "reading": "set-normalized read-out: mean_p_gold decays with K while accuracy stays flat and floor mass grows ~linearly in K; independent absolute scoring would keep mean_p_gold flat."
+ },
+ "p4_lattice": {
+  "identical_options": {
+   "2": {
+    "n": 8,
+    "distinct_patterns": 5,
+    "top_patterns": {
+     "[0.73, 0.27]": 2,
+     "[0.71, 0.29]": 2,
+     "[0.66, 0.34]": 2
+    },
+    "sum_min": 1.0,
+    "sum_max": 1.0
+   },
+   "3": {
+    "n": 8,
+    "distinct_patterns": 8,
+    "top_patterns": {
+     "[0.68, 0.19, 0.13]": 1,
+     "[0.75, 0.15, 0.1]": 1,
+     "[0.72, 0.16, 0.12]": 1
+    },
+    "sum_min": 1.0,
+    "sum_max": 1.0
+   },
+   "4": {
+    "n": 8,
+    "distinct_patterns": 8,
+    "top_patterns": {
+     "[0.81, 0.11, 0.05, 0.03]": 1,
+     "[0.84, 0.08, 0.05, 0.03]": 1,
+     "[0.82, 0.1, 0.05, 0.03]": 1
+    },
+    "sum_min": 1.0,
+    "sum_max": 1.0
+   },
+   "6": {
+    "n": 8,
+    "distinct_patterns": 7,
+    "top_patterns": {
+     "[0.82, 0.08, 0.04, 0.02]...": 2,
+     "[0.82, 0.09, 0.04, 0.02]...": 1,
+     "[0.77, 0.11, 0.04, 0.03]...": 1
+    },
+    "sum_min": 1.0,
+    "sum_max": 1.0
+   },
+   "7": {
+    "n": 8,
+    "distinct_patterns": 7,
+    "top_patterns": {
+     "[0.89, 0.05, 0.02, 0.01]...": 2,
+     "[0.85, 0.06, 0.02, 0.02]...": 1,
+     "[0.87, 0.06, 0.03, 0.01]...": 1
+    },
+    "sum_min": 1.0,
+    "sum_max": 1.0
+   },
+   "8": {
+    "n": 8,
+    "distinct_patterns": 5,
+    "top_patterns": {
+     "[0.87, 0.06, 0.02, 0.01]...": 3,
+     "[0.89, 0.05, 0.01, 0.01]...": 2,
+     "[0.91, 0.04, 0.01, 0.01]...": 1
+    },
+    "sum_min": 1.0,
+    "sum_max": 1.0
+   },
+   "12": {
+    "n": 8,
+    "distinct_patterns": 7,
+    "top_patterns": {
+     "[0.89, 0.06, 0.01, 0.01]...": 2,
+     "[0.89, 0.07, 0.01, 0.01]...": 1,
+     "[0.88, 0.08, 0.01, 0.01]...": 1
+    },
+    "sum_min": 1.0,
+    "sum_max": 1.0
+   },
+   "255": {
+    "n": 8,
+    "distinct_patterns": 7,
+    "top_patterns": {
+     "[0.73, 0.1, 0.01, 0.01]...": 2,
+     "[0.75, 0.09, 0.01, 0.01]...": 1,
+     "[0.74, 0.1, 0.01, 0.01]...": 1
+    },
+    "sum_min": 0.99,
+    "sum_max": 1.0
+   }
+  },
+  "near_tie_choice_counts": {
+   "o0": 20
+  },
+  "reading": "identical options expose the apportionment rule directly (e.g. K=3: [0.34,0.33,0.33] => largest-remainder to 1.00; [0.33,0.33,0.33] => round-down leaving 0.99), and near-tie flip counts bound the internal noise scale and tie-break bias."
+ },
+ "p5_horizon": {
+  "by_month": {
+   "2022-11": {
+    "n": 4,
+    "gold_hits": 4,
+    "abstain": 0,
+    "did_not_occur": 0,
+    "kinds": {
+     "pre": 4
+    },
+    "gold_rate": 1.0
+   },
+   "2023-10": {
+    "n": 4,
+    "gold_hits": 4,
+    "abstain": 0,
+    "did_not_occur": 0,
+    "kinds": {
+     "pre": 4
+    },
+    "gold_rate": 1.0
+   },
+   "2024-04": {
+    "n": 4,
+    "gold_hits": 4,
+    "abstain": 0,
+    "did_not_occur": 0,
+    "kinds": {
+     "pre": 4
+    },
+    "gold_rate": 1.0
+   },
+   "2024-07": {
+    "n": 4,
+    "gold_hits": 4,
+    "abstain": 0,
+    "did_not_occur": 0,
+    "kinds": {
+     "pre": 4
+    },
+    "gold_rate": 1.0
+   },
+   "2024-08": {
+    "n": 4,
+    "gold_hits": 0,
+    "abstain": 2,
+    "did_not_occur": 0,
+    "kinds": {
+     "pre": 4
+    },
+    "gold_rate": 0.0
+   },
+   "2024-10": {
+    "n": 8,
+    "gold_hits": 8,
+    "abstain": 0,
+    "did_not_occur": 0,
+    "kinds": {
+     "post": 8
+    },
+    "gold_rate": 1.0
+   },
+   "2024-11": {
+    "n": 4,
+    "gold_hits": 4,
+    "abstain": 0,
+    "did_not_occur": 0,
+    "kinds": {
+     "post": 4
+    },
+    "gold_rate": 1.0
+   },
+   "2024-12": {
+    "n": 12,
+    "gold_hits": 12,
+    "abstain": 0,
+    "did_not_occur": 4,
+    "kinds": {
+     "post": 8,
+     "fictional": 4
+    },
+    "gold_rate": 1.0
+   },
+   "2025-01": {
+    "n": 12,
+    "gold_hits": 7,
+    "abstain": 1,
+    "did_not_occur": 4,
+    "kinds": {
+     "post": 12
+    },
+    "gold_rate": 0.583
+   },
+   "2025-02": {
+    "n": 12,
+    "gold_hits": 8,
+    "abstain": 2,
+    "did_not_occur": 6,
+    "kinds": {
+     "fictional": 4,
+     "post": 8
+    },
+    "gold_rate": 0.667
+   },
+   "2025-03": {
+    "n": 4,
+    "gold_hits": 4,
+    "abstain": 0,
+    "did_not_occur": 4,
+    "kinds": {
+     "fictional": 4
+    },
+    "gold_rate": 1.0
+   },
+   "2025-04": {
+    "n": 8,
+    "gold_hits": 2,
+    "abstain": 2,
+    "did_not_occur": 4,
+    "kinds": {
+     "post": 8
+    },
+    "gold_rate": 0.25
+   },
+   "2025-05": {
+    "n": 8,
+    "gold_hits": 4,
+    "abstain": 1,
+    "did_not_occur": 7,
+    "kinds": {
+     "post": 4,
+     "fictional": 4
+    },
+    "gold_rate": 0.5
+   },
+   "2025-06": {
+    "n": 8,
+    "gold_hits": 0,
+    "abstain": 3,
+    "did_not_occur": 5,
+    "kinds": {
+     "post": 8
+    },
+    "gold_rate": 0.0
+   },
+   "2025-07": {
+    "n": 4,
+    "gold_hits": 0,
+    "abstain": 0,
+    "did_not_occur": 4,
+    "kinds": {
+     "post": 4
+    },
+    "gold_rate": 0.0
+   },
+   "2025-08": {
+    "n": 4,
+    "gold_hits": 0,
+    "abstain": 0,
+    "did_not_occur": 4,
+    "kinds": {
+     "post": 4
+    },
+    "gold_rate": 0.0
+   }
+  },
+  "reading": "a fixed parametric cutoff shows pre-months near ceiling and post-months at/below the 'did not occur'+abstain floor with a cliff at one month; rolling or retrieved knowledge shows no cliff."
+ }
+}

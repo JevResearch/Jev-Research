@@ -3,7 +3,11 @@
 
 ANGLE 1 - prefill throughput. The measured marginal prefill rate (6.053 ms per
 1k input tokens, runs_archprobe/analysis.json) is ~165k tokens/s of
-incremental server compute. Under standard serving assumptions - a
+incremental server compute. REVISED 2026-09-25: the first pass assumed bf16 on
+A100/H100-class hardware (250-500 TFLOPS), which is dated - late-2026 serving
+at this price point is quantized (fp8/int4) on H100/H200/B200/TPU-v6/MI325X-
+class parts (400-2250 effective TFLOPS). The revision raises the active-
+parameter bound ~2-4x and changes the reconciliation. Under standard serving assumptions - a
 compute-bound batched prefill (165k tok/s per stream is far above the
 memory-bound regime), FLOPs ~= 2 * N_active per token (Kaplan/Chinchilla
 convention), and an accelerator delivering MFU x peak - the ACTIVE parameter
@@ -39,37 +43,62 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "data_report" / "size_estimate.json"
 
-# Assumption grids (industry-standard ranges; NOT repo measurements)
-MFU_RANGE = (0.25, 0.45)          # achieved model-FLOPs utilization, large-batch prefill
-PEAK_TFLOPS_RANGE = (250, 500)    # bf16 dense peak per device, A100-class .. H100-class
-SHARDS = (1, 2, 4)                # devices jointly serving one pass (tensor/pipeline parallel)
+# Assumption grids (industry-standard ranges; NOT repo measurements).
+# Late-2026 revision: serving at this price point is quantized (fp8 the
+# conservative floor, int4/NVFP4-class the aggressive end), and the hardware
+# range spans H100/H200-class through B200/TPU-v6/MI325X-class accelerators.
+# The bf16-on-A100 grid this script shipped with was dated and biased the
+# active-parameter bound low by ~2-10x; it is retained below for continuity.
+MFU_RANGE = (0.25, 0.45)              # achieved utilization, large-batch prefill
+PEAK_EFF_TFLOPS_RANGE = (400, 2250)   # effective dense-math peak per device:
+                                      #   fp8 on H100/H200-class ~990;
+                                      #   int4/NVFP4-class 1300-2000;
+                                      #   bf16-dense B200-class ~2250;
+                                      #   low end: fp8 on 400-500 TFLOPS parts
+SHARDS = (1, 2, 4)                    # devices jointly serving one pass
+# Prior (dated) grid, kept for the audit trail:
+BF16_LEGACY = {"peak_TFLOPS": (250, 500),
+               "note": "bf16 dense, A100/H100-class; what the first pass assumed"}
+
+
+def _band(R: float, mfu_range, peak_range, shards) -> list:
+    lo_mfu, hi_mfu = mfu_range
+    lo_pk, hi_pk = peak_range
+    n_lo = lo_mfu * lo_pk * 1e12 * min(shards) / (2 * R)
+    n_hi = hi_mfu * hi_pk * 1e12 * max(shards) / (2 * R)
+    return [round(n_lo / 1e9, 2), round(n_hi / 1e9, 2)]
 
 
 def band_from_prefill(prefill: dict) -> dict:
     slope_ms = prefill["ms_per_1k_input_tokens"]
     R = 1000.0 / slope_ms * 1000.0            # tokens/s marginal
-    lo_mfu, hi_mfu = MFU_RANGE
-    lo_pk, hi_pk = PEAK_TFLOPS_RANGE
-    n_lo = lo_mfu * lo_pk * 1e12 * min(SHARDS) / (2 * R)
-    n_hi = hi_mfu * hi_pk * 1e12 * max(SHARDS) / (2 * R)
-    n_mid = 0.35 * 350e12 * 2 / (2 * R)
+    band = _band(R, MFU_RANGE, PEAK_EFF_TFLOPS_RANGE, SHARDS)
+    legacy = _band(R, MFU_RANGE, BF16_LEGACY["peak_TFLOPS"], SHARDS)
+    # central case: fp8 on H100/H200-class (990 TFLOPS), MFU 0.35, S=2
+    n_mid = 0.35 * 990e12 * 2 / (2 * R)
     return {
-        "method": "N_active <= MFU * peak * S / (2 * R); R from the measured marginal prefill slope",
+        "method": "N_active <= MFU * peak_effective * S / (2 * R); R from the measured marginal prefill slope",
         "marginal_prefill_rate_tok_s": round(R),
         "assumptions": {
             "MFU": list(MFU_RANGE),
-            "peak_TFLOPS_bf16_per_device": list(PEAK_TFLOPS_RANGE),
+            "peak_effective_TFLOPS_per_device": list(PEAK_EFF_TFLOPS_RANGE),
+            "peak_basis": ("quantized serving assumed (fp8 ~990 on H100/H200-class; "
+                           "int4/NVFP4-class 1300-2000; bf16-dense B200-class ~2250); "
+                           "low end 400 covers fp8 on smaller parts"),
             "shard_count_S": list(SHARDS),
             "flops_per_token": "2 * N_active (attention/overhead excluded; adds <= ~15% at <=29k ctx)",
             "concurrent_streams_B": "1 (conservative: batching with other tenants only lowers the per-stream bound)",
             "regime": "compute-bound batched prefill (165k tok/s marginal is far above memory-bound decode rates)",
         },
-        "active_params_B_range": [round(n_lo / 1e9, 2), round(n_hi / 1e9, 2)],
+        "active_params_B_range": band,
         "central_case_B": round(n_mid / 1e9, 2),
-        "reading": ("Any architecture - dense or MoE - serving this marginal prefill "
-                    "rate on 1-4 modern accelerators at ordinary efficiency has an "
-                    "ACTIVE footprint of roughly 0.2-2.7B parameters; multi-tenant "
-                    "sharing, not less, is the honest direction of error."),
+        "legacy_bf16_A100_band_B": legacy,
+        "legacy_note": BF16_LEGACY["note"],
+        "reading": ("Serving this marginal prefill rate on 1-4 quantized-serving-era "
+                    "accelerators bounds the ACTIVE footprint at roughly "
+                    f"{band[0]}-{band[1]}B parameters; multi-tenant sharing only "
+                    "lowers the bound. The dated bf16/A100 grid gave "
+                    f"{legacy[0]}-{legacy[1]}B - about 2-4x lower."),
     }
 
 
@@ -106,45 +135,53 @@ def band_from_capability() -> dict:
 def reconcile(pf: dict, cap: dict) -> dict:
     lo, hi = pf["active_params_B_range"]
     clo, chi = cap["band_dense_equivalent_b"]
+    joint_lo, joint_hi = max(lo, clo), min(hi, chi)
+    overlap = joint_lo <= joint_hi
     return {
-        "tension": (f"prefill-throughput angle: <= {lo:.1f}-{hi:.1f}B ACTIVE parameters "
-                    "(B=1 conservative). capability angle: "
-                    f"{clo:.0f}-{chi:.0f}B dense-equivalent. The two overlap only at "
-                    "the top of the throughput band and the bottom of the "
-                    "capability band."),
-        "readings_that_reconcile_both": [
-            {"reading": "MoE",
-             "statement": (f"active ~{lo:.1f}-{hi:.1f}B with a larger total (e.g. a "
-                           "~15-40B-total MoE at 10-20% activation) satisfies the "
-                           "throughput bound while carrying 9B-class knowledge"),
+        "tension": (f"throughput angle: {lo:.1f}-{hi:.1f}B ACTIVE (quantized-serving "
+                    f"assumptions); capability angle: {clo:.0f}-{chi:.0f}B "
+                    f"dense-equivalent. Under the revised assumptions the bands "
+                    f"{'OVERLAP' if overlap else 'do not overlap'}"
+                    + (f" (joint zone ~{joint_lo:.0f}-{joint_hi:.0f}B)." if overlap else ".")),
+        "readings": [
+            {"reading": "quantized dense (parsimonious, now sufficient)",
+             "statement": (f"a dense ~{joint_lo:.0f}-{min(joint_hi,9):.0f}B model served at fp8/int4 "
+                           "fits BOTH angles with no further machinery; this is the "
+                           "simplest hypothesis consistent with everything measured"),
+             "independent_evidence": "the $0.042/M price and 73 ms floor are consistent with small-model single-host serving"},
+            {"reading": "MoE (possible; the capacity-density argument favors it)",
+             "statement": ("an MoE with ~15-100B total at ~5-20% activation (active "
+                           "~1-8B) also fits, and would explain the TOP of the "
+                           "capability band with less compute per token; if the "
+                           "model is dense instead, its capacity density is "
+                           "superlative for the band"),
+             "moe_total_B_range": [15, 100],
+             "activation_pct_range": [5, 20],
              "independent_evidence": "none - the API cannot see expert structure (ARCHITECTURE-ANALYSIS.md sec.5)"},
-            {"reading": "quantized serving",
-             "statement": ("fp8/int4 weights+math raise effective peak 2-4x, moving "
-                           "the throughput band to ~0.4-10B active; a dense 4-8B "
-                           "served at int4 fits both angles"),
-             "independent_evidence": "none directly; the $0.042/M price is consistent with aggressive cost engineering"},
             {"reading": "distilled small dense",
-             "statement": (f"a distilled 1-4B dense model can reach the BOTTOM of the "
+             "statement": (f"a distilled 2-6B dense model can reach the bottom of the "
                            f"{clo:.0f}-{chi:.0f}B capability band on knowledge MCQs "
                            "(teacher labels transfer knowledge, not reasoning) - and "
                            "Jev's recognition>>production asymmetry is exactly that shape"),
              "independent_evidence": ("weak/indirect: generation tax (83.1% MCQ vs "
                                       "13.6% digit read-out), HLE near floor, brand "
                                       "prior (ARCHITECTURE-ANALYSIS.md sec.6)")},
-            {"reading": "throughput band is soft at the top",
-             "statement": ("B>1 amortization, higher MFU, or larger shards than "
-                           "assumed push the active bound up toward 4B"),
-             "independent_evidence": "ground rule 4 itself: marginal ms under shared batching is a scheduling artifact"},
+            {"reading": "dense below the joint zone",
+             "statement": ("if serving is more aggressive than assumed (int4, S>4, "
+                           "MFU>0.45), active could sit at 1-4B with distillation "
+                           "supplying the capability"),
+             "independent_evidence": "none; assumption-dependent"},
         ],
         "converged_statement": (
-            "Two-sided best guess: ACTIVE parameters of order 0.5-4B (throughput "
-            "bound at the top under conservative assumptions, capability band at "
-            "the bottom once distillation/MoE are admitted); TOTAL parameters "
-            "unconstrained (MoE would hide them). If forced to one "
-            "dense-equivalent number: order 1-9B, i.e. a 2025-era small model - "
-            "NOT a parameter claim from latency alone (ground rule 4 is "
-            "respected: the throughput angle is an explicit-assumptions bound, "
-            "not a slope-to-size conversion)."),
+            f"Two-sided best guess after the quantized-serving revision: ACTIVE "
+            f"parameters most plausibly ~{joint_lo:.0f}-{min(joint_hi,9):.0f}B (the overlap of "
+            f"the {lo:.1f}-{hi:.1f}B throughput bound with the {clo:.0f}-{chi:.0f}B "
+            "capability band), i.e. dense-equivalent order 4-9B - a 2025-era "
+            "small model. A dense quantized model in this range needs no MoE to "
+            "reconcile the angles; an MoE (~15-100B total) remains possible and "
+            "unfalsifiable from the API. TOTAL parameters unconstrained either "
+            "way. NOT a parameter claim from latency alone: the throughput angle "
+            "is an explicit-assumptions bound, not a slope-to-size conversion."),
         "what_would_tighten_it": [
             "vendor disclosure (trivially)",
             "a matched-protocol capability evaluation (removes band looseness)",

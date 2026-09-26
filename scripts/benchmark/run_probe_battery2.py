@@ -899,6 +899,8 @@ def main() -> int:
     parser.add_argument("--limit", type=int, default=0,
                         help="run only N randomized calls (cheap smoke)")
     parser.add_argument("--reset-every", type=int, default=40)
+    parser.add_argument("--keep-order", action="store_true",
+                        help="do not shuffle; run builders' order (smoke tests)")
     args = parser.parse_args()
 
     families = [f.strip() for f in args.families.split(",") if f.strip()]
@@ -921,7 +923,10 @@ def main() -> int:
         return 1
 
     rng = random.Random(args.seed)
-    rng.shuffle(calls)
+    if args.keep_order:
+        pass  # builders already emit in a sensible order; smoke uses prefixes
+    else:
+        rng.shuffle(calls)
     if args.limit:
         calls = calls[: args.limit]
 

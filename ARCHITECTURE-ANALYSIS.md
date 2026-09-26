@@ -1,6 +1,6 @@
 # What underlies jev-1.13.0 — a best-guess reconstruction
 
-**Status.** Working analysis, updated 2026-09-25. Companion to `report/index.html`
+**Status.** Working analysis, updated 2026-09-26 (post-probe). Companion to `report/index.html`
 (section "What Jev appears to be", now illustrated by
 `docs/modern-comparison/architecture-diagram.html`),
 `docs/modern-comparison/ARCHITECTURE-PROBES.md` (the probe battery), and
@@ -9,12 +9,12 @@ audits cited below are re-derived from published artifacts by
 `scripts/report/arch_audits.py` → `data_report/arch_audits.json` and
 `scripts/report/lattice_forensics.py` → `data_report/lattice_forensics.json`
 and `scripts/report/size_estimate.py` → `data_report/size_estimate.json`
-(offline; no network, no live calls). The §10 follow-up battery is **built and
-dry-run-validated but NOT dispatched**: this environment holds no working
-`TYPESAFE_API_KEY` (the documented fallback key returns 401 against the live
-endpoint, re-probed once on 2026-09-25; the endpoint itself is reachable and
-answers anonymous requests with 403). No live probe result is reported
-anywhere in this document.
+(offline; no network, no live calls). The §10 follow-up battery (P1–P5)
+**ran live on 2026-09-25/26**: 3,331 calls, 5,805,477 reported input tokens,
+$0.2438 at the measured rate, 1 transient HTTP error (the intentional
+lone-surrogate probe; see §2C), artifacts in `runs_archprobe/probe2/`
+(rows, per-family analysis, billing). Its results are integrated below and
+marked **(P-battery)**.
 
 **Ground rules honored throughout.** (1) Behavioral evidence only — every
 observation is an API-visible signal (answers, probability vectors, usage token
@@ -52,15 +52,15 @@ would force us to abandon or materially rewrite the row.
 
 | Component | Best guess | Tag | Key evidence (paths) | Falsified by |
 |---|---|---|---|---|
-| Output mechanism | A trained probability **read-out over caller-supplied options**, replacing the token-generation head — not sampled text parsed into numbers | confident | 0.01 grid on all 704,277 published probability values (7,887 vectors, K=2–255), zero off-grid; displayed sums bounded one-sided (0.99/1.00, never >1.00); 9 choice-vs-table argmax mismatches, all at exactly one quantum; `confidence` = chance-corrected p_max (§2A; `data_report/arch_audits.json`, `data_report/lattice_forensics.json`, `src/jev_observatory/validation.py`) | Off-grid probabilities at scale; a displayed sum above 1.00; free-text output; a confidence field not derivable from (p_max, K) |
+| Output mechanism | A trained probability **read-out over caller-supplied options**, replacing the token-generation head — not sampled text parsed into numbers | confident | 0.01 grid on all 704,277 published probability values (7,887 vectors, K=2–255), zero off-grid; displayed sums bounded one-sided (0.99/1.00, never >1.00 — confirmed live at every K≤12 and at 255, **(P4)**); 9 choice-vs-table argmax mismatches, all at exactly one quantum; `confidence` = chance-corrected p_max; options scored essentially absolutely — no mass dilution K=2→255 **(P3)** (§2A/§2D; `data_report/arch_audits.json`, `data_report/lattice_forensics.json`, `runs_archprobe/probe2/`) | Off-grid probabilities at scale; a displayed sum above 1.00; free-text output; a confidence field not derivable from (p_max, K); systematic p_gold dilution under inert padding |
 | Serving shape | **One forward pass per request** ("self-batching"): every question and option scored from a shared pass over the state; continuous batching across tenants; **no decode loop** | confident | +0.44 ms/question and +0.10 ms/option marginal compute ≈ the prefill cost of the tokens each adds (read-out residual ≤0.11 ms/question, zero per option); upstream flat 74–86 ms at concurrency 1→32; output tokens = serialized response JSON (`runs_archprobe/analysis.json`, `rows.jsonl`; §2B) | Per-question compute growing far above its added-token prefill cost; upstream latency rising with in-flight count; per-output-token timing |
 | Compute profile | ~73 ms fixed floor + ~6.0 ms per 1k input tokens, linear to 29k; **no large quadratic (attention-blowup) signature** | confident (measurement) / plausible (transformer reading) | `runs_archprobe/analysis.json` (73.11 ms, 6.053 ms/ktok, R²=0.857); refit: quadratic buys ΔR²=+0.008, top-bin residual +4.8 ms (`arch_audits.json → prefill_shape`) | Strong superlinear compute growth at long prompts beyond batching noise |
 | Input pipeline | Server-side **whitespace normalizer** + fixed request template (~316 tokens on an empty state; affine intercepts 246–258) ahead of tokenization | confident (normalizer) / plausible (template size) | 300 spaces = empty-state count (`runs_archprobe/cleanrun_jev.json`, `tokens_per_char.json`); `tokenizer_fingerprint.json` intercepts | Whitespace-bearing inputs whose counts show a per-space token cost |
-| Tokenizer | Vendor's own **English/Latin-centric BPE**: heavy Latin/punctuation merges; ~1 token per codepoint for Cyrillic, Greek, Arabic, Hebrew, Thai, Devanagari, Hangul, kana, common CJK; digits ~1 each; **sub-codepoint (byte-level) fallback** for uncovered chars (~2 tokens per uncovered 3-byte char; ~1.7–3 per astral); no match among 173 open signatures | plausible (strong) | `runs_archprobe/tokens_per_char_compare.json`, `tokenizer_perscript.json` (best of 88 candidates at RMSE 20.6 with systematic per-script sign errors), `tokenizer_broadscan.json` (1,215 repos → 173 signatures → 128 scored), `docs/modern-comparison/ARCHITECTURE-PROBES.md` §5b–5c | A tokenizer reproducing the whitespace-free per-script table within ~1 token/sample |
+| Tokenizer | Vendor's own **English/Latin-centric BPE**: heavy Latin/punctuation merges; ~1 token per codepoint for Cyrillic, Greek, Arabic, Hebrew, Thai, Devanagari, Hangul, kana, common CJK; digits ~1 each; **byte-level fallback confirmed live (P1)** — rare blocks cost 0.99–1.01 tokens per UTF-8 byte, partially-merged blocks 0.54–0.73; **UTF-8 pipeline confirmed** (lone surrogates rejected, HTTP 400); NFC normalization confirmed; no match among 173 open signatures | confident (mechanism, post-P1) / plausible (vendor's own) | `runs_archprobe/probe2/probe2_analysis.json → p1_fallback`, `runs_archprobe/tokens_per_char_compare.json`, `tokenizer_perscript.json`, `tokenizer_broadscan.json`, `docs/modern-comparison/ARCHITECTURE-PROBES.md` §5b–5c | A tokenizer reproducing the whitespace-free per-script table within ~1 token/sample; acceptance of lone surrogates |
 | Core model class | Transformer-family decoder LM | plausible | LM-like token behavior in Talk traces; linear prefill; capability profile; the vendor's own primer narrative (`SOURCES.md` S10) — no API signal separates attention variants at ≤29k | — (not falsifiable from this API; see §5) |
 | Dense vs MoE | **Not constrained.** Nothing API-visible separates them; the economics do not require MoE | — | §5 | — |
-| Size | **No point estimate — a two-angle band.** Throughput angle: ≤ ~0.2–2.7B *active* parameters (explicit serving assumptions; tenant-sharing only lowers the bound). Capability angle: ~4–14B dense-equivalent (2025-era small-instruct band). Converged: **~0.5–4B active, total unconstrained** (MoE / quantization / distillation reconcile the angles) | speculative (band); assumptions stated | §4; `data_report/size_estimate.json`; `docs/modern-comparison/canonical/comparable-scores.json` | Vendor disclosure; a matched-protocol evaluation outside the band; the staged P2 probe tightening per-token marginal compute |
-| Training history | English-dominant pretraining corpus (the tokenizer's per-script coverage is its fossil record); knowledge horizon **late 2024**; assistant-shaped **judgement-format post-training** (schema perfection under load, trained abstention, shape-derived confidence); OpenAI-flavored **brand prior inherited from training text** | plausible | §2F, §2G; `runs_live/FINDINGS.md` §5; `runs_archprobe/analysis.json → ancestry`; `docs/token-talk-findings.md` §9, §15 | Verifiably post-cutoff events answered correctly closed-book; identity answers that track deployment facts rather than internet priors |
+| Size | **No point estimate — a two-angle band.** Throughput angle under quantized-serving assumptions: ~0.3–12.3B *active*. Capability angle: ~4–14B dense-equivalent. The bands overlap (joint ~4–12B): a quantized dense ~4–9B fits both; a MoE (~15–100B total) remains possible, not required. Live P2 grid confirms nothing scales with option count beyond tokens | plausible (band); assumptions stated | §4; `data_report/size_estimate.json`; `runs_archprobe/probe2/ → p2_grid` | Vendor disclosure; a matched-protocol evaluation outside the band |
+| Training history | English-dominant pretraining corpus (the tokenizer's per-script coverage is its fossil record); knowledge horizon **solid to Dec 2024, partial to May 2025, none detected Jun–Aug 2025 (P5)**; assistant-shaped **judgement-format post-training** (schema perfection under load, trained abstention rising exactly where knowledge fades, shape-derived confidence); OpenAI-flavored **brand prior inherited from training text** | plausible | §2F, §2G; `runs_archprobe/probe2/probe2_analysis.json → p5_horizon`; `runs_live/FINDINGS.md` §5; `runs_archprobe/analysis.json → ancestry` | Verifiably post-horizon events answered correctly closed-book beyond the P5 fade; identity answers that track deployment facts rather than internet priors |
 | Frontier-teacher distillation | Possible contributor to post-training; **not identifiable** from any API-visible signal we can construct | speculative | §6 | — (under-determined; §6 lists the weak discriminators and their power) |
 | What it is not | Not a frontier model; not retrieval- or cache-assisted; not a wrapper around another vendor's API; not a relabeled *open* model | confident | §7 | One clean counter-instance each (e.g., a post-cutoff fact closed-book; a cache-flat latency component; an upstream round-trip signature; an exact open-tokenizer match) |
 | Interface limits | ≤255 options/question; score rubrics 2–10 levels; noul = bare scalar with no confidence field; state ≤32k, total ≤64k tokens (vendor-documented) | confident (documented + exercised) | `src/jev_observatory/schema.py`; `SOURCES.md` S4–S6, S9; `runs_live/FINDINGS.md` §2.4 | A served request exceeding a documented limit |
@@ -100,6 +100,17 @@ what it licenses.
   at K=3) is what the staged P4 identical-option probe settles
   deterministically. **[confident measurement; mechanism candidates listed,
   not decided]**
+* **Live P4 confirmation (P-battery).** The identical-option probe has run
+  (`runs_archprobe/probe2/`): with identical option texts, sums were exactly
+  1.000 at every K from 2 to 12 (8 repeats each) and 0.99–1.00 at K=255 —
+  the bounded one-sided reading, confirmed live; the exact apportionment rule
+  at the boundaries stays open. Bonus finding: identical texts did *not*
+  receive identical probabilities (K=3 gave e.g. [0.68, 0.19, 0.13] and
+  [0.75, 0.15, 0.10] across repeats; 8 distinct patterns in 8 repeats) — on
+  degenerate menus the score is position and noise, not content. Near-ties
+  with genuinely distinct surface forms were stable: the bare token "zzq"
+  beat "ZZQ"/" zzq"/"zzq " at p_max 0.95–0.98, chosen 20/20 — the
+  whitespace-blindness signature, live. **[confident]**
 * **Decision and table are post-processed separately.** 9 published vectors
   (3 probe, 6 live — the live count independently reproduces
   `runs_live/FINDINGS.md` §2.2) return a `choice` that is not the argmax of
@@ -238,6 +249,23 @@ tokens/codepoint (baseline-subtracted):
   describe the *pipeline*, not only the model. Fixed-template constants: ~316
   tokens empty-state; affine intercepts 246–258
   (`tokenizer_fingerprint.json`). **[confident]**
+* **Live P1 confirmation (P-battery, `runs_archprobe/probe2/ → p1_fallback,
+  p1_merge`).** Rare uncovered blocks cost ~1 token per UTF-8 byte
+  (cjk_ext_a 0.994, cherokee 1.006, yi 1.006, cjk_ext_b 0.994 tok/byte —
+  3–4 tokens per character): byte-level fallback with no byte-pair merges in
+  those ranges. Partially-covered ranges sit between (ethiopic 0.672,
+  emoji_rare 0.675, math_bold 0.731, hangul_rare 0.728, cjk_compat 0.544
+  tok/byte — some byte n-grams merged). A JSON lone surrogate is rejected
+  with HTTP 400 "Request contains invalid Unicode text" — the pipeline
+  validates UTF-8; UTF-16 internals are excluded. Decomposed (e + U+0301)
+  and precomposed (é) runs cost identical tokens — NFC normalization runs
+  pre-tokenization. The normalizer's whitespace set is ASCII-only: 60 spaces
+  → +2 tokens, 60 tabs → +6, 60 newlines → +9, while NBSP/ZWJ/ZWNJ/BOM/
+  soft-hyphen/ideographic-space each cost ~1 token per char. Merge
+  fingerprints: "hello" = 1 token at every repeat count (no super-merges),
+  "th" = 1 token, digits single, dash runs saturate at ~10–16 dashes/token,
+  case seams cost +31 tokens per 60 "aA" pairs vs "aa", inter-word
+  punctuation ~+1 token per word. **[confident]**
 * Read as a corpus fossil: full single-char coverage of the *small* script
   blocks (Cyrillic ~64–1k chars, Greek, Hebrew, Arabic, Thai, Devanagari,
   kana) plus common CJK, but not the 21k-char CJK block; digits unmerged;
@@ -280,6 +308,16 @@ references with protocol labels:
   is weak — which is exactly what heavy judgement-format post-training on a
   small model would produce, and exactly what the "system one" product story
   requires. **[confident]**
+* **Options are scored essentially absolutely (P3, P-battery).** 200
+  gold-labeled synthetic items run at every K from 2 to 255 with inert
+  padding: mean p(gold) = 1.000 at K=2 and 0.992 at K=255, accuracy 1.000 at
+  every K, padding pinned at 0.00 (99.4% of entries at K=255). A
+  set-softmax over noise-level option utilities would dilute p(gold) steeply
+  in K; nothing of the sort happens. Reading: each option is scored against
+  the state near-absolutely, then normalized for display — weighted scores
+  are comparable across option counts, and inert menu padding is a safe
+  protocol tool (`runs_archprobe/probe2/ → p3_kcal`). **[confident for inert
+  padding; semantic distractors untested]**
 * **Position effects are real but unbiased on content-bearing items (new).**
   Pairing the rotation audit to native-order results by item id: 419 pairs,
   22 discordant (5.3% flip rate), native 86.6% vs rotated 86.2% on the
@@ -352,6 +390,20 @@ references with protocol labels:
   (p=0.71)** it answers under forced choice, and refuses the fictional-
   premise control — a trained conservative-abstention behavior, not absent
   knowledge. **[confident]**
+* **Dated bisection, live (P5, P-battery).** 26 dated events (Oct 2024 →
+  Aug 2025) plus pre-cutoff and fictional controls, in forced and abstention
+  frames, 2 reps each (104 calls): gold-rate 1.00 for Oct/Nov/Dec 2024;
+  partial for Jan 2025 (0.58), Feb (post-only ≈0.5), Apr (0.25), May (0.5);
+  **0.00 for Jun, Jul, Aug 2025**; all 16 fictional-event calls correctly
+  answered "did not occur"; abstentions appear exactly in the fade zone.
+  Reading: a parametric horizon with a soft edge — data collection plausibly
+  ran into spring 2025 with decaying coverage; nothing suggests retrieval or
+  a rolling update. Disclosed blemish: one pre-cutoff control ("Starliner
+  crew return", labeled Aug 2024) scored 0.00 because the label was wrong —
+  the return was Sept 11, 2024; Jev's non-answer was arguably correct. The
+  horizon claim rests on the post-2024 items, which are unaffected
+  (`runs_archprobe/probe2/ → p5_horizon`). **[confident measurement;
+  month-level precision limited by n=4–12 per month]**
 
 ### 2H. Economics as architecture evidence
 
@@ -388,8 +440,9 @@ stopping on short answers, trained abstention, an OpenAI-flavored brand
 prior inherited from assistant text). Serving runs the read-out as prefill:
 one forward pass over state + questions + options, many read-out vectors,
 serialized as the response and billed as free output, continuously batched
-across tenants. The knowledge horizon behaves like a fixed late-2024
-training cutoff. Whether the post-training signal came substantially from a
+across tenants. The knowledge horizon behaves like a fixed training cutoff
+with a soft edge in spring 2025 (P5: solid to Dec 2024, partial to May 2025,
+none detected Jun–Aug 2025). Whether the post-training signal came substantially from a
 frontier teacher (distillation) or from on-policy judgement data is not
 identifiable from anything this API returns; whether the transformer is dense
 or MoE is not identifiable either, and the economics do not need MoE.
@@ -432,9 +485,14 @@ then sustaining R tokens/s needs
 > N_active ≤ MFU × peak × shards ÷ (2R)
 
 Across an honest grid — MFU 0.25–0.45 (achieved utilization on large-batch
-prefill), 250–500 TFLOPS bf16 per device (A100-class to H100-class dense),
-1–4 devices per pass — this bounds the **active footprint at ≈ 0.2–2.7B
-parameters, central case ≈ 0.7B** (`data_report/size_estimate.json`). Two
+prefill), **400–2250 effective TFLOPS per device** (late-2026 serving at this
+price point is quantized: fp8 on H100/H200-class ≈990, int4/NVFP4-class
+1300–2000, bf16-dense B200-class ≈2250; low end covers fp8 on smaller parts),
+1–4 devices per pass — this bounds the **active footprint at ≈ 0.3–12.3B
+parameters, central case ≈ 2.1B** (`data_report/size_estimate.json`). (The
+first pass of this analysis assumed 250–500 TFLOPS bf16 on A100-class
+hardware — a dated grid that biased the bound 2–4× low; both grids are
+recorded in the artifact.) Two
 honesty notes: (a) concurrent streams B>1 sharing weight fetches only *lower*
 the per-stream bound, so B=1 is the conservative direction; (b) the MFU/peak
 ranges are industry-standard serving assumptions, not repo measurements. This
@@ -456,34 +514,38 @@ distillation shifts capability-per-parameter upward.
 
 ### Where the two angles meet
 
-They overlap only at the top of the throughput bound and the bottom of the
-capability band. That gap is itself informative — something must reconcile a
-≤2.7B *active* footprint with ~9B-class *knowledge*:
+Under the revised (quantized-serving) assumptions they **overlap broadly**
+(joint zone ~4–12B active): no exotic reconciliation is needed. The readings,
+in order of parsimony:
 
-1. **MoE**: active ≪ total. The throughput angle bounds *active* parameters
-   only; a ~15–40B-total MoE at 10–20% activation satisfies it while carrying
-   9B-class knowledge. (The API cannot see expert structure — §5.)
-2. **Quantized serving**: fp8/int4 weights and math raise effective peak 2–4×,
-   moving the throughput band to ~0.4–10B active; a dense 4–8B served at int4
-   fits both angles. Consistent with the aggressive $0.042/M price.
-3. **Distilled small dense**: teacher labels lift a 1–4B dense model into the
-   bottom of the capability band on knowledge MCQs (transferring knowledge,
-   not multi-step reasoning) — and Jev's recognition ≫ production asymmetry
-   (83.1% MCQ vs 13.6% digit read-out, §2D) is exactly that shape. This is
-   weak, indirect support for the distillation hypothesis (§6).
-4. **Soft band top**: B>1 amortization, higher MFU, or more shards than assumed
-   push the active bound up toward ~4B.
+1. **Quantized dense (parsimonious, sufficient)**: a dense ~4–9B model served
+   at fp8/int4 fits both angles with nothing further assumed — an entirely
+   ordinary late-2026 object at this price point ($0.042/M, 73 ms floor).
+2. **MoE (possible, not required)**: ~15–100B total at ~5–20% activation also
+   fits, and would explain the *top* of the capability band with less compute
+   per token. The API cannot see expert structure (§5).
+3. **Distilled smaller dense**: teacher labels lift a 2–6B dense model into
+   the capability band on knowledge MCQs (transferring knowledge, not
+   multi-step reasoning) — and Jev's recognition ≫ production asymmetry
+   (83.1% MCQ vs 13.6% digit read-out, §2D) is exactly that shape. Weak,
+   indirect support for §6.
+4. **Soft band edges**: B>1 amortization, higher MFU, or more shards move the
+   throughput bound in either direction; the capability band is loose by
+   construction.
 
-**Converged statement [speculative]:** ACTIVE parameters of order **0.5–4B**;
-TOTAL parameters **unconstrained** (an MoE would hide them). Forced to a single
-dense-equivalent order: **1–9B** — a 2025-era small model. This respects ground
-rule 4: the throughput angle is an explicit-assumptions bound, not a
-slope-to-size conversion, and the capability angle is positioning under
-protocol mismatch. **Falsified / tightened by**: vendor disclosure (trivially);
-a matched-protocol capability evaluation (removes capability-band looseness);
-or the staged P2 option-cost probe at large K under load, which bounds
-per-token marginal compute more tightly than the prefill sweep
-(`data_report/size_estimate.json → reconciliation.what_would_tighten_it`).
+**Converged statement [plausible-band]:** ACTIVE parameters most plausibly
+**~4–9B** (the overlap of the 0.3–12.3B throughput bound with the 4–14B
+capability band) — dense-equivalent order 4–9B, a 2025-era small model. A
+quantized dense model in this range reconciles both angles without MoE; a
+MoE (~15–100B total) remains possible and unfalsifiable from the API. TOTAL
+parameters **unconstrained** either way. This respects ground rule 4: the
+throughput angle is an explicit-assumptions bound, not a slope-to-size
+conversion, and the capability angle is positioning under protocol
+mismatch. **Falsified / tightened by**: vendor disclosure (trivially); a
+matched-protocol capability evaluation (removes capability-band looseness).
+The P2 option-cost grid has now run: its K-coefficient is zero within
+±20.5 ms residual noise, confirming the single-trunk marginal-cost model but
+not tightening the size bound (`data_report/size_estimate.json`).
 
 ---
 
@@ -517,13 +579,13 @@ prior about the industry, not a measurement of Jev.
 ## 6. Distillation from a frontier teacher: can the API tell?
 
 Short answer: **no clean signal exists; we assign it a meaningful but
-unresolved probability (~0.40 that teacher-generated data contributed
+unresolved probability (~0.35 that teacher-generated data contributed
 materially to post-training) and say why.** The two-angle size estimate (§4)
-added a soft argument since the first pass: the throughput bound caps *active*
-parameters at ~0.2–2.7B while the capability band wants ~4–14B
-dense-equivalent, and distillation is one of only a few mechanisms that
-reconcile the two (it raises capability per active parameter) — hence 0.35 →
-0.40. Still not identifiable, still speculative.
+briefly raised this to ~0.40 while the throughput band (bf16 assumptions)
+sat far below the capability band and distillation was one of few
+reconciliations; the quantized-serving revision made the bands overlap, so
+the size argument dissolved and the estimate is back to ~0.35, resting on
+the asymmetry argument alone.
 
 Candidate discriminators and their actual power:
 
@@ -576,9 +638,10 @@ upgrade it on any current artifact.
   question content. (b) Novel content is answered, not looked up: fresh
   generator items (`runs_live/FINDINGS.md` §3c, with its easiness caveat) and
   70,100 ARC-AGI-2 cell decisions at 53.5%. (c) The knowledge horizon
-  *stops*: late-2024 facts at p≈0.97–1.0, no post-horizon knowledge observed
-  (§2G) — a live retriever would not have a 2024-shaped cliff, and the
-  abstention pattern (knows-then-hedges) is parametric-memory behavior.
+  *stops with a soft edge*: solid to Dec 2024, fading Jan–May 2025, zero
+  Jun–Aug 2025 (P5 dated bisection, §2G) — a live retriever would not have
+  a date-shaped fade like that, and the abstention pattern
+  (knows-then-hedges) is parametric-memory behavior.
   (d) Repeats are not identical (TVD 0.03–0.12; 13 signatures over 30
   identical payloads) — a lookup cache is deterministic. (e) 213
   zero-probability gold outcomes on *public* MMLU-Pro text (§2E) is not what
@@ -636,13 +699,13 @@ the single cheapest measurement with real power.
 
 | # | Hypothesis | For | Against | P | Measurement that would move it most |
 |---|---|---|---|---|---|
-| H1 | **Composite card (§3):** own small foundation, English-centric BPE w/ byte fallback, judgement post-training, read-out head, one-pass prefill-only serving | Everything in §2; tokenizer scan; latency decomposition; economics; horizon behavior | Nothing direct; the composite rests on several plausible-tier links | **0.75** | P1 (fallback granularity) + P2 (single-trunk option scoring): both cheap, both would harden the two plausible-tier links |
+| H1 | **Composite card (§3):** own small foundation, English-centric BPE w/ byte fallback, judgement post-training, read-out head, one-pass prefill-only serving | Everything in §2; tokenizer scan; latency decomposition; economics; horizon behavior; **P1 confirmed byte-level fallback + UTF-8 + NFC; P2 confirmed single-trunk scoring; P3 confirmed absolute option scoring; P4 confirmed bounded sums; P5 confirmed a parametric horizon** | Nothing direct; the remaining plausible-tier links (vendor's-own vocab, transformer core) resisted every cheap test we could build | **0.80** | Vendor disclosure, or a public tokenizer match appearing post-scan (re-run `tokenizer_broadscan.py` periodically) |
 | H2 | Relabeled **open** model (e.g. a Qwen/Llama/Hy-MT2 checkpoint behind the read-out) | Marketing's ChatGPT-adjacent framing invites it; the first token fit said Qwen | Per-script table excludes every scanned family (§2C); both "leads" were template artifacts (§2B); identity prior contradicts Qwen specifically | **0.03** | An exact open-tokenizer match appearing post-scan (re-run `tokenizer_broadscan.py` against new releases periodically) |
 | H3 | Relabeled **private/internal** base from another lab (not in any scan) | Counts cannot see private vocabularies; brand prior is OpenAI-flavored | Must still explain the unmatched per-script profile, the whitespace normalizer, and the read-out post-processing — i.e., it converges to H1 with extra steps | **0.10** | P1: a private vocab is still a vocab — fallback-granularity + merge-boundary behavior narrows the space even without a match |
 | H4 | Wrapper/ensemble around external frontier API(s) | None positive; only the brand prior | §7 timing, tokenizer, and economics arguments; flat upstream at c=32 | **0.02** | Any upstream-latency signature inside the 73 ms floor under load (none in 987 calls) |
-| H5 | Retrieval- or cache-assisted answering | 82.8% MMLU-Pro is high for the band, inviting a memorization story | §7 items (a)–(e) | **0.03** | P5 (horizon bisection): a sharp parametric cliff vs gradual/retrieval-shaped horizon |
-| H6 | Frontier-teacher **distillation** contributed materially to post-training | Brand prior; recognition≫production; vendor comfort with teacher labels (S1); one of the few readings reconciling the §4 size tension | Not identifiable; every signal is confounded (§6) | **0.40** | P6 (error-sharing correlation) — low power, the only direct-ish API probe |
-| H7 | **MoE** (small active, larger total) | Cost point typical of 2026 small-active MoE serving; one of the few readings reconciling the §4 throughput bound (≤2.7B active) with the ~9B-class capability band | Nothing requires it; prefill-only small dense is this cheap | **0.45** (unconstrained directly; prior + §4 tension) | None exists at this API surface; declare unconstrained |
+| H5 | Retrieval- or cache-assisted answering | 82.8% MMLU-Pro is high for the band, inviting a memorization story | §7 items (a)–(e); **P5 ran: a date-shaped fade (solid→partial→zero) with fictional events refused is parametric-cutoff behavior, not retrieval** | **0.02** | Re-run P5 months apart: a moving horizon would resurrect this | 
+| H6 | Frontier-teacher **distillation** contributed materially to post-training | Brand prior; recognition≫production; vendor comfort with teacher labels (S1) | Not identifiable; every signal is confounded (§6); the size-tension argument dissolved under the quantized-serving revision | **0.35** | P6 (error-sharing correlation) — low power, the only direct-ish API probe; not staged (needs external teacher APIs) |
+| H7 | **MoE** (small active, larger total) | Cost point typical of 2026 small-active MoE serving; would explain the top of the capability band with less compute per token | Not required: the revised §4 bands overlap, and a quantized dense ~4–9B fits both; nothing API-visible favors MoE | **0.40** (unconstrained directly; prior-driven) | None exists at this API surface; declare unconstrained |
 | H8 | Non-transformer core (SSM/linear-attention/hybrid) | No quadratic signature to 29k (weak) | Population prior; capability profile is LM-typical; ΔR² test can't separate at these lengths | **0.10** (unconstrained) | Longer-context curvature probes are blocked by the 32k state cap; unconstrained |
 | H9 | Headline capability materially inflated by **benchmark contamination** | MMLU-Pro/ARC are years public; 82.8 is strong for the band | HLE near-floor and ARC-AGI-2 zero-exact are contamination-resistant and weak; rotation audit shows content-driven answers; fresh generators 450/450 (easy, templated — weak) | **0.15** | A *hard* fresh-item suite (post-2024 exam material, private holdout) at MMLU-Pro difficulty — the only real test |
 | H10 | Multiple heterogeneous models routed behind one endpoint (model field stable) | Nondeterminism is large-ish | Single stable `jev-1.13.0` across 482+ calls; tokenizer counts homogeneous; timing unimodal; batch numerics explain nondeterminism | **0.03** | Bimodality in upstream-latency or token-count distributions at n≫987 (none observed) |
@@ -651,20 +714,25 @@ the single cheapest measurement with real power.
 
 ## 10. Next-probe list (cheap, discriminating, harness-ready)
 
-**Status (2026-09-25):** P1–P5 are implemented in
-`scripts/benchmark/run_probe_battery2.py` behind the repo's standard live gate
-(`JEVO_ALLOW_LIVE=1` + `TYPESAFE_API_KEY`, key never stored), validated by
-`--dry-run` against synthetic responses with planted ground truth (the
-analyzers recover a planted 2024-11 cutoff, a planted Luce dilution law, and a
-planted largest-remainder display rule — instrument validation, not a claim
-about Jev), and planned by `--plan` at **3,331 calls / ~2.47M input tokens /
-$0.1037** (`data_report/probe2_plan.json`). **None has been dispatched live**:
-this environment has no working key (documented fallback returns 401; endpoint
-reachable, anonymous 403). P4's *offline* arm has run (§2A lattice findings,
-`data_report/lattice_forensics.json`); only its live identical-option arm
-remains. Cost estimates below are at the measured $0.042/M input
-(`data_report/costs.json`), output free; every probe ships with ≥3 repeats and
-rotation controls to sit above the TVD 0.034–0.122 noise floor.
+**Status (2026-09-26): P1–P5 EXECUTED LIVE.** The battery
+(`scripts/benchmark/run_probe_battery2.py`, behind the repo's standard gate:
+`JEVO_ALLOW_LIVE=1` + `TYPESAFE_API_KEY` from the environment, key never
+stored) was dry-run-validated against planted ground truth, then dispatched
+in full on 2026-09-25/26: **3,331 calls, 5,805,477 reported input tokens,
+$0.2438** at the measured rate, 1 intentional HTTP 400 (the lone-surrogate
+probe). Artifacts: `runs_archprobe/probe2/{probe2_rows.jsonl,
+probe2_analysis.json, BILLING-probe2.json}`. Results are integrated in §2A
+(P4), §2C (P1), §2D (P3), §2G (P5), and §4 (P2); per-family headlines:
+byte-level fallback at ~1.0 tok/byte for rare blocks with UTF-8 validation
+and NFC normalization (P1); option-count cost indistinguishable from zero
+beyond the options' own tokens (P2); zero mass dilution from K=2→255 with
+inert padding (P3); sums exactly 1.000 at K≤12 with identical options scoring
+by position, not content (P4); knowledge horizon solid to Dec 2024, fading
+Jan–May 2025, zero Jun–Aug 2025, all 16 fictional events refused (P5).
+Actual tokens ran 2.35× the plan-mode estimate (chars/4 under-counted the
+digit-string payloads; §11.21). P6 (teacher error-sharing) was **not
+staged**: it needs external teacher APIs this environment does not hold, and
+its power was always low (§6).
 
 Costs at the measured $0.042/M input tokens, output free
 (`data_report/costs.json`); all implementable with `src/jev_observatory/`
@@ -772,10 +840,10 @@ report as suggestive-only regardless of outcome.
 exists at this noise floor, §5); any parameter-count-from-latency probe
 (ground rule 4); long-context curvature beyond 32k (state cap blocks it).
 
-Total program cost if all six run: ≈ **$0.10** on the Jev side (plan-mode
-figure over the exact staged payloads, `data_report/probe2_plan.json`;
-the per-probe estimates above sum to ~$0.14 before the plan tightened
-P3's item count).
+Total program cost, executed: **$0.2438** on the Jev side (3,331 calls,
+5.81M reported input tokens; plan-mode estimate was $0.10 over 2.47M — the
+chars/4 payload estimator under-counted the digit-string option payloads,
+§11.21). P6 remains unrun (external APIs required).
 
 ---
 
@@ -874,6 +942,30 @@ prior documents and in this analysis:
     batching (sharing lowers the per-stream bound). Anyone re-deriving §4
     should re-run `scripts/report/size_estimate.py` with their own grid
     rather than trusting ours.
+19. **P5 pre-control label bug**: the "Starliner crew return" control was
+    labeled Aug 2024; the event was Sept 11, 2024. Jev scored 0.00 on it —
+    arguably correct. The item is excluded from horizon reasoning (disclosed
+    in §2G); the post-2024 items, which carry the claim, are unaffected.
+    Lesson: designer-verified event tables still need date double-checks.
+20. **Degenerate menus are noise-dominated**: identical-option vectors vary
+    widely across repeats (8 distinct patterns in 8 repeats at K=3; p_max
+    0.68–0.89). The measured repeat-TVD band (0.034–0.122) comes from
+    content-bearing flat menus; on degenerate ones the spread is larger. No
+    conclusion may rest on a single degenerate call.
+21. **Plan-vs-actual cost**: plan mode estimated 2.47M input tokens
+    (chars/4); actual was 5.81M (server-reported). Digit-string payloads
+    tokenize at ~1 token/char, not 4 chars/token. Future cost projections
+    should use tokenizer-informed estimates; the $0.10 plan figure quoted
+    earlier in this document's history underestimates by ~2.4×.
+22. **P3 bucket sizes differ**: the K=2 bucket has n=132, not 396 — items
+    with 3–4 base options cannot render at K=2 and are skipped. Per-K
+    comparisons must carry their n.
+23. **vals.ai protocol labels**: the platform page metadata now reads
+    mode="one-shot" while the methodology text cited in `research.md`
+    (2026-09-20) says 5-shot CoT. The expanded charts carry each row's own
+    config fields (reasoning_effort/compute_effort) rather than a blanket
+    label; the discrepancy is unresolved and flagged wherever vals rows are
+    compared to Jev's direct protocol.
 
 ---
 
@@ -884,6 +976,11 @@ prior documents and in this analysis:
 .venv/bin/python scripts/report/arch_audits.py        # -> data_report/arch_audits.json
 .venv/bin/python scripts/report/lattice_forensics.py  # -> data_report/lattice_forensics.json
 .venv/bin/python scripts/report/size_estimate.py      # -> data_report/size_estimate.json
+
+# reference leaderboards + charts (network for the fetch; no key needed):
+.venv/bin/python scripts/report/fetch_vals_leaderboards.py  # -> docs/modern-comparison/canonical/vals-leaderboards-20260926.json
+.venv/bin/python scripts/report/comparison_graphs.py        # -> docs/modern-comparison/comparison-graphs.html
+.venv/bin/python scripts/report/pareto_graphs.py            # -> docs/modern-comparison/pareto-frontiers.html
 
 # staged follow-up battery (offline modes are ungated and free):
 .venv/bin/python scripts/benchmark/run_probe_battery2.py --plan     # -> call+cost plan

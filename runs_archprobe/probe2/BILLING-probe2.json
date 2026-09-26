@@ -1,0 +1,18 @@
+{
+  "n_calls": 3331,
+  "n_errors": 1,
+  "usage_input_tokens": 5805477,
+  "usage_output_tokens": 1997158,
+  "estimated_cost_usd_at_0p042_per_M_in": 0.2438,
+  "seed": 97,
+  "families": [
+    "p1_fallback",
+    "p1_merge",
+    "p2_grid",
+    "p3_kcal",
+    "p4_lattice",
+    "p5_horizon"
+  ],
+  "limit": 0,
+  "authorization": "live dispatch requires JEVO_ALLOW_LIVE=1 + key in env (DESIGN.md section 12 parent approval recorded in-session)"
+}

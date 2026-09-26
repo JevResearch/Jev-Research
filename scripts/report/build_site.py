@@ -73,6 +73,7 @@ INCLUDE_FILES = [
     "data_report/lattice_forensics.json",
     "data_report/probe2_plan.json",
     "data_report/size_estimate.json",
+    "data_report/jevbot_examples.json",
     "runs_live/BILLING.json",
     "runs_live/FINDINGS.md",
     "docs/token-talk-findings.md",
@@ -529,10 +530,11 @@ README_TEXT = """# Jev: Not Frontier, But Still Worth Your Attention
 An independent, hands-on evaluation of TypeSafe AI's `jev-1.13.0` API:
 16,379 live benchmark requests across three frozen suites, a 987-call
 architecture probe, a multi-protocol Talk-to-Jev program, and a
-token-counting study - 23,459 recorded calls costing $3.58 in total, every
-figure re-derivable from the published aggregates in this repository.
+token-counting study - 23,459 recorded calls, every figure re-derivable from
+the published aggregates in this repository.
 
-**The report page: [`index.html`](index.html)** (also at `report/index.html`).
+**The report page: <https://jevresearch.github.io/Jev-Research/report/>**
+(rendered; the source is [`report/index.html`](report/index.html)).
 Headline: MMLU-Pro 82.8%, GPQA Diamond 76.5%, ~73 ms fixed + ~6 ms/1k-token
 server compute, ~$0.28 per 12k-question MMLU-Pro run - a small, new,
 English-centric model with a probability read-out in place of a generation
@@ -548,28 +550,25 @@ head, not a frontier system.
 | `runs_benchmark*/` | per-stage derived aggregates (scores, weighted scores, calibration, usage) + freeze manifests with SHA-256 of every input |
 | `runs_archprobe/` | architecture-probe analysis, per-call rows, tokenizer studies, billing |
 | `runs_live/` | Talk-to-Jev traces (character / vocabulary-menu / token programs), probes, billing, findings |
-| `data_report/` | cost model, billing roll-up, aborted-stage usage, architecture audits |
+| [`data_report/`](data_report/) | cost model, billing roll-up, architecture + lattice audits, size estimate, probe-2 plan |
 | `docs/` | research write-ups: architecture probes, comparable scores, the Talk program |
-| `ARCHITECTURE-ANALYSIS.md` | the full architecture reconstruction: card, evidence, alternatives ledger, next probes |
+| [`ARCHITECTURE-ANALYSIS.md`](ARCHITECTURE-ANALYSIS.md) | the full architecture reconstruction: card, evidence, alternatives ledger, next probes |
 
 ## Reproducing the page from the data
 
 ```bash
 python3 -m venv .venv && .venv/bin/pip install -e ".[dev]"
 .venv/bin/python scripts/report/aggregate_billing.py   # -> data_report/billing_totals.json
-.venv/bin/python scripts/report/build_report.py        # -> report/index.html (byte-identical to shipped)
+.venv/bin/python scripts/report/build_report.py        # -> report/index.html
 .venv/bin/pytest                                       # saved-run regressions skip in this checkout
 ```
 
-The page embeds no hardcoded results: `build_report.py` reads every number
-from the JSON aggregates above at render time, and the CI gate in
-`scripts/report/build_site.py` verified this bundle re-renders byte-for-byte
-from published data alone. `data_report/arch_audits.json` and
-`data_report/lattice_forensics.json` ship precomputed; re-running their
+The page embeds no hardcoded results: [`build_report.py`](scripts/report/build_report.py)
+reads every number from the JSON aggregates at render time. Re-running the
 generators needs the full working tree (the dated `runs_live/` raw response
-dirs and benchmark per-item lists are not bundled). Re-running the *live* experiments requires your own
-`TYPESAFE_API_KEY` (see `.env.example`) and hits the paid API; the freeze
-manifests pin exactly what we ran.
+dirs and benchmark per-item lists are not bundled). Re-running the *live*
+experiments requires your own `TYPESAFE_API_KEY` (see `.env.example`) and hits
+the paid API.
 
 ## Data availability and licensing
 
@@ -690,6 +689,7 @@ def main() -> None:
                  "data_report/lattice_forensics.json",
                  "data_report/probe2_plan.json",
                  "data_report/size_estimate.json",
+                 "data_report/jevbot_examples.json",
                  "runs_benchmark/freeze/frozen.json"):
         if not (ROOT / need).exists():
             raise SystemExit(f"[bundle] run prerequisite first: {need} missing")

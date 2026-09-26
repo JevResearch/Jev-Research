@@ -183,6 +183,92 @@ def outputchart(a):
     return "".join(p)
 
 
+def headcount_chart(a):
+    """Upstream compute vs packed question count, with the tokens-only prediction."""
+    rows = _rows()
+    hc = [r for r in rows if r["family"] == "headcount"
+          and r.get("upstream_ms") is not None and r.get("n_questions")]
+    W, H = 940, 380
+    L, R, T, B = 66, 30, 60, 54
+    xs = [r["n_questions"] for r in hc]
+    ys = [r["upstream_ms"] for r in hc]
+    xmx = max(xs) * 1.05
+    ymx = max(ys) * 1.25
+    floor = a["prefill"]["fixed_floor_ms"]
+    slope = a["prefill"]["ms_per_1k_input_tokens"]
+    mq = a["headcount"]["marginal_ms_per_question"]
+    p = [_svg_open(W, H)]
+    p.append(f'<text x="24" y="30" fill="{TEXT}" font-size="17" font-weight="600">'
+             'Self-batching: server compute vs questions in one request</text>')
+    p.append(f'<text x="24" y="48" fill="{MUTED}" font-size="11.5">'
+             f'measured +{mq:.2f} ms per extra question; dashed = what that question&#39;s '
+             'own ~55 input tokens predict at the prefill slope - the decision '
+             'hides in the residual</text>')
+    for gy in range(0, int(ymx) + 1, 50):
+        y = H - B - gy / ymx * (H - T - B)
+        p.append(f'<line x1="{L}" y1="{y:.0f}" x2="{W-R}" y2="{y:.0f}" stroke="{GRID}"/>')
+        p.append(f'<text x="{L-8}" y="{y:.0f}" fill="{MUTED}" font-size="10" text-anchor="end">{gy}</text>')
+    for gx in range(0, int(xmx) + 1, 32):
+        x = L + gx / xmx * (W - L - R)
+        p.append(f'<line x1="{x:.0f}" y1="{T}" x2="{x:.0f}" y2="{H-B}" stroke="{GRID}"/>')
+        p.append(f'<text x="{x:.0f}" y="{H-B+16}" fill="{MUTED}" font-size="10" text-anchor="middle">{gx}</text>')
+    for x0, y0 in zip(xs, ys):
+        cxp = L + x0 / xmx * (W - L - R); cyp = H - B - y0 / ymx * (H - T - B)
+        p.append(f'<circle cx="{cxp:.0f}" cy="{cyp:.0f}" r="3.4" fill="{ACCENT}" opacity="0.85"/>')
+    pts = []
+    for nq in sorted(set(xs)):
+        tok = next(r['usage_input_tokens'] for r in hc if r['n_questions'] == nq)
+        pred = floor + slope * tok / 1000.0
+        pts.append(f"{L + nq / xmx * (W - L - R):.0f},{H - B - pred / ymx * (H - T - B):.0f}")
+    p.append(f'<polyline points="{" ".join(pts)}" fill="none" stroke="{AMBER}" stroke-width="2.2" stroke-dasharray="6 4"/>')
+    p.append(f'<text x="{(W-L-R)/2+L:.0f}" y="{H-12}" fill="{MUTED}" font-size="11" '
+             'text-anchor="middle">questions packed into one request</text>')
+    p.append("</svg>")
+    return "".join(p)
+
+
+def compute_pie(a):
+    """Where the ~77 ms of a typical MMLU-Pro call goes (measured components)."""
+    import math
+    floor = a["prefill"]["fixed_floor_ms"]
+    slope = a["prefill"]["ms_per_1k_input_tokens"]
+    tok = 560.0
+    prefill = slope * tok / 1000.0
+    decide = 0.106
+    total = floor + prefill + decide
+    parts = [("serving floor", floor, MUTED),
+             (f"prefill ({tok:.0f} input tokens)", prefill, ACCENT),
+             ("decision read-out", decide, AMBER)]
+    W, H = 940, 340
+    cx, cy, r = 300, 185, 118
+    p = [_svg_open(W, H)]
+    p.append(f'<text x="24" y="30" fill="{TEXT}" font-size="17" font-weight="600">'
+             'Anatomy of one typical call (~77 ms server compute)</text>')
+    p.append(f'<text x="24" y="48" fill="{MUTED}" font-size="11.5">'
+             'a ~560-token MMLU-Pro question: the floor is serving overhead, prefill is the '
+             'model reading, deciding is what the read-out adds</text>')
+    ang = -math.pi / 2
+    for name, val, color in parts:
+        frac = val / total
+        a2 = ang + frac * 2 * math.pi
+        large = 1 if frac > 0.5 else 0
+        x1, y1 = cx + r * math.cos(ang), cy + r * math.sin(ang)
+        x2, y2 = cx + r * math.cos(a2), cy + r * math.sin(a2)
+        p.append(f'<path d="M {cx} {cy} L {x1:.1f} {y1:.1f} A {r} {r} 0 {large} 1 {x2:.1f} {y2:.1f} Z" '
+                 f'fill="{color}" opacity="0.9"/>')
+        ang = a2
+    ly = 130
+    for name, val, color in parts:
+        p.append(f'<rect x="500" y="{ly-11}" width="13" height="13" rx="3" fill="{color}"/>')
+        p.append(f'<text x="522" y="{ly}" fill="{TEXT}" font-size="13">{_esc(name)}: '
+                 f'{val:.1f} ms ({val/total*100:.1f}%)</text>')
+        ly += 30
+    p.append(f'<text x="500" y="{ly+8}" fill="{MUTED}" font-size="11">response serialization is CPU-side and not in the header; '
+             'output tokens are billed at $0.</text>')
+    p.append("</svg>")
+    return "".join(p)
+
+
 _cache = {}
 def _rows():
     if "r" not in _cache:
@@ -295,7 +381,7 @@ and it does not identify weights or provenance.</p>
 A fixed floor plus a linear per-token term is what transformer prefill looks
 like; there is no large quadratic term at these lengths. The floor is
 per-request serving overhead, not the model itself.</p>
-<h2>2. Self-batched compute (headcount)</h2>
+<h2>2. Self-batched compute (headcount)</h2>{st(headcount_chart(a))}{st(compute_pie(a))}
 <p class="cap">Packing up to 192 questions into one request barely moves server
 compute (+{a['headcount']['marginal_ms_per_question']:.2f} ms per extra question - about what its own
 ~55 added input tokens cost at the prefill slope) while billed output tokens
