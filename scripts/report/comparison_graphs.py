@@ -1,24 +1,23 @@
 #!/usr/bin/env python3
 """Render comparison graphs (self-contained SVG/HTML, viewable offline).
 
-One bar chart per benchmark. Every non-Jev bar is a published value: for
-MMLU-Pro / GPQA / MATH-500 / HLE the rows come from the vals.ai platform
-extract (docs/modern-comparison/canonical/vals-leaderboards-20260926.json,
-133/133/52/69 models); for ARC-Challenge and ARC-AGI-2 they come from the
-hand-collected canonical references (comparable-scores.json), because no
-platform leaderboard covers Jev's encodings there.
+One bar chart per benchmark whose protocols can be put side by side
+honestly: MMLU-Pro, GPQA (vals.ai rows, 133 models each), ARC-Challenge and
+ARC-AGI-2 (hand-collected canonical rows), plus the option-rotation audit as
+a Jev-only consistency chart.
 
-Encoding (requested by the audit):
-  bar color   release era - red = oldest (2022), blue = newest (2026)
-  tip symbol  reasoning effort - rounder = less thinking, pointier = more:
-              circle none, hexagon low, pentagon medium, square high,
-              triangle xhigh, plus max; an underlying dot is always drawn
-  Jev         teal (greedy) / amber (probability-weighted), as before
+NOT charted, by audit decision: HLE (Jev's row is the multiple-choice
+subset; every published reference is the full text-only set, several with
+tools/reasoning - no fair visual exists) and MATH-500 (Jev's row is an MCQ
+conversion; external rows are free-form reasoning). Both stay in the report's
+results table with their caveats.
 
-Display selection per vals chart: top-10 by score, a priority list of models
-named in the audit, the bottom-4, then date-stratified fill to ~32 bars -
-chosen so the full range (frontier to floor, 2022 to 2026) is covered. The
-full extract stays on disk; the chart is a curated view of it.
+Encoding: bar color = release era (red <=2023 -> magenta -> purple -> blue
+2026; the hue route avoids green/teal so Jev cannot be mistaken for a year;
+gray if undated); tip shape = reasoning tier (rounder = less thinking);
+Jev = white-ringed diamonds, teal (greedy) / amber (probability-weighted),
+bold labels. Every bar carries a hover tooltip (name, score + rank, release
+date and its basis, tier, measured cost where available).
 
 Output: docs/modern-comparison/comparison-graphs.html
   python scripts/report/comparison_graphs.py
@@ -26,99 +25,30 @@ Output: docs/modern-comparison/comparison-graphs.html
 
 from __future__ import annotations
 
-import colorsys
+import glob
+import html as _html
 import json
-import math
 from pathlib import Path
+
+from chartkit import (BG, GRID, JEV_G, JEV_W, MUTED, TEXT, UI_BLOCK, UNK,
+                      TIER_LABEL, era_color, era_legend, jev_diamond, symbol,
+                      tip, wrap_subtitle)
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "docs/modern-comparison/comparison-graphs.html"
 
-BG = "#0e1117"; PANEL = "#161b27"; TEXT = "#e6e9f2"; MUTED = "#9aa2b6"
-GRID = "#242a38"; JEV_G = "#38e1c8"; JEV_W = "#f5b342"
-
 VALS = json.loads((ROOT / "docs/modern-comparison/canonical/vals-leaderboards-20260926.json").read_text())
 REF = json.loads((ROOT / "docs/modern-comparison/canonical/comparable-scores.json").read_text())
-import glob as _glob
-_agi_w = json.loads(Path(_glob.glob(str(
-    ROOT / "runs_benchmark_ext/bench-arc_agi2_choice-*/derived/weighted_score.json"))[0]
-).read_text())
-AGI_W = _agi_w["per_cell_weighted_mean"]
-
-ERA_MIN = (2022, 11)   # GPT-3.5 Turbo
-ERA_MAX = (2026, 9)    # GPT-6 generation
 
 
-def _months(ym: str) -> int:
-    y, m = ym.split("-")
-    return int(y) * 12 + int(m)
+def _gload(pat):
+    return json.loads(Path(glob.glob(str(ROOT / pat))[0]).read_text())
 
 
-def era_t(released: str | None) -> float:
-    if not released:
-        return 0.5
-    lo = _months("%d-%02d" % ERA_MIN); hi = _months("%d-%02d" % ERA_MAX)
-    return max(0.0, min(1.0, (_months(released) - lo) / (hi - lo)))
-
-
-def era_color(t: float) -> str:
-    # red (h=4deg) -> blue (h=228deg), saturation/lightness gentle on dark bg
-    h = (4 + t * (228 - 4)) / 360.0
-    r, g, b = colorsys.hls_to_rgb(h, 0.60, 0.62)
-    return "#%02x%02x%02x" % (round(r * 255), round(g * 255), round(b * 255))
-
-
-TIER_ORDER = ["none", "low", "medium", "high", "xhigh", "max"]
-TIER_SIDES = {"none": 0, "low": 6, "medium": 5, "high": 4, "xhigh": 3, "max": -1}
-TIER_LABEL = {"none": "no reasoning", "low": "low", "medium": "medium",
-              "high": "high", "xhigh": "very high", "max": "max"}
-
-
-def symbol(cx: float, cy: float, tier: str, color: str, r: float = 5.0) -> str:
-    """Underlying dot + tier outline shape (rounder = less thinking)."""
-    out = [f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="1.8" fill="{color}"/>']
-    sides = TIER_SIDES.get(tier, 0)
-    if sides == -1:  # plus / asterisk for "max"
-        out.append(f'<path d="M {cx-r:.1f} {cy:.1f} L {cx+r:.1f} {cy:.1f} '
-                   f'M {cx:.1f} {cy-r:.1f} L {cx:.1f} {cy+r:.1f} '
-                   f'M {cx-r*0.7:.1f} {cy-r*0.7:.1f} L {cx+r*0.7:.1f} {cy+r*0.7:.1f} '
-                   f'M {cx-r*0.7:.1f} {cy+r*0.7:.1f} L {cx+r*0.7:.1f} {cy-r*0.7:.1f}" '
-                   f'stroke="{color}" stroke-width="1.4" fill="none"/>')
-    elif sides == 0:
-        out.append(f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{r:.1f}" fill="none" '
-                   f'stroke="{color}" stroke-width="1.4"/>')
-    else:
-        pts = []
-        for i in range(sides):
-            a = -math.pi / 2 + i * 2 * math.pi / sides
-            pts.append(f"{cx + r * math.cos(a):.1f},{cy + r * math.sin(a):.1f}")
-        out.append(f'<polygon points="{" ".join(pts)}" fill="none" '
-                   f'stroke="{color}" stroke-width="1.4"/>')
-    return "".join(out)
-
-
-def legend(width: int, y: int) -> str:
-    p = [f'<text x="24" y="{y}" fill="{MUTED}" font-size="11.5" font-weight="600">'
-         'bar color = release era</text>']
-    x0 = 210
-    for i in range(60):
-        t = i / 59
-        p.append(f'<rect x="{x0 + i * 3}" y="{y - 9}" width="3.4" height="10" '
-                 f'fill="{era_color(t)}"/>')
-    p.append(f'<text x="{x0 - 6}" y="{y}" fill="{MUTED}" font-size="10.5" '
-             f'text-anchor="end">2022</text>')
-    p.append(f'<text x="{x0 + 184}" y="{y}" fill="{MUTED}" font-size="10.5">2026</text>')
-    x = x0 + 240
-    p.append(f'<text x="{x}" y="{y}" fill="{MUTED}" font-size="11.5" '
-             f'font-weight="600">tip shape = reasoning</text>')
-    x += 168
-    for tier in TIER_ORDER:
-        p.append(symbol(x, y - 4, tier, MUTED, 4.6))
-        p.append(f'<text x="{x + 8}" y="{y}" fill="{MUTED}" font-size="9.6">'
-                 f'{TIER_LABEL[tier]}</text>')
-        x += 8 + len(TIER_LABEL[tier]) * 5.6 + 16
-    return "".join(p)
-
+JEV = REF["jev_scores"]
+AGI_W = _gload("runs_benchmark_ext/bench-arc_agi2_choice-*/derived/weighted_score.json")["per_cell_weighted_mean"]
+MMLU_ITEMS = _gload("runs_benchmark/bench-mmlu_full-*/derived/score.json")["per_item"]
+ROT_ITEMS = _gload("runs_benchmark/bench-option_rotations-*/derived/score.json")["per_item"]
 
 PRIORITY = [
     "fireworks/gpt-oss-120b", "fireworks/gpt-oss-20b",
@@ -141,202 +71,281 @@ PRIORITY = [
 ]
 
 
-def select(models: dict, cap: int = 32) -> list[str]:
-    have = {s: m for s, m in models.items() if m.get("accuracy") is not None}
-    by_score = sorted(have, key=lambda s: -have[s]["accuracy"])
-    chosen = set(by_score[:10])
-    chosen |= {s for s in PRIORITY if s in have}
-    chosen |= set(by_score[-4:])
+def select(models, cap=34):
+    have = {k: m for k, m in models.items() if m.get("accuracy") is not None}
+    order = sorted(have, key=lambda k: -have[k]["accuracy"])
+    chosen = set(order[:10]) | {k for k in PRIORITY if k in have} | set(order[-4:])
     if len(chosen) < cap:
-        rest = sorted((s for s in have if s not in chosen),
-                      key=lambda s: have[s].get("released") or "2025-01")
+        rest = sorted((k for k in have if k not in chosen),
+                      key=lambda k: have[k].get("released") or "2025-01")
         need = cap - len(chosen)
-        if rest:
-            step = max(1, len(rest) // max(need, 1))
+        if rest and need > 0:
+            step = max(1, len(rest) // need)
             chosen |= set(rest[::step][:need])
-    return sorted(chosen, key=lambda s: -have[s]["accuracy"])
+    return order, sorted(chosen, key=lambda k: -have[k]["accuracy"])
 
 
-def bar_chart(key: str, title: str, subtitle: str, models: dict,
-              jev: tuple[float, float | None]) -> str:
-    sel = select(models)
-    rows = []
-    for s in sel:
-        m = models[s]
-        rows.append((m["name"], m["accuracy"], era_color(era_t(m.get("released"))),
-                     m.get("tier", "none")))
-    g, w = jev
-    # insert Jev bars at score position
-    def insert(rows, label, score, color, tier=None):
-        i = next((i for i, r in enumerate(rows) if r[1] < score), len(rows))
-        rows.insert(i, (label, score, color, tier))
-    if w is not None:
-        insert(rows, "Jev (weighted)", w, JEV_W)
-    insert(rows, "Jev (greedy)", g, JEV_G)
+def _tt_model(m, rank, nfull, ndisp, source="vals.ai"):
+    rel = m.get("released")
+    basis = m.get("date_basis") or "n/a"
+    tier = TIER_LABEL.get(m.get("tier", "none"), "unknown")
+    cost = m.get("cost_per_test")
+    parts = [f"<b>{_html.escape(m['name'])}</b>",
+             f"score {m['accuracy']:.1f}% &mdash; #{rank} of {nfull} "
+             f"in the full extract ({ndisp} bars shown)",
+             f"released {rel or 'unknown'} (date basis: {basis})",
+             f"reasoning config: {tier}"]
+    if cost:
+        parts.append(f"measured cost ${cost:.4f}/test ({source})")
+    else:
+        parts.append(f"source: {source}")
+    return "<br>".join(parts)
 
-    W = 980
-    row_h = 22
-    top = 96
-    legend_y = 66
-    H = top + len(rows) * row_h + 66
-    L = 268
-    R = 92
-    xmax = max(r[1] for r in rows) * 1.02
+
+def _tt_jev(label, score, note):
+    return (f"<b>{label} (this study)</b><br>score {score:.1f}%<br>"
+            f"protocol: direct one-shot answers, no reasoning, no tools<br>"
+            f"cost: $0.042/M input tokens, output free (measured billing)<br>"
+            f"{note}")
+
+
+def bar_chart(title, subtitle, entries, unit="%"):
+    W, L, R, row_h = 980, 252, 116, 22
+    sub, sub_end = wrap_subtitle(24, 50, subtitle)
+    leg_y = sub_end + 20
+    top = leg_y + 22
+    H = top + len(entries) * row_h + 62
+    xmax = max(max(e["score"] for e in entries), 1) * 1.03
     p = [f'<svg viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" '
-         f'font-family="system-ui,sans-serif" role="img" aria-label="{title}">',
+         f'font-family="system-ui,sans-serif" role="img" '
+         f'aria-label="{_html.escape(title, quote=True)}">',
          f'<rect width="{W}" height="{H}" fill="{BG}" rx="14"/>',
-         f'<text x="24" y="30" fill="{TEXT}" font-size="17" font-weight="700">{title}</text>',
-         f'<text x="24" y="48" fill="{MUTED}" font-size="11.5">{subtitle}</text>',
-         legend(W, legend_y)]
-    for gx in range(0, int(xmax) + 1, 10):
+         f'<text x="24" y="30" fill="{TEXT}" font-size="16.5" font-weight="700">'
+         f'{_html.escape(title)}</text>',
+         sub, era_legend(24, leg_y)]
+    gx = 0
+    step = 10 if xmax <= 100 else 20
+    while gx <= xmax:
         x = L + gx / xmax * (W - L - R)
-        p.append(f'<line x1="{x:.0f}" y1="{top - 8}" x2="{x:.0f}" y2="{H - 52}" stroke="{GRID}"/>')
-        p.append(f'<text x="{x:.0f}" y="{H - 38}" fill="{MUTED}" font-size="10" '
+        p.append(f'<line x1="{x:.0f}" y1="{top - 10}" x2="{x:.0f}" y2="{H - 46}" stroke="{GRID}"/>')
+        p.append(f'<text x="{x:.0f}" y="{H - 32}" fill="{MUTED}" font-size="10" '
                  f'text-anchor="middle">{gx}</text>')
+        gx += step
     y = top
-    for name, score, color, tier in rows:
-        bw = score / xmax * (W - L - R)
-        is_jev = name.startswith("Jev")
-        fs = 11.5 if is_jev else 10.5
-        weight = ' font-weight="600"' if is_jev else ""
-        p.append(f'<text x="{L - 12}" y="{y + 12}" fill="{TEXT if is_jev else MUTED}" '
-                 f'font-size="{fs}"{weight} text-anchor="end">{name}</text>')
-        h = 15 if is_jev else 12
-        op = "" if is_jev else ' opacity="0.92"'
-        p.append(f'<rect x="{L}" y="{y + 4}" width="{bw:.1f}" height="{h}" rx="3" '
-                 f'fill="{color}"{op}/>')
-        p.append(f'<text x="{L + bw + 8:.1f}" y="{y + 12}" fill="{color}" '
-                 f'font-size="10.5" font-weight="600">{score:.1f}</text>')
-        p.append(symbol(L + bw + 34 + len(f"{score:.1f}") * 2.2, y + 8.5,
-                        tier if tier else "none", color if not is_jev else TEXT, 4.4))
+    for e in entries:
+        bw = max(e["score"] / xmax * (W - L - R), 0.0)
+        jev = e.get("jev")
+        lab_cls = "mlabel jevlabel" if jev else "mlabel"
+        stroke = ' stroke="#ffffff" stroke-opacity="0.6" stroke-width="1"' if jev else ''
+        hgt = 15 if jev else 12
+        p.append(f'<g class="mrow" {tip(e["tooltip"])}>')
+        p.append(f'<text class="{lab_cls}" x="{L - 10}" y="{y + 12}" '
+                 f'fill="{TEXT if jev else MUTED}" font-size="{11.5 if jev else 10.5}"'
+                 f'{" font-weight='700'" if jev else ""} text-anchor="end">'
+                 f'{_html.escape(e["name"])}</text>')
+        p.append(f'<rect x="{L}" y="{y + 4}" width="{bw:.1f}" height="{hgt}" rx="3" '
+                 f'fill="{e["color"]}"{stroke} opacity="{1 if jev else 0.93}"/>')
+        vx = L + bw + 8
+        p.append(f'<text class="{lab_cls}" x="{vx:.1f}" y="{y + 12}" fill="{e["color"]}" '
+                 f'font-size="10.5" font-weight="600">{e["score"]:.1f}</text>')
+        mx = vx + 30
+        if jev:
+            p.append(jev_diamond(mx, y + 8.5, e["color"]))
+        else:
+            p.append(symbol(mx, y + 8.5, e.get("tier", "none"), e["color"], 4.4))
+        p.append('</g>')
         y += row_h
-    p.append(f'<text x="{(W - L - R) / 2 + L:.0f}" y="{H - 16}" fill="{MUTED}" '
-             f'font-size="11" text-anchor="middle">score (%)</text>')
+    p.append(f'<text x="{(W - L - R) / 2 + L:.0f}" y="{H - 12}" fill="{MUTED}" '
+             f'font-size="11" text-anchor="middle">score ({unit})</text>')
+    p.append(UI_BLOCK)
     p.append("</svg>")
     return "".join(p)
 
 
-# ARC charts keep the hand-collected canonical rows (no vals coverage for
-# Jev's encodings); era/tier metadata for those few models is curated here.
+def vals_chart(bkey, title, subtitle, jevs, unit="%"):
+    models = VALS["benchmarks"][bkey]["models"]
+    order, sel = select(models)
+    rank = {k: i + 1 for i, k in enumerate(order)}
+    entries = []
+    for k in sel:
+        m = models[k]
+        entries.append({"name": m["name"], "score": m["accuracy"],
+                        "color": era_color(m.get("released")),
+                        "tier": m.get("tier", "none"), "jev": False,
+                        "tooltip": _tt_model(m, rank[k], len(order), len(sel))})
+    for je in sorted(jevs, key=lambda j: j["score"]):
+        i = next((i for i, e in enumerate(entries) if e["score"] < je["score"]),
+                 len(entries))
+        entries.insert(i, je)
+    return bar_chart(title, subtitle, entries, unit)
+
+
+def jev_bars(pairs):
+    out = []
+    for label, score, kind, note in pairs:
+        out.append({"name": label, "score": score,
+                    "color": JEV_G if kind == "greedy" else JEV_W,
+                    "jev": True, "tooltip": _tt_jev(label, score, note)})
+    return out
+
+
 ARC_META = {
     "Llama 3.1 405B": ("2024-07", "none"), "GPT-4o": ("2024-05", "none"),
     "Claude 3 Opus": ("2024-03", "none"), "GPT-4": ("2023-03", "none"),
     "Nemotron-H 56B": ("2025-06", "none"), "Llama 3.1 70B": ("2024-07", "none"),
+    "Llama 3.1 8B (base, zero-shot)": ("2024-07", "none"),
     "Llama 3.1 8B (base model)": ("2024-07", "none"),
     "GPT-6 Astra": ("2026-09", "max"), "GPT-5.6 Sol": ("2026-07", "max"),
     "Claude Opus 5": ("2026-08", "high"), "Claude Fable 5.1": ("2026-08", "high"),
     "Claude Fable 5": ("2026-07", "high"), "Gemini 3.7 Flash": ("2026-07", "high"),
     "Grok 4.6": ("2026-05", "high"), "DeepSeek V4 Flash 0731": ("2025-07", "high"),
+    "DeepSeek V4 Pro 0813": ("2025-08", "high"),
+    "Gemini 3.6 Flash": ("2026-06", "high"), "Kimi K3": ("2026-06", "high"),
+    "GPT-5.6 Luna": ("2026-07", "max"), "GPT-5.2 (Dec 2025)": ("2025-12", "high"),
     "Inkling Small": ("2026-04", "medium"),
     "Claude 3.7 Sonnet (thinking 16K)": ("2025-02", "high"),
-    "GPT-4.5": ("2025-02", "none"), "o3 (low)": ("2025-04", "low"),
-    "DeepSeek V4 Pro 0813": ("2025-08", "high"),
-    "Gemini 3.6 Flash": ("2026-06", "high"),
-    "Kimi K3": ("2026-06", "high"),
-    "GPT-5.6 Luna": ("2026-07", "max"),
-    "GPT-5.2 (Dec 2025)": ("2025-12", "high"),
-    "Llama 3.1 8B (base, zero-shot)": ("2024-07", "none"),
-    "Gemma 4 E4B": ("2026-03", "medium"),
-    "Gemma 4 E2B": ("2026-03", "medium"),
-    "Qwen 3.5 9B": ("2026-01", "high"),
-    "Claude 3.7 Sonnet (no thinking)": ("2025-02", "none"),
     "Claude 3.7 Sonnet (thinking)": ("2025-02", "high"),
-    "Qwen3.8 Max": ("2026-08", "high"),
-    "DeepSeek R1 Distill Qwen 14B": ("2025-01", "high"),
-    "DeepSeek R1 Distill Llama 8B": ("2025-01", "high"),
-    "GPT-5 (high)": ("2025-08", "high"),
-    "o3": ("2025-04", "high"),
-    "Gemini 3 Pro": ("2025-11", "high"),
-    "GPT-4o (chatgpt-latest 2025-03)": ("2025-03", "none"),
-    "Llama 3.1 70B": ("2024-07", "none"),
-    "Qwen3-235B-A22B-Thinking-2507": ("2025-07", "high"),
-    "DeepSeek-R1-0528": ("2025-05", "high"),
-    "Claude 3.7 Sonnet": ("2025-02", "high"),
+    "GPT-4.5": ("2025-02", "none"), "o3 (low)": ("2025-04", "low"),
+    "o3": ("2025-04", "high"), "GPT-4o ": ("2024-05", "none"),
 }
 
 
-def ref_chart(key: str, title: str, subtitle: str, jev: tuple) -> str:
-    rows_ref = [r for r in REF["benchmarks"][key]["rows"] if r.get("score") is not None]
-    models = {}
-    for r in rows_ref:
+def ref_chart(bkey, title, subtitle, jevs, unit="%"):
+    rows = [r for r in REF["benchmarks"][bkey]["rows"] if r.get("score") is not None]
+    order = sorted(rows, key=lambda r: -r["score"])
+    rank = {r["model"]: i + 1 for i, r in enumerate(order)}
+    entries = []
+    for r in order:
         rel, tier = ARC_META.get(r["model"], (None, "none"))
-        models[r["model"]] = {"name": r["model"], "accuracy": r["score"] * 100,
-                              "released": rel, "tier": tier}
-    g = jev[0]
-    w = jev[1] if len(jev) > 1 else None
-    return bar_chart_manual(title, subtitle, models, (g, w))
+        m = {"name": r["model"], "accuracy": r["score"] * 100, "released": rel,
+             "date_basis": "curated" if rel else None, "tier": tier,
+             "cost_per_test": None}
+        proto = r.get("protocol") or "unknown"
+        tt = (f"<b>{_html.escape(r['model'])}</b><br>score {r['score']*100:.1f}% "
+              f"&mdash; #{rank[r['model']]} of {len(order)}<br>"
+              f"released {rel or 'unknown'} (date basis: curated)<br>"
+              f"protocol: {proto} &middot; source type: {r.get('source_type', 'n/a')}")
+        entries.append({"name": r["model"], "score": r["score"] * 100,
+                        "color": era_color(rel), "tier": tier, "jev": False,
+                        "tooltip": tt})
+    for je in sorted(jevs, key=lambda j: j["score"]):
+        i = next((i for i, e in enumerate(entries) if e["score"] < je["score"]),
+                 len(entries))
+        entries.insert(i, je)
+    return bar_chart(title, subtitle, entries, unit)
 
 
-def bar_chart_manual(title, subtitle, models, jev) -> str:
-    return bar_chart(None, title, subtitle, models, jev)
+def rotation_chart():
+    from collections import defaultdict
+    native = {it["item_id"].split(":")[0]: it for it in MMLU_ITEMS}
+    agg = defaultdict(lambda: {"nat": [0, 0], "rot": [0, 0]})
+    flips = 0
+    npair = 0
+    for it in ROT_ITEMS:
+        base = it["item_id"].split(":")[0]
+        if base not in native or it.get("status") != "ok" or native[base].get("status") != "ok":
+            continue
+        g = it.get("group") or "other"
+        n_ok = bool(native[base]["correct"])
+        r_ok = bool(it["correct"])
+        agg[g]["nat"][0] += n_ok; agg[g]["nat"][1] += 1
+        agg[g]["rot"][0] += r_ok; agg[g]["rot"][1] += 1
+        npair += 1
+        flips += (n_ok != r_ok)
+    tot_n = [sum(a["nat"][0] for a in agg.values()), npair]
+    tot_r = [sum(a["rot"][0] for a in agg.values()), npair]
+    rows = [("ALL PAIRED ITEMS", tot_n, tot_r)]
+    rows += [(g.title(), a["nat"], a["rot"])
+             for g, a in sorted(agg.items(),
+                                key=lambda kv: -(kv[1]["nat"][0] / kv[1]["nat"][1]))]
+    entries = []
+    for name, nat, rot in rows:
+        n_acc = 100 * nat[0] / nat[1]
+        r_acc = 100 * rot[0] / rot[1]
+        base_tt = (f"<b>{_html.escape(name)}</b><br>{nat[1]} paired items<br>"
+                   f"native order: {nat[0]}/{nat[1]} correct ({n_acc:.1f}%)<br>"
+                   f"rotated order: {rot[0]}/{rot[1]} correct ({r_acc:.1f}%)")
+        entries.append({"name": f"{name} - native", "score": n_acc, "color": JEV_G,
+                        "jev": True, "tooltip": base_tt + "<br>condition: original option order"})
+        entries.append({"name": f"{name} - rotated", "score": r_acc, "color": JEV_W,
+                        "jev": True, "tooltip": base_tt + "<br>condition: shuffled option order"})
+    subtitle = ("The same 420 MMLU-Pro items re-run with their option order shuffled. "
+                "A consistency check, not a comparison benchmark: no other model publishes "
+                "scores under this protocol, so every bar is Jev (teal = native order, "
+                "amber = rotated). Shuffling flipped "
+                f"{100*flips/npair:.1f}% of the {npair} paired answers with no net direction "
+                "(exact McNemar p = 0.83): content dominates position wherever there is "
+                "content.")
+    return bar_chart("Option-rotation audit - Jev vs Jev (consistency, not comparison)",
+                     subtitle, entries)
 
 
 def main() -> int:
-    js = REF["jev_scores"]
     charts = []
-
-    def vals_chart(bkey, title, subtitle, jev):
-        return bar_chart(bkey, title, subtitle,
-                         VALS["benchmarks"][bkey]["models"], jev)
-
     charts.append(vals_chart(
-        "mmlu_pro", "MMLU-Pro - broad knowledge (vals.ai, 12,032 items)",
-        "Jev: direct one-shot answers (teal greedy, amber probability-weighted). "
-        "vals rows use the platform harness; per-row configs shown as tip shapes.",
-        (js["mmlu_pro"]["greedy"] * 100, js["mmlu_pro"]["weighted_mean_p_gold"] * 100)))
+        "mmlu_pro", "MMLU-Pro - broad knowledge (12,032 items)",
+        "Jev: direct one-shot answers (diamonds; teal greedy, amber probability-weighted). "
+        "vals rows use the platform harness with per-row reasoning configs (tip shapes); "
+        "hover any bar for score, rank, release date and measured cost.",
+        jev_bars([("Jev (greedy)", JEV["mmlu_pro"]["greedy"] * 100, "greedy",
+                   "12,032 graduate-level multiple-choice items"),
+                  ("Jev (weighted)", JEV["mmlu_pro"]["weighted_mean_p_gold"] * 100,
+                   "weighted", "mean probability placed on the gold option")])))
     charts.append(vals_chart(
-        "gpqa", "GPQA - graduate science (vals.ai)",
-        "vals retired GPQA in Sep 2026 as saturated; rows preserved. Jev: "
-        "Diamond subset, direct, seeded option shuffle.",
-        (js["gpqa_diamond"]["greedy"] * 100, js["gpqa_diamond"]["weighted_mean_p_gold"] * 100)))
+        "gpqa", "GPQA - graduate science (Diamond for Jev)",
+        "vals retired GPQA in Sep 2026 as saturated; rows preserved. Jev: Diamond subset, "
+        "direct answers, seeded option shuffle.",
+        jev_bars([("Jev (greedy)", JEV["gpqa_diamond"]["greedy"] * 100, "greedy",
+                   "196 Diamond items"),
+                  ("Jev (weighted)", JEV["gpqa_diamond"]["weighted_mean_p_gold"] * 100,
+                   "weighted", "mean probability on the gold option")])))
     charts.append(ref_chart(
         "arc_challenge", "ARC-Challenge - elementary science (canonical refs)",
-        "No vals coverage for this encoding; bars are the hand-collected "
-        "canonical rows (mostly 25-shot CoT, mostly older models). Saturated "
-        "for everyone - Jev's best-looking chart.",
-        (js["arc_challenge"]["greedy"] * 100, js["arc_challenge"]["weighted_mean_p_gold"] * 100)))
-    charts.append(vals_chart(
-        "math500", "MATH-500 (vals.ai, free-form reasoning protocol)",
-        "External rows solve free-form with reasoning; Jev's bars are the "
-        "4-option MCQ adaptation (greedy) - a protocol conversion, labeled as "
-        "such everywhere in this report.",
-        (js["math500_mcq_adapted"]["greedy"] * 100, js["math500_mcq_adapted"]["weighted_mean_p_gold"] * 100)))
+        "No vals coverage for this encoding; bars are hand-collected canonical rows "
+        "(mostly 25-shot CoT, mostly older models). Saturated for everyone.",
+        jev_bars([("Jev (greedy)", JEV["arc_challenge"]["greedy"] * 100, "greedy",
+                   "1,172 items"),
+                  ("Jev (weighted)", JEV["arc_challenge"]["weighted_mean_p_gold"] * 100,
+                   "weighted", "mean probability on the gold option")])))
     charts.append(ref_chart(
-        "arc_agi2", "ARC-AGI-2 - abstract puzzles (canonical refs, pass@2 semi-private)",
-        "Jev cannot emit grids: scored per cell (53.5%) - shown for shape, not "
-        "rank. External bars are grid-production pass@2 with reasoning.",
-        (js["arc_agi2_public_eval"]["cell_accuracy_choice"] * 100,
-         AGI_W * 100)))
-    charts.append(vals_chart(
-        "hle", "Humanity's Last Exam (vals.ai, full text-only set)",
-        "Jev's bar is the multiple-choice subset only - an easier format, with "
-        "a ~25% guessing floor of its own. The vals rows are the full text-only "
-        "set, where guessing is near-zero. Do not rank-read this chart across "
-        "the two protocols; both say the same thing: expert-frontier material "
-        "is far out of reach.",
-        (js["hle_text_only_mc"]["greedy"] * 100, js["hle_text_only_mc"]["weighted_mean_p_gold"] * 100)))
+        "arc_agi2", "ARC-AGI-2 - abstract puzzles (mixed encodings - read the caption)",
+        "External bars: whole-grid pass@2, semi-private set, reasoning on. Jev cannot emit "
+        "grids. Its exact-grid bars are the protocol-matched pair (0 of 120 tasks solved); "
+        "the per-cell bars are a diagnostic encoding, NOT comparable to grid-level rows.",
+        jev_bars([("Jev per-cell (greedy)", JEV["arc_agi2_public_eval"]["cell_accuracy_choice"] * 100,
+                   "greedy", "diagnostic: 70,100 individual cell decisions"),
+                  ("Jev per-cell (weighted)", AGI_W * 100, "weighted",
+                   "diagnostic: mean probability on the gold cell color"),
+                  ("Jev exact-grid (greedy)", 0.0, "greedy",
+                   "protocol-matched: 0 of 120 tasks with every cell correct"),
+                  ("Jev exact-grid (weighted)", 0.0, "weighted",
+                   "whole-grid probability is the product of cell probabilities: median "
+                   "~1e-63, indistinguishable from zero")])))
+    charts.append(rotation_chart())
 
-    html = f"""<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Jev benchmark comparisons</title><style>
- body {{ background:{BG}; color:{TEXT}; font-family: system-ui, sans-serif;
-        max-width:1000px; margin:2rem auto; padding:0 1rem; line-height:1.5; }}
- h1 {{ font-size:24px; }}
- svg {{ width:100%; height:auto; display:block; margin:.4rem 0 1.4rem; }}
- p.lead {{ color:{MUTED}; font-size:14px; max-width:80ch; }}
-</style></head><body>
-<h1>Where Jev lands, across the whole field</h1>
-<p class="lead">Every non-Jev bar is a published value: vals.ai platform rows
-for MMLU-Pro / GPQA / MATH-500 / HLE (fetched 2026-09-26 into
-canonical/vals-leaderboards-20260926.json), hand-collected canonical rows for
-the two ARC encodings. Bar color is release era (red 2022 &rarr; blue 2026;
-estimated months are used only for the gradient and labeled in the extract);
-the tip shape is the row's reasoning configuration (rounder = less thinking).
-Charts show a curated ~32-bar view (top, bottom, and the models named in the
-audit); the full 133-model extract stays on disk.</p>
-{''.join(charts)}
-</body></html>
-"""
+    html = ("<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\">\n"
+            "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n"
+            "<title>Jev benchmark comparisons</title><style>\n"
+            f" body {{ background:{BG}; color:{TEXT}; font-family: system-ui, sans-serif;\n"
+            "        max-width:1000px; margin:2rem auto; padding:0 1rem; line-height:1.5; }}\n"
+            " h1 { font-size:24px; }\n"
+            " svg { width:100%; height:auto; display:block; margin:.4rem 0 1.4rem; }\n"
+            f" p.lead {{ color:{MUTED}; font-size:14px; max-width:80ch; }}\n"
+            "</style></head><body>\n"
+            "<h1>Where Jev lands, across the whole field</h1>\n"
+            "<p class=\"lead\">Every non-Jev bar is a published value: vals.ai platform rows "
+            "for MMLU-Pro and GPQA (fetched 2026-09-26 into "
+            "canonical/vals-leaderboards-20260926.json), hand-collected canonical rows for "
+            "the two ARC encodings. Bar color is release era (red &le;2023 &rarr; purple "
+            "&rarr; blue 2026; the hue route avoids teal so Jev's diamonds cannot be "
+            "mistaken for a year; gray = date not established). Tip shapes are reasoning "
+            "tiers, rounder = less thinking. Hover any bar for details. Charts show a "
+            "curated view (top, bottom, and audit-named models); the full extract stays on "
+            "disk. HLE and MATH-500 are deliberately NOT charted: Jev's rows there are a "
+            "multiple-choice subset and an MCQ conversion respectively, and no published "
+            "rows share those protocols - their numbers live in the report table with "
+            "caveats instead.</p>\n"
+            + "".join(charts) + "\n</body></html>\n")
     OUT.write_text(html, encoding="utf-8")
     print(f"[ok] wrote {OUT.relative_to(ROOT)} ({OUT.stat().st_size:,} bytes); "
           f"{len(charts)} charts")
@@ -345,3 +354,4 @@ audit); the full 133-model extract stays on disk.</p>
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

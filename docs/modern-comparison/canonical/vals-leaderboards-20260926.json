@@ -420,8 +420,8 @@
      "compute_effort": null,
      "provider": "DeepSeek",
      "name": "deepseek-v4-pro",
-     "released": null,
-     "date_basis": "estimated",
+     "released": "2025-08",
+     "date_basis": "documented",
      "tier": "xhigh"
     },
     "anthropic/claude-opus-4-1-20250805": {
@@ -2129,8 +2129,8 @@
      "compute_effort": null,
      "provider": "DeepSeek",
      "name": "deepseek-v4-pro",
-     "released": null,
-     "date_basis": "estimated",
+     "released": "2025-08",
+     "date_basis": "documented",
      "tier": "xhigh"
     },
     "kimi/kimi-k2.6": {
@@ -4559,8 +4559,8 @@
      "compute_effort": null,
      "provider": null,
      "name": "deepseek-v4-pro",
-     "released": null,
-     "date_basis": "estimated",
+     "released": "2025-08",
+     "date_basis": "documented",
      "tier": "none"
     },
     "openai/gpt-5.5": {

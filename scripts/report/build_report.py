@@ -128,7 +128,7 @@ JEV_COST = {b: SC[s]["attempts_summary"]["usage_input_tokens_sum"] * 0.042 / 1e6
                          "math500": "math_c", "hle": "hle"}.items()}
 
 _BENCH_SVGS = svgs_of("docs/modern-comparison/comparison-graphs.html")
-CHARTS = dict(zip(["mmlu_pro", "gpqa", "arc", "math500", "arc_agi2", "hle"], _BENCH_SVGS))
+CHARTS = dict(zip(["mmlu_pro", "gpqa", "arc", "arc_agi2", "rotation"], _BENCH_SVGS))
 PARETO = svgs_of("docs/modern-comparison/pareto-frontiers.html")
 EVID = svgs_of("docs/modern-comparison/architecture-evidence.html")
 ARCHDIAG = svgs_of("docs/modern-comparison/architecture-diagram.html")
@@ -951,19 +951,25 @@ def benchmarks() -> str:
         f"<td class='n'>{w}</td><td class='n'>{ww}</td><td class='cap'>{t}</td></tr>"
         for n, c, a, w, ww, t in rows)
     fig_list = [
-        fig("mmlu_pro", "Broad knowledge. Jev's direct-answer score sits near a "
-            "2025-era small model; the frontier bars had chain-of-thought."),
-        fig("gpqa", "Graduate science. Jev lands near Claude 3.7 Sonnet without "
-            "thinking - genuinely respectable, clearly not frontier."),
-        fig("arc", "Elementary science. Saturated for everyone; note the "
-            "comparison set is mostly older models, so this is Jev's best-looking chart."),
-        fig("math500", "Math, re-encoded as multiple choice. The gap between the "
-            "MCQ and digit-read-out bars is the generation tax, not a knowledge gap."),
-        fig("arc_agi2", "Abstract puzzles. Jev cannot emit a grid, so it is scored "
-            "cell by cell and solves zero tasks outright - shown for shape, not rank."),
-        fig("hle", "Expert frontier exam, multiple-choice subset. Close to the "
-            "guessing floor; the external bars are reasoning-enabled on a wider set."),
-    ]
+        fig("mmlu_pro", f"MMLU-Pro. Jev's best-aligned benchmark: same items, same "
+            f"format, direct answers. The two Jev bars are teal (greedy) and amber "
+            f"(probability-weighted); external rows come from the fetched vals.ai "
+            f"extract (133 models; ~46 bars shown, full data on disk). Bar color is "
+            f"release era, tip shape is reasoning tier, hover for details.{fn('protocol')}"),
+        fig("gpqa", "GPQA. Jev ran the Diamond subset (196 items); external rows are "
+            "the vals.ai platform's GPQA set, retired as saturated in Sep 2026. Same "
+            "encoding and hover behavior."),
+        fig("arc", "ARC-Challenge. Saturated for everyone. Jev's bar is 4-choice; "
+            "external bars are hand-collected canonical rows (mostly 25-shot CoT, "
+            "mostly older models) - context, not a protocol-matched race."),
+        fig("arc_agi2", "ARC-AGI-2. Mixed encodings, flagged: external bars are "
+            "whole-grid pass@2 with reasoning; Jev cannot emit grids. Its exact-grid "
+            "bars are the protocol-matched pair (0 of 120 tasks); the per-cell bars "
+            "are a diagnostic encoding and do not compete with the grid rows."),
+        fig("rotation", "Option-rotation audit. Not a comparison benchmark - a "
+            "consistency check. The same 420 MMLU-Pro items re-run with shuffled "
+            "option order: shuffling flipped 5.3% of paired answers with no net "
+            "direction (exact McNemar p = 0.83). Every bar is Jev."),    ]
     figs = "".join(fig_list)
     return f"""
 <section id="benchmarks">
@@ -989,13 +995,26 @@ shuffled.{fn('rotations')}</p>
 <p>Teal is Jev's greedy score (the highest-probability choice is chosen),
 while amber is Jev's probability-weighted score, and every other bar is a
 published number we fetched - not a model we ran. Bar color is release era
-(red 2022 &rarr; blue 2026) and the shape at each bar tip is that row's
-reasoning configuration - rounder means less thinking, pointier means more.
-Each chart is a curated view (top, bottom, and audit-named models) of the
-full fetched extract - 133 models for MMLU-Pro and GPQA, 52 for MATH-500, 69
-for HLE - kept on disk in
-<a href="{GH}/docs/modern-comparison/canonical/vals-leaderboards-20260926.json"><code>canonical/vals-leaderboards-20260926.json</code></a>.</p>
+(red &le;2023 &rarr; purple &rarr; blue 2026, routed away from teal so Jev
+cannot be mistaken for a year; gray = release date not established) and the
+shape at each bar tip is that row's reasoning configuration - rounder means
+less thinking, pointier means more. Jev wears white-ringed diamonds. Each
+chart is a curated view (top, bottom, and audit-named models) of the full
+fetched extract - 133 models for MMLU-Pro and GPQA - kept on disk in
+<a href="{GH}/docs/modern-comparison/canonical/vals-leaderboards-20260926.json"><code>canonical/vals-leaderboards-20260926.json</code></a>. Hover any bar
+for its score rank, release date (and how that date was established),
+reasoning config, and measured cost.</p>
 {figs}
+<p>Two table rows are deliberately <em>not</em> charted. Our HLE row is the
+multiple-choice subset while every published reference is the full text-only
+set (several with tools or reasoning on), and our MATH-500 row is a
+four-option conversion while external rows solve free-form with reasoning. No
+fair side-by-side visual exists against those references, and a misleading
+picture would be worse than no picture: both numbers stay in the table above,
+labeled as conversions, and HLE is discussed with its guessing floor in
+<a href="#arch-not">What it is not</a>. The rotation-audit chart is Jev-only for
+the same kind of reason: no external model publishes scores under that
+protocol - it is a consistency view, not a comparison.</p>
 </section>"""
 
 

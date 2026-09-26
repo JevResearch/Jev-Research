@@ -201,6 +201,7 @@ DATES: dict[str, str] = {
     "zai/glm-5.3-flash": "2026-08",
     "deepseek/deepseek-v4-flash-0731": "2025-07",
     "deepseek/deepseek-v4-pro-0813": "2025-08",
+    "deepseek/deepseek-v4-pro": "2025-08",
     "deepseek/deepseek-v4.1-flash": "2025-11",
     "fireworks/deepseek-r1": "2025-05",
     "fireworks/deepseek-v3": "2024-12",
