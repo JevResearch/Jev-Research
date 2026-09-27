@@ -3,7 +3,8 @@
 An independent, hands-on evaluation of TypeSafe AI's `jev-1.13.0` API:
 16,379 live benchmark requests across three frozen suites, a 987-call
 architecture probe, a multi-protocol Talk-to-Jev program, and a
-token-counting study - 23,459 recorded calls, every figure re-derivable from
+token-counting study, and a matched cheap-model baseline sweep on OpenRouter
+(12 models over the identical frozen items) - every figure re-derivable from
 the published aggregates in this repository.
 
 **The report page: <https://jevresearch.github.io/Jev-Research/report/>**
@@ -17,14 +18,15 @@ head, not a frontier system.
 
 | path | contents |
 |---|---|
-| `index.html`, `report/` | the report (single page, figures embedded) |
-| `assets/` | standalone chart pages (same figures, un-embedded) |
-| `src/`, `scripts/`, `tests/` | the harness that ran everything (public domain) |
-| `runs_benchmark*/` | per-stage derived aggregates (scores, weighted scores, calibration, usage) + freeze manifests with SHA-256 of every input |
-| `runs_archprobe/` | architecture-probe analysis, per-call rows, tokenizer studies, billing |
-| `runs_live/` | Talk-to-Jev traces (character / vocabulary-menu / token programs), probes, billing, findings |
+| [`report/`](report/) | the report (single page, figures embedded); rendered at <https://jevresearch.github.io/Jev-Research/report/> |
+| [`assets/`](assets/) | standalone chart pages (same figures, un-embedded) |
+| [`src/`](src/), [`scripts/`](scripts/), [`tests/`](tests/) | the harness that ran everything (public domain) |
+| [`runs_benchmark*/`](runs_benchmark/) | per-stage derived aggregates (scores, weighted scores, calibration, usage) + freeze manifests with SHA-256 of every input |
+| [`runs_archprobe/`](runs_archprobe/) | architecture-probe analysis, per-call rows, tokenizer studies, the probe2 follow-up battery, billing |
+| [`runs_matched_cheap/`](runs_matched_cheap/) | matched cheap-model baselines (OpenRouter): freeze, smoke, per-call results, summaries, spend |
+| [`runs_live/`](runs_live/) | Talk-to-Jev traces (character / vocabulary-menu / token programs), probes, billing, findings |
 | [`data_report/`](data_report/) | cost model, billing roll-up, architecture + lattice audits, size estimate, probe-2 plan |
-| `docs/` | research write-ups: architecture probes, comparable scores, the Talk program |
+| [`docs/`](docs/) | research write-ups: architecture probes, comparable scores, the vals.ai leaderboard extract, the Talk program |
 | [`ARCHITECTURE-ANALYSIS.md`](ARCHITECTURE-ANALYSIS.md) | the full architecture reconstruction: card, evidence, alternatives ledger, next probes |
 
 ## Reproducing the page from the data

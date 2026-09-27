@@ -982,6 +982,13 @@ prior documents and in this analysis:
 .venv/bin/python scripts/report/comparison_graphs.py        # -> docs/modern-comparison/comparison-graphs.html
 .venv/bin/python scripts/report/pareto_graphs.py            # -> docs/modern-comparison/pareto-frontiers.html
 
+# matched cheap-model baselines (OpenRouter key + live gate; executed 2026-09-26/27,
+# 23,412 calls, $3.73, artifacts in runs_matched_cheap/):
+.venv/bin/python scripts/benchmark/run_cheap_matched.py --plan   # roster + freeze (no key)
+.venv/bin/python scripts/benchmark/run_cheap_matched.py --smoke  # 1 call/model, wire discovery
+.venv/bin/python scripts/benchmark/run_cheap_matched.py --live   # full dispatch ($30 hard cap)
+.venv/bin/python scripts/benchmark/run_cheap_matched.py --score  # summaries + Jev join
+
 # staged follow-up battery (offline modes are ungated and free):
 .venv/bin/python scripts/benchmark/run_probe_battery2.py --plan     # -> call+cost plan
 .venv/bin/python scripts/benchmark/run_probe_battery2.py --dry-run  # -> analyzer validation

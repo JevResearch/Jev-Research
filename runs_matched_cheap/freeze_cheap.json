@@ -1,0 +1,155 @@
+{
+ "created_at": "2026-09-27T01:06:31+00:00",
+ "purpose": "cheap-model matched baselines on identical frozen items",
+ "hard_cap_usd": 30.0,
+ "wire": {
+  "reasoning_effort": "low",
+  "max_output_tokens": 1024,
+  "fallback": "reasoning_effort omitted if the API rejects it (recorded)"
+ },
+ "roster": [
+  {
+   "id": "meta-llama/llama-3.1-8b-instruct",
+   "name": "Meta: Llama 3.1 8B Instruct",
+   "context_length": 131072,
+   "input_per_M": 0.049999999999999996,
+   "output_per_M": 0.08,
+   "wish": "meta-llama/llama-3.1-8b-instruct",
+   "note": "user list"
+  },
+  {
+   "id": "mistralai/mistral-nemo",
+   "name": "Mistral: Mistral Nemo",
+   "context_length": 131072,
+   "input_per_M": 0.019000000000000003,
+   "output_per_M": 0.03,
+   "wish": "mistralai/mistral-nemo",
+   "note": "user list"
+  },
+  {
+   "id": "openai/gpt-oss-20b",
+   "name": "OpenAI: gpt-oss-20b",
+   "context_length": 131072,
+   "input_per_M": 0.018,
+   "output_per_M": 0.09,
+   "wish": "openai/gpt-oss-20b",
+   "note": "user list"
+  },
+  {
+   "id": "openai/gpt-oss-120b",
+   "name": "OpenAI: gpt-oss-120b",
+   "context_length": 131072,
+   "input_per_M": 0.15,
+   "output_per_M": 0.6,
+   "wish": "openai/gpt-oss-120b",
+   "note": "user list"
+  },
+  {
+   "id": "ibm-granite/granite-4.0-h-micro",
+   "name": "IBM: Granite 4.0 Micro",
+   "context_length": 131000,
+   "input_per_M": 0.017,
+   "output_per_M": 0.112,
+   "wish": "ibm-granite/granite-4.0-h-micro",
+   "note": "user list"
+  },
+  {
+   "id": "google/gemma-3-4b-it",
+   "name": "Google: Gemma 3 4B",
+   "context_length": 131072,
+   "input_per_M": 0.049999999999999996,
+   "output_per_M": 0.09999999999999999,
+   "wish": "google/gemma-3-4b-it",
+   "note": "user list"
+  },
+  {
+   "id": "qwen/qwen3.7-flash",
+   "name": "Qwen: Qwen3.7 Flash",
+   "context_length": 1000000,
+   "input_per_M": 0.03,
+   "output_per_M": 0.13,
+   "wish": "qwen/qwen3.7-flash",
+   "note": "user list"
+  },
+  {
+   "id": "mistralai/mistral-small-3.2-24b-instruct",
+   "name": "Mistral: Mistral Small 3.2 24B",
+   "context_length": 256000,
+   "input_per_M": 0.09375,
+   "output_per_M": 0.25,
+   "wish": "mistralai/mistral-small-3",
+   "note": "user list: 'Mistral 3 small'"
+  },
+  {
+   "id": "z-ai/glm-5.3-flash",
+   "name": "Z.ai: GLM 5.3 Flash",
+   "context_length": 1310720,
+   "input_per_M": 0.04,
+   "output_per_M": 0.5,
+   "wish": "z-ai/glm-5.3-flash",
+   "note": "frozen matched nine"
+  },
+  {
+   "id": "qwen/qwen3.8-flash",
+   "name": "Qwen: Qwen3.8 Flash",
+   "context_length": 1000000,
+   "input_per_M": 0.15,
+   "output_per_M": 0.47,
+   "wish": "qwen/qwen3.8-flash",
+   "note": "frozen matched nine"
+  },
+  {
+   "id": "deepseek/deepseek-v4-flash-0731",
+   "name": "DeepSeek: DeepSeek V4 Flash 0731",
+   "context_length": 1310720,
+   "input_per_M": 0.020999999999999998,
+   "output_per_M": 0.32,
+   "wish": "deepseek/deepseek-v4-flash-0731",
+   "note": "frozen matched nine"
+  },
+  {
+   "id": "z-ai/glm-5.3",
+   "name": "Z.ai: GLM 5.3",
+   "context_length": 1310720,
+   "input_per_M": 0.238,
+   "output_per_M": 0.748,
+   "wish": "z-ai/glm-5.3",
+   "note": "mid-tier anchor; ~$2 of the budget"
+  }
+ ],
+ "datasets": {
+  "mmlu": {
+   "n": 1000,
+   "item_ids_sha256": "d2511512418106f19c36175d8fb31326ba9927f312a30d52a088992db619a8c5"
+  },
+  "gpqa": {
+   "n": 196,
+   "item_ids_sha256": "bd9ab96dafd6089912a5d011ff0a918e5411b30702be8c8abea6b4760941363c"
+  },
+  "math500_choice": {
+   "n": 261,
+   "item_ids_sha256": "4b42862c4406dc7ba95a5cc1e33c77df3a9641ae7965852f498bfeb2c83753c9"
+  },
+  "hle_text_mc": {
+   "n": 494,
+   "item_ids_sha256": "6a9386b78990c9803cb4d12134f2273b6a687df0ca9a31564e8abfcc7b37e5ff"
+  }
+ },
+ "reservation_estimates_usd": {
+  "meta-llama/llama-3.1-8b-instruct": 0.31,
+  "mistralai/mistral-nemo": 0.12,
+  "openai/gpt-oss-20b": 0.23,
+  "openai/gpt-oss-120b": 1.66,
+  "ibm-granite/granite-4.0-h-micro": 0.28,
+  "google/gemma-3-4b-it": 0.35,
+  "qwen/qwen3.7-flash": 0.35,
+  "mistralai/mistral-small-3.2-24b-instruct": 0.79,
+  "z-ai/glm-5.3-flash": 1.12,
+  "qwen/qwen3.8-flash": 1.4,
+  "deepseek/deepseek-v4-flash-0731": 0.7,
+  "z-ai/glm-5.3": 2.22
+ },
+ "reservation_total_usd": 9.53,
+ "calls_per_model": 1951,
+ "total_calls": 23412
+}

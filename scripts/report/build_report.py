@@ -99,6 +99,10 @@ FINGER = jload("runs_archprobe/tokenizer_fingerprint.json")
 COSTS = jload("data_report/costs.json")
 VALS = jload("docs/modern-comparison/canonical/vals-leaderboards-20260926.json")
 try:
+    MATCHED = jload("runs_matched_cheap/summary.json")
+except Exception:
+    MATCHED = {}
+try:
     AUDITS = jload("data_report/arch_audits.json")
 except FileNotFoundError:
     raise SystemExit("data_report/arch_audits.json missing - run "
@@ -128,7 +132,18 @@ JEV_COST = {b: SC[s]["attempts_summary"]["usage_input_tokens_sum"] * 0.042 / 1e6
                          "math500": "math_c", "hle": "hle"}.items()}
 
 _BENCH_SVGS = svgs_of("docs/modern-comparison/comparison-graphs.html")
-CHARTS = dict(zip(["mmlu_pro", "gpqa", "arc", "arc_agi2", "rotation"], _BENCH_SVGS))
+_CH_KEYS = [("MMLU-Pro -", "mmlu_pro"), ("GPQA -", "gpqa"),
+            ("ARC-Challenge", "arc"), ("ARC-AGI-2", "arc_agi2"),
+            ("MATH-500 as multiple choice - matched", "math_m"),
+            ("Humanity", "hle_m")]
+CHARTS = {}
+for _svg in _BENCH_SVGS:
+    _m = re.search(r'aria-label="([^"]+)"', _svg)
+    _lab = _m.group(1) if _m else ""
+    for _pref, _key in _CH_KEYS:
+        if _lab.startswith(_pref):
+            CHARTS[_key] = _svg
+            break
 PARETO = svgs_of("docs/modern-comparison/pareto-frontiers.html")
 EVID = svgs_of("docs/modern-comparison/architecture-evidence.html")
 ARCHDIAG = svgs_of("docs/modern-comparison/architecture-diagram.html")
@@ -180,6 +195,21 @@ NOTES: dict[str, str] = {
     "jevfree": "Jev's output tokens are server-reported but billed at zero. "
         "Every Jev dollar figure in this report is measured from billing "
         "usage in the published run artifacts, not estimated.",
+    "matchedbase": "Matched cheap-model baselines: "
+        "scripts/benchmark/run_cheap_matched.py, artifacts in "
+        "runs_matched_cheap/ (freeze, smoke, results.jsonl, summary.json, "
+        "live_summary.json). Identical frozen items to the Jev runs "
+        "(MMLU-Pro 1,000-item stratified subset, seed 20260920; GPQA 196; "
+        "MATH-500 choice 261; HLE MC 494), dispatched over the OpenRouter "
+        "chat API with reasoning_effort=low and a 1,024-token output cap "
+        "where accepted (recorded per model; omitted where the API rejects "
+        "it). One attempt per item; strict exact-key parsing; format "
+        "failures count as wrong in the all-requested accuracy; only "
+        "transport-level 429/5xx get bounded backoff re-queues, never answer "
+        "retries. Costs are provider-reported per call (catalog-price "
+        "fallback). Hard budget cap $30, authorized by the project owner; "
+        "actual spend in live_summary.json. Era colors use curated/estimated "
+        "release dates, labeled as such in tooltips.",
     "costest": "External costs are the vals.ai platform's measured cost per "
         "test - the same harness that measured the scores, chain-of-thought "
         "tokens included, so reasoning counts against the models that use it. "
@@ -367,7 +397,6 @@ COMPS = jload("docs/modern-comparison/canonical/comparable-scores.json")
 _ROT_STAGES = [
     ("mmlu", "MMLU-Pro", "12,032 graduate-level multiple-choice questions", "mmlu_pro"),
     ("arc", "ARC-Challenge", "1,172 grade-school science items - a saturated field", "arc_challenge"),
-    ("rot", "Option-rotation audit", "420 MMLU-Pro items re-run with shuffled option order", None),
     ("gpqa", "GPQA Diamond", "196 graduate-level science questions", "gpqa_diamond"),
     ("hle", "Humanity's Last Exam (MC)", "494 expert-exam multiple-choice items", "hle_text_only"),
     ("math_c", "MATH-500 as multiple choice", "261 encodable items, answer as an option", "math500"),
@@ -929,8 +958,6 @@ def benchmarks() -> str:
          pct(wmmlu), "12k graduate-level MC questions, 10-19 options"),
         ("ARC-Challenge", arc["n_expected"], pct(arc["accuracy"]), wil(arc),
          pct(warc), "grade-school science, 4 options"),
-        ("Option-rotation audit", rot["n_expected"], pct(rot["accuracy"]), wil(rot),
-         pct(WD["rot"]["weighted_accuracy_mean"]), "same items, shuffled option order"),
         ("GPQA Diamond", gpqa["n_expected"], pct(gpqa["accuracy"]), wil(gpqa),
          pct(wgpqa), "graduate science, 4 options, seeded shuffle"),
         ("HLE, multiple-choice", hle["n_expected"], pct(hle["accuracy"]), wil(hle),
@@ -966,11 +993,41 @@ def benchmarks() -> str:
             "whole-grid pass@2 with reasoning; Jev cannot emit grids. Its exact-grid "
             "bars are the protocol-matched pair (0 of 120 tasks); the per-cell bars "
             "are a diagnostic encoding and do not compete with the grid rows."),
-        fig("rotation", "Option-rotation audit. Not a comparison benchmark - a "
-            "consistency check. The same 420 MMLU-Pro items re-run with shuffled "
-            "option order: shuffling flipped 5.3% of paired answers with no net "
-            "direction (exact McNemar p = 0.83). Every bar is Jev."),    ]
+    ]
+    if "math_m" in CHARTS:
+        fig_list.append(fig("math_m", "MATH-500 (as MCQ), matched runs. Revived because "
+                            "our own cheap-model runs on Jev's exact items and format "
+                            "beat it here - an honest comparison in both directions. "
+                            "The free-form reasoning rows are not shown."))
+    if "hle_m" in CHARTS:
+        fig_list.append(fig("hle_m", "HLE (MC subset), matched runs. Same logic: our "
+                            "runs of cheap models on Jev's exact 494-item subset; a "
+                            "matched row beats Jev, so the chart is fair. The full "
+                            "text-only set rows are not shown."))
     figs = "".join(fig_list)
+    revival_note = ""
+    if "math_m" in CHARTS or "hle_m" in CHARTS:
+        revival_note = (" Where a matched cheap-model row <em>did</em> beat Jev "
+                        "under Jev's own protocol, the chart is revived below as "
+                        "a matched-only comparison - our runs, identical items, "
+                        "fair in both directions.")
+    matched_para = ""
+    if MATCHED.get("models"):
+        _spend = (MATCHED.get("dispatch") or {}).get("spend_usd")
+        _n = len(MATCHED["models"])
+        _sp = f"${_spend:.2f}" if isinstance(_spend, (int, float)) else "under $30"
+        matched_para = (
+            "<p>The dagger-marked bars are <em>ours</em>: we ran " + str(_n) +
+            " cheap OpenRouter models over the identical frozen items - the "
+            "1,000-item MMLU-Pro stratified subset and all 196 GPQA items - "
+            "under Jev's own protocol: direct one-shot answers, one attempt, "
+            "strict answer parsing, format failures counted as wrong, no "
+            "content retries, provider-reported costs. Measured spend: " +
+            _sp + ". The reason is the Pareto chart's empty left edge: the "
+            "vals boards carry no Gemma/Llama/Granite-class commodity "
+            "models, and Jev's price claim deserves its strongest honest "
+            "version - tested against the real cheap market, not only "
+            "flagships." + fn("matchedbase") + "</p>")
     return f"""
 <section id="benchmarks">
 <h2>Benchmarks: where it actually lands</h2>
@@ -1005,16 +1062,19 @@ fetched extract - 133 models for MMLU-Pro and GPQA - kept on disk in
 for its score rank, release date (and how that date was established),
 reasoning config, and measured cost.</p>
 {figs}
-<p>Two table rows are deliberately <em>not</em> charted. Our HLE row is the
-multiple-choice subset while every published reference is the full text-only
-set (several with tools or reasoning on), and our MATH-500 row is a
-four-option conversion while external rows solve free-form with reasoning. No
-fair side-by-side visual exists against those references, and a misleading
-picture would be worse than no picture: both numbers stay in the table above,
-labeled as conversions, and HLE is discussed with its guessing floor in
-<a href="#arch-not">What it is not</a>. The rotation-audit chart is Jev-only for
-the same kind of reason: no external model publishes scores under that
-protocol - it is a consistency view, not a comparison.</p>
+<p>Two table rows are deliberately <em>not</em> charted against the vals
+boards. Our HLE row is the multiple-choice subset while every published
+reference is the full text-only set (several with tools or reasoning on), and
+our MATH-500 row is a four-option conversion while external rows solve
+free-form with reasoning. No fair side-by-side visual exists against those
+references, and a misleading picture would be worse than no picture: both
+numbers stay in the table above, labeled as conversions, and HLE is discussed
+with its guessing floor in
+<a href="#arch-not">What it is not</a>. {revival_note} The option-rotation audit is likewise
+not charted here: it is a consistency measurement, not a benchmark, and its
+results belong to the position-bias discussion in
+<a href="#arch-order">The order of the options matters</a>.</p>
+{matched_para}
 </section>"""
 
 
@@ -1031,6 +1091,44 @@ def pareto() -> str:
     jgq = jgq_run / n_gpqa
     ratio = fable_gpqa / jgq
     figs = "".join(f"<figure>{svg}</figure>" for svg in PARETO)
+    pareto_corr = ""
+    _rows = []
+    for _mid, _dss in (MATCHED.get("models") or {}).items():
+        _e = _dss.get("mmlu") or {}
+        _jj = _e.get("jev_join") or {}
+        if (_e.get("accuracy_all_requested") is not None
+                and _e.get("cost_per_question_usd")
+                and _e.get("n_terminal") == _e.get("n_requested")):
+            _rows.append((_mid.split("/")[-1],
+                          _e["accuracy_all_requested"] * 100,
+                          _e["cost_per_question_usd"],
+                          (_jj.get("jev_accuracy_on_subset") or 0) * 100))
+    if _rows:
+        _rows.sort(key=lambda r: -r[1])
+        _ja = _rows[0][3]
+        _jc = JEV_COST["mmlu_pro"] / SC["mmlu"]["n_expected"]
+        _beat = [r for r in _rows if r[1] > _ja]
+        _cheap = [r for r in _rows if r[2] < _jc]
+        _best = _rows[0]
+        _ex = ", ".join(r[0] for r in _cheap[:3]) or "several roster models"
+        pareto_corr = (
+            "<p>One correction this study owes the market: Jev is <em>not</em> "
+            "the cheapest thing in it. Our matched runs (dagger points, this "
+            "study) put a dozen commodity models in the same price decade - "
+            + _ex + " bill less per question than Jev does - because their "
+            "providers' input stickers are lower and direct answers keep "
+            "outputs short. What survives the comparison: on the identical "
+            "items Jev outscores " + str(len(_rows) - len(_beat)) + " of " +
+            str(len(_rows)) + " matched models"
+            + (f" (best of the roster: {_best[0]} at {_best[1]:.1f}% vs Jev's "
+               f"{_ja:.1f}%)" if _beat else
+               f" (top of the roster at {_best[1]:.1f}%, Jev {_ja:.1f}%)") +
+            ", it remains one to four orders of magnitude cheaper than every "
+            "vals-measured flagship, and nothing in the roster pairs its "
+            "~73 ms floor with probability read-outs. The frontier claim "
+            "holds at the flagship end; at the commodity end Jev is one "
+            "strong offer among several - a more useful sentence than "
+            "&lsquo;off the chart&rsquo;.</p>")
     return f"""
 <section id="pareto">
 <h2>The frontier the cost numbers actually draw</h2>
@@ -1057,6 +1155,7 @@ roughly {ratio:,.0f} times cheaper than Fable 5.1, and about
 {(fable['accuracy'] - SC['gpqa']['accuracy']*100):.0f} points less accurate.
 Cheap and mid-tier can be the same sentence - and on these axes,
 &ldquo;off the chart&rdquo; is a position, not an excuse.</p>
+{pareto_corr}
 {figs}
 </section>"""
 

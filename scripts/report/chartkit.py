@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import colorsys
 import html as _html
+import json
 import math
 import textwrap
 
@@ -142,10 +143,9 @@ g.mrow{cursor:default}
 
 def era_legend(x: int, y: int) -> str:
     """Gradient strip + tier shapes + Jev diamond legend row."""
-    p = [f'<text x="{x}" y="{y}" fill="{MUTED}" font-size="10.5" font-weight="600">'
-         'color = release era</text>']
+    p = []
     lo_m, hi_m = ERA_MIN[0] * 12 + ERA_MIN[1], ERA_MAX[0] * 12 + ERA_MAX[1]
-    gx = x + 108
+    gx = x + 46
     for i in range(44):
         ym = lo_m + int(i / 43 * (hi_m - lo_m))
         rel = f"{ym // 12}-{ym % 12:02d}"
@@ -163,3 +163,56 @@ def era_legend(x: int, y: int) -> str:
     p.append(jev_diamond(sx + 4, y - 4, JEV_G, 5))
     p.append(f'<text x="{sx + 14}" y="{y}" fill="{MUTED}" font-size="9.5">Jev</text>')
     return "".join(p)
+
+
+# ---------------------------------------------------------------- matched runs
+# Cheap-model matched baselines (runs_matched_cheap/, OpenRouter, identical
+# frozen items, direct answers, reasoning_effort=low where supported,
+# strict parsing, format failures counted as wrong).
+CHEAP_META = {
+    "meta-llama/llama-3.1-8b-instruct": ("Llama 3.1 8B", "2024-07", "none", "documented"),
+    "mistralai/mistral-nemo": ("Mistral Nemo", "2024-07", "none", "documented"),
+    "openai/gpt-oss-20b": ("gpt-oss-20b", "2025-08", "low", "documented"),
+    "openai/gpt-oss-120b": ("gpt-oss-120b", "2025-08", "low", "documented"),
+    "ibm-granite/granite-4.0-h-micro": ("Granite 4.0 Micro", "2025-06", "low", "estimated"),
+    "google/gemma-3-4b-it": ("Gemma 3 4B", "2025-03", "none", "documented"),
+    "qwen/qwen3.7-flash": ("Qwen3.7 Flash", "2026-06", "low", "estimated"),
+    "mistralai/mistral-small-3.2-24b-instruct": ("Mistral Small 3.2", "2025-09", "none", "estimated"),
+    "z-ai/glm-5.3-flash": ("GLM-5.3 Flash", "2026-08", "low", "documented"),
+    "qwen/qwen3.8-flash": ("Qwen3.8 Flash", "2026-08", "low", "estimated"),
+    "deepseek/deepseek-v4-flash-0731": ("DeepSeek V4 Flash", "2025-07", "low", "documented"),
+    "z-ai/glm-5.3": ("GLM-5.3", "2026-08", "low", "documented"),
+}
+
+
+def load_matched(root) -> dict:
+    """summary.json from the matched cheap-model runs, or {} before completion."""
+    p = root / "runs_matched_cheap/summary.json"
+    if not p.exists():
+        return {}
+    return json.loads(p.read_text())
+
+
+def matched_points(summary: dict, ds: str) -> list[dict]:
+    """Chart-ready rows: {id,name,short,released,tier,basis,accuracy,cost,n,...}."""
+    out = []
+    for mid, dss in (summary.get("models") or {}).items():
+        e = dss.get(ds)
+        if not e or e.get("accuracy_all_requested") is None:
+            continue
+        if (e.get("n_terminal") or 0) < e.get("n_requested", 1):
+            continue  # incomplete runs are not charted
+        short, rel, tier, basis = CHEAP_META.get(
+            mid, (mid.split("/")[-1], None, "none", None))
+        out.append({
+            "id": mid, "name": short, "short": short, "released": rel,
+            "tier": tier, "date_basis": basis,
+            "accuracy": e["accuracy_all_requested"] * 100,
+            "cost": e.get("cost_per_question_usd"),
+            "n": e.get("n_requested"),
+            "fmt_pct": 100 * e.get("format_failed", 0) / max(e.get("n_terminal", 1), 1),
+            "jev_join": e.get("jev_join"),
+            "latency_ms": e.get("median_latency_ms"),
+        })
+    out.sort(key=lambda r: -r["accuracy"])
+    return out

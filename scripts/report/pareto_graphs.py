@@ -36,6 +36,7 @@ import math
 from pathlib import Path
 
 from chartkit import (BG, GRID, JEV_G, JEV_W, MUTED, TEXT, UI_BLOCK, UNK,
+                      load_matched, matched_points,
                       TIER_LABEL, era_color, era_legend, jev_diamond, symbol,
                       tip, wrap_subtitle)
 
@@ -101,6 +102,14 @@ def chart(bkey, title, subtitle, jev_glob, jev_g, jev_w, n_items):
     scores = [a for _, a, _ in pts]
     costs = [c for c, _, _ in pts]
     jc = jev_cost_per_question(jev_glob)
+    # matched cheap-model baselines (this study): identical items, measured cost
+    _ds = {"mmlu_pro": "mmlu", "gpqa": "gpqa"}.get(bkey, bkey)
+    for r in matched_points(load_matched(ROOT), _ds):
+        if not r.get("cost"):
+            continue
+        mm = dict(r)
+        mm["name"] = r["name"] + " \u2020"
+        pts.append((r["cost"], r["accuracy"], mm))
     n_all = len(pts)
 
     W, H = 980, 640
@@ -142,11 +151,13 @@ def chart(bkey, title, subtitle, jev_glob, jev_g, jev_w, n_items):
                  f'text-anchor="end">{gy:.0f}</text>')
         gy += 20
     # frontier
-    fr = frontier([(c, a) for c, a, _ in pts])
+    fr = frontier([(c, a) for c, a, _ in pts] + [(jc, jev_g)])
     p.append('<polyline points="' + " ".join(f"{X(x):.1f},{Y(y):.1f}" for x, y in fr)
              + f'" fill="none" stroke="{MUTED}" stroke-width="1.6" '
              f'stroke-dasharray="5 4" opacity="0.8"/>')
     # model points, ALL labeled
+    scores = [a for _, a, _ in pts]
+    costs = [c for c, _, _ in pts]
     for c, a, m in pts:
         color = era_color(m.get("released"))
         tier = m.get("tier", "none")
@@ -154,11 +165,24 @@ def chart(bkey, title, subtitle, jev_glob, jev_g, jev_w, n_items):
         cr = _rank(c, costs, reverse=True)
         rel = m.get("released") or "unknown"
         basis = m.get("date_basis") or "n/a"
-        tt = (f"<b>{_html.escape(m['name'])}</b><br>"
-              f"score {a:.1f}% &mdash; #{sr} of {n_all}<br>"
-              f"cost ${c:.5f}/question &mdash; #{cr} of {n_all} (cheapest = #1)<br>"
-              f"released {rel} (date basis: {basis})<br>"
-              f"reasoning config: {TIER_LABEL.get(tier, 'unknown')}")
+        if m.get("jev_join") is not None or m.get("fmt_pct") is not None:
+            jj = m.get("jev_join") or {}
+            tt = (f"<b>{_html.escape(m['name'])}</b> (matched baseline, this study)<br>"
+                  f"score {a:.1f}% &mdash; #{sr} of {n_all}<br>"
+                  f"cost ${c:.6f}/question &mdash; #{cr} of {n_all} (provider-reported)<br>"
+                  f"released {rel}" + (" (estimated)" if basis == "estimated" else "") + "<br>"
+                  f"protocol: identical frozen items, direct answers, one attempt, "
+                  f"strict parsing, format failures counted wrong "
+                  f"({m.get('fmt_pct', 0):.1f}%), reasoning_effort=low where supported<br>"
+                  f"vs Jev on the same items: "
+                  f"{(jj.get('jev_accuracy_on_subset') or 0)*100:.1f}% "
+                  f"(McNemar exact p={jj.get('mcnemar_exact_p', 'n/a')})")
+        else:
+            tt = (f"<b>{_html.escape(m['name'])}</b><br>"
+                  f"score {a:.1f}% &mdash; #{sr} of {n_all}<br>"
+                  f"cost ${c:.5f}/question &mdash; #{cr} of {n_all}<br>"
+                  f"released {rel}" + (" (estimated)" if basis == "estimated" else "") + "<br>"
+                  f"reasoning config: {TIER_LABEL.get(tier, 'unknown')}")
         on_fr = any(abs(fc - c) < 1e-12 and fa == a for fc, fa in fr)
         p.append(f'<g class="mrow isorow" {tip(tt)}>')
         p.append(symbol(X(c), Y(a), tier, color, 4.8))
@@ -172,7 +196,7 @@ def chart(bkey, title, subtitle, jev_glob, jev_g, jev_w, n_items):
     jcr = _rank(jc, costs + [jc], reverse=True)
     jtt_g = (f"<b>Jev, greedy (this study)</b><br>score {jev_g:.1f}% &mdash; "
              f"#{jsr} of {n_all + 1} here<br>cost ${jc:.8f}/question &mdash; "
-             f"#{jcr} of {n_all + 1} (cheapest = #1)<br>measured billing: "
+             f"#{jcr} of {n_all + 1}<br>measured billing: "
              f"${jc * n_items:.4f} for the whole {n_items}-question run")
     jtt_w = (f"<b>Jev, probability-weighted (this study)</b><br>mean probability on the "
              f"gold option: {jev_w:.1f}%<br>same cost: ${jc:.8f}/question")
@@ -213,6 +237,10 @@ def main():
             "row's reasoning tier. The dashed line is the Pareto frontier: from the "
             "upper right, down to the left. All models are labeled; hover any point "
             "to isolate it and see score rank, cost rank, release date and tier. "
+            "Dagger-marked points are our own matched runs of a dozen cheap "
+            "OpenRouter models on the identical frozen items (direct answers, one "
+            "attempt, strict parsing, provider-reported costs) - they fill the "
+            "commodity end of the market that the vals boards do not cover. "
             "HLE and MATH-500 are not charted here: Jev's rows on those benchmarks "
             "are a multiple-choice subset and an MCQ conversion, and no fair "
             "cost/score comparison exists against free-form or full-set references. "

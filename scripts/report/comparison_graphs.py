@@ -31,6 +31,7 @@ import json
 from pathlib import Path
 
 from chartkit import (BG, GRID, JEV_G, JEV_W, MUTED, TEXT, UI_BLOCK, UNK,
+                      CHEAP_META, load_matched, matched_points,
                       TIER_LABEL, era_color, era_legend, jev_diamond, symbol,
                       tip, wrap_subtitle)
 
@@ -93,7 +94,7 @@ def _tt_model(m, rank, nfull, ndisp, source="vals.ai"):
     parts = [f"<b>{_html.escape(m['name'])}</b>",
              f"score {m['accuracy']:.1f}% &mdash; #{rank} of {nfull} "
              f"in the full extract ({ndisp} bars shown)",
-             f"released {rel or 'unknown'} (date basis: {basis})",
+             f"released {rel or 'unknown'}" + (" (estimated)" if basis == "estimated" else ""),
              f"reasoning config: {tier}"]
     if cost:
         parts.append(f"measured cost ${cost:.4f}/test ({source})")
@@ -162,11 +163,41 @@ def bar_chart(title, subtitle, entries, unit="%"):
     return "".join(p)
 
 
-def vals_chart(bkey, title, subtitle, jevs, unit="%"):
+def _matched_entries(mrows, jev_score_for_join):
+    out = []
+    for r in mrows:
+        jj = r.get("jev_join") or {}
+        tt = (f"<b>{r['name']} &dagger;</b> (matched baseline, this study)<br>"
+              f"score {r['accuracy']:.1f}% on the identical frozen items<br>"
+              f"protocol: direct one-shot answers on OpenRouter, one attempt, "
+              f"strict key parsing, format failures counted as wrong "
+              f"({r['fmt_pct']:.1f}% here), reasoning_effort=low where supported<br>"
+              f"released {r['released'] or 'unknown'}"
+              + (" (estimated)" if r.get("date_basis") == "estimated" else "") + "<br>"
+              f"measured cost ${r['cost']:.6f}/question<br>"
+              f"vs Jev on the same items: "
+              f"{(jj.get('jev_accuracy_on_subset') or 0)*100:.1f}% "
+              f"(McNemar exact p={jj.get('mcnemar_exact_p', 'n/a')})")
+        out.append({"name": r["name"] + " \u2020", "score": r["accuracy"],
+                    "color": era_color(r.get("released")), "tier": r.get("tier", "none"),
+                    "jev": False, "tooltip": tt})
+    return out
+
+
+def jev_bars(pairs):
+    out = []
+    for label, score, kind, note in pairs:
+        out.append({"name": label, "score": score,
+                    "color": JEV_G if kind == "greedy" else JEV_W,
+                    "jev": True, "tooltip": _tt_jev(label, score, note)})
+    return out
+
+
+def vals_chart(bkey, title, subtitle, jevs, unit="%", matched=None):
     models = VALS["benchmarks"][bkey]["models"]
     order, sel = select(models)
     rank = {k: i + 1 for i, k in enumerate(order)}
-    entries = []
+    entries = _matched_entries(matched or [], None)
     for k in sel:
         m = models[k]
         entries.append({"name": m["name"], "score": m["accuracy"],
@@ -178,16 +209,6 @@ def vals_chart(bkey, title, subtitle, jevs, unit="%"):
                  len(entries))
         entries.insert(i, je)
     return bar_chart(title, subtitle, entries, unit)
-
-
-def jev_bars(pairs):
-    out = []
-    for label, score, kind, note in pairs:
-        out.append({"name": label, "score": score,
-                    "color": JEV_G if kind == "greedy" else JEV_W,
-                    "jev": True, "tooltip": _tt_jev(label, score, note)})
-    return out
-
 
 ARC_META = {
     "Llama 3.1 405B": ("2024-07", "none"), "GPT-4o": ("2024-05", "none"),
@@ -205,8 +226,20 @@ ARC_META = {
     "Inkling Small": ("2026-04", "medium"),
     "Claude 3.7 Sonnet (thinking 16K)": ("2025-02", "high"),
     "Claude 3.7 Sonnet (thinking)": ("2025-02", "high"),
+    "Claude 3.7 Sonnet (no thinking)": ("2025-02", "none"),
+    "Claude 3.7 Sonnet": ("2025-02", "high"),
     "GPT-4.5": ("2025-02", "none"), "o3 (low)": ("2025-04", "low"),
-    "o3": ("2025-04", "high"), "GPT-4o ": ("2024-05", "none"),
+    "o3": ("2025-04", "high"),
+    "Gemma 4 E4B": ("2026-03", "medium"), "Gemma 4 E2B": ("2026-03", "medium"),
+    "Qwen 3.5 9B": ("2026-01", "high"),
+    "Qwen3.8 Max": ("2026-08", "high"),
+    "DeepSeek R1 Distill Qwen 14B": ("2025-01", "high"),
+    "DeepSeek R1 Distill Llama 8B": ("2025-01", "high"),
+    "GPT-5 (high)": ("2025-08", "high"),
+    "Gemini 3 Pro": ("2025-11", "high"),
+    "GPT-4o (chatgpt-latest 2025-03)": ("2025-03", "none"),
+    "Qwen3-235B-A22B-Thinking-2507": ("2025-07", "high"),
+    "DeepSeek-R1-0528": ("2025-05", "high"),
 }
 
 
@@ -223,7 +256,7 @@ def ref_chart(bkey, title, subtitle, jevs, unit="%"):
         proto = r.get("protocol") or "unknown"
         tt = (f"<b>{_html.escape(r['model'])}</b><br>score {r['score']*100:.1f}% "
               f"&mdash; #{rank[r['model']]} of {len(order)}<br>"
-              f"released {rel or 'unknown'} (date basis: curated)<br>"
+              f"released {rel or 'unknown'}<br>"
               f"protocol: {proto} &middot; source type: {r.get('source_type', 'n/a')}")
         entries.append({"name": r["model"], "score": r["score"] * 100,
                         "color": era_color(rel), "tier": tier, "jev": False,
@@ -280,7 +313,21 @@ def rotation_chart():
                      subtitle, entries)
 
 
+def matched_only_chart(title, subtitle, mrows, jevs, unit="%"):
+    entries = _matched_entries(mrows, None)
+    for je in sorted(jevs, key=lambda j: j["score"]):
+        i = next((i for i, e in enumerate(entries) if e["score"] < je["score"]),
+                 len(entries))
+        entries.insert(i, je)
+    return bar_chart(title, subtitle, entries, unit)
+
+
 def main() -> int:
+    summary = load_matched(ROOT)
+    mm_mmlu = matched_points(summary, "mmlu")
+    mm_gpqa = matched_points(summary, "gpqa")
+    mm_math = matched_points(summary, "math500_choice")
+    mm_hle = matched_points(summary, "hle_text_mc")
     charts = []
     charts.append(vals_chart(
         "mmlu_pro", "MMLU-Pro - broad knowledge (12,032 items)",
@@ -290,7 +337,8 @@ def main() -> int:
         jev_bars([("Jev (greedy)", JEV["mmlu_pro"]["greedy"] * 100, "greedy",
                    "12,032 graduate-level multiple-choice items"),
                   ("Jev (weighted)", JEV["mmlu_pro"]["weighted_mean_p_gold"] * 100,
-                   "weighted", "mean probability placed on the gold option")])))
+                   "weighted", "mean probability placed on the gold option")]),
+        matched=mm_mmlu))
     charts.append(vals_chart(
         "gpqa", "GPQA - graduate science (Diamond for Jev)",
         "vals retired GPQA in Sep 2026 as saturated; rows preserved. Jev: Diamond subset, "
@@ -298,7 +346,8 @@ def main() -> int:
         jev_bars([("Jev (greedy)", JEV["gpqa_diamond"]["greedy"] * 100, "greedy",
                    "196 Diamond items"),
                   ("Jev (weighted)", JEV["gpqa_diamond"]["weighted_mean_p_gold"] * 100,
-                   "weighted", "mean probability on the gold option")])))
+                   "weighted", "mean probability on the gold option")]),
+        matched=mm_gpqa))
     charts.append(ref_chart(
         "arc_challenge", "ARC-Challenge - elementary science (canonical refs)",
         "No vals coverage for this encoding; bars are hand-collected canonical rows "
@@ -321,7 +370,40 @@ def main() -> int:
                   ("Jev exact-grid (weighted)", 0.0, "weighted",
                    "whole-grid probability is the product of cell probabilities: median "
                    "~1e-63, indistinguishable from zero")])))
-    charts.append(rotation_chart())
+    # rotation audit deliberately not charted: position bias lives in the
+    # architecture section ("The order of the options matters"), per audit.
+    jev_math = JEV["math500_mcq_adapted"]["greedy"] * 100
+    jev_hle = JEV["hle_text_only_mc"]["greedy"] * 100
+    _math_beats = mm_math and max(r["accuracy"] for r in mm_math) > jev_math
+    _n_math_beats = sum(1 for r in mm_math if r["accuracy"] > jev_math)
+    _n_hle_beats = sum(1 for r in mm_hle if r["accuracy"] > jev_hle)
+    if _math_beats:
+        charts.append(matched_only_chart(
+            "MATH-500 as multiple choice - matched runs (this study)",
+            "Revived per audit: these rows are OUR runs of cheap OpenRouter models "
+            "on Jev's exact 261-item MCQ conversion - same items, same format, "
+            "direct answers, strict parsing, format failures counted as wrong. "
+            "The vals free-form reasoning rows are NOT shown (protocol "
+            f"mismatch). {_n_math_beats} of {len(mm_math)} matched models beat Jev "
+            "here, so the comparison is honest in both directions.",
+            mm_math,
+            jev_bars([("Jev (greedy)", jev_math, "greedy", "261 encodable items, MCQ"),
+                      ("Jev (weighted)",
+                       JEV["math500_mcq_adapted"]["weighted_mean_p_gold"] * 100,
+                       "weighted", "mean probability on the gold option")])))
+    if mm_hle and max(r["accuracy"] for r in mm_hle) > jev_hle:
+        charts.append(matched_only_chart(
+            "Humanity's Last Exam (MC subset) - matched runs (this study)",
+            "Revived per audit: OUR runs of cheap OpenRouter models on Jev's exact "
+            "494-item MC subset - same items, same format, direct answers, strict "
+            "parsing. The vals full-text-set rows are NOT shown (protocol "
+            f"mismatch). {_n_hle_beats} of {len(mm_hle)} matched models beat Jev "
+            "here, so the comparison is honest in both directions.",
+            mm_hle,
+            jev_bars([("Jev (greedy)", jev_hle, "greedy", "494 MC items"),
+                      ("Jev (weighted)",
+                       JEV["hle_text_only_mc"]["weighted_mean_p_gold"] * 100,
+                       "weighted", "mean probability on the gold option")])))
 
     html = ("<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\">\n"
             "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n"
@@ -341,10 +423,20 @@ def main() -> int:
             "mistaken for a year; gray = date not established). Tip shapes are reasoning "
             "tiers, rounder = less thinking. Hover any bar for details. Charts show a "
             "curated view (top, bottom, and audit-named models); the full extract stays on "
-            "disk. HLE and MATH-500 are deliberately NOT charted: Jev's rows there are a "
+            "disk. Dagger-marked bars are our own matched runs of cheap OpenRouter "
+            "models on the identical frozen items under Jev's protocol (direct "
+            "answers, strict parsing, measured costs). HLE and MATH-500 are "
+            "deliberately NOT charted: Jev's rows there are a "
             "multiple-choice subset and an MCQ conversion respectively, and no published "
             "rows share those protocols - their numbers live in the report table with "
             "caveats instead.</p>\n"
+            + ("<p class=\"lead\">Update: the matched cheap-model runs (dagger "
+               "bars, this study) DO beat Jev on one of those subsets, so that "
+               "chart is revived above as a matched-only comparison - our runs, "
+               "Jev's exact items and format, no external protocol mixing.</p>\n"
+               if (mm_math and max(r["accuracy"] for r in mm_math) > JEV["math500_mcq_adapted"]["greedy"] * 100)
+               or (mm_hle and max(r["accuracy"] for r in mm_hle) > JEV["hle_text_only_mc"]["greedy"] * 100)
+               else "")
             + "".join(charts) + "\n</body></html>\n")
     OUT.write_text(html, encoding="utf-8")
     print(f"[ok] wrote {OUT.relative_to(ROOT)} ({OUT.stat().st_size:,} bytes); "

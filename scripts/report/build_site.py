@@ -74,6 +74,12 @@ INCLUDE_FILES = [
     "data_report/probe2_plan.json",
     "data_report/size_estimate.json",
     "data_report/jevbot_examples.json",
+    "runs_matched_cheap/freeze_cheap.json",
+    "runs_matched_cheap/smoke_cheap.json",
+    "runs_matched_cheap/results.jsonl",
+    "runs_matched_cheap/attempts.jsonl",
+    "runs_matched_cheap/live_summary.json",
+    "runs_matched_cheap/summary.json",
     "runs_live/BILLING.json",
     "runs_live/FINDINGS.md",
     "docs/token-talk-findings.md",
@@ -104,6 +110,10 @@ INTERNAL_ALLOW = {
     "docs/review-gate/audit/mech_dryrun_spec.json",
     "docs/review-gate/audit/mech_dryrun_mappings.json",
     "docs/modern-comparison/openrouter-catalog-nine-20260919.json",
+    # matched cheap-model ledgers: item ids, answer letters, usage and cost
+    # only - never item text; license-scanned via GATED_GLOBS.
+    "runs_matched_cheap/results.jsonl",
+    "runs_matched_cheap/attempts.jsonl",
 }
 BENCH_DIRS = ("runs_benchmark", "runs_benchmark_ext", "runs_benchmark_ext2")
 
@@ -129,6 +139,13 @@ def rel(p: Path) -> str:
 
 def banned_path(r: str) -> bool:
     parts = r.split("/")
+    # runs_matched_cheap ledgers carry item ids, answer letters, usage and cost
+    # only - never item text - and are explicitly license-scanned via
+    # GATED_GLOBS below. The generic name ban targets the benchmark-stage
+    # results/spec files, which embed licensed item content.
+    if r.startswith("runs_matched_cheap/") and parts[-1] in {"results.jsonl",
+                                                             "attempts.jsonl"}:
+        return False
     if parts[0].startswith("runs_live/") or (parts[0] == "runs_live" and len(parts) > 1):
         return True                       # dated run dirs never ship; top-level
                                           # files are allow-listed via INCLUDE
@@ -233,7 +250,7 @@ def structural_scan(bundle: Path) -> list[str]:
             continue
         if set(parts[:-1]) & BANNED_COMPONENTS and r not in INTERNAL_ALLOW:
             problems.append(f"G1 banned dir: {r}")
-        if parts and parts[-1] in BANNED_FILES:
+        if parts and parts[-1] in BANNED_FILES and r not in INTERNAL_ALLOW:
             problems.append(f"G1 banned file: {r}")
         if re.search(r"\.(log|exit)$", r) or "raw" == (parts[-2] if len(parts) > 1 else ""):
             problems.append(f"G1 banned tail: {r}")
@@ -298,6 +315,8 @@ BUNDLE_FILE_SPREAD = 3      # window in >=3 bundle files is our repeated own-tex
 
 GATED_GLOBS = ("runs_benchmark*/bench-*/items.jsonl",
                "runs_benchmark*/bench-*/spec.json",
+               "runs_matched_cheap/results.jsonl",
+               "runs_matched_cheap/attempts.jsonl",
                "boolq_spec.json", "boolq_paired_spec.json", "mmlu_pilot_spec.json")
 # Whitelist: our own authored prose (synthetic probe corpora, research docs).
 # A phrase only counts as a leak if it is NOT already in our public documents.
@@ -530,7 +549,8 @@ README_TEXT = """# Jev: Not Frontier, But Still Worth Your Attention
 An independent, hands-on evaluation of TypeSafe AI's `jev-1.13.0` API:
 16,379 live benchmark requests across three frozen suites, a 987-call
 architecture probe, a multi-protocol Talk-to-Jev program, and a
-token-counting study - 23,459 recorded calls, every figure re-derivable from
+token-counting study, and a matched cheap-model baseline sweep on OpenRouter
+(12 models over the identical frozen items) - every figure re-derivable from
 the published aggregates in this repository.
 
 **The report page: <https://jevresearch.github.io/Jev-Research/report/>**
@@ -544,14 +564,15 @@ head, not a frontier system.
 
 | path | contents |
 |---|---|
-| `index.html`, `report/` | the report (single page, figures embedded) |
-| `assets/` | standalone chart pages (same figures, un-embedded) |
-| `src/`, `scripts/`, `tests/` | the harness that ran everything (public domain) |
-| `runs_benchmark*/` | per-stage derived aggregates (scores, weighted scores, calibration, usage) + freeze manifests with SHA-256 of every input |
-| `runs_archprobe/` | architecture-probe analysis, per-call rows, tokenizer studies, billing |
-| `runs_live/` | Talk-to-Jev traces (character / vocabulary-menu / token programs), probes, billing, findings |
+| [`report/`](report/) | the report (single page, figures embedded); rendered at <https://jevresearch.github.io/Jev-Research/report/> |
+| [`assets/`](assets/) | standalone chart pages (same figures, un-embedded) |
+| [`src/`](src/), [`scripts/`](scripts/), [`tests/`](tests/) | the harness that ran everything (public domain) |
+| [`runs_benchmark*/`](runs_benchmark/) | per-stage derived aggregates (scores, weighted scores, calibration, usage) + freeze manifests with SHA-256 of every input |
+| [`runs_archprobe/`](runs_archprobe/) | architecture-probe analysis, per-call rows, tokenizer studies, the probe2 follow-up battery, billing |
+| [`runs_matched_cheap/`](runs_matched_cheap/) | matched cheap-model baselines (OpenRouter): freeze, smoke, per-call results, summaries, spend |
+| [`runs_live/`](runs_live/) | Talk-to-Jev traces (character / vocabulary-menu / token programs), probes, billing, findings |
 | [`data_report/`](data_report/) | cost model, billing roll-up, architecture + lattice audits, size estimate, probe-2 plan |
-| `docs/` | research write-ups: architecture probes, comparable scores, the Talk program |
+| [`docs/`](docs/) | research write-ups: architecture probes, comparable scores, the vals.ai leaderboard extract, the Talk program |
 | [`ARCHITECTURE-ANALYSIS.md`](ARCHITECTURE-ANALYSIS.md) | the full architecture reconstruction: card, evidence, alternatives ledger, next probes |
 
 ## Reproducing the page from the data
@@ -690,6 +711,7 @@ def main() -> None:
                  "data_report/probe2_plan.json",
                  "data_report/size_estimate.json",
                  "data_report/jevbot_examples.json",
+                 "runs_matched_cheap/summary.json",
                  "runs_benchmark/freeze/frozen.json"):
         if not (ROOT / need).exists():
             raise SystemExit(f"[bundle] run prerequisite first: {need} missing")
