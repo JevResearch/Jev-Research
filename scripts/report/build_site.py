@@ -80,6 +80,12 @@ INCLUDE_FILES = [
     "runs_matched_cheap/attempts.jsonl",
     "runs_matched_cheap/live_summary.json",
     "runs_matched_cheap/summary.json",
+    "runs_matched_cheap/v2/freeze_v2.json",
+    "runs_matched_cheap/v2/smoke_v2.json",
+    "runs_matched_cheap/v2/results.jsonl",
+    "runs_matched_cheap/v2/live_summary.json",
+    "runs_matched_cheap/v2/live_summary_pass1.json",
+    "runs_matched_cheap/v2/summary_v2.json",
     "runs_live/BILLING.json",
     "runs_live/FINDINGS.md",
     "docs/token-talk-findings.md",
@@ -114,6 +120,7 @@ INTERNAL_ALLOW = {
     # only - never item text; license-scanned via GATED_GLOBS.
     "runs_matched_cheap/results.jsonl",
     "runs_matched_cheap/attempts.jsonl",
+    "runs_matched_cheap/v2/results.jsonl",
 }
 BENCH_DIRS = ("runs_benchmark", "runs_benchmark_ext", "runs_benchmark_ext2")
 
@@ -317,6 +324,7 @@ GATED_GLOBS = ("runs_benchmark*/bench-*/items.jsonl",
                "runs_benchmark*/bench-*/spec.json",
                "runs_matched_cheap/results.jsonl",
                "runs_matched_cheap/attempts.jsonl",
+               "runs_matched_cheap/v2/results.jsonl",
                "boolq_spec.json", "boolq_paired_spec.json", "mmlu_pilot_spec.json")
 # Whitelist: our own authored prose (synthetic probe corpora, research docs).
 # A phrase only counts as a leak if it is NOT already in our public documents.
@@ -712,6 +720,7 @@ def main() -> None:
                  "data_report/size_estimate.json",
                  "data_report/jevbot_examples.json",
                  "runs_matched_cheap/summary.json",
+                 "runs_matched_cheap/v2/summary_v2.json",
                  "runs_benchmark/freeze/frozen.json"):
         if not (ROOT / need).exists():
             raise SystemExit(f"[bundle] run prerequisite first: {need} missing")

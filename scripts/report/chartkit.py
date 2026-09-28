@@ -104,6 +104,7 @@ svg.isolate .mlabel{opacity:0;transition:opacity .12s}
 svg.isolate g.hot .mlabel{opacity:1}
 svg.isolate .jevlabel{opacity:1}
 g.mrow{cursor:default}
+g.ptrow .fatten{fill:transparent;stroke:none}
 </style>
 <script type="text/javascript"><![CDATA[
 (function(){
@@ -162,6 +163,8 @@ def era_legend(x: int, y: int) -> str:
         sx += 13
     p.append(jev_diamond(sx + 4, y - 4, JEV_G, 5))
     p.append(f'<text x="{sx + 14}" y="{y}" fill="{MUTED}" font-size="9.5">Jev</text>')
+    p.append(f'<text x="{sx + 44}" y="{y}" fill="{MUTED}" font-size="9.5">&dagger; our '
+             'matched run</text>')
     return "".join(p)
 
 
@@ -176,10 +179,13 @@ CHEAP_META = {
     "openai/gpt-oss-120b": ("gpt-oss-120b", "2025-08", "low", "documented"),
     "ibm-granite/granite-4.0-h-micro": ("Granite 4.0 Micro", "2025-06", "low", "estimated"),
     "google/gemma-3-4b-it": ("Gemma 3 4B", "2025-03", "none", "documented"),
-    "qwen/qwen3.7-flash": ("Qwen3.7 Flash", "2026-06", "low", "estimated"),
+    "qwen/qwen3.7-flash": ("Qwen3.7 Flash", "2026-06", "none", "estimated"),
+    "qwen/qwen3.8-max-0902": ("Qwen3.8 Max", "2026-08", "low", "documented"),
+    "xiaomi/mimo-v2.6-pro": ("MiMo v2.6 Pro", "2026-05", "low", "documented"),
+    "xiaomi/mimo-v2.6-flash": ("MiMo v2.6 Flash", "2026-05", "low", "documented"),
     "mistralai/mistral-small-3.2-24b-instruct": ("Mistral Small 3.2", "2025-09", "none", "estimated"),
     "z-ai/glm-5.3-flash": ("GLM-5.3 Flash", "2026-08", "low", "documented"),
-    "qwen/qwen3.8-flash": ("Qwen3.8 Flash", "2026-08", "low", "estimated"),
+    "qwen/qwen3.8-flash": ("Qwen3.8 Flash", "2026-08", "none", "estimated"),
     "deepseek/deepseek-v4-flash-0731": ("DeepSeek V4 Flash", "2025-07", "low", "documented"),
     "z-ai/glm-5.3": ("GLM-5.3", "2026-08", "low", "documented"),
 }
@@ -187,7 +193,9 @@ CHEAP_META = {
 
 def load_matched(root) -> dict:
     """summary.json from the matched cheap-model runs, or {} before completion."""
-    p = root / "runs_matched_cheap/summary.json"
+    p = root / "runs_matched_cheap/v2/summary_v2.json"
+    if not p.exists():
+        p = root / "runs_matched_cheap/summary.json"
     if not p.exists():
         return {}
     return json.loads(p.read_text())
@@ -198,19 +206,28 @@ def matched_points(summary: dict, ds: str) -> list[dict]:
     out = []
     for mid, dss in (summary.get("models") or {}).items():
         e = dss.get(ds)
-        if not e or e.get("accuracy_all_requested") is None:
+        if not e:
+            continue
+        if (e.get("accuracy_recovered") is None
+                and e.get("accuracy_all_requested") is None):
             continue
         if (e.get("n_terminal") or 0) < e.get("n_requested", 1):
             continue  # incomplete runs are not charted
         short, rel, tier, basis = CHEAP_META.get(
             mid, (mid.split("/")[-1], None, "none", None))
+        acc = e.get("accuracy_recovered")
+        if acc is None:
+            acc = e.get("accuracy_all_requested")
+        if acc is None:
+            continue
+        unre = e.get("unrecovered", e.get("format_failed", 0))
         out.append({
             "id": mid, "name": short, "short": short, "released": rel,
             "tier": tier, "date_basis": basis,
-            "accuracy": e["accuracy_all_requested"] * 100,
+            "accuracy": acc * 100,
             "cost": e.get("cost_per_question_usd"),
             "n": e.get("n_requested"),
-            "fmt_pct": 100 * e.get("format_failed", 0) / max(e.get("n_terminal", 1), 1),
+            "fmt_pct": 100 * unre / max(e.get("n_terminal", 1), 1),
             "jev_join": e.get("jev_join"),
             "latency_ms": e.get("median_latency_ms"),
         })

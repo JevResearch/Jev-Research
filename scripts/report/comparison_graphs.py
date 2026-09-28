@@ -92,14 +92,11 @@ def _tt_model(m, rank, nfull, ndisp, source="vals.ai"):
     tier = TIER_LABEL.get(m.get("tier", "none"), "unknown")
     cost = m.get("cost_per_test")
     parts = [f"<b>{_html.escape(m['name'])}</b>",
-             f"score {m['accuracy']:.1f}% &mdash; #{rank} of {nfull} "
-             f"in the full extract ({ndisp} bars shown)",
-             f"released {rel or 'unknown'}" + (" (estimated)" if basis == "estimated" else ""),
-             f"reasoning config: {tier}"]
+             f"score {m['accuracy']:.1f}% &mdash; #{rank} of {nfull}",
+             f"released {rel or 'unknown'}"
+             + (" (estimated)" if basis == "estimated" else "")]
     if cost:
-        parts.append(f"measured cost ${cost:.4f}/test ({source})")
-    else:
-        parts.append(f"source: {source}")
+        parts.append(f"measured cost ${cost:.4f}/test")
     return "<br>".join(parts)
 
 
@@ -111,7 +108,7 @@ def _tt_jev(label, score, note):
 
 
 def bar_chart(title, subtitle, entries, unit="%"):
-    W, L, R, row_h = 980, 252, 116, 22
+    W, L, R, row_h = 1180, 292, 128, 25
     sub, sub_end = wrap_subtitle(24, 50, subtitle)
     leg_y = sub_end + 20
     top = leg_y + 22
@@ -166,18 +163,11 @@ def bar_chart(title, subtitle, entries, unit="%"):
 def _matched_entries(mrows, jev_score_for_join):
     out = []
     for r in mrows:
-        jj = r.get("jev_join") or {}
-        tt = (f"<b>{r['name']} &dagger;</b> (matched baseline, this study)<br>"
-              f"score {r['accuracy']:.1f}% on the identical frozen items<br>"
-              f"protocol: direct one-shot answers on OpenRouter, one attempt, "
-              f"strict key parsing, format failures counted as wrong "
-              f"({r['fmt_pct']:.1f}% here), reasoning_effort=low where supported<br>"
+        tt = (f"<b>{r['name']}</b> &mdash; our matched run<br>"
+              f"score {r['accuracy']:.1f}%<br>"
               f"released {r['released'] or 'unknown'}"
               + (" (estimated)" if r.get("date_basis") == "estimated" else "") + "<br>"
-              f"measured cost ${r['cost']:.6f}/question<br>"
-              f"vs Jev on the same items: "
-              f"{(jj.get('jev_accuracy_on_subset') or 0)*100:.1f}% "
-              f"(McNemar exact p={jj.get('mcnemar_exact_p', 'n/a')})")
+              f"measured cost ${r['cost']:.6f}/question")
         out.append({"name": r["name"] + " \u2020", "score": r["accuracy"],
                     "color": era_color(r.get("released")), "tier": r.get("tier", "none"),
                     "jev": False, "tooltip": tt})
@@ -204,6 +194,7 @@ def vals_chart(bkey, title, subtitle, jevs, unit="%", matched=None):
                         "color": era_color(m.get("released")),
                         "tier": m.get("tier", "none"), "jev": False,
                         "tooltip": _tt_model(m, rank[k], len(order), len(sel))})
+    entries.sort(key=lambda e: -e["score"])
     for je in sorted(jevs, key=lambda j: j["score"]):
         i = next((i for i, e in enumerate(entries) if e["score"] < je["score"]),
                  len(entries))
@@ -243,11 +234,11 @@ ARC_META = {
 }
 
 
-def ref_chart(bkey, title, subtitle, jevs, unit="%"):
+def ref_chart(bkey, title, subtitle, jevs, unit="%", matched=None):
     rows = [r for r in REF["benchmarks"][bkey]["rows"] if r.get("score") is not None]
     order = sorted(rows, key=lambda r: -r["score"])
     rank = {r["model"]: i + 1 for i, r in enumerate(order)}
-    entries = []
+    entries = _matched_entries(matched or [], None)
     for r in order:
         rel, tier = ARC_META.get(r["model"], (None, "none"))
         m = {"name": r["model"], "accuracy": r["score"] * 100, "released": rel,
@@ -261,6 +252,7 @@ def ref_chart(bkey, title, subtitle, jevs, unit="%"):
         entries.append({"name": r["model"], "score": r["score"] * 100,
                         "color": era_color(rel), "tier": tier, "jev": False,
                         "tooltip": tt})
+    entries.sort(key=lambda e: -e["score"])
     for je in sorted(jevs, key=lambda j: j["score"]):
         i = next((i for i, e in enumerate(entries) if e["score"] < je["score"]),
                  len(entries))
@@ -325,6 +317,7 @@ def matched_only_chart(title, subtitle, mrows, jevs, unit="%"):
 def main() -> int:
     summary = load_matched(ROOT)
     mm_mmlu = matched_points(summary, "mmlu")
+    mm_arc = matched_points(summary, "arc")
     mm_gpqa = matched_points(summary, "gpqa")
     mm_math = matched_points(summary, "math500_choice")
     mm_hle = matched_points(summary, "hle_text_mc")
@@ -332,8 +325,7 @@ def main() -> int:
     charts.append(vals_chart(
         "mmlu_pro", "MMLU-Pro - broad knowledge (12,032 items)",
         "Jev: direct one-shot answers (diamonds; teal greedy, amber probability-weighted). "
-        "vals rows use the platform harness with per-row reasoning configs (tip shapes); "
-        "hover any bar for score, rank, release date and measured cost.",
+        "Vals rows use the platform harness with per-row reasoning configs (tip shapes).",
         jev_bars([("Jev (greedy)", JEV["mmlu_pro"]["greedy"] * 100, "greedy",
                    "12,032 graduate-level multiple-choice items"),
                   ("Jev (weighted)", JEV["mmlu_pro"]["weighted_mean_p_gold"] * 100,
@@ -341,7 +333,7 @@ def main() -> int:
         matched=mm_mmlu))
     charts.append(vals_chart(
         "gpqa", "GPQA - graduate science (Diamond for Jev)",
-        "vals retired GPQA in Sep 2026 as saturated; rows preserved. Jev: Diamond subset, "
+        "Vals retired GPQA in Sep 2026 as saturated; rows preserved. Jev: Diamond subset, "
         "direct answers, seeded option shuffle.",
         jev_bars([("Jev (greedy)", JEV["gpqa_diamond"]["greedy"] * 100, "greedy",
                    "196 Diamond items"),
@@ -355,12 +347,13 @@ def main() -> int:
         jev_bars([("Jev (greedy)", JEV["arc_challenge"]["greedy"] * 100, "greedy",
                    "1,172 items"),
                   ("Jev (weighted)", JEV["arc_challenge"]["weighted_mean_p_gold"] * 100,
-                   "weighted", "mean probability on the gold option")])))
+                   "weighted", "mean probability on the gold option")]),
+        matched=mm_arc))
     charts.append(ref_chart(
         "arc_agi2", "ARC-AGI-2 - abstract puzzles (mixed encodings - read the caption)",
         "External bars: whole-grid pass@2, semi-private set, reasoning on. Jev cannot emit "
         "grids. Its exact-grid bars are the protocol-matched pair (0 of 120 tasks solved); "
-        "the per-cell bars are a diagnostic encoding, NOT comparable to grid-level rows.",
+        "the per-cell bars are a diagnostic encoding, not comparable to grid-level rows.",
         jev_bars([("Jev per-cell (greedy)", JEV["arc_agi2_public_eval"]["cell_accuracy_choice"] * 100,
                    "greedy", "diagnostic: 70,100 individual cell decisions"),
                   ("Jev per-cell (weighted)", AGI_W * 100, "weighted",
@@ -380,12 +373,10 @@ def main() -> int:
     if _math_beats:
         charts.append(matched_only_chart(
             "MATH-500 as multiple choice - matched runs (this study)",
-            "Revived per audit: these rows are OUR runs of cheap OpenRouter models "
-            "on Jev's exact 261-item MCQ conversion - same items, same format, "
-            "direct answers, strict parsing, format failures counted as wrong. "
-            "The vals free-form reasoning rows are NOT shown (protocol "
-            f"mismatch). {_n_math_beats} of {len(mm_math)} matched models beat Jev "
-            "here, so the comparison is honest in both directions.",
+            "Our runs of cheap OpenRouter models on Jev's exact 261-item MCQ "
+            "conversion - same items, same format, direct answers. The vals "
+            "free-form reasoning rows are not shown (protocol mismatch). "
+            f"{_n_math_beats} of {len(mm_math)} matched models beat Jev here.",
             mm_math,
             jev_bars([("Jev (greedy)", jev_math, "greedy", "261 encodable items, MCQ"),
                       ("Jev (weighted)",
@@ -394,11 +385,10 @@ def main() -> int:
     if mm_hle and max(r["accuracy"] for r in mm_hle) > jev_hle:
         charts.append(matched_only_chart(
             "Humanity's Last Exam (MC subset) - matched runs (this study)",
-            "Revived per audit: OUR runs of cheap OpenRouter models on Jev's exact "
-            "494-item MC subset - same items, same format, direct answers, strict "
-            "parsing. The vals full-text-set rows are NOT shown (protocol "
-            f"mismatch). {_n_hle_beats} of {len(mm_hle)} matched models beat Jev "
-            "here, so the comparison is honest in both directions.",
+            "Our runs of cheap OpenRouter models on Jev's exact 494-item MC "
+            "subset - same items, same format, direct answers. The vals "
+            "full-text-set rows are not shown (protocol mismatch). "
+            f"{_n_hle_beats} of {len(mm_hle)} matched models beat Jev here.",
             mm_hle,
             jev_bars([("Jev (greedy)", jev_hle, "greedy", "494 MC items"),
                       ("Jev (weighted)",

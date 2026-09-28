@@ -222,7 +222,7 @@ def headcount_chart(a):
         pts.append(f"{L + nq / xmx * (W - L - R):.0f},{H - B - pred / ymx * (H - T - B):.0f}")
     p.append(f'<polyline points="{" ".join(pts)}" fill="none" stroke="{AMBER}" stroke-width="2.2" stroke-dasharray="6 4"/>')
     p.append(f'<text x="{(W-L-R)/2+L:.0f}" y="{H-12}" fill="{MUTED}" font-size="11" '
-             'text-anchor="middle">questions packed into one request</text>')
+             'text-anchor="middle">Questions packed into one request</text>')
     p.append("</svg>")
     return "".join(p)
 

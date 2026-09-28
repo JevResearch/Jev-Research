@@ -1,0 +1,622 @@
+{
+ "created_at": "2026-09-27T21:35:12+00:00",
+ "results": [
+  {
+   "id": "meta-llama/llama-3.1-8b-instruct",
+   "wire": {
+    "model": "meta-llama/llama-3.1-8b-instruct",
+    "reasoning_effort": "low",
+    "max_output_tokens": 4096,
+    "extra_body": {
+     "temperature": 0
+    }
+   },
+   "http": 200,
+   "content": "B",
+   "reasoning_excerpt": "",
+   "pred": "B",
+   "stage": "exact",
+   "usage": {
+    "prompt_tokens": 84,
+    "completion_tokens": 2,
+    "total_tokens": 86,
+    "cost": 4.36e-06,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 4.36e-06,
+     "upstream_inference_prompt_cost": 4.2e-06,
+     "upstream_inference_completions_cost": 1.6e-07
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "mistralai/mistral-nemo",
+   "wire": {
+    "model": "mistralai/mistral-nemo",
+    "reasoning_effort": "low",
+    "max_output_tokens": 4096,
+    "extra_body": {
+     "temperature": 0
+    }
+   },
+   "http": 200,
+   "content": "B",
+   "reasoning_excerpt": "",
+   "pred": "B",
+   "stage": "exact",
+   "usage": {
+    "prompt_tokens": 52,
+    "completion_tokens": 2,
+    "total_tokens": 54,
+    "cost": 2.26896e-06,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 2.26896e-06,
+     "upstream_inference_prompt_cost": 1.99056e-06,
+     "upstream_inference_completions_cost": 2.784e-07
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "openai/gpt-oss-20b",
+   "wire": {
+    "model": "openai/gpt-oss-20b",
+    "reasoning_effort": "low",
+    "max_output_tokens": 4096,
+    "extra_body": {
+     "temperature": 0
+    }
+   },
+   "http": 200,
+   "content": "B",
+   "reasoning_excerpt": "Correct answer B.",
+   "pred": "B",
+   "stage": "exact",
+   "usage": {
+    "prompt_tokens": 116,
+    "completion_tokens": 15,
+    "total_tokens": 131,
+    "cost": 3.82e-06,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 3.82e-06,
+     "upstream_inference_prompt_cost": 2.32e-06,
+     "upstream_inference_completions_cost": 1.5e-06
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 5,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "openai/gpt-oss-120b",
+   "wire": {
+    "model": "openai/gpt-oss-120b",
+    "reasoning_effort": "low",
+    "max_output_tokens": 4096,
+    "extra_body": {
+     "temperature": 0
+    }
+   },
+   "http": 200,
+   "content": "B",
+   "reasoning_excerpt": "The answer is Paris, option B.",
+   "pred": "B",
+   "stage": "exact",
+   "usage": {
+    "prompt_tokens": 116,
+    "completion_tokens": 18,
+    "total_tokens": 134,
+    "cost": 4.03e-05,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 4.03e-05,
+     "upstream_inference_prompt_cost": 2.32e-05,
+     "upstream_inference_completions_cost": 1.71e-05
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 9,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "ibm-granite/granite-4.0-h-micro",
+   "wire": {
+    "model": "ibm-granite/granite-4.0-h-micro",
+    "reasoning_effort": "low",
+    "max_output_tokens": 4096,
+    "extra_body": {
+     "temperature": 0
+    }
+   },
+   "http": 200,
+   "content": "B",
+   "reasoning_excerpt": "",
+   "pred": "B",
+   "stage": "exact",
+   "usage": {
+    "prompt_tokens": 79,
+    "completion_tokens": 2,
+    "total_tokens": 81,
+    "cost": 1.567e-06,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 1.567e-06,
+     "upstream_inference_prompt_cost": 1.343e-06,
+     "upstream_inference_completions_cost": 2.24e-07
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "google/gemma-3-4b-it",
+   "wire": {
+    "model": "google/gemma-3-4b-it",
+    "reasoning_effort": "low",
+    "max_output_tokens": 4096,
+    "extra_body": {
+     "temperature": 0
+    }
+   },
+   "http": 200,
+   "content": "B\n",
+   "reasoning_excerpt": "",
+   "pred": "B",
+   "stage": "exact",
+   "usage": {
+    "prompt_tokens": 60,
+    "completion_tokens": 3,
+    "total_tokens": 63,
+    "cost": 3.3e-06,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 3.3e-06,
+     "upstream_inference_prompt_cost": 3e-06,
+     "upstream_inference_completions_cost": 3e-07
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "qwen/qwen3.7-flash",
+   "wire": {
+    "model": "qwen/qwen3.7-flash",
+    "reasoning_effort": null,
+    "max_output_tokens": 2048,
+    "extra_body": {
+     "temperature": 0,
+     "reasoning": {
+      "enabled": false
+     }
+    }
+   },
+   "http": 200,
+   "content": "B",
+   "reasoning_excerpt": "",
+   "pred": "B",
+   "stage": "exact",
+   "usage": {
+    "prompt_tokens": 62,
+    "completion_tokens": 1,
+    "total_tokens": 63,
+    "cost": 1.99e-06,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 1.99e-06,
+     "upstream_inference_prompt_cost": 1.86e-06,
+     "upstream_inference_completions_cost": 1.3e-07
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "mistralai/mistral-small-3.2-24b-instruct",
+   "wire": {
+    "model": "mistralai/mistral-small-3.2-24b-instruct",
+    "reasoning_effort": "low",
+    "max_output_tokens": 4096,
+    "extra_body": {
+     "temperature": 0
+    }
+   },
+   "http": 200,
+   "content": "B",
+   "reasoning_excerpt": "",
+   "pred": "B",
+   "stage": "exact",
+   "usage": {
+    "prompt_tokens": 52,
+    "completion_tokens": 2,
+    "total_tokens": 54,
+    "cost": 5.375e-06,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 5.375e-06,
+     "upstream_inference_prompt_cost": 4.875e-06,
+     "upstream_inference_completions_cost": 5e-07
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "z-ai/glm-5.3-flash",
+   "wire": {
+    "model": "z-ai/glm-5.3-flash",
+    "reasoning_effort": "low",
+    "max_output_tokens": 4096,
+    "extra_body": {
+     "temperature": 0
+    }
+   },
+   "http": 200,
+   "content": "B",
+   "reasoning_excerpt": "The user is asking a simple multiple-choice question about the capital of France. The answer is obviously Paris, which i",
+   "pred": "B",
+   "stage": "exact",
+   "usage": {
+    "prompt_tokens": 61,
+    "completion_tokens": 48,
+    "total_tokens": 109,
+    "cost": 5.023e-05,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 5.023e-05,
+     "upstream_inference_prompt_cost": 2.623e-05,
+     "upstream_inference_completions_cost": 2.4e-05
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 46,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "qwen/qwen3.8-flash",
+   "wire": {
+    "model": "qwen/qwen3.8-flash",
+    "reasoning_effort": null,
+    "max_output_tokens": 2048,
+    "extra_body": {
+     "temperature": 0,
+     "reasoning": {
+      "enabled": false
+     }
+    }
+   },
+   "http": 200,
+   "content": "B",
+   "reasoning_excerpt": "",
+   "pred": "B",
+   "stage": "exact",
+   "usage": {
+    "prompt_tokens": 75,
+    "completion_tokens": 1,
+    "total_tokens": 76,
+    "cost": 1.172e-05,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 1.172e-05,
+     "upstream_inference_prompt_cost": 1.125e-05,
+     "upstream_inference_completions_cost": 4.7e-07
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "deepseek/deepseek-v4-flash-0731",
+   "wire": {
+    "model": "deepseek/deepseek-v4-flash-0731",
+    "reasoning_effort": "low",
+    "max_output_tokens": 4096,
+    "extra_body": {
+     "temperature": 0
+    }
+   },
+   "http": 200,
+   "content": "B",
+   "reasoning_excerpt": "We need to answer multiple-choice: capital of France is Paris, option B. Reply with only option key.",
+   "pred": "B",
+   "stage": "exact",
+   "usage": {
+    "prompt_tokens": 53,
+    "completion_tokens": 25,
+    "total_tokens": 78,
+    "cost": 1.16925e-05,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 1.16925e-05,
+     "upstream_inference_prompt_cost": 1.1925e-06,
+     "upstream_inference_completions_cost": 1.05e-05
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 23,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "z-ai/glm-5.3",
+   "wire": {
+    "model": "z-ai/glm-5.3",
+    "reasoning_effort": "low",
+    "max_output_tokens": 4096,
+    "extra_body": {
+     "temperature": 0
+    }
+   },
+   "http": 200,
+   "content": "B",
+   "reasoning_excerpt": "",
+   "pred": "B",
+   "stage": "exact",
+   "usage": {
+    "prompt_tokens": 86,
+    "completion_tokens": 3,
+    "total_tokens": 89,
+    "cost": 0.0001336,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.0001336,
+     "upstream_inference_prompt_cost": 0.0001204,
+     "upstream_inference_completions_cost": 1.32e-05
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 1,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "xiaomi/mimo-v2.6-pro",
+   "wire": {
+    "model": "xiaomi/mimo-v2.6-pro",
+    "reasoning_effort": "low",
+    "max_output_tokens": 4096,
+    "extra_body": {
+     "temperature": 0
+    }
+   },
+   "http": 200,
+   "content": "B",
+   "reasoning_excerpt": "B",
+   "pred": "B",
+   "stage": "exact",
+   "usage": {
+    "prompt_tokens": 56,
+    "completion_tokens": 5,
+    "total_tokens": 61,
+    "cost": 2.871e-05,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 2.871e-05,
+     "upstream_inference_prompt_cost": 2.436e-05,
+     "upstream_inference_completions_cost": 4.35e-06
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 2,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "xiaomi/mimo-v2.6-flash",
+   "wire": {
+    "model": "xiaomi/mimo-v2.6-flash",
+    "reasoning_effort": "low",
+    "max_output_tokens": 4096,
+    "extra_body": {
+     "temperature": 0
+    }
+   },
+   "http": 200,
+   "content": "B",
+   "reasoning_excerpt": "B",
+   "pred": "B",
+   "stage": "exact",
+   "usage": {
+    "prompt_tokens": 56,
+    "completion_tokens": 5,
+    "total_tokens": 61,
+    "cost": 9.24e-06,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 9.24e-06,
+     "upstream_inference_prompt_cost": 7.84e-06,
+     "upstream_inference_completions_cost": 1.4e-06
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 1,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "qwen/qwen3.8-max-0902",
+   "wire": {
+    "model": "qwen/qwen3.8-max-0902",
+    "reasoning_effort": "low",
+    "max_output_tokens": 1024,
+    "extra_body": {
+     "temperature": 0
+    }
+   },
+   "http": 400,
+   "error": "{'message': 'Reasoning is mandatory for this endpoint and cannot be disabled.', 'code': 400, 'metadata': {'provider_name': None}}",
+   "http_fallback": 200,
+   "wire_fallback": {
+    "model": "qwen/qwen3.8-max-0902",
+    "reasoning_effort": "low",
+    "max_output_tokens": 1024,
+    "extra_body": {
+     "temperature": 0
+    }
+   },
+   "fallback_used": true,
+   "content": "B",
+   "reasoning_excerpt": "The question asks about the capital of France. The answer is Paris, which is option B.\n",
+   "pred": "B",
+   "stage": "exact",
+   "usage": {
+    "prompt_tokens": 99,
+    "completion_tokens": 23,
+    "total_tokens": 122,
+    "cost": 0.000336,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.000336,
+     "upstream_inference_prompt_cost": 0.000198,
+     "upstream_inference_completions_cost": 0.000138
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 19,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   },
+   "ok": true
+  }
+ ]
+}

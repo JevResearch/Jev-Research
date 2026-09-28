@@ -1,0 +1,127 @@
+{
+ "created_at": "2026-09-27T21:34:19+00:00",
+ "roster": [
+  {
+   "id": "meta-llama/llama-3.1-8b-instruct",
+   "no_think": false,
+   "arc": false,
+   "input_per_M": 0.049999999999999996,
+   "output_per_M": 0.08
+  },
+  {
+   "id": "mistralai/mistral-nemo",
+   "no_think": false,
+   "arc": false,
+   "input_per_M": 0.019000000000000003,
+   "output_per_M": 0.03
+  },
+  {
+   "id": "openai/gpt-oss-20b",
+   "no_think": false,
+   "arc": false,
+   "input_per_M": 0.018,
+   "output_per_M": 0.09
+  },
+  {
+   "id": "openai/gpt-oss-120b",
+   "no_think": false,
+   "arc": false,
+   "input_per_M": 0.15,
+   "output_per_M": 0.6
+  },
+  {
+   "id": "ibm-granite/granite-4.0-h-micro",
+   "no_think": false,
+   "arc": false,
+   "input_per_M": 0.017,
+   "output_per_M": 0.112
+  },
+  {
+   "id": "google/gemma-3-4b-it",
+   "no_think": false,
+   "arc": false,
+   "input_per_M": 0.049999999999999996,
+   "output_per_M": 0.09999999999999999
+  },
+  {
+   "id": "qwen/qwen3.7-flash",
+   "no_think": true,
+   "arc": false,
+   "input_per_M": 0.03,
+   "output_per_M": 0.13
+  },
+  {
+   "id": "mistralai/mistral-small-3.2-24b-instruct",
+   "no_think": false,
+   "arc": false,
+   "input_per_M": 0.09375,
+   "output_per_M": 0.25
+  },
+  {
+   "id": "z-ai/glm-5.3-flash",
+   "no_think": false,
+   "arc": true,
+   "input_per_M": 0.045,
+   "output_per_M": 0.14
+  },
+  {
+   "id": "qwen/qwen3.8-flash",
+   "no_think": true,
+   "arc": true,
+   "input_per_M": 0.15,
+   "output_per_M": 0.47
+  },
+  {
+   "id": "deepseek/deepseek-v4-flash-0731",
+   "no_think": false,
+   "arc": false,
+   "input_per_M": 0.020999999999999998,
+   "output_per_M": 0.32
+  },
+  {
+   "id": "z-ai/glm-5.3",
+   "no_think": false,
+   "arc": true,
+   "input_per_M": 0.35559999999999997,
+   "output_per_M": 1.1176
+  },
+  {
+   "id": "xiaomi/mimo-v2.6-pro",
+   "no_think": false,
+   "arc": true,
+   "input_per_M": 0.435,
+   "output_per_M": 0.87
+  },
+  {
+   "id": "xiaomi/mimo-v2.6-flash",
+   "no_think": false,
+   "arc": true,
+   "input_per_M": 0.14,
+   "output_per_M": 0.28
+  },
+  {
+   "id": "qwen/qwen3.8-max-0902",
+   "no_think": true,
+   "arc": true,
+   "input_per_M": 2.0,
+   "output_per_M": 6.0
+  }
+ ],
+ "missing": [],
+ "wire": {
+  "temperature": 0,
+  "max_output_tokens": 4096,
+  "max_output_tokens_no_think": 2048,
+  "reasoning_effort": "low unless thinking disabled",
+  "recovery": "exact->stripped->answer_pattern->isolated_upper_key->first_char->reasoning_channel"
+ },
+ "datasets": {
+  "mmlu": 1000,
+  "gpqa": 196,
+  "math500_choice": 261,
+  "hle_text_mc": 494,
+  "arc": 1172
+ },
+ "hard_cap_usd": 20.0,
+ "total_calls": 36297
+}

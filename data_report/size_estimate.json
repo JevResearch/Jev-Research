@@ -10,10 +10,18 @@
     0.45
    ],
    "peak_effective_TFLOPS_per_device": [
+    800,
+    9000
+   ],
+   "bf16_nameplate_fleet_TFLOPS": [
     400,
     2250
    ],
-   "peak_basis": "quantized serving assumed (fp8 ~990 on H100/H200-class; int4/NVFP4-class 1300-2000; bf16-dense B200-class ~2250); low end 400 covers fp8 on smaller parts",
+   "quant_multiplier": [
+    2,
+    4
+   ],
+   "peak_basis": "bf16 nameplate for the late-2026 fleet is ~400-2250 TFLOPS/device (H100/H200 ~990; B200-class ~2250; smaller parts ~400); quantized serving multiplies effective math throughput ~2x (fp8) to ~4x (int4/NVFP4), giving ~800-9000 effective",
    "shard_count_S": [
     1,
     2,
@@ -24,16 +32,16 @@
    "regime": "compute-bound batched prefill (165k tok/s marginal is far above memory-bound decode rates)"
   },
   "active_params_B_range": [
-   0.3,
-   12.26
+   0.61,
+   49.03
   ],
-  "central_case_B": 2.1,
+  "central_case_B": 4.19,
   "legacy_bf16_A100_band_B": [
    0.19,
    2.72
   ],
   "legacy_note": "bf16 dense, A100/H100-class; what the first pass assumed",
-  "reading": "Serving this marginal prefill rate on 1-4 quantized-serving-era accelerators bounds the ACTIVE footprint at roughly 0.3-12.26B parameters; multi-tenant sharing only lowers the bound. The dated bf16/A100 grid gave 0.19-2.72B - about 2-4x lower."
+  "reading": "Serving this marginal prefill rate on 1-4 quantized-serving-era accelerators bounds the ACTIVE footprint at roughly 0.61 to 49.03B parameters; multi-tenant sharing only lowers the bound. Counting quantization correctly (bf16 nameplate x2-4) widens the bound several-fold over the first revision, which itself was ~2-4x above the dated bf16/A100 grid (0.19-2.72B)."
  },
  "capability_angle": {
   "nearest_published_neighbors": {
@@ -71,7 +79,7 @@
  },
  "conventions_note": "2N FLOPs/token counts weight matmuls only; attention adds ~2*L*d_model per token per layer, which at <=29k context and typical small-model widths is <15% of the total - inside the assumption ranges.",
  "reconciliation": {
-  "tension": "throughput angle: 0.3-12.3B ACTIVE (quantized-serving assumptions); capability angle: 4-14B dense-equivalent. Under the revised assumptions the bands OVERLAP (joint zone ~4-12B).",
+  "tension": "throughput angle: 0.6-49.0B ACTIVE (quantized-serving assumptions); capability angle: 4-14B dense-equivalent. Under the revised assumptions the bands OVERLAP (joint zone ~4-14B).",
   "readings": [
    {
     "reading": "quantized dense (parsimonious, now sufficient)",
@@ -79,8 +87,8 @@
     "independent_evidence": "the $0.042/M price and 73 ms floor are consistent with small-model single-host serving"
    },
    {
-    "reading": "MoE (possible; the capacity-density argument favors it)",
-    "statement": "an MoE with ~15-100B total at ~5-20% activation (active ~1-8B) also fits, and would explain the TOP of the capability band with less compute per token; if the model is dense instead, its capacity density is superlative for the band",
+    "reading": "MoE (possible; not favored)",
+    "statement": "an MoE with ~15-100B total at ~5-20% activation also fits, and would explain the TOP of the capability band with less compute per token; the loose corrected throughput band removes the capacity-density argument that once favored this reading",
     "moe_total_B_range": [
      15,
      100
@@ -102,7 +110,7 @@
     "independent_evidence": "none; assumption-dependent"
    }
   ],
-  "converged_statement": "Two-sided best guess after the quantized-serving revision: ACTIVE parameters most plausibly ~4-9B (the overlap of the 0.3-12.3B throughput bound with the 4-14B capability band), i.e. dense-equivalent order 4-9B - a 2025-era small model. A dense quantized model in this range needs no MoE to reconcile the angles; an MoE (~15-100B total) remains possible and unfalsifiable from the API. TOTAL parameters unconstrained either way. NOT a parameter claim from latency alone: the throughput angle is an explicit-assumptions bound, not a slope-to-size conversion.",
+  "converged_statement": "Two-sided best guess after the quantized-serving revision: ACTIVE parameters most plausibly ~4-9B (the overlap of the 0.6-49.0B throughput bound with the 4-14B capability band), i.e. dense-equivalent order 4-9B - a 2025-era small model. A dense quantized model in this range needs no MoE to reconcile the angles; an MoE (~15-100B total) remains possible and unfalsifiable from the API. TOTAL parameters unconstrained either way. NOT a parameter claim from latency alone: the throughput angle is an explicit-assumptions bound, not a slope-to-size conversion.",
   "what_would_tighten_it": [
    "vendor disclosure (trivially)",
    "a matched-protocol capability evaluation (removes band looseness)",

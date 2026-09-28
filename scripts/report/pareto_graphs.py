@@ -56,8 +56,9 @@ def jev_cost_per_question(stage_glob):
 
 CHARTS = [
     ("mmlu_pro", "MMLU-Pro: score vs measured cost per question",
-     "vals.ai platform measurements (chain-of-thought included in the cost, so reasoning "
-     "counts against the models that use it); Jev from our billing: $0.042/M input tokens, "
+     "Vals.ai platform measurements (chain-of-thought included in the cost, so reasoning "
+     "counts against the models that use it), plus our own matched runs (dagger); "
+     "Jev from our billing: $0.042/M input tokens, "
      "output free. Dashed line: the Pareto frontier - from the upper right, down to the "
      "left: each step down-left is cheaper and worse. Hover a point to isolate it.",
      "runs_benchmark/bench-mmlu_full-*/derived/score.json", 82.8, 74.0, 12032),
@@ -112,8 +113,8 @@ def chart(bkey, title, subtitle, jev_glob, jev_g, jev_w, n_items):
         pts.append((r["cost"], r["accuracy"], mm))
     n_all = len(pts)
 
-    W, H = 980, 640
-    L, R, B = 78, 40, 62
+    W, H = 1280, 820
+    L, R, B = 88, 48, 68
     xs = costs + [jc]
     lo = math.floor(math.log10(min(xs))) - 0.35
     hi = math.ceil(math.log10(max(xs))) + 0.35
@@ -125,13 +126,13 @@ def chart(bkey, title, subtitle, jev_glob, jev_g, jev_w, n_items):
     def Y(v):
         return H - B - v / ymax * (H - top - B)
 
-    sub, sub_end = wrap_subtitle(24, 50, subtitle, width=150, size=10.5)
+    sub, sub_end = wrap_subtitle(24, 54, subtitle, width=148, size=12)
     top = sub_end + 54
     p = [f'<svg viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" '
          f'font-family="system-ui,sans-serif" role="img" data-isolate="1" '
          f'aria-label="{_html.escape(title, quote=True)}">',
          f'<rect width="{W}" height="{H}" fill="{BG}" rx="14"/>',
-         f'<text x="24" y="30" fill="{TEXT}" font-size="16.5" font-weight="700">'
+         f'<text x="24" y="32" fill="{TEXT}" font-size="20" font-weight="700">'
          f'{_html.escape(title)}</text>',
          sub, era_legend(24, sub_end + 26)]
     # gridlines
@@ -140,21 +141,21 @@ def chart(bkey, title, subtitle, jev_glob, jev_g, jev_w, n_items):
         c = 10.0 ** e
         x = X(c)
         p.append(f'<line x1="{x:.0f}" y1="{top}" x2="{x:.0f}" y2="{H - B}" stroke="{GRID}"/>')
-        p.append(f'<text x="{x:.0f}" y="{H - B + 16}" fill="{MUTED}" font-size="10" '
+        p.append(f'<text x="{x:.0f}" y="{H - B + 18}" fill="{MUTED}" font-size="12" '
                  f'text-anchor="middle">${c:g}</text>')
         e += 1
     gy = 0
     while gy <= ymax:
         y = Y(gy)
         p.append(f'<line x1="{L}" y1="{y:.0f}" x2="{W - R}" y2="{y:.0f}" stroke="{GRID}"/>')
-        p.append(f'<text x="{L - 8}" y="{y + 3:.0f}" fill="{MUTED}" font-size="10" '
+        p.append(f'<text x="{L - 8}" y="{y + 4:.0f}" fill="{MUTED}" font-size="12" '
                  f'text-anchor="end">{gy:.0f}</text>')
         gy += 20
     # frontier
     fr = frontier([(c, a) for c, a, _ in pts] + [(jc, jev_g)])
     p.append('<polyline points="' + " ".join(f"{X(x):.1f},{Y(y):.1f}" for x, y in fr)
              + f'" fill="none" stroke="{MUTED}" stroke-width="1.6" '
-             f'stroke-dasharray="5 4" opacity="0.8"/>')
+             f'stroke-dasharray="6 5" opacity="0.85"/>')
     # model points, ALL labeled
     scores = [a for _, a, _ in pts]
     costs = [c for c, _, _ in pts]
@@ -166,29 +167,20 @@ def chart(bkey, title, subtitle, jev_glob, jev_g, jev_w, n_items):
         rel = m.get("released") or "unknown"
         basis = m.get("date_basis") or "n/a"
         if m.get("jev_join") is not None or m.get("fmt_pct") is not None:
-            jj = m.get("jev_join") or {}
-            tt = (f"<b>{_html.escape(m['name'])}</b> (matched baseline, this study)<br>"
+            tt = (f"<b>{_html.escape(m['name'])}</b> &mdash; our matched run<br>"
                   f"score {a:.1f}% &mdash; #{sr} of {n_all}<br>"
-                  f"cost ${c:.6f}/question &mdash; #{cr} of {n_all} (provider-reported)<br>"
-                  f"released {rel}" + (" (estimated)" if basis == "estimated" else "") + "<br>"
-                  f"protocol: identical frozen items, direct answers, one attempt, "
-                  f"strict parsing, format failures counted wrong "
-                  f"({m.get('fmt_pct', 0):.1f}%), reasoning_effort=low where supported<br>"
-                  f"vs Jev on the same items: "
-                  f"{(jj.get('jev_accuracy_on_subset') or 0)*100:.1f}% "
-                  f"(McNemar exact p={jj.get('mcnemar_exact_p', 'n/a')})")
+                  f"cost ${c:.6f}/question &mdash; #{cr} of {n_all}<br>"
+                  f"released {rel}" + (" (estimated)" if basis == "estimated" else ""))
         else:
             tt = (f"<b>{_html.escape(m['name'])}</b><br>"
                   f"score {a:.1f}% &mdash; #{sr} of {n_all}<br>"
                   f"cost ${c:.5f}/question &mdash; #{cr} of {n_all}<br>"
-                  f"released {rel}" + (" (estimated)" if basis == "estimated" else "") + "<br>"
-                  f"reasoning config: {TIER_LABEL.get(tier, 'unknown')}")
-        on_fr = any(abs(fc - c) < 1e-12 and fa == a for fc, fa in fr)
+                  f"released {rel}" + (" (estimated)" if basis == "estimated" else ""))
         p.append(f'<g class="mrow isorow" {tip(tt)}>')
-        p.append(symbol(X(c), Y(a), tier, color, 4.8))
-        weight = ' font-weight="700"' if on_fr else ''
-        p.append(f'<text class="mlabel" x="{X(c) + 8:.1f}" y="{Y(a) - 6:.1f}" '
-                 f'fill="{color}" font-size="8.4"{weight} opacity="0.92">'
+        p.append(f'<circle class="fatten" cx="{X(c):.1f}" cy="{Y(a):.1f}" r="14"/>')
+        p.append(symbol(X(c), Y(a), tier, color, 5.2))
+        p.append(f'<text class="mlabel" x="{X(c) + 9:.1f}" y="{Y(a) - 7:.1f}" '
+                 f'fill="{color}" font-size="8.4" opacity="0.92">'
                  f'{_html.escape(m["name"])}</text>')
         p.append('</g>')
     # Jev points
@@ -212,10 +204,10 @@ def chart(bkey, title, subtitle, jev_glob, jev_g, jev_w, n_items):
              f'fill="{JEV_W}" font-size="10">Jev (weighted)</text>')
     p.append('</g>')
     p.append(f'<text x="{(W - L - R) / 2 + L:.0f}" y="{H - 16}" fill="{MUTED}" '
-             f'font-size="11" text-anchor="middle">cost per question (USD, log scale)</text>')
-    p.append(f'<text x="20" y="{(H - top - B) / 2 + top:.0f}" fill="{MUTED}" font-size="11" '
+             f'font-size="13" text-anchor="middle">Cost per question (USD, log scale)</text>')
+    p.append(f'<text x="20" y="{(H - top - B) / 2 + top:.0f}" fill="{MUTED}" font-size="13" '
              f'text-anchor="middle" transform="rotate(-90 20 {(H - top - B) / 2 + top:.0f})">'
-             f'score (%)</text>')
+             f'Score (%)</text>')
     p.append(UI_BLOCK)
     p.append("</svg>")
     return "".join(p), jc

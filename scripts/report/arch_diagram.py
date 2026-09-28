@@ -156,7 +156,7 @@ def build_svg() -> str:
                  MUT, 10.5))
     p.append(txt(cx, ty0 + 358, "heavily batched (options \u00d7 parallel runs)",
                  MUT, 10.5))
-    p.append(txt(cx, ty0 + 380, f"est. active size: ~{est_lo}-{est_hi}B params (see report)",
+    p.append(txt(cx, ty0 + 380, f"est. active size: ~{est_lo} to {est_hi}B params",
                  AMBER, 10.2))
 
     # hidden states -> read-out head: elbow out of the frame and up
@@ -173,7 +173,7 @@ def build_svg() -> str:
     p.append(txt(rx0 + rw / 2, 198, "over the caller's options", INK, 11.5))
     p.append(txt(rx0 + rw / 2, 226, f"+{mq:.2f} ms / question", MUT, 10.5))
     p.append(txt(rx0 + rw / 2, 242, f"+{mo:.2f} ms / option", MUT, 10.5))
-    p.append(txt(rx0 + rw / 2, 260, "= prefill of their own tokens", MUT, 10.5))
+    p.append(txt(rx0 + rw / 2, 260, "~ prefill cost of the tokens they add", MUT, 10.5))
 
     p.append(arrow(rx0 + rw / 2, 286, rx0 + rw / 2, 314))
 
@@ -203,7 +203,7 @@ def build_svg() -> str:
                  MUT, 11, anchor="start"))
     p.append(txt(36, yb + 92, "no discernible preexisting lineage;",
                  MUT, 11, anchor="start"))
-    p.append(txt(36, yb + 108, "frontier-teacher contribution: none identifiable",
+    p.append(txt(36, yb + 108, "frontier-teacher contribution: none identifiable, not excluded",
                  MUT, 11, anchor="start"))
 
     p.append(box(466, yb, 250, 118, stroke=MUT, dash="2 3"))

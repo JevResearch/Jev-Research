@@ -99,7 +99,7 @@ FINGER = jload("runs_archprobe/tokenizer_fingerprint.json")
 COSTS = jload("data_report/costs.json")
 VALS = jload("docs/modern-comparison/canonical/vals-leaderboards-20260926.json")
 try:
-    MATCHED = jload("runs_matched_cheap/summary.json")
+    MATCHED = jload("runs_matched_cheap/v2/summary_v2.json")
 except Exception:
     MATCHED = {}
 try:
@@ -192,9 +192,11 @@ NOTES: dict[str, str] = {
         "parallelism frameworks (Megatron-LM, pipeline parallelism, ZeRO / "
         "DeepSpeed), and many more. &ldquo;I co-invented&rdquo; implies one "
         "of a small subset; ChatGPT has thousands of fathers.",
-    "jevfree": "Jev's output tokens are server-reported but billed at zero. "
-        "Every Jev dollar figure in this report is measured from billing "
-        "usage in the published run artifacts, not estimated.",
+    "jevfree": "Jev's responses report an &ldquo;output&rdquo; token count in "
+        "usage - the serialized response JSON, counted but never billed; every "
+        "output token is priced at zero. Every Jev dollar figure in this "
+        "report is measured from billing usage in the published run artifacts, "
+        "not estimated.",
     "matchedbase": "Matched cheap-model baselines: "
         "scripts/benchmark/run_cheap_matched.py, artifacts in "
         "runs_matched_cheap/ (freeze, smoke, results.jsonl, summary.json, "
@@ -272,15 +274,17 @@ NOTES: dict[str, str] = {
         "scripts/report/arch_audits.py -&gt; data_report/arch_audits.json.",
     "sizeest": "The size-estimate machinery lives in "
         "data_report/size_estimate.json (scripts/report/size_estimate.py): "
-        "both angles, the full assumption grid (MFU 0.25-0.45; EFFECTIVE "
-        "peak 400-2250 TFLOPS per device - quantized fp8/int4 serving on "
-        "H100/H200/B200/TPU-v6/MI325X-class hardware; 1-4 shards; FLOPs = "
-        "2*N_active per token, attention adding ~15% or less at these "
-        "lengths; single-stream conservative), the reconciling readings "
-        "(quantized dense / MoE / distilled small dense / soft band top), "
-        "and what would tighten each. An earlier pass assumed bf16 on "
-        "A100-class hardware and produced a band ~2-4x too low; the file "
-        "carries both, labeled. The MFU/peak ranges are industry-standard "
+        "both angles, the full assumption grid (MFU 0.25-0.45; the late-2026 "
+        "fleet's BF16 nameplate ~400-2250 TFLOPS per device times a "
+        "quantization multiplier of 2-4x (fp8/int4-FP4) = ~800-9000 "
+        "effective; 1-4 shards; FLOPs = 2*N_active per token, attention "
+        "adding ~15% or less at these lengths; single-stream conservative), "
+        "the reconciling readings (quantized dense / MoE / distilled small "
+        "dense), and what would tighten each. Two earlier passes were "
+        "wrong, both labeled in the file: one assumed bf16 on A100-class "
+        "hardware (~2-4x too low); the second treated the fleet's BF16 "
+        "numbers as already effective (~2-4x too low again) - the audit "
+        "caught it. The MFU/peak ranges are industry-standard "
         "serving assumptions, not repo measurements.",
     "lattice": "Full lattice forensics: <a href='https://github.com/JevResearch/Jev-Research/blob/main/scripts/report/lattice_forensics.py'>scripts/report/lattice_forensics.py</a> "
         "-&gt; <a href='https://github.com/JevResearch/Jev-Research/blob/main/data_report/lattice_forensics.json'>data_report/lattice_forensics.json</a>, over 704,277 values in 7,887 "
@@ -350,6 +354,13 @@ p,li{max-width:none}a{color:var(--peri)}
 .pitch{font-size:1.16rem;font-style:italic;border-left:3px solid var(--amber);padding-left:1.1rem;margin:1.1rem 0}
 .pitch b{font-style:normal}
 svg{width:100%;height:auto;display:block;margin:1rem 0}
+figure{margin:1.6rem 0;width:100%}
+figure svg{margin:.4rem 0}
+figcaption{color:var(--mut);font-size:.8rem;font-style:italic;margin:.3rem 0 0;line-height:1.45}
+@media(min-width:900px){
+figure{width:min(96vw,1120px);margin-left:calc(50% - min(48vw,560px));margin-right:calc(50% - min(48vw,560px))}
+figcaption{max-width:72ch;margin-left:auto;margin-right:auto}
+}
 table{border-collapse:collapse;width:100%;font-size:.92rem;margin:1rem 0}
 th,td{text-align:left;padding:.45rem .6rem;border-bottom:1px solid var(--line)}
 th{color:var(--mut);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}
@@ -471,7 +482,7 @@ def hero() -> str:
 hallucinate, built by the co-inventor of ChatGPT - fast, and almost free. We ran it
 live on {TOTAL_REQUESTS:,} benchmark requests, measured its latency and billing,
 and probed what it is underneath. The result is a smaller, humbler model that
-is genuinely useful for a job that nobody else serves quite this way.</p>
+is nonetheless genuinely useful for a job that nobody else serves quite this way.</p>
 <div class="herorot" id="herorot" aria-label="Jev benchmark results, rotating">
 {''.join(slides)}
 <div class="rot-ctl">
@@ -500,7 +511,7 @@ is genuinely useful for a job that nobody else serves quite this way.</p>
 }})();
 </script>
 {toc}
-<div class="card tldr"><b>TL;DR.</b> Jev{fn('behavioronly')} is not a frontier
+<div class="card tldr"><b>TL;DR.</b> Jev is not a frontier
 model; for example, it misses about a quarter of graduate science questions,
 and scores a mere {hle_w} on HLE. It nonetheless is also not a toy:
 {pct(SC['mmlu']['accuracy'])} MMLU-Pro, {pct(SC['gpqa']['accuracy'])} GPQA,
@@ -538,8 +549,8 @@ shot, no chain of thought, no tools, no retries - which is not how the frontier
 scores we compare against are produced with modern models, although it is how
 older models in the benchmarks functioned, and is automatically factored into
 the Pareto frontier comparisons. Second, the API is closed: we never saw
-weights, gradients, or any serving internal, so the architecture discussion is
-inference from observable behavior. Third, we chose benchmarks the model could
+weights, gradients, or anything internal to its design, so the architecture discussion is
+inference from observable behavior.{fn('behavioronly')} Third, we chose benchmarks the model could
 answer natively - selecting between visible options or grading fixed rubrics -
 because converting them into something else would measure our conversion, not
 the model.</p>
@@ -668,41 +679,20 @@ why its output is free, and why it cannot write you a poem.</div>
 <figure>{strip_titles(ARCHDIAG[0])}</figure>
 <table class="plain">
 <tr><th>Component</th><th>Best guess</th><th>Confidence</th></tr>
-<tr><td>Output side</td><td class='cap'>a trained probability read-out over the caller's
+<tr><td>Output side</td><td class='cap'>A trained probability read-out over the caller's
 options - a discriminative head where a language head usually goes, with
-choice / score / noul as its three exposed shapes</td><td>confident</td></tr>
-<tr><td>Serving</td><td class='cap'>one forward pass per request; all questions and options
-scored from it; continuous batching across tenants (upstream compute flat
-from concurrency 1&rarr;32, and unchanged by option count); no decode
-loop</td><td>confident</td></tr>
-<tr><td>Compute profile</td><td class='cap'>~{floor:.0f} ms fixed floor + ~{slope:.0f} ms per 1k input
-tokens, linear to 29k tokens, no large quadratic signature. Marginal cost of
-deciding: +{mq:.2f} ms per extra question, +{mo:.2f} ms per extra option -
-both about what their own added tokens cost</td><td>confident (measured)</td></tr>
-<tr><td>Input pipeline</td><td class='cap'>a whitespace normalizer (ASCII runs collapse;
-NBSP, ZWJ and BOM do not) plus a fixed ~{bp['mergerate_baseline_tokens']}-token
-template, ahead of the model's own tokenizer</td><td>confident / plausible</td></tr>
-<tr><td>Tokenizer</td><td class='cap'>the vendor's own English/Latin-centric BPE: heavy Latin
-merges, ~1 token per codepoint for the major non-Latin scripts, byte-level
-fallback for uncovered characters ({byte_lo:.2f}-{byte_hi:.2f} tokens per UTF-8 byte on the
-rarest blocks). Does not match any known preexisting tokenizer signature
-(173 tested); appears to be new</td><td>plausible (strong)</td></tr>
-<tr><td>Core</td><td class='cap'>transformer-family decoder LM; dense vs MoE unknown -
+choice / score / noul as its three exposed shapes</td><td>Confident</td></tr>
+<tr><td>Serving</td><td class='cap'>One forward pass per request; all questions and options scored from it; continuous batching across tenants (server compute stays flat whether we send 1 or 32 requests at once, and is unchanged by option count); no decode loop</td><td>Confident</td></tr>
+<tr><td>Compute profile</td><td class='cap'>Fixed ~{floor:.0f} ms floor + ~{slope:.0f} ms per 1k input tokens, linear to 29k tokens, with no large quadratic signature. Marginal cost of deciding: +{mq:.2f} ms per extra question and +{mo:.2f} ms per extra option - both about what the added tokens cost.</td><td>Confident (measured)</td></tr>
+<tr><td>Input pipeline</td><td class='cap'>A whitespace normalizer (ASCII runs collapse; NBSP, ZWJ and BOM do not) plus a fixed ~{bp['mergerate_baseline_tokens']}-token template, ahead of the model's own tokenizer</td><td>Confident / plausible</td></tr>
+<tr><td>Tokenizer</td><td class='cap'>The vendor's own English/Latin-centric BPE: heavy Latin merges, ~1 token per codepoint for the major non-Latin scripts, and a byte-level fallback for uncovered characters ({byte_lo:.2f}-{byte_hi:.2f} tokens per UTF-8 byte on the rarest blocks). It matches no known preexisting tokenizer signature (173 tested) and appears to be new.</td><td>Plausible (strong)</td></tr>
+<tr><td>Core</td><td class='cap'>Transformer-family decoder LM; dense vs MoE unknown -
 with quantized-serving assumptions the two size angles overlap, so neither
 is forced and MoE stays possible; attention variant unknowable at these
-context lengths</td><td>plausible / open</td></tr>
-<tr><td>Size</td><td class='cap'>no point estimate. Latency suggests ~{sz_lo:.1f}-{sz_hi:.0f}B active
-params from prefill throughput (with quantized-serving assumptions);
-capability suggests {szc_lo:.0f}-{szc_hi:.0f}B dense-equivalent. The two overlap: a quantized
-dense ~{szc_lo:.0f}-{sz_dense_hi:.0f}B fits both; a MoE (~{sz_moe_lo:.0f}-{sz_moe_hi:.0f}B total) stays possible, not
-forced</td><td>plausible</td></tr>
-<tr><td>Training</td><td class='cap'>English-dominant pretraining; knowledge horizon solid to
-late 2024, partial to ~{hz_solid}, gone by {hz_gone}; judgement-format assistant
-post-training; OpenAI-flavored brand prior inherited from training text;
-frontier-teacher contribution none identifiable</td><td>plausible</td></tr>
-<tr><td>What it is not</td><td class='cap'>not frontier, not retrieval- or cache-assisted,
-not a wrapper around another vendor's API, not a relabeled open
-model</td><td>confident</td></tr>
+context lengths</td><td>Plausible / open</td></tr>
+<tr><td>Size</td><td class='cap'>No point estimate. Latency suggests ~{sz_lo:.1f} to {sz_hi:.0f}B active params from prefill throughput (with quantized-serving assumptions); capability suggests {szc_lo:.0f} to {szc_hi:.0f}B dense-equivalent, which does the narrowing. A quantized dense ~{szc_lo:.0f} to {sz_dense_hi:.0f}B is the parsimonious joint reading; a MoE (~{sz_moe_lo:.0f} to {sz_moe_hi:.0f}B total) stays possible, not favored</td><td>Plausible</td></tr>
+<tr><td>Training</td><td class='cap'>English-dominant pretraining; knowledge horizon solid to late 2024, partial to ~{hz_solid}, gone by {hz_gone}; judgement-format assistant post-training; OpenAI-flavored brand prior inherited from training text; frontier-teacher contribution: none identifiable, not excluded</td><td>Plausible</td></tr>
+<tr><td>What it is not</td><td class='cap'>Not frontier, not retrieval- or cache-assisted, not a wrapper around another vendor's API, not a relabeled open model</td><td>Confident</td></tr>
 </table>
 <p class="cap">See <a href="{GH}/ARCHITECTURE-ANALYSIS.md">ARCHITECTURE-ANALYSIS.md</a>
 &sect;1 for details.</p>
@@ -711,13 +701,15 @@ model</td><td>confident</td></tr>
 <p>The latency section below carries the measurements: server compute is a
 fixed floor plus a linear prefill term (~{slope:.0f} ms per 1k input tokens), and the
 decisive numbers are the marginals. Packing one more question into a request
-costs +{mq:.2f} ms, and the ~{mcq['input_tokens_per_unit']:.0f} input tokens that question adds predict
-+{mcq['prefill_predicted_ms_per_unit']:.2f} ms at the prefill slope, so the decision itself hides in a
-residual under {mcq['residual_ms_per_unit']:.2f} ms. One more option costs +{mo:.2f} ms against the
-+{mco['prefill_predicted_ms_per_unit']:.2f} ms its own ~{mco['input_tokens_per_unit']:.0f} tokens predict: the read-out's compute is
-indistinguishable from zero. The battery re-confirmed this live: across a
-grid of option counts 2-255 crossed with option lengths of 2-64 tokens,
-nothing scaled with the number of options beyond the tokens they add
+costs +{mq:.2f} ms. That question brings ~{mcq['input_tokens_per_unit']:.0f} input tokens with it, and
+reading those tokens at the prefill slope is itself worth
++{mcq['prefill_predicted_ms_per_unit']:.2f} ms - which leaves under {mcq['residual_ms_per_unit']:.2f} ms for the act of
+deciding. An extra option behaves the same way: +{mo:.2f} ms measured, against
+the +{mco['prefill_predicted_ms_per_unit']:.2f} ms that its own ~{mco['input_tokens_per_unit']:.0f} tokens already predict. In
+both cases the read-out's own compute is indistinguishable from zero.</p>
+<p>The battery re-confirmed this live: across a grid of option counts (2-255)
+crossed with option lengths (2-64 tokens), nothing scaled with the number
+of options beyond the tokens they add
 ({p2g['ols_ms_per_100_options_beyond_tokens']:+.1f} ms per 100 options, inside the &plusmn;{p2g['residual_sd_ms']:.0f} ms
 residual noise). Billed output grows ~{fq:.0f} tokens per question
 and ~{fo:.1f} per option - that is the response JSON serializing itself, which
@@ -733,6 +725,14 @@ questions packed into one request ({hc_n} probe calls). The dashed line is
 what each question's own added input tokens predict at the prefill slope; the
 points sit on it, which is the whole finding: deciding is free, reading is
 not.</figcaption></figure>
+<p class="cap">In short, what moves server compute:</p>
+<ul class="cap">
+<li><b>Prompt tokens</b> - the only thing that scales it, and linearly.</li>
+<li><b>Extra questions</b> in a request - only through the tokens they add.</li>
+<li><b>Extra options</b> - only through the tokens they add; the deciding itself is free.</li>
+<li><b>Concurrent requests</b> - flat on the server (shared batching); only our own wall time queues.</li>
+<li><b>Repeats</b> - every call re-reads the prompt; nothing is cached away.</li>
+</ul>
 
 <h3 id="arch-fingerprints">Fingerprints on the read-out</h3>
 <p>Every probability Jev returns is rounded to two decimals: across
@@ -752,31 +752,34 @@ runs <b>after</b> rounding, and it only ever takes mass away:
 every sharp vector and every two-option vector sums to exactly
 1.000.{fn('lattice')}</p>
 <p>Two more seams show. In {n_mismatch} vectors the returned choice is not the
-argmax of its own displayed table. Each such gap is exactly one quantum,
+argmax of its own displayed table. Each such gap is exactly one quantum (e.g., 0.01),
 which monotone rounding cannot produce - so the decision is computed at
 pre-display precision while the table is rounded separately. And the choice
-<code>confidence</code> field is recoverable. It is the chance-corrected top
-probability: take the highest probability in the vector, subtract the 1/K you
-would get from guessing, divide by the room left over. Of {cfc['n']:,}
-published choice vectors, {cfc['exact']:,} match that formula exactly against
-the displayed table, {cfc['within_1_quantum']} are within one quantum and {cfc['within_2_quanta']} within two. None
-is further off.{fn('readout')} Buyer's note: choice confidence is a
+<code>confidence</code> field is roughly recoverable. It is, to within a
+quantum or two, the chance-corrected top probability:
+<code>(p_max &minus; 1/K) / (1 &minus; 1/K)</code>, where <code>p_max</code>
+is the highest probability in the vector and <code>1/K</code> is what
+guessing would earn across K options. Of {cfc['n']:,} published choice
+vectors, {cfc['exact']:,} match that formula exactly against the displayed
+table, {cfc['within_1_quantum']} are within one quantum, and {cfc['within_2_quanta']} within two. None is further
+off.{fn('readout')} Buyer's note: choice confidence is a
 deterministic function of the vector you were already handed, not a second
 opinion. Score answers use a different shape statistic and noul answers carry
 no confidence at all.</p>
-<p>The follow-up battery ({P2BILL['n_calls']:,} live calls, ${P2BILL['estimated_cost_usd_at_0p042_per_M_in']:.2f}) put the
-read-out on a degenerate case: identical option texts, repeated. Across {n4}
+<p>The follow-up battery ({P2BILL['n_calls']:,} live calls) put the read-out
+on a degenerate case: identical option texts, repeated. Across {n4}
 such vectors at option counts 2 to 255, sums were exactly 1.000 at every size
 up to 12 and {ident['255']['sum_min']:.2f}-{ident['255']['sum_max']:.2f} at 255 - the bounded-correction reading, confirmed
 live. Identical texts did <i>not</i> get identical probabilities: they were
 scored by position, not content, which is the purest form of the ordering
 effect described below.</p>
-<p>The same battery re-ran 200 gold-labeled synthetic questions at every
+<p>To test whether dummy filler options dilute the answer, we re-ran 200
+gold-labeled synthetic questions at every
 option count from 2 to 255, padding with inert filler. The probability on
 the right answer did not move - {pct(p3['255']['mean_p_gold'])} at 255
 options against {pct(p3['2']['mean_p_gold'])} at two - and accuracy stayed perfect at every
-size, with the filler options pinned at 0.00. Options are scored on their
-content, essentially absolutely; the vector is then normalized over the set.
+size, with the filler options pinned at 0.00. Apart from the ordering effects
+below, options are scored on their content, essentially absolutely; the vector is then normalized over the set.
 One consequence for the benchmark tables below: the weighted scores are not
 an artifact of menu size.</p>
 
@@ -806,7 +809,7 @@ flat rubric - order will move your answer.</p>
 <h3 id="arch-tokenizer">A tokenizer nobody recognizes</h3>
 <p>Probing tells the full story, including after discounting false leads.
 Jev's counter merges English text and punctuation hard, spends ~1 token per
-codepoint on Cyrillic, Greek, Arabic, Hebrew, Thai, Devanagari, Hangul, kana
+codepoint on Cyrillic, Greek, Arabic, Hebrew, Thai, Devanagari, Hangul, Kana
 and common CJK, and ~1 per digit. Uncovered characters fall back below
 codepoint granularity: the rare blocks cost {byte_lo:.2f}-{byte_hi:.2f} tokens per UTF-8 byte
 (3-4 tokens per character), which is byte-level fallback. A lone surrogate
@@ -850,24 +853,23 @@ reasonable assumptions. From the throughput side: the marginal prefill rate is
 ~{sz_R:,} tokens/s. Batched prefill is compute-bound and costs about
 2&middot;N<sub>active</sub> FLOPs per token, so
 N<sub>active</sub> &le; MFU &times; effective peak &times; shards &divide; 2R.
-Late-2026 serving at this price point is quantized, so the honest peak range
-is effective fp8-to-fp4 throughput on H100/H200/B200/TPU-v6/MI325X-class
-hardware - ~{sz_pk_lo:.0f}-{sz_pk_hi:.0f} TFLOPS per device, not the 250-500 of a 2020-era bf16 A100.
+Assuming typical late-2026 hardware (H100/H200/B200/TPU-v6/MI325X-class,
+~400-2250 BF16 TFLOPS per device) and FP4-FP8 quantization - which doubles
+(fp8) to quadruples (fp4) effective throughput - the honest peak range is
+~{sz_pk_lo:.0f}-{sz_pk_hi:.0f} effective TFLOPS per device, not the 250-500 of a 2020-era bf16 A100.
 With 25-45% utilization over 1-4 devices that bounds the <i>active</i>
-footprint at ~{sz_lo:.1f}-{sz_hi:.1f}B parameters (central case ~{sza['central_case_B']:.1f}B), and sharing the machine
+footprint at ~{sz_lo:.1f} to {sz_hi:.1f}B parameters (central case ~{sza['central_case_B']:.1f}B), and sharing the machine
 with other tenants only lowers the bound. From the capability side: the
-neighbors above put it at {szc_lo:.0f}-{szc_hi:.0f}B dense-equivalent. The two bands overlap, which is
-what makes the estimate usable rather than merely a refusal. The
-parsimonious reading: a quantized dense model of ~{szc_lo:.0f}-{sz_dense_hi:.0f}B active fits both
-angles without strain - an entirely ordinary object at this size in late
-2026. A MoE of ~{sz_moe_lo:.0f}-{sz_moe_hi:.0f}B total at {sz_act_lo:.0f}-{sz_act_hi:.0f}% activation fits just as well and
-would explain the top of the capability band with less compute per token,
-but nothing observable prefers it over the dense reading. Distillation is
-orthogonal to both: teacher labels lift a smaller model (2-6B) into the
-capability band on knowledge multiple-choice, and Jev's
-recognition-far-exceeds-production asymmetry is exactly that shape. Total
-parameters stay unconstrained either way: nothing this API returns can see
-expert structure.{fn('sizeest')}</p>
+similar-performing models put it at {szc_lo:.0f} to {szc_hi:.0f}B dense-equivalent. The two are
+consistent - but honesty requires noting that the throughput bound, computed
+this way, is loose: it is the capability angle doing the real work. The
+parsimonious reading: a quantized dense model of roughly
+{szc_lo:.0f} to {sz_dense_hi:.0f}B active parameters fits both angles without strain - an entirely
+ordinary object at this size in late 2026. A MoE of ~{sz_moe_lo:.0f} to {sz_moe_hi:.0f}B total at
+{sz_act_lo:.0f}-{sz_act_hi:.0f}% activation fits just as well and would explain the top of the
+capability band with less compute per token, but nothing observable prefers
+it over the dense reading. Total parameters stay unconstrained either way:
+nothing this API returns can see expert structure.{fn('sizeest')}</p>
 
 <h3 id="arch-not">What it is not</h3>
 <p>Four negations, each a measurement rather than a vibe.{fn('notwrapper')}
@@ -893,18 +895,8 @@ produced any of the training signal: every discriminator we can construct is
 confounded, including the OpenAI-shaped brand prior, which the open
 assistant-text ecosystem produces on its own. And any exact parameter count
 or hidden dimension. The two-angle estimate above bands the active size at
-~{sz_lo:.1f}-{sz_hi:.1f}B, but identification is beyond this API, which documents nothing past
+~{sz_lo:.1f} to {sz_hi:.1f}B, but identification is beyond this API, which documents nothing past
 32k-token state, 64k total, &le;255 options and 2-10 rubric levels.</p>
-<p>What could be tested from the outside, we tested: a five-family follow-up
-battery - tokenizer fallback granularity, option-cost decoupling, calibration
-under option-count scaling, the identical-option rounding rule, and the
-knowledge-horizon bisection - ran live on 2026-09-25 ({P2BILL['n_calls']:,} calls,
-${P2BILL['estimated_cost_usd_at_0p042_per_M_in']:.2f}, one transient error;
-<a href="{GH}/runs_archprobe/probe2/probe2_analysis.json"><code>runs_archprobe/probe2/</code></a>).
-Its results are woven through this section: byte-level fallback and the
-normalizer map above, the option-cost grid under &ldquo;one pass&rdquo;,
-absolute scoring and the rounding sums under &ldquo;fingerprints&rdquo;, and
-the refined horizon under &ldquo;what it is not&rdquo;.</p>
 </section>"""
 
 
@@ -935,7 +927,7 @@ frontier-like ({arc_pct} on ARC-Challenge), that's only on a race that
 finished years ago. Everything below is the evidence.</p>
 <p><b>The co-inventor of ChatGPT.</b> Diogo Almeida certainly deserves credit,
 but saying &ldquo;I co-invented ChatGPT&rdquo; overassigns it. Almeida was one
-of the eight primary authors on InstructGPT, also worked on learned
+of the eight primary authors on InstructGPT, worked on learned
 optimizers, and was also one of 88 people thanked in the initial release of
 ChatGPT. But ChatGPT was born from the work of thousands of people; see the
 footnote.{fn('almeida')}</p>
@@ -979,55 +971,32 @@ def benchmarks() -> str:
         for n, c, a, w, ww, t in rows)
     fig_list = [
         fig("mmlu_pro", f"MMLU-Pro. Jev's best-aligned benchmark: same items, same "
-            f"format, direct answers. The two Jev bars are teal (greedy) and amber "
-            f"(probability-weighted); external rows come from the fetched vals.ai "
-            f"extract (133 models; ~46 bars shown, full data on disk). Bar color is "
-            f"release era, tip shape is reasoning tier, hover for details.{fn('protocol')}"),
+            f"format, direct answers. External rows come from the fetched vals.ai "
+            f"extract (133 models); dagger bars are our matched runs on the "
+            f"identical 1,000-item subset.{fn('protocol')}"),
         fig("gpqa", "GPQA. Jev ran the Diamond subset (196 items); external rows are "
-            "the vals.ai platform's GPQA set, retired as saturated in Sep 2026. Same "
-            "encoding and hover behavior."),
+            "the vals.ai platform's GPQA set, retired as saturated in Sep 2026."),
         fig("arc", "ARC-Challenge. Saturated for everyone. Jev's bar is 4-choice; "
             "external bars are hand-collected canonical rows (mostly 25-shot CoT, "
-            "mostly older models) - context, not a protocol-matched race."),
+            "mostly older models) plus our matched runs of six modern models "
+            "(dagger)."),
         fig("arc_agi2", "ARC-AGI-2. Mixed encodings, flagged: external bars are "
             "whole-grid pass@2 with reasoning; Jev cannot emit grids. Its exact-grid "
             "bars are the protocol-matched pair (0 of 120 tasks); the per-cell bars "
             "are a diagnostic encoding and do not compete with the grid rows."),
     ]
     if "math_m" in CHARTS:
-        fig_list.append(fig("math_m", "MATH-500 (as MCQ), matched runs. Revived because "
-                            "our own cheap-model runs on Jev's exact items and format "
-                            "beat it here - an honest comparison in both directions. "
-                            "The free-form reasoning rows are not shown."))
+        fig_list.append(fig("math_m", "MATH-500 (as MCQ). Two benchmarks that we ran "
+                            "posed challenges for comparing to public results; this "
+                            "one compares only our matched runs over Jev's exact "
+                            "items and format - the free-form public rows are not "
+                            "shown."))
     if "hle_m" in CHARTS:
         fig_list.append(fig("hle_m", "HLE (MC subset), matched runs. Same logic: our "
                             "runs of cheap models on Jev's exact 494-item subset; a "
                             "matched row beats Jev, so the chart is fair. The full "
                             "text-only set rows are not shown."))
     figs = "".join(fig_list)
-    revival_note = ""
-    if "math_m" in CHARTS or "hle_m" in CHARTS:
-        revival_note = (" Where a matched cheap-model row <em>did</em> beat Jev "
-                        "under Jev's own protocol, the chart is revived below as "
-                        "a matched-only comparison - our runs, identical items, "
-                        "fair in both directions.")
-    matched_para = ""
-    if MATCHED.get("models"):
-        _spend = (MATCHED.get("dispatch") or {}).get("spend_usd")
-        _n = len(MATCHED["models"])
-        _sp = f"${_spend:.2f}" if isinstance(_spend, (int, float)) else "under $30"
-        matched_para = (
-            "<p>The dagger-marked bars are <em>ours</em>: we ran " + str(_n) +
-            " cheap OpenRouter models over the identical frozen items - the "
-            "1,000-item MMLU-Pro stratified subset and all 196 GPQA items - "
-            "under Jev's own protocol: direct one-shot answers, one attempt, "
-            "strict answer parsing, format failures counted as wrong, no "
-            "content retries, provider-reported costs. Measured spend: " +
-            _sp + ". The reason is the Pareto chart's empty left edge: the "
-            "vals boards carry no Gemma/Llama/Granite-class commodity "
-            "models, and Jev's price claim deserves its strongest honest "
-            "version - tested against the real cheap market, not only "
-            "flagships." + fn("matchedbase") + "</p>")
     return f"""
 <section id="benchmarks">
 <h2>Benchmarks: where it actually lands</h2>
@@ -1051,30 +1020,16 @@ shuffled.{fn('rotations')}</p>
 <h3 id="bench-charts">The charts</h3>
 <p>Teal is Jev's greedy score (the highest-probability choice is chosen),
 while amber is Jev's probability-weighted score, and every other bar is a
-published number we fetched - not a model we ran. Bar color is release era
-(red &le;2023 &rarr; purple &rarr; blue 2026, routed away from teal so Jev
-cannot be mistaken for a year; gray = release date not established) and the
-shape at each bar tip is that row's reasoning configuration - rounder means
-less thinking, pointier means more. Jev wears white-ringed diamonds. Each
-chart is a curated view (top, bottom, and audit-named models) of the full
-fetched extract - 133 models for MMLU-Pro and GPQA - kept on disk in
-<a href="{GH}/docs/modern-comparison/canonical/vals-leaderboards-20260926.json"><code>canonical/vals-leaderboards-20260926.json</code></a>. Hover any bar
-for its score rank, release date (and how that date was established),
-reasoning config, and measured cost.</p>
+published number we fetched - not a model we ran - except the dagger-marked
+bars, which are our own matched runs of cheap models over the identical
+frozen items.{fn('matchedbase')} Bar color is release era (red &le;2023
+&rarr; purple &rarr; blue 2026), and the shape at each bar tip is that row's
+reasoning configuration - rounder means less thinking, pointier means more.
+Each chart is a curated view (top, bottom, and audit-named models) of the
+full fetched extract - 133 models for MMLU-Pro and GPQA - kept on disk in
+<a href="{GH}/docs/modern-comparison/canonical/vals-leaderboards-20260926.json"><code>canonical/vals-leaderboards-20260926.json</code></a>.</p>
 {figs}
-<p>Two table rows are deliberately <em>not</em> charted against the vals
-boards. Our HLE row is the multiple-choice subset while every published
-reference is the full text-only set (several with tools or reasoning on), and
-our MATH-500 row is a four-option conversion while external rows solve
-free-form with reasoning. No fair side-by-side visual exists against those
-references, and a misleading picture would be worse than no picture: both
-numbers stay in the table above, labeled as conversions, and HLE is discussed
-with its guessing floor in
-<a href="#arch-not">What it is not</a>. {revival_note} The option-rotation audit is likewise
-not charted here: it is a consistency measurement, not a benchmark, and its
-results belong to the position-bias discussion in
-<a href="#arch-order">The order of the options matters</a>.</p>
-{matched_para}
+
 </section>"""
 
 
@@ -1091,44 +1046,52 @@ def pareto() -> str:
     jgq = jgq_run / n_gpqa
     ratio = fable_gpqa / jgq
     figs = "".join(f"<figure>{svg}</figure>" for svg in PARETO)
-    pareto_corr = ""
-    _rows = []
-    for _mid, _dss in (MATCHED.get("models") or {}).items():
-        _e = _dss.get("mmlu") or {}
-        _jj = _e.get("jev_join") or {}
-        if (_e.get("accuracy_all_requested") is not None
-                and _e.get("cost_per_question_usd")
-                and _e.get("n_terminal") == _e.get("n_requested")):
-            _rows.append((_mid.split("/")[-1],
-                          _e["accuracy_all_requested"] * 100,
-                          _e["cost_per_question_usd"],
-                          (_jj.get("jev_accuracy_on_subset") or 0) * 100))
-    if _rows:
-        _rows.sort(key=lambda r: -r[1])
-        _ja = _rows[0][3]
-        _jc = JEV_COST["mmlu_pro"] / SC["mmlu"]["n_expected"]
-        _beat = [r for r in _rows if r[1] > _ja]
-        _cheap = [r for r in _rows if r[2] < _jc]
-        _best = _rows[0]
-        _ex = ", ".join(r[0] for r in _cheap[:3]) or "several roster models"
-        pareto_corr = (
-            "<p>One correction this study owes the market: Jev is <em>not</em> "
-            "the cheapest thing in it. Our matched runs (dagger points, this "
-            "study) put a dozen commodity models in the same price decade - "
-            + _ex + " bill less per question than Jev does - because their "
-            "providers' input stickers are lower and direct answers keep "
-            "outputs short. What survives the comparison: on the identical "
-            "items Jev outscores " + str(len(_rows) - len(_beat)) + " of " +
-            str(len(_rows)) + " matched models"
-            + (f" (best of the roster: {_best[0]} at {_best[1]:.1f}% vs Jev's "
-               f"{_ja:.1f}%)" if _beat else
-               f" (top of the roster at {_best[1]:.1f}%, Jev {_ja:.1f}%)") +
-            ", it remains one to four orders of magnitude cheaper than every "
-            "vals-measured flagship, and nothing in the roster pairs its "
-            "~73 ms floor with probability read-outs. The frontier claim "
-            "holds at the flagship end; at the commodity end Jev is one "
-            "strong offer among several - a more useful sentence than "
-            "&lsquo;off the chart&rsquo;.</p>")
+    pareto_extra = ""
+    if MATCHED.get("models"):
+        _jcq = JEV_COST["mmlu_pro"] / SC["mmlu"]["n_expected"]
+        _rows = []
+        for _mid, _dss in MATCHED["models"].items():
+            _e = _dss.get("mmlu") or {}
+            _a = _e.get("accuracy_recovered")
+            _c = _e.get("cost_per_question_usd")
+            _jj = _e.get("jev_join") or {}
+            if _a is not None and _c and _e.get("n_terminal") == _e.get("n_requested"):
+                _rows.append((_mid.split("/")[-1], _a * 100.0, _c,
+                              (_jj.get("jev_accuracy_on_subset") or 0.0) * 100.0))
+        if _rows:
+            _rows.sort(key=lambda r: -r[1])
+            _js = _rows[0][3]
+            _above = [r for r in _rows if r[1] > _js]
+            _cheaper = [r for r in _rows if r[2] < _jcq]
+            _cb = max(_cheaper, key=lambda r: r[1]) if _cheaper else None
+            bits = [" The dagger points fill in the commodity end, and they "
+                    "refine the claim."]
+            if _above:
+                _names = ", ".join(f"{r[0]} ({r[1]:.1f}%)" for r in _above[:3])
+                _mults = [r[2] / _jcq for r in _above]
+                bits.append(
+                    f" {len(_above)} matched models outscore Jev on these "
+                    f"identical items - {_names} - at {min(_mults):.0f} to "
+                    f"{max(_mults):.0f} times its per-question cost, because "
+                    f"every thinking token gets billed.")
+            else:
+                bits.append(" No matched model outscores Jev on these "
+                            "identical items.")
+            if _cb is not None:
+                bits.append(
+                    f" Below Jev's price the best matched score is "
+                    f"{_cb[1]:.1f}% ({_cb[0]}), and several commodity models "
+                    f"bill less per question than Jev does.")
+            bits.append(
+                f" The frontier therefore runs: "
+                + (f"{_cb[1]:.0f}% at commodity prices, " if _cb else "")
+                + f"a jump to Jev's {_js:.1f}% at ${_jcq:.6f} per question, "
+                f"then a long climb through the thinking tier to the "
+                f"flagships. Jev owns the low-cost rung; it does not own the "
+                f"top.")
+            pareto_extra = "<p>" + "".join(bits) + "</p>"
+
+
     return f"""
 <section id="pareto">
 <h2>The frontier the cost numbers actually draw</h2>
@@ -1140,10 +1103,10 @@ should be clear by now why they discourage users from benchmarking the
 model).</p>
 <p>Our version uses the same accuracies as the benchmark section and measured
 money on the horizontal axis: what one question costs, start to finish. Every
-external point is a vals.ai platform measurement - accuracy and cost per test
-from the same harness - which means any chain-of-thought a model burns is
-included in its cost: reasoning counts against the models that use
-it.{fn('costest')} Jev's points come from our own billing.</p>
+external point is either our own run (mostly of small models) or a vals.ai
+platform measurement. Chain-of-thought models are thus inherently punished
+for their billed intermediary tokens.{fn('costest')} Jev's points come from
+our own billing.</p>
 <p>Jev does land on the visible frontier - and then some. At
 {pct(SC['mmlu']['accuracy'])} on MMLU-Pro its whole 12,032-question run cost
 ${JEV_COST['mmlu_pro']:.2f}, about ${jq:.6f} per question: four to five orders
@@ -1155,7 +1118,7 @@ roughly {ratio:,.0f} times cheaper than Fable 5.1, and about
 {(fable['accuracy'] - SC['gpqa']['accuracy']*100):.0f} points less accurate.
 Cheap and mid-tier can be the same sentence - and on these axes,
 &ldquo;off the chart&rdquo; is a position, not an excuse.</p>
-{pareto_corr}
+{pareto_extra}
 {figs}
 </section>"""
 
@@ -1171,10 +1134,9 @@ def latency() -> str:
     return f"""
 <section id="latency">
 <h2>What the milliseconds say</h2>
-<p>Every response carries a server-side compute timing in a proxy header, which
+<p>Every response carries server-side compute timing in a proxy header, which
 strips out network and queueing - the cleanest architecture signal a public API
-leaks. The architecture section above draws the conclusions; this section is
-the raw shape. Sequential probes across prompt sizes from ~0.5k to ~29k tokens
+leaks. Sequential probes across prompt sizes from ~0.5k to ~29k tokens
 fit:</p>
 <div class="card"><b>~{floor:.0f} ms fixed floor + ~{slope:.0f} ms per 1k input
 tokens</b>, with a negligible quadratic term. A flat base plus a linear prefill
@@ -1186,7 +1148,7 @@ floor plus a straight line, with no attention-blowup curvature at these
 lengths.</figcaption></figure>
 <figure>{strip_titles(EVID[2])}<figcaption>Where a typical call's milliseconds
 go: the floor is ~95% of it. Prefill is the model reading; the decision itself
-is a rounding error on the chart because it is one on the server.
+is a rounding error on the chart.
 </figcaption></figure>
 <p>The more telling experiment is <i>self-batching</i>. Packing 192 questions
 into one request barely moves compute time (+{mq:.2f} ms per extra question),
@@ -1242,14 +1204,14 @@ prior leaks into the result (including through option position), so that mode
 is a collaboration, and we report it as one.</p>
 <p>Alone at the character level, Jev fails outright: its per-character
 distributions are dominated by spaces and <code>a</code>, and greedy decoding
-produces <code>Geeee</code> and <code>A&nbsp;&nbsp;&nbsp;&nbsp;</code> no
+produces <code>&ldquo;Geeee&rdquo;</code> and <code>&ldquo;A&nbsp;&nbsp;&nbsp;&nbsp;&rdquo;</code> no
 matter what guards we add. Alone with a vocabulary menu it produces 86-100%
 genuine words and zero syntax - <i>&ldquo;They areas s aren'ts area aren't
 arenas are s&rdquo;</i>, <i>&ldquo;My american s can't cannots s
 she&rdquo;</i> - word salad that stops politely. Two quirks show up in every
 mode: whitespace-blindness (it prefers the bare token over the leading-space
 variant even mid-sentence, so &ldquo;The capital of France is&hellip;&rdquo;
-greedily decodes to <code>ThecapitalisParis.</code>) and repetition
+greedily decodes to <code>&ldquo;ThecapitalisParis.&rdquo;</code>) and repetition
 attractors (a <code>was was was</code> loop that only structural bans stop;
 temperature and nucleus sampling cool it somewhat but never cure it - on
 creative prompts its step distributions are so flat that any honest sampling
@@ -1259,17 +1221,17 @@ long-form configuration the program produced <i>&ldquo;In the outer rim of
 galaxy where nebulae paint the void in hues ofviolet andgold cos cosmic
 rabbits hop through the interstellar aether and meet Elvis Presley who was
 beenhad&rdquo;</i> - fluent, on-prompt, and corrupted exactly where Jev's own
-surface-form quirks show through (ofviolet, andgold).</p>
+surface-form quirks show through (<code>&ldquo;ofviolet&rdquo;</code>, <code>&ldquo;andgold&rdquo;</code>).</p>
 <p>We are not the first to give Jev a mouth. <a
 href="https://famelos.com/jev-chat/watch/">Jev Chat</a> - which appears to
 power <a href="https://bsky.app/profile/jevbot.bsky.social">Jev Bot</a> on
-Bluesky - grows every reply one word at a time from a word table, a simpler
+Bluesky - grows every reply one word at a time from a Markov model, a simpler
 guide than our local LM. Its public feed reads exactly like our unguided
 vocabulary menu: <i>&ldquo;Wow interesting actually yeah anyway? Well about
 this thing? Yours opinion speaking again?&rdquo;</i>, <i>&ldquo;Well im
 steve.&rdquo;</i>, <i>&ldquo;I am jeff smith.&rdquo;</i>, <i>&ldquo;I think
 that the sea is ocean. It typically seems open sea, and specifically atlantic
-ocean.&rdquo;</i> (we collected {jevbot_n} unique posts, published in
+ocean.&rdquo;</i> (we collected {jevbot_n} unique posts and published a nine-post sample in
 <a href="{GH}/data_report/jevbot_examples.json"><code>data_report/jevbot_examples.json</code></a>).
 An independent implementation with an independent guide reaching the same
 result is worth something: general-internet continuation, invented personas,
@@ -1298,9 +1260,7 @@ over &ldquo;Anthropic&rdquo; {pct(mass.get('anthropic',0))}, Google
 self-report is learned text, and assistant training data is saturated with
 OpenAI-shaped self-descriptions; injected contrary options got flat 0.01
 treatment and were never chosen in earlier token-steering runs too. It is a
-brand prior, and it is the same prior that made the &ldquo;coauthor of
-ChatGPT&rdquo; framing of the launch page feel like a hint about the weights.
-It is not evidence about the weights.</p>
+brand prior. It is not evidence about the weights.</p>
 
 <h3 id="probes-tokens">3. Counting tokens</h3>
 <p>The API reports an input-token count for every request, and that is not a
@@ -1336,11 +1296,6 @@ def keynotes() -> str:
 <p>The cliff's-notes version: every gotcha a user will actually hit, roughly
 in the order you will hit them.</p>
 <ul>
-<li><b>It answers; it does not write.</b> No free text, no chain of thought.
-Three shapes: choice (up to 255 named options), score (2-10 rubric levels),
-noul (a single yes probability). What it knows, it can pick - and what it can
-pick, it cannot always produce: {pct(SC['math_c']['accuracy'])} on MATH-500 as multiple
-choice, {pct(SC['math_s']['accuracy'])} reading the same answers out digit by digit.</li>
 <li><b>Order your options deliberately.</b> Position is a first-order factor
 wherever content is weak: a U-shaped serial-position curve (~4&times; primacy,
 plus a recency bump), and on flat menus the ordering alone can change the
@@ -1349,30 +1304,38 @@ shuffling, with no net direction). For measurement-grade use, rotate the list
 and average over 6+ rotations.</li>
 <li><b>Probabilities come back on a 0.01 grid.</b> Nothing finer is ever
 shown, so differences below 0.01 are invisible. An option can sit at exactly
-0.00 - there is no floor - and the vector sums to 0.99 or 1.00, never above.
-Set your thresholds accordingly.</li>
+0.00 - there is no floor - but low-probability answers get drowned in
+rounding noise. The vector sums to 0.99 or 1.00, never above. Set your
+thresholds accordingly.</li>
 <li><b><code>confidence</code> is not new information.</b> For choice it is
 the chance-corrected top probability of the same vector, rounded. If you want
 that statistic, compute it yourself; do not give it independent trust.</li>
 <li><b>Trust the argmax more than the distribution.</b> Greedy accuracy beats
 probability-weighted accuracy nearly everywhere ({pct(SC['mmlu']['accuracy'])} vs
 {pct(WD['mmlu']['weighted_accuracy_mean'])} on MMLU-Pro): the vector understates how often Jev is
-right. Use the choice as the answer and the vector as a ranking signal.</li>
+right. Use the choice as the answer and the vector as a ranking signal:
+treat probabilities as a ranker, not a well-calibrated distribution.</li>
 <li><b>It is not deterministic.</b> Repeats of identical requests differ (TVD
 0.03-0.12 on flat menus; less on sharp ones). Do not build logic on one
 call's tail probabilities; average repeats where stability matters.</li>
 <li><b>Normalize option surface forms.</b> Leading spaces and casing change
 scores - the bare token beats its leading-space variant even mid-sentence.
 Present options the way you want them judged.</li>
-<li><b>Whitespace is nearly free; digits are not.</b> The server collapses
-ASCII whitespace runs before tokenizing, while digits cost ~1 token each:
-number-heavy states cost several times what the same volume of English text
-would.</li>
+<li><b>Whitespace is nearly free; digits and non-Latin scripts are not.</b>
+The server collapses ASCII whitespace runs before tokenizing, while digits
+cost ~1 token each and the major non-Latin scripts ~1 token per character
+(the rarest blocks ~1 token per byte): number-heavy or CJK/Cyrillic-heavy
+states cost several times what the same volume of English text would.</li>
+<li><b>It does not see whitespace.</b> Options differing only in spacing or
+case score near-identically - a leading space can change the winner - and
+its word-menu speech runs words together. Never make whitespace the only
+difference between two options.</li>
 <li><b>Pack questions into one request.</b> Every question rides the same
 forward pass: +{ARCH['headcount']['marginal_ms_per_question']:.2f} ms per question, +{ARCH['optioncount']['marginal_ms_per_option']:.2f} ms per option. A
 192-question request costs ~153 ms of server compute; the same four questions
 sent separately cost ~280 ms of wall each. Put shared context in
-<code>state</code> once.</li>
+<code>state</code> once. Extra options and rubric levels are essentially
+free: they cost only their own tokens' prefill.</li>
 <li><b>The envelope is solid.</b> Across ~16k benchmark requests: 19
 contract-invalid responses and zero schema drift. Limits: 255 options, 2-10
 levels, 32k-token state, 64k total; oversized requests fail with
@@ -1381,10 +1344,10 @@ levels, 32k-token state, 64k total; oversized requests fail with
 to ~May 2025, nothing after June 2025 in our dated bisection. Do not ask it
 about last week - and if you want its abstention, offer an explicit
 &ldquo;cannot say&rdquo; option; it uses one.</li>
-<li><b>It will tell you it is from OpenAI.</b> That is training-text
-contamination, not lineage - the same prior makes it accept a fictional
-origin story at 0.97 if you assert one in the prompt. Believe its
-probabilities; do not believe its biography.</li>
+<li><b>It knows nothing about who it is.</b> It has undergone no SFT in
+that regard; ask its origin and training-text contamination answers - it
+will say OpenAI, and it accepts a fictional origin story at 0.97 if you
+assert one in the prompt.</li>
 <li><b>And the headline: it is not frontier.</b> Respectable 2025-era
 small-model knowledge ({pct(SC['mmlu']['accuracy'])} MMLU-Pro, {pct(SC['gpqa']['accuracy'])} GPQA Diamond),
 {pct(SC['hle']['accuracy'])} on HLE's multiple-choice subset, zero exact grids on
@@ -1429,15 +1392,13 @@ existing model. It earns attention by being useful, not by being frontier. That
 is a perfectly good thing to be. Just say so.</p>
 </section>
 <footer>
-<p><b>Reproducibility.</b> This report is generated from the run artifacts in this
+<p><b>Reproducibility.</b> This report was created from the run artifacts in this
 repository by <code>scripts/report/build_report.py</code>; every number is read
 from disk at render time, and the charts are produced by
 <code>comparison_graphs.py</code>, <code>pareto_graphs.py</code> and
-<code>arch_evidence.py</code>. Jev was called live with an API key that is never
-stored in any artifact. Our own probing transcripts (the Talk-to-Jev traces and
-the architecture-probe rows) are published verbatim; benchmark raw logs are held
-locally because they embed licensed dataset text - the published freeze hashes
-pin them exactly.</p>
+<code>arch_evidence.py</code>. Our own probing transcripts (the Talk-to-Jev
+traces and the architecture-probe rows) are published verbatim; benchmark raw
+logs are held locally because they embed licensed dataset text.</p>
 </footer>
 {refs()}"""
 

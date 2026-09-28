@@ -59,7 +59,7 @@ would force us to abandon or materially rewrite the row.
 | Tokenizer | Vendor's own **English/Latin-centric BPE**: heavy Latin/punctuation merges; ~1 token per codepoint for Cyrillic, Greek, Arabic, Hebrew, Thai, Devanagari, Hangul, kana, common CJK; digits ~1 each; **byte-level fallback confirmed live (P1)** — rare blocks cost 0.99–1.01 tokens per UTF-8 byte, partially-merged blocks 0.54–0.73; **UTF-8 pipeline confirmed** (lone surrogates rejected, HTTP 400); NFC normalization confirmed; no match among 173 open signatures | confident (mechanism, post-P1) / plausible (vendor's own) | `runs_archprobe/probe2/probe2_analysis.json → p1_fallback`, `runs_archprobe/tokens_per_char_compare.json`, `tokenizer_perscript.json`, `tokenizer_broadscan.json`, `docs/modern-comparison/ARCHITECTURE-PROBES.md` §5b–5c | A tokenizer reproducing the whitespace-free per-script table within ~1 token/sample; acceptance of lone surrogates |
 | Core model class | Transformer-family decoder LM | plausible | LM-like token behavior in Talk traces; linear prefill; capability profile; the vendor's own primer narrative (`SOURCES.md` S10) — no API signal separates attention variants at ≤29k | — (not falsifiable from this API; see §5) |
 | Dense vs MoE | **Not constrained.** Nothing API-visible separates them; the economics do not require MoE | — | §5 | — |
-| Size | **No point estimate — a two-angle band.** Throughput angle under quantized-serving assumptions: ~0.3–12.3B *active*. Capability angle: ~4–14B dense-equivalent. The bands overlap (joint ~4–12B): a quantized dense ~4–9B fits both; a MoE (~15–100B total) remains possible, not required. Live P2 grid confirms nothing scales with option count beyond tokens | plausible (band); assumptions stated | §4; `data_report/size_estimate.json`; `runs_archprobe/probe2/ → p2_grid` | Vendor disclosure; a matched-protocol evaluation outside the band |
+| Size | **No point estimate — a two-angle band.** Throughput angle (BF16 nameplate 400–2250 TFLOPS × quantization 2–4×, MFU 0.25–0.45, 1–4 shards): ~0.6–49B *active* — honest but loose. Capability angle: ~4–14B dense-equivalent, which does the narrowing. A quantized dense ~4–9B is the parsimonious joint reading; a MoE (~15–100B total) stays possible, not favored. Live P2 grid confirms nothing scales with option count beyond tokens | plausible (band); assumptions stated | §4; `data_report/size_estimate.json`; `runs_archprobe/probe2/ → p2_grid` | Vendor disclosure; a matched-protocol evaluation outside the band |
 | Training history | English-dominant pretraining corpus (the tokenizer's per-script coverage is its fossil record); knowledge horizon **solid to Dec 2024, partial to May 2025, none detected Jun–Aug 2025 (P5)**; assistant-shaped **judgement-format post-training** (schema perfection under load, trained abstention rising exactly where knowledge fades, shape-derived confidence); OpenAI-flavored **brand prior inherited from training text** | plausible | §2F, §2G; `runs_archprobe/probe2/probe2_analysis.json → p5_horizon`; `runs_live/FINDINGS.md` §5; `runs_archprobe/analysis.json → ancestry` | Verifiably post-horizon events answered correctly closed-book beyond the P5 fade; identity answers that track deployment facts rather than internet priors |
 | Frontier-teacher distillation | Possible contributor to post-training; **not identifiable** from any API-visible signal we can construct | speculative | §6 | — (under-determined; §6 lists the weak discriminators and their power) |
 | What it is not | Not a frontier model; not retrieval- or cache-assisted; not a wrapper around another vendor's API; not a relabeled *open* model | confident | §7 | One clean counter-instance each (e.g., a post-cutoff fact closed-book; a cache-flat latency component; an upstream round-trip signature; an exact open-tokenizer match) |
@@ -485,14 +485,17 @@ then sustaining R tokens/s needs
 > N_active ≤ MFU × peak × shards ÷ (2R)
 
 Across an honest grid — MFU 0.25–0.45 (achieved utilization on large-batch
-prefill), **400–2250 effective TFLOPS per device** (late-2026 serving at this
-price point is quantized: fp8 on H100/H200-class ≈990, int4/NVFP4-class
-1300–2000, bf16-dense B200-class ≈2250; low end covers fp8 on smaller parts),
-1–4 devices per pass — this bounds the **active footprint at ≈ 0.3–12.3B
-parameters, central case ≈ 2.1B** (`data_report/size_estimate.json`). (The
-first pass of this analysis assumed 250–500 TFLOPS bf16 on A100-class
-hardware — a dated grid that biased the bound 2–4× low; both grids are
-recorded in the artifact.) Two
+prefill), the plausible late-2026 fleet's **BF16 nameplate of ~400–2250
+TFLOPS per device** (H100/H200-class ≈990; B200-class ≈2250; smaller parts
+≈400) **times a quantization multiplier of 2–4×** (fp8 doubles, int4/FP4-class
+quadruples effective math throughput) = **~800–9000 effective TFLOPS per
+device**, over 1–4 devices per pass — this bounds the **active footprint at
+≈ 0.6–49B parameters, central case ≈ 4.2B**
+(`data_report/size_estimate.json`). (Two earlier passes were wrong and are
+recorded in the artifact: the first assumed bf16 250–500 TFLOPS on A100-class
+hardware → 0.2–2.7B; the second treated the fleet's 400–2250 BF16 figures as
+if they were already effective → 0.3–12.3B. The audit caught the second
+error: quantization still has to be applied on top of BF16 nameplate.) Two
 honesty notes: (a) concurrent streams B>1 sharing weight fetches only *lower*
 the per-stream bound, so B=1 is the conservative direction; (b) the MFU/peak
 ranges are industry-standard serving assumptions, not repo measurements. This
@@ -514,16 +517,18 @@ distillation shifts capability-per-parameter upward.
 
 ### Where the two angles meet
 
-Under the revised (quantized-serving) assumptions they **overlap broadly**
-(joint zone ~4–12B active): no exotic reconciliation is needed. The readings,
-in order of parsimony:
+Under the corrected quantization arithmetic the throughput band (0.6–49B) is
+honest but **loose** — consistent with anything from a small dense model to a
+~50B-active MoE. The capability angle (4–14B) does the narrowing. The
+readings, in order of parsimony:
 
 1. **Quantized dense (parsimonious, sufficient)**: a dense ~4–9B model served
    at fp8/int4 fits both angles with nothing further assumed — an entirely
    ordinary late-2026 object at this price point ($0.042/M, 73 ms floor).
-2. **MoE (possible, not required)**: ~15–100B total at ~5–20% activation also
+2. **MoE (possible, not favored)**: ~15–100B total at ~5–20% activation also
    fits, and would explain the *top* of the capability band with less compute
-   per token. The API cannot see expert structure (§5).
+   per token — but the loose throughput band removes the capacity-density
+   argument that once favored it. The API cannot see expert structure (§5).
 3. **Distilled smaller dense**: teacher labels lift a 2–6B dense model into
    the capability band on knowledge MCQs (transferring knowledge, not
    multi-step reasoning) — and Jev's recognition ≫ production asymmetry
@@ -534,8 +539,8 @@ in order of parsimony:
    construction.
 
 **Converged statement [plausible-band]:** ACTIVE parameters most plausibly
-**~4–9B** (the overlap of the 0.3–12.3B throughput bound with the 4–14B
-capability band) — dense-equivalent order 4–9B, a 2025-era small model. A
+**~4–9B** (capability-driven; the 0.6–49B throughput bound is consistent
+but loose) — dense-equivalent order 4–9B, a 2025-era small model. A
 quantized dense model in this range reconciles both angles without MoE; a
 MoE (~15–100B total) remains possible and unfalsifiable from the API. TOTAL
 parameters **unconstrained** either way. This respects ground rule 4: the
@@ -705,7 +710,7 @@ the single cheapest measurement with real power.
 | H4 | Wrapper/ensemble around external frontier API(s) | None positive; only the brand prior | §7 timing, tokenizer, and economics arguments; flat upstream at c=32 | **0.02** | Any upstream-latency signature inside the 73 ms floor under load (none in 987 calls) |
 | H5 | Retrieval- or cache-assisted answering | 82.8% MMLU-Pro is high for the band, inviting a memorization story | §7 items (a)–(e); **P5 ran: a date-shaped fade (solid→partial→zero) with fictional events refused is parametric-cutoff behavior, not retrieval** | **0.02** | Re-run P5 months apart: a moving horizon would resurrect this | 
 | H6 | Frontier-teacher **distillation** contributed materially to post-training | Brand prior; recognition≫production; vendor comfort with teacher labels (S1) | Not identifiable; every signal is confounded (§6); the size-tension argument dissolved under the quantized-serving revision | **0.35** | P6 (error-sharing correlation) — low power, the only direct-ish API probe; not staged (needs external teacher APIs) |
-| H7 | **MoE** (small active, larger total) | Cost point typical of 2026 small-active MoE serving; would explain the top of the capability band with less compute per token | Not required: the revised §4 bands overlap, and a quantized dense ~4–9B fits both; nothing API-visible favors MoE | **0.40** (unconstrained directly; prior-driven) | None exists at this API surface; declare unconstrained |
+| H7 | **MoE** (small active, larger total) | Cost point typical of 2026 small-active MoE serving; would explain the top of the capability band with less compute per token | Not required and no longer favored: the corrected §4 throughput bound is loose, a quantized dense ~4–9B is parsimonious, and nothing API-visible favors MoE | **0.35** (unconstrained directly; prior-driven) | None exists at this API surface; declare unconstrained |
 | H8 | Non-transformer core (SSM/linear-attention/hybrid) | No quadratic signature to 29k (weak) | Population prior; capability profile is LM-typical; ΔR² test can't separate at these lengths | **0.10** (unconstrained) | Longer-context curvature probes are blocked by the 32k state cap; unconstrained |
 | H9 | Headline capability materially inflated by **benchmark contamination** | MMLU-Pro/ARC are years public; 82.8 is strong for the band | HLE near-floor and ARC-AGI-2 zero-exact are contamination-resistant and weak; rotation audit shows content-driven answers; fresh generators 450/450 (easy, templated — weak) | **0.15** | A *hard* fresh-item suite (post-2024 exam material, private holdout) at MMLU-Pro difficulty — the only real test |
 | H10 | Multiple heterogeneous models routed behind one endpoint (model field stable) | Nondeterminism is large-ish | Single stable `jev-1.13.0` across 482+ calls; tokenizer counts homogeneous; timing unimodal; batch numerics explain nondeterminism | **0.03** | Bimodality in upstream-latency or token-count distributions at n≫987 (none observed) |
@@ -966,6 +971,27 @@ prior documents and in this analysis:
     config fields (reasoning_effort/compute_effort) rather than a blanket
     label; the discrepancy is unresolved and flagged wherever vals rows are
     compared to Jev's direct protocol.
+24. **The v1 matched sweep's scores were a parser artifact, not a capability
+    measurement.** Strict exact-key parsing plus a 1,024-token output cap
+    crushed exactly the models that think before answering (Qwen3.7-Flash
+    burned its whole budget in the reasoning channel and returned empty
+    content: 98.5% "format failures" on GPQA, yet ~100% accuracy on the
+    answers it did emit) and the models that answer in prose (Gemma-3-4B on
+    MATH: 92% rejected). Diagnosed with 216 raw-stored probe calls across
+    three wire variants (`runs_matched_cheap/diag/`); the whole roster was
+    re-run as v2 (temperature 0, thinking disabled where supported, 4,096-token
+    cap, documented recovery parser applied identically to all models,
+    unrecovered = wrong). Lesson: strict-format discipline measures
+    instruction-following, not capability, and conflating them silently is
+    how you publish a table of lies. Jev itself is unaffected - it has no
+    text format to fail (18 contract-invalid responses in 12,032 MMLU calls,
+    counted as wrong in its 82.8%).
+25. **Public-leaderboard dependence has a coverage hole exactly where the
+    Pareto story lives.** vals.ai carries 133 MMLU-Pro rows and not one
+    Gemma/Llama/Granite/Nemo-class commodity model - the cheap end of the
+    market had to be measured ourselves (v2 roster: 15 models, incl. MiMo
+    v2.6 Pro/Flash and Qwen3.8-Max). Any chart sourced only from public
+    boards inherits their roster biases; label the gap or fill it.
 
 ---
 
@@ -987,7 +1013,15 @@ prior documents and in this analysis:
 .venv/bin/python scripts/benchmark/run_cheap_matched.py --plan   # roster + freeze (no key)
 .venv/bin/python scripts/benchmark/run_cheap_matched.py --smoke  # 1 call/model, wire discovery
 .venv/bin/python scripts/benchmark/run_cheap_matched.py --live   # full dispatch ($30 hard cap)
-.venv/bin/python scripts/benchmark/run_cheap_matched.py --score  # summaries + Jev join
+.venv/bin/python scripts/benchmark/run_cheap_matched.py --score  # summaries + Jev join (v1, superseded)
+
+# matched cheap-model baselines v2 (the v1 scores were a strict-parse artifact;
+# see register item 24; OpenRouter key + live gate; artifacts in runs_matched_cheap/v2/):
+.venv/bin/python scripts/benchmark/diag_parse.py             # raw-response parser diagnostic
+.venv/bin/python scripts/benchmark/run_cheap_matched2.py --plan
+.venv/bin/python scripts/benchmark/run_cheap_matched2.py --smoke
+.venv/bin/python scripts/benchmark/run_cheap_matched2.py --live
+.venv/bin/python scripts/benchmark/run_cheap_matched2.py --score
 
 # staged follow-up battery (offline modes are ungated and free):
 .venv/bin/python scripts/benchmark/run_probe_battery2.py --plan     # -> call+cost plan

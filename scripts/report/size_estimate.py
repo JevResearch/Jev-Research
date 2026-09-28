@@ -50,11 +50,15 @@ OUT = ROOT / "data_report" / "size_estimate.json"
 # The bf16-on-A100 grid this script shipped with was dated and biased the
 # active-parameter bound low by ~2-10x; it is retained below for continuity.
 MFU_RANGE = (0.25, 0.45)              # achieved utilization, large-batch prefill
-PEAK_EFF_TFLOPS_RANGE = (400, 2250)   # effective dense-math peak per device:
-                                      #   fp8 on H100/H200-class ~990;
-                                      #   int4/NVFP4-class 1300-2000;
-                                      #   bf16-dense B200-class ~2250;
-                                      #   low end: fp8 on 400-500 TFLOPS parts
+# BF16 nameplate per device for the plausible late-2026 fleet (the numbers the
+# audit supplied): ~400 (smaller parts) to ~2250 (B200-class dense).
+BF16_FLEET_TFLOPS_RANGE = (400, 2250)
+# Quantization multiplies EFFECTIVE math throughput over bf16 nameplate:
+#   fp8 ~2x, int4/NVFP4-class ~4x. Serving at this price point is quantized,
+#   so the honest effective peak is the bf16 fleet range scaled by 2-4x.
+QUANT_MULT = (2, 4)
+PEAK_EFF_TFLOPS_RANGE = (BF16_FLEET_TFLOPS_RANGE[0] * QUANT_MULT[0],
+                         BF16_FLEET_TFLOPS_RANGE[1] * QUANT_MULT[1])  # (800, 9000)
 SHARDS = (1, 2, 4)                    # devices jointly serving one pass
 # Prior (dated) grid, kept for the audit trail:
 BF16_LEGACY = {"peak_TFLOPS": (250, 500),
@@ -74,17 +78,22 @@ def band_from_prefill(prefill: dict) -> dict:
     R = 1000.0 / slope_ms * 1000.0            # tokens/s marginal
     band = _band(R, MFU_RANGE, PEAK_EFF_TFLOPS_RANGE, SHARDS)
     legacy = _band(R, MFU_RANGE, BF16_LEGACY["peak_TFLOPS"], SHARDS)
-    # central case: fp8 on H100/H200-class (990 TFLOPS), MFU 0.35, S=2
-    n_mid = 0.35 * 990e12 * 2 / (2 * R)
+    # central case: fp8 on H100/H200-class (~2x its ~990 bf16 => ~1979 eff),
+    # MFU 0.35, S=2
+    n_mid = 0.35 * 1979e12 * 2 / (2 * R)
     return {
         "method": "N_active <= MFU * peak_effective * S / (2 * R); R from the measured marginal prefill slope",
         "marginal_prefill_rate_tok_s": round(R),
         "assumptions": {
             "MFU": list(MFU_RANGE),
             "peak_effective_TFLOPS_per_device": list(PEAK_EFF_TFLOPS_RANGE),
-            "peak_basis": ("quantized serving assumed (fp8 ~990 on H100/H200-class; "
-                           "int4/NVFP4-class 1300-2000; bf16-dense B200-class ~2250); "
-                           "low end 400 covers fp8 on smaller parts"),
+            "bf16_nameplate_fleet_TFLOPS": list(BF16_FLEET_TFLOPS_RANGE),
+            "quant_multiplier": list(QUANT_MULT),
+            "peak_basis": ("bf16 nameplate for the late-2026 fleet is ~400-2250 "
+                           "TFLOPS/device (H100/H200 ~990; B200-class ~2250; "
+                           "smaller parts ~400); quantized serving multiplies "
+                           "effective math throughput ~2x (fp8) to ~4x "
+                           "(int4/NVFP4), giving ~800-9000 effective"),
             "shard_count_S": list(SHARDS),
             "flops_per_token": "2 * N_active (attention/overhead excluded; adds <= ~15% at <=29k ctx)",
             "concurrent_streams_B": "1 (conservative: batching with other tenants only lowers the per-stream bound)",
@@ -96,9 +105,11 @@ def band_from_prefill(prefill: dict) -> dict:
         "legacy_note": BF16_LEGACY["note"],
         "reading": ("Serving this marginal prefill rate on 1-4 quantized-serving-era "
                     "accelerators bounds the ACTIVE footprint at roughly "
-                    f"{band[0]}-{band[1]}B parameters; multi-tenant sharing only "
-                    "lowers the bound. The dated bf16/A100 grid gave "
-                    f"{legacy[0]}-{legacy[1]}B - about 2-4x lower."),
+                    f"{band[0]} to {band[1]}B parameters; multi-tenant sharing only "
+                    "lowers the bound. Counting quantization correctly (bf16 "
+                    "nameplate x2-4) widens the bound several-fold over the first "
+                    "revision, which itself was ~2-4x above the dated bf16/A100 "
+                    f"grid ({legacy[0]}-{legacy[1]}B)."),
     }
 
 
@@ -149,12 +160,12 @@ def reconcile(pf: dict, cap: dict) -> dict:
                            "fits BOTH angles with no further machinery; this is the "
                            "simplest hypothesis consistent with everything measured"),
              "independent_evidence": "the $0.042/M price and 73 ms floor are consistent with small-model single-host serving"},
-            {"reading": "MoE (possible; the capacity-density argument favors it)",
-             "statement": ("an MoE with ~15-100B total at ~5-20% activation (active "
-                           "~1-8B) also fits, and would explain the TOP of the "
-                           "capability band with less compute per token; if the "
-                           "model is dense instead, its capacity density is "
-                           "superlative for the band"),
+            {"reading": "MoE (possible; not favored)",
+             "statement": ("an MoE with ~15-100B total at ~5-20% activation also "
+                           "fits, and would explain the TOP of the capability band "
+                           "with less compute per token; the loose corrected "
+                           "throughput band removes the capacity-density argument "
+                           "that once favored this reading"),
              "moe_total_B_range": [15, 100],
              "activation_pct_range": [5, 20],
              "independent_evidence": "none - the API cannot see expert structure (ARCHITECTURE-ANALYSIS.md sec.5)"},
