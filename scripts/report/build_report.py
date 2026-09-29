@@ -98,10 +98,14 @@ PCC = jload("runs_archprobe/tokens_per_char_compare.json")
 FINGER = jload("runs_archprobe/tokenizer_fingerprint.json")
 COSTS = jload("data_report/costs.json")
 VALS = jload("docs/modern-comparison/canonical/vals-leaderboards-20260926.json")
-try:
-    MATCHED = jload("runs_matched_cheap/v2/summary_v2.json")
-except Exception:
-    MATCHED = {}
+MATCHED = {}
+for _mp in ("runs_matched_cheap/v3/summary_v3.json",
+            "runs_matched_cheap/v2/summary_v2.json"):
+    try:
+        MATCHED = jload(_mp)
+        break
+    except Exception:
+        continue
 try:
     AUDITS = jload("data_report/arch_audits.json")
 except FileNotFoundError:
@@ -198,20 +202,27 @@ NOTES: dict[str, str] = {
         "report is measured from billing usage in the published run artifacts, "
         "not estimated.",
     "matchedbase": "Matched cheap-model baselines: "
-        "scripts/benchmark/run_cheap_matched.py, artifacts in "
-        "runs_matched_cheap/ (freeze, smoke, results.jsonl, summary.json, "
-        "live_summary.json). Identical frozen items to the Jev runs "
-        "(MMLU-Pro 1,000-item stratified subset, seed 20260920; GPQA 196; "
-        "MATH-500 choice 261; HLE MC 494), dispatched over the OpenRouter "
-        "chat API with reasoning_effort=low and a 1,024-token output cap "
-        "where accepted (recorded per model; omitted where the API rejects "
-        "it). One attempt per item; strict exact-key parsing; format "
-        "failures count as wrong in the all-requested accuracy; only "
-        "transport-level 429/5xx get bounded backoff re-queues, never answer "
-        "retries. Costs are provider-reported per call (catalog-price "
-        "fallback). Hard budget cap $30, authorized by the project owner; "
-        "actual spend in live_summary.json. Era colors use curated/estimated "
-        "release dates, labeled as such in tooltips.",
+        "scripts/benchmark/run_matched3.py (v3, spec-compliant) over "
+        "run_cheap_matched2.py (v2); artifacts in runs_matched_cheap/ "
+        "(v3/ preferred, v2/ kept for provenance). Identical frozen items to "
+        "the Jev runs (MMLU-Pro 1,000-item stratified subset, seed 20260920; "
+        "GPQA 196; MATH-500 choice 261; HLE MC 494; ARC-Challenge 1,172 for "
+        "several models), one attempt per item, transport-level backoff only, "
+        "provider-reported costs. v3 wire policy: NO temperature, top_p, seed "
+        "or reasoning parameters - each model runs at its documented provider "
+        "defaults, per the audit's out-of-spec warning; max_tokens is a bill "
+        "guard, not a thinking budget. (v2 pinned temperature 0 + effort low, "
+        "which is out of spec for reasoning models and depressed their scores "
+        "and costs; v2 cells survive only where v3 did not re-run - Qwen3.8 "
+        "Max MMLU - and are labeled in the summary.) Answers are parsed "
+        "strictly and, failing that, recovered by a documented deterministic "
+        "parser applied identically to every model; unrecovered answers count "
+        "as wrong. The cost gap versus vals.ai rows for the same model is "
+        "protocol, not metering: vals runs 5-shot chain-of-thought at "
+        "max effort (2-50x the tokens), ours are one-shot at defaults - both "
+        "figures are what the providers actually billed. Budget $80 total "
+        "authorized by the project owner; spend in the live_summary files. "
+        "Era colors use curated/estimated release dates, labeled in tooltips.",
     "costest": "External costs are the vals.ai platform's measured cost per "
         "test - the same harness that measured the scores, chain-of-thought "
         "tokens included, so reasoning counts against the models that use it. "

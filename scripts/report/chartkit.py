@@ -175,25 +175,29 @@ def era_legend(x: int, y: int) -> str:
 CHEAP_META = {
     "meta-llama/llama-3.1-8b-instruct": ("Llama 3.1 8B", "2024-07", "none", "documented"),
     "mistralai/mistral-nemo": ("Mistral Nemo", "2024-07", "none", "documented"),
-    "openai/gpt-oss-20b": ("gpt-oss-20b", "2025-08", "low", "documented"),
-    "openai/gpt-oss-120b": ("gpt-oss-120b", "2025-08", "low", "documented"),
-    "ibm-granite/granite-4.0-h-micro": ("Granite 4.0 Micro", "2025-06", "low", "estimated"),
+    "openai/gpt-oss-20b": ("gpt-oss-20b", "2025-08", "medium", "documented"),
+    "openai/gpt-oss-120b": ("gpt-oss-120b", "2025-08", "medium", "documented"),
+    "ibm-granite/granite-4.0-h-micro": ("Granite 4.0 Micro", "2025-06", "medium", "estimated"),
     "google/gemma-3-4b-it": ("Gemma 3 4B", "2025-03", "none", "documented"),
-    "qwen/qwen3.7-flash": ("Qwen3.7 Flash", "2026-06", "none", "estimated"),
-    "qwen/qwen3.8-max-0902": ("Qwen3.8 Max", "2026-08", "low", "documented"),
-    "xiaomi/mimo-v2.6-pro": ("MiMo v2.6 Pro", "2026-05", "low", "documented"),
-    "xiaomi/mimo-v2.6-flash": ("MiMo v2.6 Flash", "2026-05", "low", "documented"),
+    "qwen/qwen3.7-flash": ("Qwen3.7 Flash", "2026-06", "high", "estimated"),
+    "qwen/qwen3.7-flash@think": ("Qwen3.7 Flash (thinking)", "2026-06", "low", "estimated"),
+    "qwen/qwen3.8-max-0902": ("Qwen3.8 Max", "2026-08", "high", "documented"),
+    "xiaomi/mimo-v2.6-pro": ("MiMo v2.6 Pro", "2026-05", "high", "documented"),
+    "xiaomi/mimo-v2.6-flash": ("MiMo v2.6 Flash", "2026-05", "high", "documented"),
     "mistralai/mistral-small-3.2-24b-instruct": ("Mistral Small 3.2", "2025-09", "none", "estimated"),
-    "z-ai/glm-5.3-flash": ("GLM-5.3 Flash", "2026-08", "low", "documented"),
-    "qwen/qwen3.8-flash": ("Qwen3.8 Flash", "2026-08", "none", "estimated"),
-    "deepseek/deepseek-v4-flash-0731": ("DeepSeek V4 Flash", "2025-07", "low", "documented"),
-    "z-ai/glm-5.3": ("GLM-5.3", "2026-08", "low", "documented"),
+    "z-ai/glm-5.3-flash": ("GLM-5.3 Flash", "2026-08", "high", "documented"),
+    "qwen/qwen3.8-flash": ("Qwen3.8 Flash", "2026-08", "high", "estimated"),
+    "qwen/qwen3.8-flash@think": ("Qwen3.8 Flash (thinking)", "2026-08", "low", "estimated"),
+    "deepseek/deepseek-v4-flash-0731": ("DeepSeek V4 Flash", "2025-07", "high", "documented"),
+    "z-ai/glm-5.3": ("GLM-5.3", "2026-08", "max", "documented"),
 }
 
 
 def load_matched(root) -> dict:
     """summary.json from the matched cheap-model runs, or {} before completion."""
-    p = root / "runs_matched_cheap/v2/summary_v2.json"
+    p = root / "runs_matched_cheap/v3/summary_v3.json"
+    if not p.exists():
+        p = root / "runs_matched_cheap/v2/summary_v2.json"
     if not p.exists():
         p = root / "runs_matched_cheap/summary.json"
     if not p.exists():

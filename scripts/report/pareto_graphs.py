@@ -167,12 +167,16 @@ def chart(bkey, title, subtitle, jev_glob, jev_g, jev_w, n_items):
         rel = m.get("released") or "unknown"
         basis = m.get("date_basis") or "n/a"
         if m.get("jev_join") is not None or m.get("fmt_pct") is not None:
-            tt = (f"<b>{_html.escape(m['name'])}</b> &mdash; our matched run<br>"
+            _tl = {"none": "none", "low": "low", "medium": "medium",
+                   "high": "high", "xhigh": "xhigh", "max": "max"}.get(tier, "none")
+            tt = (f"<b>{_html.escape(m['name'])} ({_tl})</b><br>"
                   f"score {a:.1f}% &mdash; #{sr} of {n_all}<br>"
                   f"cost ${c:.6f}/question &mdash; #{cr} of {n_all}<br>"
                   f"released {rel}" + (" (estimated)" if basis == "estimated" else ""))
         else:
-            tt = (f"<b>{_html.escape(m['name'])}</b><br>"
+            _tl = {"none": "none", "low": "low", "medium": "medium",
+                   "high": "high", "xhigh": "xhigh", "max": "max"}.get(tier, "none")
+            tt = (f"<b>{_html.escape(m['name'])} ({_tl})</b><br>"
                   f"score {a:.1f}% &mdash; #{sr} of {n_all}<br>"
                   f"cost ${c:.5f}/question &mdash; #{cr} of {n_all}<br>"
                   f"released {rel}" + (" (estimated)" if basis == "estimated" else ""))

@@ -1,0 +1,202 @@
+{
+ "created_at": "2026-09-28T14:41:43+00:00",
+ "wire_policy": "NO temperature/top_p/seed, NO reasoning params - provider defaults (documented spec); max_tokens is a bill guard only",
+ "hard_cap_usd": 32.0,
+ "models": [
+  {
+   "id": "z-ai/glm-5.3",
+   "datasets": [
+    "mmlu",
+    "gpqa",
+    "math500_choice"
+   ],
+   "max_tokens": 32768,
+   "note": "documented default effort max; finish first (partially complete)",
+   "n_calls": 1457,
+   "input_per_M": 0.35559999999999997,
+   "output_per_M": 1.1176
+  },
+  {
+   "id": "meta-llama/llama-3.1-8b-instruct",
+   "datasets": [
+    "mmlu",
+    "gpqa",
+    "math500_choice",
+    "hle_text_mc"
+   ],
+   "max_tokens": 1024,
+   "note": "non-thinking; defaults",
+   "n_calls": 1951,
+   "input_per_M": 0.049999999999999996,
+   "output_per_M": 0.08
+  },
+  {
+   "id": "mistralai/mistral-nemo",
+   "datasets": [
+    "mmlu",
+    "gpqa",
+    "math500_choice",
+    "hle_text_mc"
+   ],
+   "max_tokens": 1024,
+   "note": "non-thinking; defaults",
+   "n_calls": 1951,
+   "input_per_M": 0.019000000000000003,
+   "output_per_M": 0.03
+  },
+  {
+   "id": "google/gemma-3-4b-it",
+   "datasets": [
+    "mmlu",
+    "gpqa",
+    "math500_choice",
+    "hle_text_mc"
+   ],
+   "max_tokens": 4096,
+   "note": "non-thinking; defaults",
+   "n_calls": 1951,
+   "input_per_M": 0.049999999999999996,
+   "output_per_M": 0.09999999999999999
+  },
+  {
+   "id": "mistralai/mistral-small-3.2-24b-instruct",
+   "datasets": [
+    "mmlu",
+    "gpqa",
+    "math500_choice",
+    "hle_text_mc"
+   ],
+   "max_tokens": 4096,
+   "note": "non-thinking; defaults",
+   "n_calls": 1951,
+   "input_per_M": 0.09375,
+   "output_per_M": 0.25
+  },
+  {
+   "id": "z-ai/glm-5.3-flash",
+   "datasets": [
+    "mmlu",
+    "gpqa",
+    "math500_choice",
+    "hle_text_mc",
+    "arc"
+   ],
+   "max_tokens": 32768,
+   "note": "provider defaults",
+   "n_calls": 3123,
+   "input_per_M": 0.045,
+   "output_per_M": 0.14
+  },
+  {
+   "id": "openai/gpt-oss-20b",
+   "datasets": [
+    "mmlu",
+    "gpqa",
+    "math500_choice",
+    "hle_text_mc"
+   ],
+   "max_tokens": 16384,
+   "note": "documented default sampling/effort",
+   "n_calls": 1951,
+   "input_per_M": 0.018,
+   "output_per_M": 0.09
+  },
+  {
+   "id": "qwen/qwen3.7-flash",
+   "datasets": [
+    "mmlu",
+    "gpqa",
+    "math500_choice",
+    "hle_text_mc"
+   ],
+   "max_tokens": 16384,
+   "note": "provider defaults",
+   "n_calls": 1951,
+   "input_per_M": 0.03,
+   "output_per_M": 0.13
+  },
+  {
+   "id": "xiaomi/mimo-v2.6-flash",
+   "datasets": [
+    "mmlu",
+    "gpqa",
+    "math500_choice",
+    "hle_text_mc",
+    "arc"
+   ],
+   "max_tokens": 32768,
+   "note": "provider defaults",
+   "n_calls": 3123,
+   "input_per_M": 0.14,
+   "output_per_M": 0.28
+  },
+  {
+   "id": "openai/gpt-oss-120b",
+   "datasets": [
+    "mmlu",
+    "gpqa",
+    "math500_choice",
+    "hle_text_mc"
+   ],
+   "max_tokens": 16384,
+   "note": "documented default sampling/effort",
+   "n_calls": 1951,
+   "input_per_M": 0.15,
+   "output_per_M": 0.6
+  },
+  {
+   "id": "qwen/qwen3.8-flash",
+   "datasets": [
+    "mmlu",
+    "gpqa",
+    "math500_choice",
+    "hle_text_mc",
+    "arc"
+   ],
+   "max_tokens": 16384,
+   "note": "provider defaults (thinking on by default)",
+   "n_calls": 3123,
+   "input_per_M": 0.15,
+   "output_per_M": 0.47
+  },
+  {
+   "id": "deepseek/deepseek-v4-flash-0731",
+   "datasets": [
+    "mmlu",
+    "gpqa",
+    "math500_choice",
+    "hle_text_mc"
+   ],
+   "max_tokens": 32768,
+   "note": "provider defaults",
+   "n_calls": 1951,
+   "input_per_M": 0.020999999999999998,
+   "output_per_M": 0.32
+  },
+  {
+   "id": "xiaomi/mimo-v2.6-pro",
+   "datasets": [
+    "mmlu",
+    "gpqa",
+    "math500_choice"
+   ],
+   "max_tokens": 32768,
+   "note": "provider defaults",
+   "n_calls": 1457,
+   "input_per_M": 0.435,
+   "output_per_M": 0.87
+  },
+  {
+   "id": "qwen/qwen3.8-max-0902",
+   "datasets": [
+    "gpqa"
+   ],
+   "max_tokens": 16384,
+   "note": "reasoning mandatory; GPQA only on budget (v2 MMLU cell kept, labeled)",
+   "n_calls": 196,
+   "input_per_M": 2.0,
+   "output_per_M": 6.0
+  }
+ ],
+ "total_calls": 28087
+}

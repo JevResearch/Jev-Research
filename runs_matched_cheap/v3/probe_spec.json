@@ -1,0 +1,30 @@
+{
+ "created_at": "2026-09-28T14:30:00+00:00",
+ "note": "10-item cost probe at provider defaults; interrupted after 2 of 15 models (budget wall hit), but both cost-model checks landed: the two priciest reasoners fit the budget plan. Full-run spend is in live_summary.json files.",
+ "results": [
+  {
+   "id": "z-ai/glm-5.3",
+   "avg_out_tokens": 1156,
+   "avg_cost_per_call_usd": 0.004996,
+   "extrapolated_total_usd": 7.28,
+   "extrapolation_datasets": {
+    "mmlu": 1000,
+    "gpqa": 196,
+    "math500_choice": 261
+   }
+  },
+  {
+   "id": "z-ai/glm-5.3-flash",
+   "avg_out_tokens": 448,
+   "avg_cost_per_call_usd": 0.000257,
+   "extrapolated_total_usd": 0.81,
+   "extrapolation_datasets": {
+    "mmlu": 1000,
+    "gpqa": 196,
+    "math500_choice": 261,
+    "hle_text_mc": 494,
+    "arc": 1172
+   }
+  }
+ ]
+}

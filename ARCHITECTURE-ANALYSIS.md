@@ -992,6 +992,22 @@ prior documents and in this analysis:
     market had to be measured ourselves (v2 roster: 15 models, incl. MiMo
     v2.6 Pro/Flash and Qwen3.8-Max). Any chart sourced only from public
     boards inherits their roster biases; label the gap or fill it.
+26. **Spec compliance cuts both ways - the v2 matched sweep was itself out
+    of spec.** v2 fixed v1's parser artifacts but imposed temperature=0 and
+    reasoning_effort=low on every model. For reasoning models that is not a
+    neutral harness choice: GLM-5.3 documents default effort max for
+    leaderboard reproduction, and at forced-low effort it scored BELOW its
+    own flash sibling on MMLU (83.4 vs 85.5) and 13.6 points under the vals
+    board's GLM-5.3 GPQA row, while looking ~25x cheaper - because it was
+    made to think ~1k tokens where the published rows think tens of
+    thousands. Owner audit caught the inversion. v3 re-runs every model with
+    NO sampling or reasoning parameters (provider defaults = documented
+    spec), generous bill-guard caps, and a cost-modeled dispatch order
+    (cheap models first) so a budget stop can only truncate the expensive
+    tail. Lesson recorded: "matched protocol" means matched items, format
+    and parsing - never imposed sampling settings; run models at vendor
+    defaults and let their billed thinking tokens count as cost, which is
+    exactly what a Pareto frontier is for.
 
 ---
 

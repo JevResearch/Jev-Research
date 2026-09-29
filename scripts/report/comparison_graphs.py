@@ -91,7 +91,9 @@ def _tt_model(m, rank, nfull, ndisp, source="vals.ai"):
     basis = m.get("date_basis") or "n/a"
     tier = TIER_LABEL.get(m.get("tier", "none"), "unknown")
     cost = m.get("cost_per_test")
-    parts = [f"<b>{_html.escape(m['name'])}</b>",
+    _tl = {"none": "none", "low": "low", "medium": "medium", "high": "high",
+           "xhigh": "xhigh", "max": "max"}.get(m.get("tier", "none"), "")
+    parts = [f"<b>{_html.escape(m['name'])} ({_tl})</b>",
              f"score {m['accuracy']:.1f}% &mdash; #{rank} of {nfull}",
              f"released {rel or 'unknown'}"
              + (" (estimated)" if basis == "estimated" else "")]
@@ -163,7 +165,9 @@ def bar_chart(title, subtitle, entries, unit="%"):
 def _matched_entries(mrows, jev_score_for_join):
     out = []
     for r in mrows:
-        tt = (f"<b>{r['name']}</b> &mdash; our matched run<br>"
+        _tl = {"none": "none", "low": "low", "medium": "medium",
+               "high": "high", "xhigh": "xhigh", "max": "max"}.get(r.get("tier", "none"), "")
+        tt = (f"<b>{r['name']} ({_tl})</b><br>"
               f"score {r['accuracy']:.1f}%<br>"
               f"released {r['released'] or 'unknown'}"
               + (" (estimated)" if r.get("date_basis") == "estimated" else "") + "<br>"
@@ -245,7 +249,9 @@ def ref_chart(bkey, title, subtitle, jevs, unit="%", matched=None):
              "date_basis": "curated" if rel else None, "tier": tier,
              "cost_per_test": None}
         proto = r.get("protocol") or "unknown"
-        tt = (f"<b>{_html.escape(r['model'])}</b><br>score {r['score']*100:.1f}% "
+        _tl2 = {"none": "none", "low": "low", "medium": "medium", "high": "high",
+                "xhigh": "xhigh", "max": "max"}.get(tier, "none")
+        tt = (f"<b>{_html.escape(r['model'])} ({_tl2})</b><br>score {r['score']*100:.1f}% "
               f"&mdash; #{rank[r['model']]} of {len(order)}<br>"
               f"released {rel or 'unknown'}<br>"
               f"protocol: {proto} &middot; source type: {r.get('source_type', 'n/a')}")
