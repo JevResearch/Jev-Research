@@ -92,10 +92,12 @@ def tip(s: str) -> str:
 
 
 def wrap_subtitle(x: int, y: int, text: str, width: int = 118,
-                  size: float = 11.0, fill: str = MUTED) -> tuple[str, int]:
+                  size: float = 11.0, fill: str = MUTED,
+                  anchor: str = "start") -> tuple[str, int]:
     lines = textwrap.wrap(text, width)
-    out = [f'<text x="{x}" y="{y + i * 14:.0f}" fill="{fill}" font-size="{size}">'
-           f'{_html.escape(ln)}</text>' for i, ln in enumerate(lines)]
+    out = [f'<text x="{x}" y="{y + i * 14:.0f}" fill="{fill}" font-size="{size}" '
+           f'text-anchor="{anchor}">{_html.escape(ln)}</text>'
+           for i, ln in enumerate(lines)]
     return "".join(out), y + len(lines) * 14
 
 
@@ -161,9 +163,7 @@ def era_legend(x: int, y: int) -> str:
     for tier in ("none", "low", "medium", "high", "xhigh", "max"):
         p.append(symbol(sx, y - 4, tier, MUTED, 4.2))
         sx += 13
-    p.append(jev_diamond(sx + 4, y - 4, JEV_G, 5))
-    p.append(f'<text x="{sx + 14}" y="{y}" fill="{MUTED}" font-size="9.5">Jev</text>')
-    p.append(f'<text x="{sx + 44}" y="{y}" fill="{MUTED}" font-size="9.5">&dagger; our '
+    p.append(f'<text x="{sx + 14}" y="{y}" fill="{MUTED}" font-size="9.5">&dagger; our '
              'matched run</text>')
     return "".join(p)
 

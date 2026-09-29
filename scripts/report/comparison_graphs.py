@@ -111,7 +111,7 @@ def _tt_jev(label, score, note):
 
 def bar_chart(title, subtitle, entries, unit="%"):
     W, L, R, row_h = 1180, 292, 128, 25
-    sub, sub_end = wrap_subtitle(24, 50, subtitle)
+    sub, sub_end = wrap_subtitle((L + W - R) // 2, 50, subtitle, anchor="middle")
     leg_y = sub_end + 20
     top = leg_y + 22
     H = top + len(entries) * row_h + 62
@@ -150,7 +150,7 @@ def bar_chart(title, subtitle, entries, unit="%"):
                  f'font-size="10.5" font-weight="600">{e["score"]:.1f}</text>')
         mx = vx + 30
         if jev:
-            p.append(jev_diamond(mx, y + 8.5, e["color"]))
+            p.append(symbol(mx, y + 8.5, "none", e["color"], 4.6))
         else:
             p.append(symbol(mx, y + 8.5, e.get("tier", "none"), e["color"], 4.4))
         p.append('</g>')

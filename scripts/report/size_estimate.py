@@ -160,7 +160,7 @@ def reconcile(pf: dict, cap: dict) -> dict:
                            "fits BOTH angles with no further machinery; this is the "
                            "simplest hypothesis consistent with everything measured"),
              "independent_evidence": "the $0.042/M price and 73 ms floor are consistent with small-model single-host serving"},
-            {"reading": "MoE (possible; not favored)",
+            {"reading": "MoE (possible)",
              "statement": ("an MoE with ~15-100B total at ~5-20% activation also "
                            "fits, and would explain the TOP of the capability band "
                            "with less compute per token; the loose corrected "

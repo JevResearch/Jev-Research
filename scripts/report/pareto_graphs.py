@@ -126,7 +126,7 @@ def chart(bkey, title, subtitle, jev_glob, jev_g, jev_w, n_items):
     def Y(v):
         return H - B - v / ymax * (H - top - B)
 
-    sub, sub_end = wrap_subtitle(24, 54, subtitle, width=148, size=12)
+    sub, sub_end = wrap_subtitle((L + W - R) // 2, 54, subtitle, width=175, size=12, anchor="middle")
     top = sub_end + 54
     p = [f'<svg viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" '
          f'font-family="system-ui,sans-serif" role="img" data-isolate="1" '
@@ -198,12 +198,12 @@ def chart(bkey, title, subtitle, jev_glob, jev_g, jev_w, n_items):
              f"gold option: {jev_w:.1f}%<br>same cost: ${jc:.8f}/question")
     p.append(f'<g class="mrow isorow" {tip(jtt_g)}>')
     p.append(f'<circle cx="{X(jc):.1f}" cy="{Y(jev_g):.1f}" r="8" fill="{JEV_G}" opacity="0.22"/>')
-    p.append(jev_diamond(X(jc), Y(jev_g), JEV_G, 5.4))
+    p.append(symbol(X(jc), Y(jev_g), "none", JEV_G, 5.2))
     p.append(f'<text class="mlabel jevlabel" x="{X(jc) + 11:.1f}" y="{Y(jev_g) + 4:.1f}" '
              f'fill="{JEV_G}" font-size="11" font-weight="700">Jev (greedy)</text>')
     p.append('</g>')
     p.append(f'<g class="mrow isorow" {tip(jtt_w)}>')
-    p.append(jev_diamond(X(jc), Y(jev_w), JEV_W, 4.6))
+    p.append(symbol(X(jc), Y(jev_w), "none", JEV_W, 4.4))
     p.append(f'<text class="mlabel jevlabel" x="{X(jc) + 11:.1f}" y="{Y(jev_w) + 4:.1f}" '
              f'fill="{JEV_W}" font-size="10">Jev (weighted)</text>')
     p.append('</g>')

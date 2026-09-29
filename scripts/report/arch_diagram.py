@@ -96,25 +96,25 @@ def build_svg() -> str:
          f'modified input stage and option read-out">',
          f'<rect width="{W}" height="{H}" fill="{BG}" rx="14"/>',
          txt(W // 2, 30, "Hypothesized Architecture", INK, 16, weight="700"),
-         txt(W // 2, 48, "a transformer stack, drawn plain - with the two modifications the evidence actually shows",
+         txt(W // 2, 48, "A transformer stack, drawn plain - with the two modifications the evidence actually shows",
              MUT, 10.5)]
 
     # ---------------- INPUT column (left) ----------------
     ix, iw = 24, 208
     p.append(box(ix, 78, iw, 118))
     p.append(txt(ix + iw / 2, 98, "REQUEST", TEAL, 11, weight="700"))
-    p.append(txt(ix + iw / 2, 120, "state + questions", INK, 11.5))
-    p.append(txt(ix + iw / 2, 138, "options: 255 or fewer each", MUT, 11))
-    p.append(txt(ix + iw / 2, 156, "choice / score / noul", MUT, 11))
+    p.append(txt(ix + iw / 2, 120, "State + questions", INK, 11.5))
+    p.append(txt(ix + iw / 2, 138, "Options: 255 or fewer each", MUT, 11))
+    p.append(txt(ix + iw / 2, 156, "Choice / score / noul", MUT, 11))
     p.append(txt(ix + iw / 2, 178, "POST /v1/systemone", MUT, 9.5))
 
     p.append(arrow(ix + iw / 2, 196, ix + iw / 2, 224))
 
     p.append(box(ix, 226, iw, 150))
     p.append(txt(ix + iw / 2, 246, "SERVING PATH", TEAL, 11, weight="700"))
-    p.append(txt(ix + iw / 2, 268, "whitespace normalizer", INK, 11.5))
-    p.append(txt(ix + iw / 2, 286, "fixed template, ~316 tok", MUT, 11))
-    p.append(txt(ix + iw / 2, 306, "vendor's own tokenizer", INK, 11.5))
+    p.append(txt(ix + iw / 2, 268, "Whitespace normalizer", INK, 11.5))
+    p.append(txt(ix + iw / 2, 286, "Fixed template, ~316 tok", MUT, 11))
+    p.append(txt(ix + iw / 2, 306, "Vendor's own tokenizer", INK, 11.5))
     p.append(txt(ix + iw / 2, 324, "Latin-centric BPE,", MUT, 11))
     p.append(txt(ix + iw / 2, 340, "byte-level fallback,", MUT, 11))
     p.append(txt(ix + iw / 2, 356, "~1 tok per non-Latin char", MUT, 11))
@@ -126,16 +126,16 @@ def build_svg() -> str:
     p.append(txt(cx, ty0 + 6, "ONE FORWARD PASS  (prefill only)", TEAL, 11.5, weight="700"))
 
     p.append(box(cx - tw / 2, ty0 + 22, tw, 40))
-    p.append(txt(cx, ty0 + 47, "token embeddings", INK, 12))
+    p.append(txt(cx, ty0 + 47, "Token embeddings", INK, 12))
 
     p.append(arrow(cx, ty0 + 62, cx, ty0 + 84))
 
     # N x [attention, feed-forward]
     p.append(box(cx - tw / 2, ty0 + 86, tw, 132, sw=1.2))
     p.append(box(cx - tw / 2 + 14, ty0 + 100, tw - 28, 44))
-    p.append(txt(cx, ty0 + 127, "attention", INK, 12))
+    p.append(txt(cx, ty0 + 127, "Attention", INK, 12))
     p.append(box(cx - tw / 2 + 14, ty0 + 158, tw - 28, 44))
-    p.append(txt(cx, ty0 + 185, "feed-forward", INK, 12))
+    p.append(txt(cx, ty0 + 185, "Feed-forward", INK, 12))
     p.append(txt(cx + tw / 2 + 24, ty0 + 157, "\u00d7 N", INK, 13, anchor="start", weight="700"))
 
     # loop-back arrow (residual repetition of the block)
@@ -147,16 +147,16 @@ def build_svg() -> str:
 
     p.append(arrow(cx, ty0 + 218, cx, ty0 + 244))
     p.append(box(cx - tw / 2, ty0 + 246, tw, 40))
-    p.append(txt(cx, ty0 + 271, "final hidden states h", INK, 12))
-    p.append(txt(cx, ty0 + 310, "every question + option reads from this one pass",
+    p.append(txt(cx, ty0 + 271, "Final hidden states h", INK, 12))
+    p.append(txt(cx, ty0 + 310, "Every question + option reads from this one pass",
                  MUT, 10.5))
-    p.append(txt(cx, ty0 + 326, f"compute: {floor} ms floor + {slope} ms per 1k tokens",
+    p.append(txt(cx, ty0 + 326, f"Compute: {floor} ms floor + {slope} ms per 1k tokens",
                  MUT, 10.5))
-    p.append(txt(cx, ty0 + 342, "linear to 29k; deciding adds <= 0.11 ms/question",
+    p.append(txt(cx, ty0 + 342, "Linear to 29k; deciding adds <= 0.11 ms/question",
                  MUT, 10.5))
-    p.append(txt(cx, ty0 + 358, "heavily batched (options \u00d7 parallel runs)",
+    p.append(txt(cx, ty0 + 358, "Heavily batched (options \u00d7 parallel runs)",
                  MUT, 10.5))
-    p.append(txt(cx, ty0 + 380, f"est. active size: ~{est_lo} to {est_hi}B params",
+    p.append(txt(cx, ty0 + 380, f"Est. active size: ~{est_lo} to {est_hi}B params",
                  AMBER, 10.2))
 
     # hidden states -> read-out head: elbow out of the frame and up
@@ -168,19 +168,19 @@ def build_svg() -> str:
     rx0, rw = 748, 208
     p.append(box(rx0, 118, rw, 168))
     p.append(txt(rx0 + rw / 2, 138, "READ-OUT HEAD", TEAL, 11, weight="700"))
-    p.append(txt(rx0 + rw / 2, 160, "replaces the language head", MUT, 11))
-    p.append(txt(rx0 + rw / 2, 182, "one distribution per question,", INK, 11.5))
+    p.append(txt(rx0 + rw / 2, 160, "Replaces the language head", MUT, 11))
+    p.append(txt(rx0 + rw / 2, 182, "One distribution per question,", INK, 11.5))
     p.append(txt(rx0 + rw / 2, 198, "over the caller's options", INK, 11.5))
     p.append(txt(rx0 + rw / 2, 226, f"+{mq:.2f} ms / question", MUT, 10.5))
     p.append(txt(rx0 + rw / 2, 242, f"+{mo:.2f} ms / option", MUT, 10.5))
-    p.append(txt(rx0 + rw / 2, 260, "~ prefill cost of the tokens they add", MUT, 10.5))
+    p.append(txt(rx0 + rw / 2, 260, "Each pays only for its own tokens", MUT, 10.5))
 
     p.append(arrow(rx0 + rw / 2, 286, rx0 + rw / 2, 314))
 
     p.append(box(rx0, 316, rw, 110))
     p.append(txt(rx0 + rw / 2, 336, "DISPLAY PIPELINE", TEAL, 11, weight="700"))
-    p.append(txt(rx0 + rw / 2, 358, "argmax decided before rounding", INK, 11.5))
-    p.append(txt(rx0 + rw / 2, 378, "probabilities rounded to", MUT, 11))
+    p.append(txt(rx0 + rw / 2, 358, "Argmax decided before rounding", INK, 11.5))
+    p.append(txt(rx0 + rw / 2, 378, "Probabilities rounded to", MUT, 11))
     p.append(txt(rx0 + rw / 2, 394, "the 0.01 grid; returned sums", MUT, 11))
     p.append(txt(rx0 + rw / 2, 410, "are 0.99 or 1.00, never above", MUT, 11))
 
@@ -188,7 +188,7 @@ def build_svg() -> str:
 
     p.append(box(rx0, 486, rw, 66))
     p.append(txt(rx0 + rw / 2, 508, "RESPONSE JSON", TEAL, 11, weight="700"))
-    p.append(txt(rx0 + rw / 2, 530, "serialized vectors", INK, 11.5))
+    p.append(txt(rx0 + rw / 2, 530, "Serialized vectors", INK, 11.5))
 
     # ---------------- bottom band ----------------
     yb = 486
@@ -199,19 +199,19 @@ def build_svg() -> str:
                  INK, 11, anchor="start"))
     p.append(txt(36, yb + 58, "solid to late 2024, partial to May 2025",
                  INK, 11, anchor="start"))
-    p.append(txt(36, yb + 76, "judgement-format post-training (vendor: RLCD);",
+    p.append(txt(36, yb + 76, "Judgement-format post-training (vendor: RLCD);",
                  MUT, 11, anchor="start"))
-    p.append(txt(36, yb + 92, "no discernible preexisting lineage;",
+    p.append(txt(36, yb + 92, "No discernible preexisting lineage;",
                  MUT, 11, anchor="start"))
-    p.append(txt(36, yb + 108, "frontier-teacher contribution: none identifiable, not excluded",
+    p.append(txt(36, yb + 108, "Frontier-teacher contribution: none identifiable, not excluded",
                  MUT, 11, anchor="start"))
 
     p.append(box(466, yb, 250, 118, stroke=MUT, dash="2 3"))
     p.append(txt(478, yb + 20, "NOT IDENTIFIED", MUT, 10.8, anchor="start", weight="700"))
-    p.append(txt(478, yb + 44, "dense vs MoE; attention type", MUT, 11, anchor="start"))
-    p.append(txt(478, yb + 64, "teacher-distilled vs trained", MUT, 11, anchor="start"))
+    p.append(txt(478, yb + 44, "Dense vs MoE; attention type", MUT, 11, anchor="start"))
+    p.append(txt(478, yb + 64, "Teacher-distilled vs trained", MUT, 11, anchor="start"))
     p.append(txt(478, yb + 80, "on its own data", MUT, 11, anchor="start"))
-    p.append(txt(478, yb + 100, "exact rule behind the 0.01 rounding", MUT, 11, anchor="start"))
+    p.append(txt(478, yb + 100, "Exact rule behind the 0.01 rounding", MUT, 11, anchor="start"))
 
     p.append("</svg>")
     return "".join(p)

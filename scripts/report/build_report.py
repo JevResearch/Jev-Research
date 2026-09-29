@@ -307,8 +307,10 @@ NOTES: dict[str, str] = {
         "bounded one-sided correction (or apportions integer hundredths), "
         "leaving a 0.01 shortfall on ~46% of flat large-K vectors. Every "
         "two-option vector sums to exactly 1.000 (complement emission). The grid "
-        "is a rounding step, not a floor: probabilities below 0.005 display "
-        "as exactly 0.00, and they are common. The live identical-option "
+        "is a rounding step, not a hard floor: probabilities below 0.005 "
+        "display as exactly 0.00 where one answer is confident (common), "
+        "while a flat vector keeps a 0.01 floor standard. The live "
+        "identical-option "
         "probe (runs_archprobe/probe2/) confirmed sums of exactly 1.000 at "
         "every option count up to 12 and 0.99-1.00 at 255; the exact "
         "apportionment rule at the boundaries remains open.",
@@ -370,7 +372,7 @@ figure svg{margin:.4rem 0}
 figcaption{color:var(--mut);font-size:.8rem;font-style:italic;margin:.3rem 0 0;line-height:1.45}
 @media(min-width:900px){
 figure{width:min(96vw,1120px);margin-left:calc(50% - min(48vw,560px));margin-right:calc(50% - min(48vw,560px))}
-figcaption{max-width:72ch;margin-left:auto;margin-right:auto}
+figcaption{max-width:none;margin-left:auto;margin-right:auto}
 }
 table{border-collapse:collapse;width:100%;font-size:.92rem;margin:1rem 0}
 th,td{text-align:left;padding:.45rem .6rem;border-bottom:1px solid var(--line)}
@@ -701,7 +703,7 @@ choice / score / noul as its three exposed shapes</td><td>Confident</td></tr>
 with quantized-serving assumptions the two size angles overlap, so neither
 is forced and MoE stays possible; attention variant unknowable at these
 context lengths</td><td>Plausible / open</td></tr>
-<tr><td>Size</td><td class='cap'>No point estimate. Latency suggests ~{sz_lo:.1f} to {sz_hi:.0f}B active params from prefill throughput (with quantized-serving assumptions); capability suggests {szc_lo:.0f} to {szc_hi:.0f}B dense-equivalent, which does the narrowing. A quantized dense ~{szc_lo:.0f} to {sz_dense_hi:.0f}B is the parsimonious joint reading; a MoE (~{sz_moe_lo:.0f} to {sz_moe_hi:.0f}B total) stays possible, not favored</td><td>Plausible</td></tr>
+<tr><td>Size</td><td class='cap'>No point estimate. Latency suggests ~{sz_lo:.1f} to {sz_hi:.0f}B active params from prefill throughput (with quantized-serving assumptions); capability suggests {szc_lo:.0f} to {szc_hi:.0f}B dense-equivalent, which does the narrowing. A quantized dense ~{szc_lo:.0f} to {sz_dense_hi:.0f}B is the parsimonious joint reading; a MoE (~{sz_moe_lo:.0f} to {sz_moe_hi:.0f}B total) stays possible</td><td>Plausible</td></tr>
 <tr><td>Training</td><td class='cap'>English-dominant pretraining; knowledge horizon solid to late 2024, partial to ~{hz_solid}, gone by {hz_gone}; judgement-format assistant post-training; OpenAI-flavored brand prior inherited from training text; frontier-teacher contribution: none identifiable, not excluded</td><td>Plausible</td></tr>
 <tr><td>What it is not</td><td class='cap'>Not frontier, not retrieval- or cache-assisted, not a wrapper around another vendor's API, not a relabeled open model</td><td>Confident</td></tr>
 </table>
@@ -749,8 +751,8 @@ not.</figcaption></figure>
 <p>Every probability Jev returns is rounded to two decimals: across
 {lat_vals:,} values in {lat_vecs:,} published vectors, from 2-option questions up to
 255-option menus, not one value ever landed off that 0.01
-grid.{fn('quantization')} A probability of exactly 0.00 is common, so there is
-no floor - genuinely unlikely options are shown as zero, not as 0.01. What
+grid.{fn('quantization')} A probability of exactly 0.00 is common where there is high confidence
+about at least one answer (otherwise, a 0.01 floor is standard). What
 that costs you is resolution: two options at 0.17 and 0.174 are
 indistinguishable, so any conclusion resting on a difference below 0.01 is
 reading noise.</p>
@@ -866,8 +868,8 @@ reasonable assumptions. From the throughput side: the marginal prefill rate is
 N<sub>active</sub> &le; MFU &times; effective peak &times; shards &divide; 2R.
 Assuming typical late-2026 hardware (H100/H200/B200/TPU-v6/MI325X-class,
 ~400-2250 BF16 TFLOPS per device) and FP4-FP8 quantization - which doubles
-(fp8) to quadruples (fp4) effective throughput - the honest peak range is
-~{sz_pk_lo:.0f}-{sz_pk_hi:.0f} effective TFLOPS per device, not the 250-500 of a 2020-era bf16 A100.
+(fp8) to quadruples (fp4) effective throughput - we estimate the peak
+range at ~{sz_pk_lo:.0f}-{sz_pk_hi:.0f} effective TFLOPS per device.
 With 25-45% utilization over 1-4 devices that bounds the <i>active</i>
 footprint at ~{sz_lo:.1f} to {sz_hi:.1f}B parameters (central case ~{sza['central_case_B']:.1f}B), and sharing the machine
 with other tenants only lowers the bound. From the capability side: the
@@ -900,8 +902,8 @@ frontier: the benchmark section says so six ways.</p>
 
 <h3 id="arch-open">What stays open</h3>
 <p>Three things this API cannot tell us, and we do not guess them. Whether the
-transformer is dense or mixture-of-experts - the capability/latency ratio
-favors MoE, but nothing observable separates them. Whether a frontier teacher
+transformer is dense or mixture-of-experts - nothing observable separates
+them. Whether a frontier teacher
 produced any of the training signal: every discriminator we can construct is
 confounded, including the OpenAI-shaped brand prior, which the open
 assistant-text ecosystem produces on its own. And any exact parameter count
@@ -1024,8 +1026,7 @@ thought is a cost that counts against the models that employ it.</p>
 </table>
 <p class="cap">The <b>Weighted</b> column is the average probability Jev itself
 put on the right answer; it sits below accuracy almost everywhere, which says
-Jev's confidence spreads onto wrong options more than its accuracy war-
-rants.{fn('greedyw')} MATH-500 and ARC-AGI-2 rows are conversions, not native
+Jev's confidence spreads onto wrong options more than its accuracy warrants.{fn('greedyw')} MATH-500 and ARC-AGI-2 rows are conversions, not native
 runs.{fn('mathadapt')} The rotation audit re-ran items with option order
 shuffled.{fn('rotations')}</p>
 <h3 id="bench-charts">The charts</h3>
@@ -1059,6 +1060,16 @@ def pareto() -> str:
     figs = "".join(f"<figure>{svg}</figure>" for svg in PARETO)
     pareto_extra = ""
     if MATCHED.get("models"):
+        _DISP = {"deepseek/deepseek-v4-flash-0731": "DeepSeek V4 Flash",
+                 "qwen/qwen3.8-max-0902": "Qwen3.8 Max",
+                 "qwen/qwen3.8-flash": "Qwen3.8 Flash",
+                 "qwen/qwen3.7-flash": "Qwen3.7 Flash",
+                 "z-ai/glm-5.3-flash": "GLM-5.3 Flash",
+                 "z-ai/glm-5.3": "GLM-5.3",
+                 "xiaomi/mimo-v2.6-pro": "MiMo v2.6 Pro",
+                 "xiaomi/mimo-v2.6-flash": "MiMo v2.6 Flash",
+                 "openai/gpt-oss-20b": "gpt-oss-20b",
+                 "openai/gpt-oss-120b": "gpt-oss-120b"}
         _jcq = JEV_COST["mmlu_pro"] / SC["mmlu"]["n_expected"]
         _rows = []
         for _mid, _dss in MATCHED["models"].items():
@@ -1067,7 +1078,7 @@ def pareto() -> str:
             _c = _e.get("cost_per_question_usd")
             _jj = _e.get("jev_join") or {}
             if _a is not None and _c and _e.get("n_terminal") == _e.get("n_requested"):
-                _rows.append((_mid.split("/")[-1], _a * 100.0, _c,
+                _rows.append((_DISP.get(_mid, _mid.split("/")[-1]), _a * 100.0, _c,
                               (_jj.get("jev_accuracy_on_subset") or 0.0) * 100.0))
         if _rows:
             _rows.sort(key=lambda r: -r[1])
@@ -1078,7 +1089,7 @@ def pareto() -> str:
             bits = [" The dagger points fill in the commodity end, and they "
                     "refine the claim."]
             if _above:
-                _names = ", ".join(f"{r[0]} ({r[1]:.1f}%)" for r in _above[:3])
+                _names = ", ".join(f"{r[0]} ({r[1]:.1f}%)" for r in _above)
                 _mults = [r[2] / _jcq for r in _above]
                 bits.append(
                     f" {len(_above)} matched models outscore Jev on these "
@@ -1118,7 +1129,7 @@ external point is either our own run (mostly of small models) or a vals.ai
 platform measurement. Chain-of-thought models are thus inherently punished
 for their billed intermediary tokens.{fn('costest')} Jev's points come from
 our own billing.</p>
-<p>Jev does land on the visible frontier - and then some. At
+<p>To be clear, due to the significant cost savings from a lack of text decoding, Jev <i>does</i> move the frontier - and then some. Just not at the level of the frontier. At
 {pct(SC['mmlu']['accuracy'])} on MMLU-Pro its whole 12,032-question run cost
 ${JEV_COST['mmlu_pro']:.2f}, about ${jq:.6f} per question: four to five orders
 of magnitude left of every vals-measured flagship. The same run at Claude
@@ -1233,7 +1244,7 @@ galaxy where nebulae paint the void in hues ofviolet andgold cos cosmic
 rabbits hop through the interstellar aether and meet Elvis Presley who was
 beenhad&rdquo;</i> - fluent, on-prompt, and corrupted exactly where Jev's own
 surface-form quirks show through (<code>&ldquo;ofviolet&rdquo;</code>, <code>&ldquo;andgold&rdquo;</code>).</p>
-<p>We are not the first to give Jev a mouth. <a
+<p>In terms of giving Jev a mouth, we were beaten to the punch. <a
 href="https://famelos.com/jev-chat/watch/">Jev Chat</a> - which appears to
 power <a href="https://bsky.app/profile/jevbot.bsky.social">Jev Bot</a> on
 Bluesky - grows every reply one word at a time from a Markov model, a simpler
@@ -1315,8 +1326,8 @@ shuffling, with no net direction). For measurement-grade use, rotate the list
 and average over 6+ rotations.</li>
 <li><b>Probabilities come back on a 0.01 grid.</b> Nothing finer is ever
 shown, so differences below 0.01 are invisible. An option can sit at exactly
-0.00 - there is no floor - but low-probability answers get drowned in
-rounding noise. The vector sums to 0.99 or 1.00, never above. Set your
+0.00 where confidence concentrates on one answer (otherwise, a 0.01 floor
+is standard) - and low-probability answers get drowned in rounding noise. The vector sums to 0.99 or 1.00, never above. Set your
 thresholds accordingly.</li>
 <li><b><code>confidence</code> is not new information.</b> For choice it is
 the chance-corrected top probability of the same vector, rounded. If you want
@@ -1402,15 +1413,7 @@ OpenAI, and turned out to be a tokenizer fingerprint nobody could match to an
 existing model. It earns attention by being useful, not by being frontier. That
 is a perfectly good thing to be. Just say so.</p>
 </section>
-<footer>
-<p><b>Reproducibility.</b> This report was created from the run artifacts in this
-repository by <code>scripts/report/build_report.py</code>; every number is read
-from disk at render time, and the charts are produced by
-<code>comparison_graphs.py</code>, <code>pareto_graphs.py</code> and
-<code>arch_evidence.py</code>. Our own probing transcripts (the Talk-to-Jev
-traces and the architecture-probe rows) are published verbatim; benchmark raw
-logs are held locally because they embed licensed dataset text.</p>
-</footer>
+
 {refs()}"""
 
 

@@ -93,7 +93,7 @@ def concurrency_chart(a):
     p.append(f'<text x="24" y="30" fill="{TEXT}" font-size="17" font-weight="600">'
              'Concurrency: client wall vs server compute</text>')
     p.append(f'<text x="24" y="48" fill="{MUTED}" font-size="11.5">'
-             'wall (red) bends up past c=16 but upstream (teal) stays flat — '
+             'wall (red) bends up past c=16 but upstream (teal) stays flat - '
              'that is our connection pool, not a server limit</text>')
     for gx in cs:
         x = L + gx / xmx * (W - L - R)
