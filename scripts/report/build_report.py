@@ -369,7 +369,7 @@ p,li{max-width:none}a{color:var(--peri)}
 svg{width:100%;height:auto;display:block;margin:1rem 0}
 figure{margin:1.6rem 0;width:100%}
 figure svg{margin:.4rem 0}
-figcaption{color:var(--mut);font-size:.8rem;font-style:italic;margin:.3rem 0 0;line-height:1.45}
+figcaption{color:var(--mut);font-size:.8rem;font-style:italic;margin:.3rem 0 0;line-height:1.45;text-align:center}
 @media(min-width:900px){
 figure{width:min(96vw,1120px);margin-left:calc(50% - min(48vw,560px));margin-right:calc(50% - min(48vw,560px))}
 figcaption{max-width:none;margin-left:auto;margin-right:auto}

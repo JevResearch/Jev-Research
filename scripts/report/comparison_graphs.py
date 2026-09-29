@@ -120,9 +120,10 @@ def bar_chart(title, subtitle, entries, unit="%"):
          f'font-family="system-ui,sans-serif" role="img" '
          f'aria-label="{_html.escape(title, quote=True)}">',
          f'<rect width="{W}" height="{H}" fill="{BG}" rx="14"/>',
-         f'<text x="24" y="30" fill="{TEXT}" font-size="16.5" font-weight="700">'
+         f'<text x="{(L + W - R) // 2}" y="30" fill="{TEXT}" font-size="16.5" '
+         f'font-weight="700" text-anchor="middle">'
          f'{_html.escape(title)}</text>',
-         sub, era_legend(24, leg_y)]
+         sub, era_legend((L + W - R) // 2 - 300, leg_y)]
     gx = 0
     step = 10 if xmax <= 100 else 20
     while gx <= xmax:

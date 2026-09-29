@@ -132,9 +132,10 @@ def chart(bkey, title, subtitle, jev_glob, jev_g, jev_w, n_items):
          f'font-family="system-ui,sans-serif" role="img" data-isolate="1" '
          f'aria-label="{_html.escape(title, quote=True)}">',
          f'<rect width="{W}" height="{H}" fill="{BG}" rx="14"/>',
-         f'<text x="24" y="32" fill="{TEXT}" font-size="20" font-weight="700">'
+         f'<text x="{(L + W - R) // 2}" y="32" fill="{TEXT}" font-size="20" '
+         f'font-weight="700" text-anchor="middle">'
          f'{_html.escape(title)}</text>',
-         sub, era_legend(24, sub_end + 26)]
+         sub, era_legend((L + W - R) // 2 - 300, sub_end + 26)]
     # gridlines
     e = math.ceil(lo)
     while e <= hi:
