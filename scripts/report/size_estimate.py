@@ -3,7 +3,7 @@
 
 ANGLE 1 - prefill throughput. The measured marginal prefill rate (6.053 ms per
 1k input tokens, runs_archprobe/analysis.json) is ~165k tokens/s of
-incremental server compute. REVISED 2026-09-25: the first pass assumed bf16 on
+incremental upstream service time. REVISED 2026-09-25: the first pass assumed bf16 on
 A100/H100-class hardware (250-500 TFLOPS), which is dated - late-2026 serving
 at this price point is quantized (fp8/int4) on H100/H200/B200/TPU-v6/MI325X-
 class parts (400-2250 effective TFLOPS). The revision raises the active-

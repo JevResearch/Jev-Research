@@ -1,0 +1,15 @@
+{
+  "schema": "aggregate-provenance-1.0.0",
+  "entries": [
+    {
+      "artifact": "score.json",
+      "preserved_as": "runs_benchmark/bench-option_rotations-9013bf99bfb6/derived/preserved-pre-policy-v1/score.json",
+      "sha256": "3d20e96c09fac187cca0e5a0ae368aa230d29f3e51d8ab45dacb9190636191e1",
+      "scoring_version": "benchmark-score-pre-policy-v1 (usable-answered denominator; rotation probability keys un-remapped)",
+      "regenerated_as": {
+        "path": "score.json",
+        "scoring_version": "benchmark-score-2.0.0"
+      }
+    }
+  ]
+}

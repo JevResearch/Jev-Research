@@ -1,15 +1,33 @@
 {
+  "score_schema_version": "benchmark-score-2.0.0",
+  "scoring_policy": {
+    "headline": "all-requested: every requested logical request is in the headline denominator; missing terminal results, strict-format failures and unusable answers count as wrong",
+    "usable_response_accuracy": "separately reported over ok+usable responses only, with its own count and Wilson interval; never substituted for the headline",
+    "by_group_and_rotation": "denominators and Wilson intervals follow the all-requested policy",
+    "proper_scores": "displayed probability vectors only; for rotated items the probability KEYS are canonicalized through the recorded remapping before comparison with canonical gold",
+    "duplicates": "duplicate terminal logical_request_id (or item_id) values are refused with a hard error, never double-counted"
+  },
   "stage": "arc_test",
   "run_dir": "runs_benchmark/bench-arc_test-9013bf99bfb6",
+  "n_requested": 1172,
   "n_expected": 1172,
   "n_terminal_results": 1172,
-  "n_scored": 1172,
-  "n_missing_terminal": 0,
+  "n_correct": 1147,
   "accuracy": 0.9786689419795221,
   "wilson_95": {
     "low": 0.9687,
     "high": 0.98551
   },
+  "n_missing_terminal": 0,
+  "n_usable_responses": 1172,
+  "usable_response_correct": 1147,
+  "usable_response_accuracy": 0.9786689419795221,
+  "usable_response_wilson_95": {
+    "low": 0.9687,
+    "high": 0.98551
+  },
+  "n_usable_multi_question_excluded": 0,
+  "usable_response_note": "SEPARATE diagnostic over ok+usable responses only (n_usable_responses; multi-question chunk items are excluded from usable_response_accuracy because item-level correctness is not defined for them); never the headline denominator",
   "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject.",
   "status_counts": {
     "ok": 1172
@@ -22,7 +40,7 @@
     "excluded_no_valid_probabilities": 0,
     "brier_mean": 0.03713890784982935,
     "log_loss_mean": 0.2036860442271505,
-    "note": "proper scores only over attempts with usable, finite probabilities; text-only baselines contribute none"
+    "note": "proper scores only over attempts with usable, finite probabilities (rotated items scored on probability keys canonicalized through the recorded remapping); text-only baselines contribute none"
   },
   "by_group": {
     "arc-challenge": {
@@ -33,7 +51,8 @@
         "low": 0.9687,
         "high": 0.98551
       },
-      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject.",
+      "denominator_note": "all requested items in this group/variant; missing, invalid and unusable count as wrong"
     }
   },
   "by_rotation_variant": {},

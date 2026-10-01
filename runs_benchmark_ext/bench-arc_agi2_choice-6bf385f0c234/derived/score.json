@@ -1,6 +1,7 @@
 {
   "stage": "arc_agi2_choice",
   "run_dir": "runs_benchmark_ext/bench-arc_agi2_choice-6bf385f0c234",
+  "score_schema_version": "benchmark-score-2.0.0",
   "official_task_criterion": "task solved only when every output cell of every test input is exactly correct (pass@1; no retries by protocol)",
   "n_tasks_expected": 120,
   "n_tasks": 120,
@@ -15,7 +16,6 @@
   "n_chunk_items_expected": 517,
   "n_chunk_items_terminal": 517,
   "n_missing_terminal": 0,
-  "missing_items": [],
   "status_counts": {
     "ok": 517
   },

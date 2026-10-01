@@ -17,6 +17,13 @@ Cell-level truth, one question per cell (Native mode):
   whenever the server's probability vector puts any mass on the mode.  This is
   the benchmark's own color scale, so the rubric is definitional, not a
   proxy regression.
+* every cell question states its TEST-GRID identity (grid i of n) alongside
+  its (row, column): a task's test inputs are all in the shared state, so
+  without the grid identity two grids of one task could serialize to
+  byte-identical requests with different gold.
+* the option palette (cell_choice) and the question count are derived from
+  the GOLD output grids — an explicitly recorded ORACLE diagnostic protocol
+  (``ORACLE_DIAGNOSTIC_PROTOCOL``), never presented as official evaluation.
 
 Task-level truth (WholeTask mode): every cell of every test output is one
 question in a single request whose state is the full task (demonstrations +
@@ -55,10 +62,13 @@ from .base import DatasetProvenance, LoadedDataset
 SOURCE_REPO = "https://github.com/arcprize/ARC-AGI-2"
 EXPECTED_EVAL_TASKS = 120
 SCORE_LEVELS = 10
-# Cell position MUST live in the question CONTENT: the server never sees
-# question ids (isolation probes), so identical instructions would make every
-# cell question indistinguishable (observed live 2026-09-20: position-blind
-# answers).  Each cell question therefore states its own (row, column).
+# Cell position AND test-grid identity MUST live in the question CONTENT: the
+# server never sees question ids (isolation probes), so identical instructions
+# would make every cell question indistinguishable (observed live 2026-09-20:
+# position-blind answers), and row/column-only instructions made cells of
+# DIFFERENT test grids of the same task byte-identical requests with different
+# gold (7 duplicate-payload pairs in the recorded choice run).  Each cell
+# question therefore states its own (grid, row, column).
 SCORE_INSTRUCTIONS_TEMPLATE = (
     "Output cell color for the test-output grid cell at row {row}, column "
     "{col} (0-indexed from the top-left corner). "
@@ -74,6 +84,29 @@ CHOICE_INSTRUCTIONS_TEMPLATE = (
     "{col} (0-indexed from the top-left corner). "
     "Choose the single best option."
 )
+CHOICE_INSTRUCTIONS_GRID_TEMPLATE = (
+    "Output cell color for test output grid {grid} of {n_grids} (the output "
+    "of test input {grid}), cell at row {row}, column {col} (0-indexed from "
+    "the top-left corner). Choose the single best option."
+)
+SCORE_INSTRUCTIONS_CELL_GRID_TEMPLATE = (
+    "Output cell color for test output grid {grid} of {n_grids} (the output "
+    "of test input {grid}), cell at row {row}, column {col} (0-indexed from "
+    "the top-left corner). Level i means the cell color i (0-9)."
+)
+# The per-cell encodings derive option sets (cell_choice) and question counts
+# from the GOLD output grids: an explicitly recorded ORACLE diagnostic
+# protocol, never presented as official ARC-AGI-2 evaluation (which requires
+# free-form grid generation and scores whole tasks on unseen data).
+ORACLE_DIAGNOSTIC_PROTOCOL = {
+    "kind": "oracle-dimensions-and-palette",
+    "dims_from_gold": "cell questions are enumerated over the gold output grid dimensions",
+    "palette_from_gold": ("cell_choice options are the distinct colors of the gold "
+                          "output grid (padded with one decoy when a single color)"),
+    "status": ("explicitly recorded diagnostic protocol; NOT official ARC-AGI-2 "
+               "evaluation (that requires free-form grid generation on the "
+               "semi-private set)"),
+}
 # ARC-AGI-2 grids are at most 30x30 = 900 cells (docs/readme); a defensive cap
 # keeps any malformed archive from producing unbounded questions per request.
 MAX_GRID_DIM = 30
@@ -282,16 +315,18 @@ def build_items_cell_mode(
                      for r in range(height) for c in range(width)]
             chunks = [cells[i:i + CHUNK_QUESTIONS]
                       for i in range(0, len(cells), CHUNK_QUESTIONS)]
+            n_grids = len(task["test_outputs"])
             for chunk_index, chunk in enumerate(chunks):
                 questions: dict[str, dict[str, Any]] = {}
                 gold: dict[str, dict[str, Any]] = {}
                 for qid, r, c, value in chunk:
-                    template = (CHOICE_INSTRUCTIONS_TEMPLATE
+                    template = (CHOICE_INSTRUCTIONS_GRID_TEMPLATE
                                 if mode == "cell_choice"
-                                else SCORE_INSTRUCTIONS_TEMPLATE)
+                                else SCORE_INSTRUCTIONS_CELL_GRID_TEMPLATE)
                     questions[qid] = {
                         "type": question_type,
-                        "instructions": template.format(row=r, col=c),
+                        "instructions": template.format(
+                            row=r, col=c, grid=grid_index + 1, n_grids=n_grids),
                         "criteria": criteria,
                     }
                     gold[qid] = {"arc_agi2_cell": {"value": value}}
@@ -307,6 +342,9 @@ def build_items_cell_mode(
                     "arc_meta": {
                         "task_id": record["id"],
                         "grid_index": grid_index,
+                        "n_grids": n_grids,
+                        "grid_identity": ("test output grid "
+                                          f"{grid_index + 1} of {n_grids}"),
                         "height": height,
                         "width": width,
                         "distinct_output_colors": distinct,
@@ -314,6 +352,7 @@ def build_items_cell_mode(
                         "chunk_index": chunk_index,
                         "n_chunks": len(chunks),
                         "base_id": base_id,
+                        "diagnostic_protocol": ORACLE_DIAGNOSTIC_PROTOCOL,
                     },
                     "leakage_check": False,
                 })
@@ -374,6 +413,7 @@ def build_items_whole_task_mode(
                     "chunk_index": chunk_index,
                     "n_chunks": len(chunks),
                     "base_id": base_id,
+                    "diagnostic_protocol": ORACLE_DIAGNOSTIC_PROTOCOL,
                 },
                 "leakage_check": False,
             })
@@ -440,6 +480,10 @@ def build_spec(
             "no_chain_of_thought": True,
             "correct_answer_retries": 0,
             "encoding": mode,
+            "grid_identity": ("every cell question states its test-grid identity "
+                             "(grid i of n) plus (row, column) in the question "
+                             "content — the server never sees question ids"),
+            "oracle_diagnostics": ORACLE_DIAGNOSTIC_PROTOCOL,
             "task_truth": ("per-grid exact cell recovery; task solved only when ALL "
                            "grids are fully correct (whole_task stage reports the "
                            "official criterion directly)"),

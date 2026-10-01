@@ -15,11 +15,17 @@ artifacts were crushing several models' scores:
 2. VERBOSE SOLVERS REJECTED BY EXACT-KEY PARSING. Gemma-3-4B, Llama-3.1-8B
    and Mistral-Small-3.2 answer in prose ("The answer is B..."). Fix: a
    documented, deterministic recovery parser applied IDENTICALLY to every
-   model, with the recovery stage recorded per item:
-     exact -> stripped -> answer-pattern -> isolated-uppercase-key ->
-     first-char -> (empty content) reasoning-channel -> unrecovered.
-   Unrecovered counts as wrong. Both strict and recovered accuracy are
-   reported; charts use recovered.
+   model, with the recovery stage recorded per item (see
+   jev_observatory.answer_recovery for the full contract):
+     exact -> stripped -> answer_pattern -> isolated-key ->
+     (empty content) reasoning-channel -> unrecovered.
+   Recovery matches the ACTUAL allowed keys (MATH keys are o0-o3, some
+   MMLU/HLE keys extend beyond J) at token boundaries only; the LAST
+   unambiguous explicit answer statement wins; negated/disjunctive mentions
+   and multiple distinct key mentions recover nothing; first-character
+   guessing is gone (it inflated recovered accuracy). Unrecovered counts as
+   wrong. Both strict and recovered accuracy are reported; charts use
+   recovered.
 
 Wire v2 (recorded per attempt): temperature=0, max_output_tokens=4096
 (2048 where thinking is disabled), reasoning_effort=low where accepted and
@@ -58,6 +64,9 @@ import urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 
+from jev_observatory.answer_recovery import (RECOVERY_SPEC_VERSION,
+                                             recover_choice,
+                                             recovery_spec)
 from jev_observatory.matched import build_baseline_request, logical_id
 from jev_observatory.openrouter import (API_KEY_ENV, CHAT_PATH, MODELS_PATH,
                                         OPENROUTER_BASE_URL,
@@ -150,40 +159,10 @@ def gold_of(item: dict) -> str | None:
     return None
 
 
-_ANS_PAT = re.compile(
-    r"(?:answer|option|choice)\s*(?:is|:|=)?\s*[\(\[\*]*([A-J])[\)\]\*.,]?", re.I)
-_ISO_PAT = re.compile(r"(?<![A-Za-z0-9])([A-J])(?![A-Za-z0-9])")
-
-
-def recover_choice(text: str | None, keys: list[str],
-                   reasoning: str | None = None) -> tuple[str | None, str]:
-    """Deterministic, documented recovery. Returns (key|None, stage)."""
-    keyset = set(keys)
-    t = (text or "").strip()
-    if t in keyset:
-        return t, "exact"
-    t1 = t.strip("*_`\"' .\n\t")
-    if t1 in keyset:
-        return t1, "stripped"
-    if len(t1) == 1 and t1.upper() in keyset:
-        return t1.upper(), "stripped_char"
-    m = _ANS_PAT.findall(t)
-    if m and m[-1].upper() in keyset:
-        return m[-1].upper(), "answer_pattern"
-    iso = [c for c in _ISO_PAT.findall(t) if c in keyset]  # uppercase only: 'a' the article must not recover
-    if iso:
-        return iso[-1], "isolated_upper_key"
-    if t and t[0].upper() in keyset:
-        return t[0].upper(), "first_char"
-    if not t and reasoning:
-        r = reasoning.strip()
-        m2 = _ANS_PAT.findall(r)
-        if m2 and m2[-1].upper() in keyset:
-            return m2[-1].upper(), "reasoning_channel"
-        iso2 = [c for c in _ISO_PAT.findall(r[-40:]) if c in keyset]
-        if iso2:
-            return iso2[-1], "reasoning_channel"
-    return None, "unrecovered"
+# recover_choice is implemented in jev_observatory.answer_recovery (generalized
+# to the actual allowed keys, token boundaries, unambiguous explicit final
+# answer preference, no gold access, no first-character guessing) and
+# re-exported here for run_matched3.py's rcm2 import contract.
 
 
 def wire_for(model: str, no_think: bool) -> WireConfig:
@@ -221,7 +200,8 @@ def cmd_plan() -> int:
         "wire": {"temperature": 0, "max_output_tokens": MAX_OUT,
                  "max_output_tokens_no_think": MAX_OUT_NOTHINK,
                  "reasoning_effort": "low unless thinking disabled",
-                 "recovery": "exact->stripped->answer_pattern->isolated_upper_key->first_char->reasoning_channel"},
+                 "recovery": ",".join(recovery_spec()["stages"]),
+                 "recovery_spec_version": RECOVERY_SPEC_VERSION},
         "datasets": {k: len(v) for k, v in items.items()},
         "hard_cap_usd": HARD_CAP_USD, "total_calls": calls,
     }, indent=1))
@@ -232,6 +212,15 @@ def cmd_plan() -> int:
         print(f"  {m['id']:44s} in ${m['input_per_M']:.2f}/M out ${m['output_per_M']:.2f}/M  {n} calls"
               f"{'  [arc]' if m['arc'] else ''}{'  [no-think]' if m['no_think'] else ''}")
     return 0
+
+
+def _refuse_overwrite(path: Path) -> None:
+    """Original run evidence is never overwritten; regenerate elsewhere."""
+    if path.exists():
+        raise SystemExit(
+            f"[refused] {path} already exists; original run evidence is never "
+            f"overwritten (use scripts/benchmark/run_baseline_revision.py for "
+            f"versioned re-runs)")
 
 
 def _live_gate() -> str:
@@ -254,6 +243,15 @@ def _extract_content_reasoning(body) -> tuple[str, str]:
     if not isinstance(reasoning, str):
         reasoning = json.dumps(reasoning)[:2000]
     return content, reasoning
+
+
+def _extract_finish_reason(body) -> str | None:
+    """finish_reason from an OpenRouter chat response body (recorded truth)."""
+    if not isinstance(body, dict):
+        return None
+    ch = (body.get("choices") or [{}])[0]
+    value = ch.get("finish_reason")
+    return str(value) if value is not None else None
 
 
 def cmd_smoke() -> int:
@@ -300,6 +298,7 @@ def cmd_smoke() -> int:
         print(f"[smoke] {mid:44s} http={rec.get('http')} pred={rec.get('pred')} "
               f"stage={rec.get('stage')} ok={rec.get('ok')} "
               f"content={rec.get('content','')[:40]!r}")
+    _refuse_overwrite(RUN_ROOT / "smoke_v2.json")
     (RUN_ROOT / "smoke_v2.json").write_text(json.dumps(
         {"created_at": utc_now(), "results": out}, indent=1))
     nok = sum(1 for r in out if r["ok"])
@@ -336,6 +335,7 @@ def cmd_live() -> int:
             max_output_tokens=int(w.get("max_output_tokens") or MAX_OUT),
             extra_body=w.get("extra_body") or None)
     items = load_items()
+    _refuse_overwrite(RUN_ROOT / "freeze_v2.json")
     RUN_ROOT.mkdir(parents=True, exist_ok=True)
     RAW_DIR.mkdir(parents=True, exist_ok=True)
     results_p = RUN_ROOT / "results.jsonl"
@@ -438,8 +438,9 @@ def cmd_live() -> int:
                         rf = raw_files.get(mid)
                         if rf is None:
                             rf = raw_files[mid] = (RAW_DIR / f"{mid.replace(chr(47), chr(95))}.jsonl").open("a")
-                        rf.write(json.dumps({"lid": lid, "content": content[:400],
-                                             "reasoning": reasoning[:300]}) + "\n")
+                        rf.write(json.dumps({"lid": lid, "content": content,
+                                             "reasoning": reasoning,
+                                             "finish_reason": _extract_finish_reason(body)}) + "\n")
                     break
                 except Exception as exc:
                     if attempt >= TRANSPORT_RETRIES:

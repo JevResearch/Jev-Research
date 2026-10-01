@@ -6,21 +6,31 @@ The gold labels come ONLY from the frozen ``items.jsonl`` of the planned run
 ``results.jsonl``. The scorer never repairs a bad answer, never drops a
 failure, and never averages robustness data into the headline.
 
-Outputs (machine-readable JSON, input for the report graphics):
+Scoring policy (``benchmark-score-2.0.0``; see ``SCORING_POLICY``):
 
-* micro accuracy overall and per subject (group), with Wilson 95% intervals;
+* HEADLINE accuracy is ALL-REQUESTED: every requested logical request is in
+  the denominator; missing terminal results, strict-format failures and
+  unusable answers count as WRONG.  The usable-response accuracy and count
+  are reported SEPARATELY and are never substituted for the headline;
+* by-group and by-rotation-variant blocks follow the same all-requested
+  denominator policy, with Wilson 95% intervals computed on it;
 * an explicit finite-population caveat on every interval (a benchmark is a
   finite item set, so the interval is a diagnostic for item sampling within
   that fixed set, NOT a superpopulation claim);
-* strict-format failure counts and every non-ok terminal status, by stage;
+* duplicate terminal ``logical_request_id`` (or ``item_id``) values are
+  REFUSED with a hard error — never silently double-counted;
+* rotation robustness scored against the canonical labels restored through
+  the recorded remapping, reported per variant separately, with a hard error
+  if the restored comparison disagrees with the direct comparison.  The
+  probability KEYS of rotated items are canonicalized through the same
+  remapping before any proper-score or zero-gold computation (looking up
+  canonical gold against still-rotated keys produced spurious zero-gold
+  counts);
 * zero-probability gold count (gold key carries probability exactly 0 where
   the server reported probabilities; text baselines report ``null``);
 * proper scores (multiclass Brier, clipped log loss) ONLY where probabilities
   are present, contract-usable and finite; otherwise an explicit null with a
-  count of exclusions — never false calibration certainty;
-* rotation robustness scored against the canonical labels restored through the
-  recorded remapping, reported per variant separately, with a hard error if
-  the restored comparison disagrees with the direct comparison.
+  count of exclusions — never false calibration certainty.
 """
 
 from __future__ import annotations
@@ -33,11 +43,34 @@ from typing import Any
 from .metrics import brier_multiclass, wilson_interval
 
 WILSON_Z = 1.959963984540054
+SCORE_SCHEMA_VERSION = "benchmark-score-2.0.0"
+# Aggregates generated before the all-requested policy were written with this
+# (implicit) denominator: usable answers only.  Preserved verbatim, never
+# regenerated in place (see preserve_original_aggregate).
+PRE_POLICY_AGGREGATE_VERSION = "benchmark-score-pre-policy-v1 (usable-answered denominator; rotation probability keys un-remapped)"
 FINITE_SET_CAVEAT = (
     "Wilson intervals are item-sampling diagnostics within this fixed, finite "
     "benchmark item set; they are not superpopulation claims and the benchmark "
     "does not exhaust the item space of the subject."
 )
+SCORING_POLICY = {
+    "headline": (
+        "all-requested: every requested logical request is in the headline "
+        "denominator; missing terminal results, strict-format failures and "
+        "unusable answers count as wrong"),
+    "usable_response_accuracy": (
+        "separately reported over ok+usable responses only, with its own "
+        "count and Wilson interval; never substituted for the headline"),
+    "by_group_and_rotation": (
+        "denominators and Wilson intervals follow the all-requested policy"),
+    "proper_scores": (
+        "displayed probability vectors only; for rotated items the "
+        "probability KEYS are canonicalized through the recorded remapping "
+        "before comparison with canonical gold"),
+    "duplicates": (
+        "duplicate terminal logical_request_id (or item_id) values are "
+        "refused with a hard error, never double-counted"),
+}
 
 
 class ScoringError(RuntimeError):
@@ -101,22 +134,26 @@ def score_digit_readout_run(run_dir: Path | str, *, stage: str) -> dict[str, Any
         if not values:
             raise ScoringError(f"item {record['id']}: no gold digits; refusing to score")
         gold_maps[str(record["id"])] = values
-    results = {str(r.get("item_id")): r for r in _read_jsonl(run_dir / "results.jsonl")
-               if r.get("terminal") is True}
+    results = _read_jsonl(run_dir / "results.jsonl")
+    terminal = [r for r in results if r.get("terminal") is True]
+    _reject_duplicate_terminals(terminal)
+    by_item = {str(r.get("item_id")): r for r in terminal}
     attempts = _read_jsonl(run_dir / "attempts.jsonl")
 
     correct_flags: list[bool] = []
+    usable_flags: list[bool] = []
     group_flags: dict[str, list[bool]] = {}
     status_counts: dict[str, int] = {}
     per_item: list[dict[str, Any]] = []
     for item_id in sorted(gold_maps):
         gmap = gold_maps[item_id]
         group = _item_group(run_dir, item_id)
-        result = results.get(item_id)
+        result = by_item.get(item_id)
         record: dict[str, Any] = {
             "item_id": item_id, "group": group,
             "status": result.get("status") if result else "missing",
-            "correct": None, "predicted": None, "gold": "".join(
+            "correct": None, "predicted": None, "usable": False,
+            "gold": "".join(
                 gmap[q] for q in sorted(gmap)),
         }
         status = record["status"]
@@ -130,20 +167,27 @@ def score_digit_readout_run(run_dir: Path | str, *, stage: str) -> dict[str, Any
                 (predictions.get(q) or {}).get("probabilities")))
                 for q in sorted(gmap))
             record["predicted"] = predicted
+            record["usable"] = bool(usable_all)
             correct = bool(usable_all and predicted == record["gold"])
         record["correct"] = correct
         correct_flags.append(correct)
+        usable_flags.append(record["usable"])
         group_flags.setdefault(group, []).append(correct)
         per_item.append(record)
     n = len(correct_flags)
     k = sum(correct_flags)
+    n_usable = sum(usable_flags)
     doc: dict[str, Any] = {
+        "score_schema_version": SCORE_SCHEMA_VERSION,
+        "scoring_policy": SCORING_POLICY,
         "stage": stage,
         "run_dir": str(run_dir),
+        "n_requested": n,
         "n_expected": n,
         "n_scored": n,
-        "n_missing_terminal": n - len(results),
-        "missing_logical_ids": sorted(set(gold_maps) - set(results)),
+        "n_missing_terminal": n - len(by_item),
+        "missing_logical_ids": sorted(set(gold_maps) - set(by_item)),
+        "n_correct": k,
         "accuracy": (k / n) if n else None,
         "wilson_95": wilson_interval(k, n).to_dict() if n else None,
         "finite_set_caveat": FINITE_SET_CAVEAT,
@@ -152,7 +196,10 @@ def score_digit_readout_run(run_dir: Path | str, *, stage: str) -> dict[str, Any
                               "missing/error items count as incorrect"),
         "status_counts": status_counts,
         "strict_format_failures": sum(
-            1 for r in per_item if r["status"] == "ok" and r["predicted"] is None),
+            1 for r in per_item if r["status"] == "ok" and not r["usable"]),
+        "n_usable_responses": n_usable,
+        "usable_response_accuracy": (sum(1 for r in per_item if r["usable"] and r["correct"])
+                                     / n_usable) if n_usable else None,
         "by_group": {},
         "by_rotation_variant": {},
         "attempts_summary": {
@@ -219,8 +266,11 @@ def score_run(
     """Score one benchmark stage run. Deterministic and offline.
 
     ``logical_request_id`` is ``{condition}:{item_id}``; predictions and
-    attempts join on it. A logical request with no terminal result is counted
-    as missing — never silently dropped.
+    attempts join on it.  Every requested logical request is in the headline
+    denominator: a request with no terminal result — and a request answered
+    with a strict-format failure or an unusable answer — counts as WRONG
+    (all-requested policy), while the usable-response accuracy and count are
+    reported separately.  Duplicate terminal logical ids are refused.
     """
     run_dir = Path(run_dir)
     gold = gold_override or load_items_gold(
@@ -228,12 +278,13 @@ def score_run(
     rotations = rotations if rotations is not None else load_rotations(run_dir)
     results = _read_jsonl(run_dir / "results.jsonl")
     attempts = _read_jsonl(run_dir / "attempts.jsonl")
+    terminal = [r for r in results if r.get("terminal") is True]
+    _reject_duplicate_terminals(terminal)
 
-    n_expected = len(gold)
-    scored: dict[str, dict[str, Any]] = {}
-    correct_flags: list[bool] = []
-    group_flags: dict[str, list[bool]] = {}
-    variant_flags: dict[str, list[bool]] = {}
+    n_requested = len(gold)
+    requested_correct: dict[str, bool] = dict.fromkeys(gold, False)
+    requested_usable: dict[str, bool] = dict.fromkeys(gold, False)
+    condition_of: dict[str, str] = {}
     zero_prob_gold = 0
     zero_prob_candidates = 0
     proper_scores: list[dict[str, Any]] = []
@@ -242,15 +293,14 @@ def score_run(
     status_counts: dict[str, int] = {}
     per_item: list[dict[str, Any]] = []
 
-    for result in results:
-        if result.get("terminal") is not True:
-            continue
+    for result in terminal:
         lid = result["logical_request_id"]
         item_id, condition = _split_logical_id(lid)
         if item_id not in gold:
             raise ScoringError(
                 f"result {lid}: item not in the frozen gold set; refusing to score"
             )
+        condition_of[item_id] = condition
         status = str(result.get("status"))
         status_counts[status] = status_counts.get(status, 0) + 1
         record: dict[str, Any] = {
@@ -261,6 +311,7 @@ def score_run(
             "status": status,
             "model_returned": result.get("model_returned"),
             "correct": None,
+            "usable": False,
             "choice": None,
             "canonical_choice": None,
         }
@@ -273,50 +324,83 @@ def score_run(
                 strict_format_failures += 1
                 status_counts["strict_format_failure"] = status_counts.get("strict_format_failure", 0) + 1
             else:
+                record["usable"] = True
+                requested_usable[item_id] = True
+                gold_value = gold[item_id]["value"]
                 canonical_choice, gold_value = _canonical_pair(
-                    item_id, condition, choice, gold[item_id]["value"], rotations)
-                correct = canonical_choice == gold_value
+                    item_id, condition, choice, gold_value, rotations)
                 record["choice"] = choice
                 record["canonical_choice"] = canonical_choice
                 record["gold_canonical"] = gold_value
-                record["correct"] = correct
-                correct_flags.append(correct)
-                group_flags.setdefault(record["group"], []).append(correct)
-                if item_id in rotations:
-                    variant_flags.setdefault(condition, []).append(correct)
+                if gold[item_id]["value"] is not None:
+                    # multi-question items (gold value None) are scored at the
+                    # cell level by the grid aggregator, not here
+                    correct = canonical_choice == gold_value
+                    record["correct"] = correct
+                    requested_correct[item_id] = bool(correct)
                 probabilities = (answer or {}).get("probabilities")
-                if isinstance(probabilities, dict) and probabilities:
-                    scored_prob = _score_probabilities(probabilities, choice, gold_value)
-                    if scored_prob is None:
+                if gold_value is not None and isinstance(probabilities, dict) and probabilities:
+                    scored_probs = probabilities
+                    if item_id in rotations:
+                        # canonicalize the probability KEYS through the same
+                        # remapping used for the choice; canonical gold looked
+                        # up against still-rotated keys is a scoring bug
+                        scored_probs = _canonicalize_probabilities(
+                            probabilities, rotations[item_id]["remapping"])
+                    if scored_probs is None:
                         prob_exclusions += 1
                     else:
-                        p_gold, brier, log_loss = scored_prob
-                        if p_gold == 0.0:
-                            zero_prob_gold += 1
-                        zero_prob_candidates += 1
-                        proper_scores.append({
-                            "logical_request_id": lid,
-                            "p_gold": p_gold, "brier": brier, "log_loss": log_loss,
-                        })
+                        scored_prob = _score_probabilities(scored_probs, gold_value)
+                        if scored_prob is None:
+                            prob_exclusions += 1
+                        else:
+                            p_gold, brier, log_loss = scored_prob
+                            if p_gold == 0.0:
+                                zero_prob_gold += 1
+                            zero_prob_candidates += 1
+                            proper_scores.append({
+                                "logical_request_id": lid,
+                                "p_gold": p_gold, "brier": brier, "log_loss": log_loss,
+                            })
         elif status in {"contract_invalid", "malformed_json"}:
             # a strict-format failure is COUNTED, never repaired and never retried
             strict_format_failures += 1
         per_item.append(record)
 
-    n_scored = len(correct_flags)
-    accuracy = (sum(correct_flags) / n_scored) if n_scored else None
+    n_correct = sum(requested_correct.values())
+    usable_rows = [rec for rec in per_item
+                   if rec["usable"] and rec["correct"] is not None]
+    usable_correct = sum(1 for rec in usable_rows if rec["correct"])
+    n_usable = sum(requested_usable.values())
+    accuracy = (n_correct / n_requested) if n_requested else None
     doc: dict[str, Any] = {
+        "score_schema_version": SCORE_SCHEMA_VERSION,
+        "scoring_policy": SCORING_POLICY,
         "stage": stage,
         "run_dir": str(run_dir),
-        "n_expected": n_expected,
-        "n_terminal_results": len([r for r in results if r.get("terminal") is True]),
-        "n_scored": n_scored,
-        "n_missing_terminal": n_expected - len(per_item),
+        "n_requested": n_requested,
+        "n_expected": n_requested,
+        "n_terminal_results": len(terminal),
+        "n_correct": n_correct,
+        "accuracy": accuracy,
+        "wilson_95": (wilson_interval(n_correct, n_requested).to_dict()
+                      if n_requested else None),
+        "n_missing_terminal": n_requested - len(terminal),
         "missing_logical_ids": sorted(
             set(gold) - {rec["item_id"] for rec in per_item}),
-        "accuracy": accuracy,
-        "wilson_95": (wilson_interval(sum(correct_flags), n_scored).to_dict()
-                      if n_scored else None),
+        "n_usable_responses": n_usable,
+        "usable_response_correct": usable_correct,
+        "usable_response_accuracy": ((usable_correct / len(usable_rows))
+                                     if usable_rows else None),
+        "usable_response_wilson_95": (
+            wilson_interval(usable_correct, len(usable_rows)).to_dict()
+            if usable_rows else None),
+        "n_usable_multi_question_excluded": n_usable - len(usable_rows),
+        "usable_response_note": (
+            "SEPARATE diagnostic over ok+usable responses only "
+            "(n_usable_responses; multi-question chunk items are excluded "
+            "from usable_response_accuracy because item-level correctness is "
+            "not defined for them); never the headline denominator"),
         "finite_set_caveat": FINITE_SET_CAVEAT,
         "status_counts": status_counts,
         "strict_format_failures": strict_format_failures,
@@ -328,7 +412,9 @@ def score_run(
             "brier_mean": _mean([p["brier"] for p in proper_scores]),
             "log_loss_mean": _mean([p["log_loss"] for p in proper_scores]),
             "note": ("proper scores only over attempts with usable, finite "
-                     "probabilities; text-only baselines contribute none"),
+                     "probabilities (rotated items scored on probability keys "
+                     "canonicalized through the recorded remapping); "
+                     "text-only baselines contribute none"),
         },
         "by_group": {},
         "by_rotation_variant": {},
@@ -336,8 +422,17 @@ def score_run(
                                          if r.get("model_returned")}),
         "per_item": per_item,
     }
+    group_flags: dict[str, list[bool]] = {}
+    for item_id, is_correct in requested_correct.items():
+        group_flags.setdefault(gold[item_id]["group"], []).append(bool(is_correct))
     for group, flags in sorted(group_flags.items()):
         doc["by_group"][group] = _accuracy_block(flags)
+    variant_flags: dict[str, list[bool]] = {}
+    for item_id in gold:
+        if item_id not in rotations:
+            continue
+        variant = condition_of.get(item_id) or f"perm{rotations[item_id]['variant']}"
+        variant_flags.setdefault(variant, []).append(bool(requested_correct[item_id]))
     for variant, flags in sorted(variant_flags.items()):
         doc["by_rotation_variant"][variant] = _accuracy_block(flags)
     doc["attempts_summary"] = {
@@ -351,8 +446,27 @@ def score_run(
     return doc
 
 
+def _reject_duplicate_terminals(terminal: list[dict[str, Any]]) -> None:
+    """Duplicate terminal logical ids (or item ids) are refused, never averaged."""
+    seen_lids: set[str] = set()
+    seen_items: set[str] = set()
+    for result in terminal:
+        lid = str(result.get("logical_request_id"))
+        if lid in seen_lids:
+            raise ScoringError(
+                f"duplicate terminal logical_request_id {lid!r}; refusing to "
+                f"double-count a request")
+        seen_lids.add(lid)
+        item_id = _split_logical_id(lid)[0]
+        if item_id in seen_items:
+            raise ScoringError(
+                f"duplicate terminal item_id {item_id!r} (via {lid!r}); refusing "
+                f"to double-count a request")
+        seen_items.add(item_id)
+
+
 def _canonical_pair(item_id: str, condition: str, choice: str,
-                    gold_value: str, rotations: dict[str, dict[str, Any]]) -> tuple[str, str]:
+                    gold_value: str | None, rotations: dict[str, dict[str, Any]]) -> tuple[str, str | None]:
     """Compare through the canonical label mapping for rotated items.
 
     ``remapping[k]`` is the new key holding the description originally under
@@ -363,7 +477,7 @@ def _canonical_pair(item_id: str, condition: str, choice: str,
     agree with the direct comparison against the rotated item's own gold (which
     follows the description). Any disagreement is a hard error.
     """
-    if item_id in rotations:
+    if item_id in rotations and gold_value is not None:
         remapping = rotations[item_id]["remapping"]
         inverse = {v: k for k, v in remapping.items()}
         if len(inverse) != len(remapping):
@@ -386,7 +500,29 @@ def _canonical_pair(item_id: str, condition: str, choice: str,
     return choice, gold_value
 
 
-def _score_probabilities(probabilities: dict[str, float], choice: str,
+def _canonicalize_probabilities(probabilities: dict[str, float],
+                                remapping: dict[str, str]) -> dict[str, float] | None:
+    """Rotate probability keys back to canonical labels; None excludes.
+
+    ``remapping[k]`` is the new key holding the description originally under
+    key ``k``, so a probability reported under key ``k_new`` belongs to the
+    canonical key ``inverse[k_new]``.  A key outside the recorded remapping
+    makes the vector unscorable under the recorded rotation: an exclusion,
+    never a silent re-key.
+    """
+    inverse = {v: k for k, v in remapping.items()}
+    if len(inverse) != len(remapping):
+        return None
+    canonical: dict[str, float] = {}
+    for key, value in probabilities.items():
+        target = inverse.get(key)
+        if target is None:
+            return None
+        canonical[target] = value
+    return canonical
+
+
+def _score_probabilities(probabilities: dict[str, float],
                          gold: str) -> tuple[float, float, float] | None:
     """Proper scores where probabilities are valid; None excludes the attempt.
 
@@ -425,6 +561,8 @@ def _accuracy_block(flags: list[bool]) -> dict[str, Any]:
         "accuracy": (sum(flags) / n) if n else None,
         "wilson_95": interval.to_dict() if interval else None,
         "finite_set_caveat": FINITE_SET_CAVEAT,
+        "denominator_note": ("all requested items in this group/variant; "
+                             "missing, invalid and unusable count as wrong"),
     }
 
 
@@ -458,6 +596,50 @@ def _mean(values: list[float]) -> float | None:
 def _sum_field(records: list[dict[str, Any]], field: str) -> int | None:
     values = [r.get(field) for r in records if isinstance(r.get(field), int)]
     return sum(values) if values else None
+
+
+def preserve_original_aggregate(path: Path | str) -> dict[str, Any]:
+    """Preserve an existing aggregate with versioned provenance, never in place.
+
+    Copies ``<path>`` to ``<dir>/preserved-pre-policy-v1/<name>`` (refusing to
+    overwrite an earlier preservation) and records the provenance entry in
+    ``<dir>/aggregate_provenance.json``.  Returns the provenance entry.
+    """
+    source = Path(path)
+    if not source.exists():
+        raise ScoringError(f"no aggregate to preserve at {source}")
+    preserved_dir = source.parent / "preserved-pre-policy-v1"
+    preserved_dir.mkdir(parents=True, exist_ok=True)
+    target = preserved_dir / source.name
+    if not target.exists():
+        target.write_bytes(source.read_bytes())
+    entry = {
+        "artifact": source.name,
+        "preserved_as": str(target),
+        "sha256": _sha256_bytes(target.read_bytes()),
+        "scoring_version": PRE_POLICY_AGGREGATE_VERSION,
+        "regenerated_as": {
+            "path": source.name,
+            "scoring_version": SCORE_SCHEMA_VERSION,
+        },
+    }
+    provenance_path = source.parent / "aggregate_provenance.json"
+    provenance: dict[str, Any] = {"schema": "aggregate-provenance-1.0.0", "entries": []}
+    if provenance_path.exists():
+        provenance = json.loads(provenance_path.read_text(encoding="utf-8"))
+    entries = [e for e in provenance.get("entries", [])
+               if e.get("artifact") != source.name]
+    entries.append(entry)
+    provenance["entries"] = sorted(entries, key=lambda e: e["artifact"])
+    provenance_path.write_text(
+        json.dumps(provenance, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8")
+    return entry
+
+
+def _sha256_bytes(data: bytes) -> str:
+    from hashlib import sha256
+    return sha256(data).hexdigest()
 
 
 def write_score(doc: dict[str, Any], path: Path | str) -> None:

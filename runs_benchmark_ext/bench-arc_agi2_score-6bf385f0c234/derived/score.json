@@ -1,6 +1,7 @@
 {
   "stage": "arc_agi2_score",
   "run_dir": "runs_benchmark_ext/bench-arc_agi2_score-6bf385f0c234",
+  "score_schema_version": "benchmark-score-2.0.0",
   "official_task_criterion": "task solved only when every output cell of every test input is exactly correct (pass@1; no retries by protocol)",
   "n_tasks_expected": 120,
   "n_tasks": 120,
@@ -15,7 +16,6 @@
   "n_chunk_items_expected": 517,
   "n_chunk_items_terminal": 517,
   "n_missing_terminal": 0,
-  "missing_items": [],
   "status_counts": {
     "ok": 517,
     "strict_format_failure": 517
@@ -25,7 +25,10 @@
   "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject.",
   "base_score_doc": {
     "note": "item-level choice accuracy is NOT defined for multi-question chunk items; use the cell/grid/task metrics above",
-    "wilson_cell_diagnostic": null
+    "wilson_cell_diagnostic": {
+      "low": 0.0,
+      "high": 0.007375
+    }
   },
   "per_task": {
     "0934a4d8": {

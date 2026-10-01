@@ -36,7 +36,7 @@ import math
 from pathlib import Path
 
 from chartkit import (BG, GRID, JEV_G, JEV_W, MUTED, TEXT, UI_BLOCK, UNK,
-                      load_matched, matched_points,
+                      exactly_one, load_matched, load_jev_scores, matched_points,
                       TIER_LABEL, era_color, era_legend, jev_diamond, symbol,
                       tip, wrap_subtitle)
 
@@ -47,8 +47,7 @@ COSTS = json.loads((ROOT / "data_report/costs.json").read_text())
 
 
 def jev_cost_per_question(stage_glob):
-    hit = sorted(glob.glob(str(ROOT / stage_glob)))[0]
-    d = json.loads(Path(hit).read_text())
+    d = json.loads(Path(exactly_one(ROOT, stage_glob)).read_text())
     u = d["attempts_summary"]
     price = COSTS["prices_usd_per_M"]["Jev"]["input"]
     return u["usage_input_tokens_sum"] * price / 1e6 / u["n_attempts"]
@@ -59,21 +58,29 @@ CHARTS = [
      "Vals.ai platform measurements (chain-of-thought included in the cost, so reasoning "
      "counts against the models that use it), plus our own matched runs (dagger); "
      "Jev from our billing: $0.042/M input tokens, "
-     "output free. Dashed line: the Pareto frontier - from the upper right, down to the "
-     "left: each step down-left is cheaper and worse. Hover a point to isolate it.",
-     "runs_benchmark/bench-mmlu_full-*/derived/score.json", 82.8, 74.0, 12032),
+     "output free. Dashed line: the cost/accuracy envelope of this mixed view - from the "
+     "upper right, down to the left: each step down-left is cheaper and worse. It is a "
+     "positioning envelope across mixed sets and protocols, not a single undifferentiated "
+     "true Pareto frontier. Hover a point to isolate it.",
+     "runs_benchmark/bench-mmlu_full-*/derived/score.json"),
     ("gpqa", "GPQA: score vs measured cost per question",
      "Same basis. Jev: Diamond subset (196 items), direct answers, seeded option shuffle.",
-     "runs_benchmark_ext2/bench-gpqa_diamond-*/derived/score.json", 76.5, 63.0, 196),
+     "runs_benchmark_ext2/bench-gpqa_diamond-*/derived/score.json"),
 ]
+
+# Authoritative Jev scores (regenerated score artifacts via recorded selectors):
+# nothing about Jev is hardcoded in this chart code.
+JEV_SCORES = load_jev_scores(ROOT)
+_JEV_KEY = {"mmlu_pro": "mmlu_pro", "gpqa": "gpqa_diamond"}
 
 
 def frontier(pts):
-    """True Pareto envelope: cost ascending, keep accuracy record-breakers.
-
-    A point survives iff no cheaper point is at least as accurate - i.e. each
-    kept point beats the running max of everything cheaper. The result rises
-    to the right (falls to the left), the correct frontier direction.
+    """Cost/accuracy envelope of this mixed view: cost ascending, keep accuracy
+    record-breakers. A point survives iff no cheaper point is at least as
+    accurate - i.e. each kept point beats the running max of everything
+    cheaper. The result rises to the right (falls to the left), the correct
+    frontier direction. Positioning only: the rows mix publisher protocols,
+    our protocol conversions and our matched runs.
     """
     out = []
     best = -1.0
@@ -220,24 +227,34 @@ def chart(bkey, title, subtitle, jev_glob, jev_g, jev_w, n_items):
 def main():
     charts = []
     summary = {}
-    for bkey, title, subtitle, jglob, jg, jw, n_items in CHARTS:
-        svg, jc = chart(bkey, title, subtitle, jglob, jg, jw, n_items)
+    for bkey, title, subtitle, jglob in CHARTS:
+        js = JEV_SCORES[_JEV_KEY[bkey]]
+        svg, jc = chart(bkey, title, subtitle, jglob,
+                        js["greedy"] * 100, js["weighted_mean_p_gold"] * 100, js["n"])
         charts.append(svg)
         summary[bkey] = {"jev_cost_per_question_usd": round(jc, 8),
-                         "jev_run_cost_usd": round(jc * n_items, 4)}
-        print(f"{bkey}: Jev ${jc:.6f}/question (${jc * n_items:.4f}/run)")
+                         "jev_run_cost_usd": round(jc * js["n"], 4)}
+        print(f"{bkey}: Jev ${jc:.6f}/question (${jc * js['n']:.4f}/run)")
     lead = ("Every external point is a vals.ai platform row: accuracy and cost per "
             "question measured by the same harness, chain-of-thought included in the "
             "cost. Jev's diamonds are measured from our billing ($0.042/M input "
-            "tokens, output free). Color is release era (red &le;2023 &rarr; purple "
+            "tokens, output free) and its scores read from the regenerated score "
+            "artifacts (all-requested). Color is release era (red &le;2023 &rarr; purple "
             "&rarr; blue 2026; gray = date not established); marker shape is the "
-            "row's reasoning tier. The dashed line is the Pareto frontier: from the "
-            "upper right, down to the left. All models are labeled; hover any point "
-            "to isolate it and see score rank, cost rank, release date and tier. "
+            "row's reasoning tier. The dashed line is the cost/accuracy envelope of "
+            "this mixed view: from the upper right, down to the left. It is a "
+            "positioning envelope across mixed sets and protocols (publisher rows, "
+            "our protocol conversions, our matched runs), not a single "
+            "undifferentiated true Pareto frontier. All models are labeled; hover or "
+            "focus any point to isolate it and see score rank, cost rank, release date "
+            "and tier. "
+            "Measured cost includes reasoning tokens but does not fix the "
+            "harness/sample mismatch between our runs and the platform rows. "
             "Dagger-marked points are our own matched runs of a dozen cheap "
             "OpenRouter models on the identical frozen items (direct answers, one "
             "attempt, strict parsing, provider-reported costs) - they fill the "
-            "commodity end of the market that the vals boards do not cover. "
+            "commodity end of the market that the vals boards do not cover, and only "
+            "complete v4r1 cells (full sampled denominators) are charted. "
             "HLE and MATH-500 are not charted here: Jev's rows on those benchmarks "
             "are a multiple-choice subset and an MCQ conversion, and no fair "
             "cost/score comparison exists against free-form or full-set references. "
@@ -253,7 +270,7 @@ def main():
             '<p class="lead">' + lead + '</p>\n'
             + "".join(charts) + '\n</body></html>\n')
     OUT.write_text(html, encoding="utf-8")
-    print(f"[ok] wrote {OUT.relative_to(ROOT)} ({OUT.stat().st_size:,} bytes); "
+    print(f"[ok] wrote {OUT} ({OUT.stat().st_size:,} bytes); "
           f"{len(charts)} charts")
 
 

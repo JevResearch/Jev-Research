@@ -1,0 +1,89 @@
+{
+  "created_at": "2026-10-01T02:01:41.081+00:00",
+  "freeze_sha256": "d98f20eb693ed95b159859cdeb586bde8ab1e3c4ef811cf2b30369a1b6f4345f",
+  "freeze_path": "runs_benchmark_ext_rerun1/freeze/frozen.json",
+  "extended": true,
+  "counts": {
+    "mmlu_pro_test_full": 12032,
+    "option_rotation_items": 420,
+    "arc_challenge_test_full": 1172,
+    "arc_agi2_public_eval_tasks": 120,
+    "arc_agi2_commit": "f3283f727488ad98fe575ea6a5ac981e4a188e49",
+    "math500_test": 500,
+    "gpqa_diamond": 198,
+    "hle_test_rows": 2500,
+    "total_requests": 2065,
+    "request_ceiling": 15000
+  },
+  "expected_counts": {
+    "arc_agi2_choice": 517,
+    "arc_agi2_score": 517,
+    "arc_agi2_task": 497,
+    "math500_choice": 261,
+    "math500_score": 273
+  },
+  "sources": {
+    "arc_agi2_choice": {
+      "file": "data/arc_agi2_public_eval_f3283f7.tar.gz",
+      "sha256": "179681bc01d55810ee0e90d2717ef04b8d130496541c4853479a8d6fffa4b975",
+      "url": "https://codeload.github.com/arcprize/ARC-AGI-2/tar.gz/f3283f727488ad98fe575ea6a5ac981e4a188e49"
+    },
+    "arc_agi2_score": {
+      "file": "data/arc_agi2_public_eval_f3283f7.tar.gz",
+      "sha256": "179681bc01d55810ee0e90d2717ef04b8d130496541c4853479a8d6fffa4b975",
+      "url": "https://codeload.github.com/arcprize/ARC-AGI-2/tar.gz/f3283f727488ad98fe575ea6a5ac981e4a188e49"
+    },
+    "arc_agi2_task": {
+      "file": "data/arc_agi2_public_eval_f3283f7.tar.gz",
+      "sha256": "179681bc01d55810ee0e90d2717ef04b8d130496541c4853479a8d6fffa4b975",
+      "url": "https://codeload.github.com/arcprize/ARC-AGI-2/tar.gz/f3283f727488ad98fe575ea6a5ac981e4a188e49"
+    },
+    "math500_choice": {
+      "file": "data/math500_test.jsonl",
+      "sha256": "35dc41080a3680858b27fa7e0533d2d547825316fc5dafe5d316f4ccc5a06132",
+      "url": "https://huggingface.co/datasets/HuggingFaceH4/MATH-500/resolve/main/test.jsonl"
+    },
+    "math500_score": {
+      "file": "data/math500_test.jsonl",
+      "sha256": "35dc41080a3680858b27fa7e0533d2d547825316fc5dafe5d316f4ccc5a06132",
+      "url": "https://huggingface.co/datasets/HuggingFaceH4/MATH-500/resolve/main/test.jsonl"
+    }
+  },
+  "cost_estimator": {
+    "formula": "estimated_cost_usd = estimated_input_tokens / 1e6 * price_per_mtok",
+    "jev_price_per_mtok_input": 0.042,
+    "note": "server tokenisation is the only authority; estimates are conservative"
+  },
+  "stages": {
+    "arc_agi2_choice": {
+      "run_id": "bench-arc_agi2_choice-d98f20eb693e",
+      "n_items": 517,
+      "manifest_sha256": "ba1ccea27017f5beb69ff7daabc1a3d51a4fe0aecffbdbaa33f208b031d0598f",
+      "source_sha256": "179681bc01d55810ee0e90d2717ef04b8d130496541c4853479a8d6fffa4b975"
+    },
+    "arc_agi2_score": {
+      "run_id": "bench-arc_agi2_score-d98f20eb693e",
+      "n_items": 517,
+      "manifest_sha256": "ea0264a639e840a1a2bc9e2af560f46a392aab59f679b82d0d5cd233f780d182",
+      "source_sha256": "179681bc01d55810ee0e90d2717ef04b8d130496541c4853479a8d6fffa4b975"
+    },
+    "arc_agi2_task": {
+      "run_id": "bench-arc_agi2_task-d98f20eb693e",
+      "n_items": 497,
+      "manifest_sha256": "43b7b077ff688fe334d89550efeb8a299bc68139fb8e13079f308b998a6d8762",
+      "source_sha256": "179681bc01d55810ee0e90d2717ef04b8d130496541c4853479a8d6fffa4b975"
+    },
+    "math500_choice": {
+      "run_id": "bench-math500_choice-d98f20eb693e",
+      "n_items": 261,
+      "manifest_sha256": "ad1e809c6484b2c66ec5bbe5f0009f7e13f4bca3be8ebc11959c0782e73843c1",
+      "source_sha256": "35dc41080a3680858b27fa7e0533d2d547825316fc5dafe5d316f4ccc5a06132"
+    },
+    "math500_score": {
+      "run_id": "bench-math500_score-d98f20eb693e",
+      "n_items": 273,
+      "manifest_sha256": "e647eff20dc70c299bcf9dc8152379a98bc9dfa833c7e1979e29bf427b7563ff",
+      "source_sha256": "35dc41080a3680858b27fa7e0533d2d547825316fc5dafe5d316f4ccc5a06132"
+    }
+  }
+}

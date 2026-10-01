@@ -1,0 +1,606 @@
+{
+ "generated_by": "scripts/benchmark/benchmark_diagnostics.py (offline, deterministic)",
+ "scoring_policy": "headline accuracy is ALL-REQUESTED (missing/invalid wrong); usable-response accuracy reported separately",
+ "stages": {
+  "mmlu_full": {
+   "stage": "mmlu_full",
+   "run_dir": "runs_benchmark/bench-mmlu_full-9013bf99bfb6",
+   "n_requested": 12032,
+   "n_terminal": 12032,
+   "n_correct": 9950,
+   "headline_accuracy_all_requested": 0.826961,
+   "n_usable": 12014,
+   "usable_response_accuracy": 0.8282,
+   "selected_answer_displayed_probability": {
+    "mean_all": 0.816597,
+    "mean_when_correct": 0.864919,
+    "mean_when_wrong": 0.583653,
+    "n": 12014,
+    "note": "displayed probability of the SELECTED answer, split by observed correctness; its overall mean is the model-implied expected accuracy of taking that choice (a predicted confidence), which the reliability bins test for calibration"
+   },
+   "mean_top_displayed_probability": {
+    "mean_pmax": 0.816597,
+    "note": "mean top displayed probability is the model's displayed confidence of its greedy choice; the mean SELECTED-answer displayed probability is a predicted confidence and its mean IS the model-implied expected accuracy of taking that choice — compare it with the observed accuracy to test calibration.  The distinct caveat is that mean p(gold) is NOT 'predicted greedy accuracy'; the reliability bins below test calibration directly"
+   },
+   "reliability_bins_equal_width": {
+    "binning": "10 equal-width bins on the selected-answer displayed probability; bin i covers [i/10,(i+1)/10), the last bin includes the right edge",
+    "bins": [
+     {
+      "bin": 1,
+      "low": 0.1,
+      "high": 0.2,
+      "n": 102,
+      "mean_probability": 0.176078,
+      "empirical_accuracy": 0.382353
+     },
+     {
+      "bin": 2,
+      "low": 0.2,
+      "high": 0.3,
+      "n": 451,
+      "mean_probability": 0.24898,
+      "empirical_accuracy": 0.399113
+     },
+     {
+      "bin": 3,
+      "low": 0.3,
+      "high": 0.4,
+      "n": 545,
+      "mean_probability": 0.34611,
+      "empirical_accuracy": 0.477064
+     },
+     {
+      "bin": 4,
+      "low": 0.4,
+      "high": 0.5,
+      "n": 576,
+      "mean_probability": 0.447135,
+      "empirical_accuracy": 0.552083
+     },
+     {
+      "bin": 5,
+      "low": 0.5,
+      "high": 0.6,
+      "n": 702,
+      "mean_probability": 0.54312,
+      "empirical_accuracy": 0.653846
+     },
+     {
+      "bin": 6,
+      "low": 0.6,
+      "high": 0.7,
+      "n": 700,
+      "mean_probability": 0.643829,
+      "empirical_accuracy": 0.697143
+     },
+     {
+      "bin": 7,
+      "low": 0.7,
+      "high": 0.8,
+      "n": 815,
+      "mean_probability": 0.74773,
+      "empirical_accuracy": 0.784049
+     },
+     {
+      "bin": 8,
+      "low": 0.8,
+      "high": 0.9,
+      "n": 1176,
+      "mean_probability": 0.848716,
+      "empirical_accuracy": 0.853741
+     },
+     {
+      "bin": 9,
+      "low": 0.9,
+      "high": 1.0,
+      "n": 6947,
+      "mean_probability": 0.978081,
+      "empirical_accuracy": 0.944724
+     }
+    ],
+    "ece_10bins": 0.0501797841684701,
+    "rounding_caveat": "displayed probabilities arrive pre-rounded (2 decimals) from the server; bin membership, mean probabilities and ECE carry up to +/-0.005 per-class rounding uncertainty; all aggregates here are reported unrounded except where explicitly noted"
+   },
+   "proper_scores": {
+    "n": 12014,
+    "brier_mean": 0.267186,
+    "log_loss_mean_clipped_1e-15": 1.113787,
+    "zero_probability_gold": 213,
+    "zero_probability_gold_candidates": 12014,
+    "note": "rotated items scored on probability keys canonicalized through the recorded remapping; display rounding at 2dp"
+   }
+  },
+  "option_rotations": {
+   "stage": "option_rotations",
+   "run_dir": "runs_benchmark/bench-option_rotations-9013bf99bfb6",
+   "n_requested": 420,
+   "n_terminal": 420,
+   "n_correct": 361,
+   "headline_accuracy_all_requested": 0.859524,
+   "n_usable": 419,
+   "usable_response_accuracy": 0.861575,
+   "selected_answer_displayed_probability": {
+    "mean_all": 0.83315,
+    "mean_when_correct": 0.874377,
+    "mean_when_wrong": 0.576552,
+    "n": 419,
+    "note": "displayed probability of the SELECTED answer, split by observed correctness; its overall mean is the model-implied expected accuracy of taking that choice (a predicted confidence), which the reliability bins test for calibration"
+   },
+   "mean_top_displayed_probability": {
+    "mean_pmax": 0.83315,
+    "note": "mean top displayed probability is the model's displayed confidence of its greedy choice; the mean SELECTED-answer displayed probability is a predicted confidence and its mean IS the model-implied expected accuracy of taking that choice — compare it with the observed accuracy to test calibration.  The distinct caveat is that mean p(gold) is NOT 'predicted greedy accuracy'; the reliability bins below test calibration directly"
+   },
+   "reliability_bins_equal_width": {
+    "binning": "10 equal-width bins on the selected-answer displayed probability; bin i covers [i/10,(i+1)/10), the last bin includes the right edge",
+    "bins": [
+     {
+      "bin": 2,
+      "low": 0.2,
+      "high": 0.3,
+      "n": 9,
+      "mean_probability": 0.243333,
+      "empirical_accuracy": 0.222222
+     },
+     {
+      "bin": 3,
+      "low": 0.3,
+      "high": 0.4,
+      "n": 20,
+      "mean_probability": 0.347,
+      "empirical_accuracy": 0.55
+     },
+     {
+      "bin": 4,
+      "low": 0.4,
+      "high": 0.5,
+      "n": 21,
+      "mean_probability": 0.45381,
+      "empirical_accuracy": 0.666667
+     },
+     {
+      "bin": 5,
+      "low": 0.5,
+      "high": 0.6,
+      "n": 28,
+      "mean_probability": 0.531786,
+      "empirical_accuracy": 0.607143
+     },
+     {
+      "bin": 6,
+      "low": 0.6,
+      "high": 0.7,
+      "n": 17,
+      "mean_probability": 0.646471,
+      "empirical_accuracy": 0.705882
+     },
+     {
+      "bin": 7,
+      "low": 0.7,
+      "high": 0.8,
+      "n": 33,
+      "mean_probability": 0.750909,
+      "empirical_accuracy": 0.818182
+     },
+     {
+      "bin": 8,
+      "low": 0.8,
+      "high": 0.9,
+      "n": 42,
+      "mean_probability": 0.848095,
+      "empirical_accuracy": 0.928571
+     },
+     {
+      "bin": 9,
+      "low": 0.9,
+      "high": 1.0,
+      "n": 249,
+      "mean_probability": 0.980522,
+      "empirical_accuracy": 0.959839
+     }
+    ],
+    "ece_10bins": 0.05391419331742244,
+    "rounding_caveat": "displayed probabilities arrive pre-rounded (2 decimals) from the server; bin membership, mean probabilities and ECE carry up to +/-0.005 per-class rounding uncertainty; all aggregates here are reported unrounded except where explicitly noted"
+   },
+   "proper_scores": {
+    "n": 419,
+    "brier_mean": 0.213541,
+    "log_loss_mean_clipped_1e-15": 0.731053,
+    "zero_probability_gold": 4,
+    "zero_probability_gold_candidates": 419,
+    "note": "rotated items scored on probability keys canonicalized through the recorded remapping; display rounding at 2dp"
+   }
+  },
+  "arc_test": {
+   "stage": "arc_test",
+   "run_dir": "runs_benchmark/bench-arc_test-9013bf99bfb6",
+   "n_requested": 1172,
+   "n_terminal": 1172,
+   "n_correct": 1147,
+   "headline_accuracy_all_requested": 0.978669,
+   "n_usable": 1172,
+   "usable_response_accuracy": 0.978669,
+   "selected_answer_displayed_probability": {
+    "mean_all": 0.983669,
+    "mean_when_correct": 0.9868,
+    "mean_when_wrong": 0.84,
+    "n": 1172,
+    "note": "displayed probability of the SELECTED answer, split by observed correctness; its overall mean is the model-implied expected accuracy of taking that choice (a predicted confidence), which the reliability bins test for calibration"
+   },
+   "mean_top_displayed_probability": {
+    "mean_pmax": 0.983669,
+    "note": "mean top displayed probability is the model's displayed confidence of its greedy choice; the mean SELECTED-answer displayed probability is a predicted confidence and its mean IS the model-implied expected accuracy of taking that choice — compare it with the observed accuracy to test calibration.  The distinct caveat is that mean p(gold) is NOT 'predicted greedy accuracy'; the reliability bins below test calibration directly"
+   },
+   "reliability_bins_equal_width": {
+    "binning": "10 equal-width bins on the selected-answer displayed probability; bin i covers [i/10,(i+1)/10), the last bin includes the right edge",
+    "bins": [
+     {
+      "bin": 4,
+      "low": 0.4,
+      "high": 0.5,
+      "n": 2,
+      "mean_probability": 0.47,
+      "empirical_accuracy": 0.5
+     },
+     {
+      "bin": 5,
+      "low": 0.5,
+      "high": 0.6,
+      "n": 6,
+      "mean_probability": 0.543333,
+      "empirical_accuracy": 0.666667
+     },
+     {
+      "bin": 6,
+      "low": 0.6,
+      "high": 0.7,
+      "n": 11,
+      "mean_probability": 0.65,
+      "empirical_accuracy": 0.636364
+     },
+     {
+      "bin": 7,
+      "low": 0.7,
+      "high": 0.8,
+      "n": 6,
+      "mean_probability": 0.756667,
+      "empirical_accuracy": 0.833333
+     },
+     {
+      "bin": 8,
+      "low": 0.8,
+      "high": 0.9,
+      "n": 24,
+      "mean_probability": 0.853333,
+      "empirical_accuracy": 0.833333
+     },
+     {
+      "bin": 9,
+      "low": 0.9,
+      "high": 1.0,
+      "n": 1123,
+      "mean_probability": 0.994203,
+      "empirical_accuracy": 0.988424
+     }
+    ],
+    "ece_10bins": 0.00715001109215015,
+    "rounding_caveat": "displayed probabilities arrive pre-rounded (2 decimals) from the server; bin membership, mean probabilities and ECE carry up to +/-0.005 per-class rounding uncertainty; all aggregates here are reported unrounded except where explicitly noted"
+   },
+   "proper_scores": {
+    "n": 1172,
+    "brier_mean": 0.037139,
+    "log_loss_mean_clipped_1e-15": 0.203686,
+    "zero_probability_gold": 5,
+    "zero_probability_gold_candidates": 1172,
+    "note": "rotated items scored on probability keys canonicalized through the recorded remapping; display rounding at 2dp"
+   }
+  },
+  "math500_choice": {
+   "stage": "math500_choice",
+   "run_dir": "runs_benchmark_ext/bench-math500_choice-6bf385f0c234",
+   "n_requested": 261,
+   "n_terminal": 261,
+   "n_correct": 217,
+   "headline_accuracy_all_requested": 0.831418,
+   "n_usable": 261,
+   "usable_response_accuracy": 0.831418,
+   "selected_answer_displayed_probability": {
+    "mean_all": 0.73705,
+    "mean_when_correct": 0.783456,
+    "mean_when_wrong": 0.508182,
+    "n": 261,
+    "note": "displayed probability of the SELECTED answer, split by observed correctness; its overall mean is the model-implied expected accuracy of taking that choice (a predicted confidence), which the reliability bins test for calibration"
+   },
+   "mean_top_displayed_probability": {
+    "mean_pmax": 0.73705,
+    "note": "mean top displayed probability is the model's displayed confidence of its greedy choice; the mean SELECTED-answer displayed probability is a predicted confidence and its mean IS the model-implied expected accuracy of taking that choice — compare it with the observed accuracy to test calibration.  The distinct caveat is that mean p(gold) is NOT 'predicted greedy accuracy'; the reliability bins below test calibration directly"
+   },
+   "reliability_bins_equal_width": {
+    "binning": "10 equal-width bins on the selected-answer displayed probability; bin i covers [i/10,(i+1)/10), the last bin includes the right edge",
+    "bins": [
+     {
+      "bin": 2,
+      "low": 0.2,
+      "high": 0.3,
+      "n": 2,
+      "mean_probability": 0.285,
+      "empirical_accuracy": 0.5
+     },
+     {
+      "bin": 3,
+      "low": 0.3,
+      "high": 0.4,
+      "n": 22,
+      "mean_probability": 0.353182,
+      "empirical_accuracy": 0.590909
+     },
+     {
+      "bin": 4,
+      "low": 0.4,
+      "high": 0.5,
+      "n": 26,
+      "mean_probability": 0.443077,
+      "empirical_accuracy": 0.576923
+     },
+     {
+      "bin": 5,
+      "low": 0.5,
+      "high": 0.6,
+      "n": 36,
+      "mean_probability": 0.547222,
+      "empirical_accuracy": 0.611111
+     },
+     {
+      "bin": 6,
+      "low": 0.6,
+      "high": 0.7,
+      "n": 24,
+      "mean_probability": 0.64625,
+      "empirical_accuracy": 0.833333
+     },
+     {
+      "bin": 7,
+      "low": 0.7,
+      "high": 0.8,
+      "n": 22,
+      "mean_probability": 0.755455,
+      "empirical_accuracy": 0.863636
+     },
+     {
+      "bin": 8,
+      "low": 0.8,
+      "high": 0.9,
+      "n": 33,
+      "mean_probability": 0.849394,
+      "empirical_accuracy": 0.969697
+     },
+     {
+      "bin": 9,
+      "low": 0.9,
+      "high": 1.0,
+      "n": 96,
+      "mean_probability": 0.965104,
+      "empirical_accuracy": 0.989583
+     }
+    ],
+    "ece_10bins": 0.09436762835249043,
+    "rounding_caveat": "displayed probabilities arrive pre-rounded (2 decimals) from the server; bin membership, mean probabilities and ECE carry up to +/-0.005 per-class rounding uncertainty; all aggregates here are reported unrounded except where explicitly noted"
+   },
+   "proper_scores": {
+    "n": 261,
+    "brier_mean": 0.260009,
+    "log_loss_mean_clipped_1e-15": 0.478243,
+    "zero_probability_gold": 0,
+    "zero_probability_gold_candidates": 261,
+    "note": "rotated items scored on probability keys canonicalized through the recorded remapping; display rounding at 2dp"
+   }
+  },
+  "gpqa_diamond": {
+   "stage": "gpqa_diamond",
+   "run_dir": "runs_benchmark_ext2/bench-gpqa_diamond-8c4bbf2988d4",
+   "n_requested": 196,
+   "n_terminal": 196,
+   "n_correct": 150,
+   "headline_accuracy_all_requested": 0.765306,
+   "n_usable": 196,
+   "usable_response_accuracy": 0.765306,
+   "selected_answer_displayed_probability": {
+    "mean_all": 0.696276,
+    "mean_when_correct": 0.751667,
+    "mean_when_wrong": 0.515652,
+    "n": 196,
+    "note": "displayed probability of the SELECTED answer, split by observed correctness; its overall mean is the model-implied expected accuracy of taking that choice (a predicted confidence), which the reliability bins test for calibration"
+   },
+   "mean_top_displayed_probability": {
+    "mean_pmax": 0.696327,
+    "note": "mean top displayed probability is the model's displayed confidence of its greedy choice; the mean SELECTED-answer displayed probability is a predicted confidence and its mean IS the model-implied expected accuracy of taking that choice — compare it with the observed accuracy to test calibration.  The distinct caveat is that mean p(gold) is NOT 'predicted greedy accuracy'; the reliability bins below test calibration directly"
+   },
+   "reliability_bins_equal_width": {
+    "binning": "10 equal-width bins on the selected-answer displayed probability; bin i covers [i/10,(i+1)/10), the last bin includes the right edge",
+    "bins": [
+     {
+      "bin": 2,
+      "low": 0.2,
+      "high": 0.3,
+      "n": 2,
+      "mean_probability": 0.275,
+      "empirical_accuracy": 0.5
+     },
+     {
+      "bin": 3,
+      "low": 0.3,
+      "high": 0.4,
+      "n": 22,
+      "mean_probability": 0.358182,
+      "empirical_accuracy": 0.454545
+     },
+     {
+      "bin": 4,
+      "low": 0.4,
+      "high": 0.5,
+      "n": 32,
+      "mean_probability": 0.43625,
+      "empirical_accuracy": 0.59375
+     },
+     {
+      "bin": 5,
+      "low": 0.5,
+      "high": 0.6,
+      "n": 22,
+      "mean_probability": 0.538636,
+      "empirical_accuracy": 0.590909
+     },
+     {
+      "bin": 6,
+      "low": 0.6,
+      "high": 0.7,
+      "n": 21,
+      "mean_probability": 0.64619,
+      "empirical_accuracy": 0.809524
+     },
+     {
+      "bin": 7,
+      "low": 0.7,
+      "high": 0.8,
+      "n": 16,
+      "mean_probability": 0.748125,
+      "empirical_accuracy": 0.875
+     },
+     {
+      "bin": 8,
+      "low": 0.8,
+      "high": 0.9,
+      "n": 14,
+      "mean_probability": 0.847857,
+      "empirical_accuracy": 0.928571
+     },
+     {
+      "bin": 9,
+      "low": 0.9,
+      "high": 1.0,
+      "n": 67,
+      "mean_probability": 0.967463,
+      "empirical_accuracy": 0.940299
+     }
+    ],
+    "ece_10bins": 0.08760198979591834,
+    "rounding_caveat": "displayed probabilities arrive pre-rounded (2 decimals) from the server; bin membership, mean probabilities and ECE carry up to +/-0.005 per-class rounding uncertainty; all aggregates here are reported unrounded except where explicitly noted"
+   },
+   "proper_scores": {
+    "n": 196,
+    "brier_mean": 0.346994,
+    "log_loss_mean_clipped_1e-15": 0.674119,
+    "zero_probability_gold": 0,
+    "zero_probability_gold_candidates": 196,
+    "note": "rotated items scored on probability keys canonicalized through the recorded remapping; display rounding at 2dp"
+   }
+  },
+  "hle_text_mc": {
+   "stage": "hle_text_mc",
+   "run_dir": "runs_benchmark_ext2/bench-hle_text_mc-8c4bbf2988d4",
+   "n_requested": 494,
+   "n_terminal": 494,
+   "n_correct": 108,
+   "headline_accuracy_all_requested": 0.218623,
+   "n_usable": 494,
+   "usable_response_accuracy": 0.218623,
+   "selected_answer_displayed_probability": {
+    "mean_all": 0.633421,
+    "mean_when_correct": 0.630741,
+    "mean_when_wrong": 0.634171,
+    "n": 494,
+    "note": "displayed probability of the SELECTED answer, split by observed correctness; its overall mean is the model-implied expected accuracy of taking that choice (a predicted confidence), which the reliability bins test for calibration"
+   },
+   "mean_top_displayed_probability": {
+    "mean_pmax": 0.633502,
+    "note": "mean top displayed probability is the model's displayed confidence of its greedy choice; the mean SELECTED-answer displayed probability is a predicted confidence and its mean IS the model-implied expected accuracy of taking that choice — compare it with the observed accuracy to test calibration.  The distinct caveat is that mean p(gold) is NOT 'predicted greedy accuracy'; the reliability bins below test calibration directly"
+   },
+   "reliability_bins_equal_width": {
+    "binning": "10 equal-width bins on the selected-answer displayed probability; bin i covers [i/10,(i+1)/10), the last bin includes the right edge",
+    "bins": [
+     {
+      "bin": 1,
+      "low": 0.1,
+      "high": 0.2,
+      "n": 10,
+      "mean_probability": 0.171,
+      "empirical_accuracy": 0.1
+     },
+     {
+      "bin": 2,
+      "low": 0.2,
+      "high": 0.3,
+      "n": 24,
+      "mean_probability": 0.254583,
+      "empirical_accuracy": 0.208333
+     },
+     {
+      "bin": 3,
+      "low": 0.3,
+      "high": 0.4,
+      "n": 63,
+      "mean_probability": 0.346825,
+      "empirical_accuracy": 0.174603
+     },
+     {
+      "bin": 4,
+      "low": 0.4,
+      "high": 0.5,
+      "n": 67,
+      "mean_probability": 0.445821,
+      "empirical_accuracy": 0.283582
+     },
+     {
+      "bin": 5,
+      "low": 0.5,
+      "high": 0.6,
+      "n": 66,
+      "mean_probability": 0.54697,
+      "empirical_accuracy": 0.19697
+     },
+     {
+      "bin": 6,
+      "low": 0.6,
+      "high": 0.7,
+      "n": 58,
+      "mean_probability": 0.646724,
+      "empirical_accuracy": 0.275862
+     },
+     {
+      "bin": 7,
+      "low": 0.7,
+      "high": 0.8,
+      "n": 56,
+      "mean_probability": 0.74875,
+      "empirical_accuracy": 0.267857
+     },
+     {
+      "bin": 8,
+      "low": 0.8,
+      "high": 0.9,
+      "n": 53,
+      "mean_probability": 0.848868,
+      "empirical_accuracy": 0.207547
+     },
+     {
+      "bin": 9,
+      "low": 0.9,
+      "high": 1.0,
+      "n": 97,
+      "mean_probability": 0.957113,
+      "empirical_accuracy": 0.175258
+     }
+    ],
+    "ece_10bins": 0.41479747165991904,
+    "rounding_caveat": "displayed probabilities arrive pre-rounded (2 decimals) from the server; bin membership, mean probabilities and ECE carry up to +/-0.005 per-class rounding uncertainty; all aggregates here are reported unrounded except where explicitly noted"
+   },
+   "proper_scores": {
+    "n": 494,
+    "brier_mean": 1.097377,
+    "log_loss_mean_clipped_1e-15": 5.171075,
+    "zero_probability_gold": 45,
+    "zero_probability_gold_candidates": 494,
+    "note": "rotated items scored on probability keys canonicalized through the recorded remapping; display rounding at 2dp"
+   }
+  }
+ }
+}

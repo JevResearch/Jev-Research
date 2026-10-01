@@ -1,15 +1,33 @@
 {
+  "score_schema_version": "benchmark-score-2.0.0",
+  "scoring_policy": {
+    "headline": "all-requested: every requested logical request is in the headline denominator; missing terminal results, strict-format failures and unusable answers count as wrong",
+    "usable_response_accuracy": "separately reported over ok+usable responses only, with its own count and Wilson interval; never substituted for the headline",
+    "by_group_and_rotation": "denominators and Wilson intervals follow the all-requested policy",
+    "proper_scores": "displayed probability vectors only; for rotated items the probability KEYS are canonicalized through the recorded remapping before comparison with canonical gold",
+    "duplicates": "duplicate terminal logical_request_id (or item_id) values are refused with a hard error, never double-counted"
+  },
   "stage": "mmlu_full",
   "run_dir": "runs_benchmark/bench-mmlu_full-9013bf99bfb6",
+  "n_requested": 12032,
   "n_expected": 12032,
   "n_terminal_results": 12032,
-  "n_scored": 12014,
-  "n_missing_terminal": 0,
-  "accuracy": 0.8282004328283669,
+  "n_correct": 9950,
+  "accuracy": 0.8269614361702128,
   "wilson_95": {
+    "low": 0.820098,
+    "high": 0.833616
+  },
+  "n_missing_terminal": 0,
+  "n_usable_responses": 12014,
+  "usable_response_correct": 9950,
+  "usable_response_accuracy": 0.8282004328283669,
+  "usable_response_wilson_95": {
     "low": 0.821351,
     "high": 0.83484
   },
+  "n_usable_multi_question_excluded": 0,
+  "usable_response_note": "SEPARATE diagnostic over ok+usable responses only (n_usable_responses; multi-question chunk items are excluded from usable_response_accuracy because item-level correctness is not defined for them); never the headline denominator",
   "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject.",
   "status_counts": {
     "ok": 12014,
@@ -23,38 +41,41 @@
     "excluded_no_valid_probabilities": 0,
     "brier_mean": 0.2664990844015315,
     "log_loss_mean": 1.1137874846820581,
-    "note": "proper scores only over attempts with usable, finite probabilities; text-only baselines contribute none"
+    "note": "proper scores only over attempts with usable, finite probabilities (rotated items scored on probability keys canonicalized through the recorded remapping); text-only baselines contribute none"
   },
   "by_group": {
     "biology": {
-      "n": 716,
+      "n": 717,
       "correct": 653,
-      "accuracy": 0.9120111731843575,
+      "accuracy": 0.9107391910739191,
       "wilson_95": {
-        "low": 0.889002,
-        "high": 0.930623
+        "low": 0.887622,
+        "high": 0.929479
       },
-      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject.",
+      "denominator_note": "all requested items in this group/variant; missing, invalid and unusable count as wrong"
     },
     "business": {
-      "n": 788,
+      "n": 789,
       "correct": 628,
-      "accuracy": 0.7969543147208121,
+      "accuracy": 0.7959442332065906,
       "wilson_95": {
-        "low": 0.767458,
-        "high": 0.823569
+        "low": 0.766421,
+        "high": 0.822599
       },
-      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject.",
+      "denominator_note": "all requested items in this group/variant; missing, invalid and unusable count as wrong"
     },
     "chemistry": {
-      "n": 1131,
+      "n": 1132,
       "correct": 911,
-      "accuracy": 0.8054818744473917,
+      "accuracy": 0.8047703180212014,
       "wilson_95": {
-        "low": 0.781395,
-        "high": 0.827501
+        "low": 0.780665,
+        "high": 0.826814
       },
-      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject.",
+      "denominator_note": "all requested items in this group/variant; missing, invalid and unusable count as wrong"
     },
     "computer science": {
       "n": 410,
@@ -64,77 +85,85 @@
         "low": 0.842818,
         "high": 0.906261
       },
-      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject.",
+      "denominator_note": "all requested items in this group/variant; missing, invalid and unusable count as wrong"
     },
     "economics": {
-      "n": 843,
+      "n": 844,
       "correct": 744,
-      "accuracy": 0.8825622775800712,
+      "accuracy": 0.8815165876777251,
       "wilson_95": {
-        "low": 0.859074,
-        "high": 0.902579
+        "low": 0.857966,
+        "high": 0.90161
       },
-      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject.",
+      "denominator_note": "all requested items in this group/variant; missing, invalid and unusable count as wrong"
     },
     "engineering": {
-      "n": 965,
+      "n": 969,
       "correct": 746,
-      "accuracy": 0.7730569948186529,
+      "accuracy": 0.7698658410732714,
       "wilson_95": {
-        "low": 0.745578,
-        "high": 0.798371
+        "low": 0.742329,
+        "high": 0.795272
       },
-      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject.",
+      "denominator_note": "all requested items in this group/variant; missing, invalid and unusable count as wrong"
     },
     "health": {
-      "n": 817,
+      "n": 818,
       "correct": 669,
-      "accuracy": 0.8188494492044064,
+      "accuracy": 0.8178484107579462,
       "wilson_95": {
-        "low": 0.790967,
-        "high": 0.843747
+        "low": 0.789933,
+        "high": 0.842793
       },
-      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject.",
+      "denominator_note": "all requested items in this group/variant; missing, invalid and unusable count as wrong"
     },
     "history": {
-      "n": 380,
+      "n": 381,
       "correct": 293,
-      "accuracy": 0.7710526315789473,
+      "accuracy": 0.7690288713910761,
       "wilson_95": {
-        "low": 0.72622,
-        "high": 0.81046
+        "low": 0.724151,
+        "high": 0.808536
       },
-      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject.",
+      "denominator_note": "all requested items in this group/variant; missing, invalid and unusable count as wrong"
     },
     "law": {
-      "n": 1099,
+      "n": 1101,
       "correct": 847,
-      "accuracy": 0.7707006369426752,
+      "accuracy": 0.7693006357856494,
       "wilson_95": {
-        "low": 0.744929,
-        "high": 0.794586
+        "low": 0.743506,
+        "high": 0.793223
       },
-      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject.",
+      "denominator_note": "all requested items in this group/variant; missing, invalid and unusable count as wrong"
     },
     "math": {
-      "n": 1349,
+      "n": 1351,
       "correct": 1170,
-      "accuracy": 0.8673091178650852,
+      "accuracy": 0.8660251665433013,
       "wilson_95": {
-        "low": 0.848159,
-        "high": 0.884373
+        "low": 0.84682,
+        "high": 0.883155
       },
-      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject.",
+      "denominator_note": "all requested items in this group/variant; missing, invalid and unusable count as wrong"
     },
     "other": {
-      "n": 922,
+      "n": 924,
       "correct": 745,
-      "accuracy": 0.8080260303687635,
+      "accuracy": 0.8062770562770563,
       "wilson_95": {
-        "low": 0.781346,
-        "high": 0.83215
+        "low": 0.779548,
+        "high": 0.83047
       },
-      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject.",
+      "denominator_note": "all requested items in this group/variant; missing, invalid and unusable count as wrong"
     },
     "philosophy": {
       "n": 499,
@@ -144,17 +173,19 @@
         "low": 0.796328,
         "high": 0.861931
       },
-      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject.",
+      "denominator_note": "all requested items in this group/variant; missing, invalid and unusable count as wrong"
     },
     "physics": {
-      "n": 1297,
+      "n": 1299,
       "correct": 1080,
-      "accuracy": 0.8326908249807248,
+      "accuracy": 0.8314087759815243,
       "wilson_95": {
-        "low": 0.811401,
-        "high": 0.852015
+        "low": 0.810079,
+        "high": 0.850785
       },
-      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject.",
+      "denominator_note": "all requested items in this group/variant; missing, invalid and unusable count as wrong"
     },
     "psychology": {
       "n": 798,
@@ -164,7 +195,8 @@
         "low": 0.837834,
         "high": 0.885501
       },
-      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject.",
+      "denominator_note": "all requested items in this group/variant; missing, invalid and unusable count as wrong"
     }
   },
   "by_rotation_variant": {},

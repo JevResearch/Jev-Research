@@ -25,7 +25,9 @@ import sys
 from pathlib import Path
 
 from jev_observatory.benchmark_exec import load_freeze, stage_run_id
-from jev_observatory.benchmark_score import ScoringError, score_run, write_score
+from jev_observatory.benchmark_score import (ScoringError,
+                                             preserve_original_aggregate,
+                                             score_run, write_score)
 
 
 def main() -> int:
@@ -60,10 +62,17 @@ def main() -> int:
         print(f"[scoring-error] {exc}", file=sys.stderr)
         return 3
     out = Path(args.out) if args.out else run_dir / "derived" / "score.json"
+    if out.exists():
+        # preserve the original aggregate with explicit versioned provenance
+        # BEFORE regenerating; originals are never overwritten in place
+        entry = preserve_original_aggregate(out)
+        print(f"[preserved] {entry['preserved_as']} "
+              f"({entry['scoring_version']})", file=sys.stderr)
     write_score(doc, out)
     summary = {
         "stage": doc["stage"],
         "score_path": str(out),
+        "score_schema_version": doc.get("score_schema_version"),
     }
     if args.stage.startswith("arc_agi2"):
         summary.update({
@@ -81,11 +90,13 @@ def main() -> int:
         })
     else:
         summary.update({
-            "n_expected": doc["n_expected"],
-            "n_scored": doc["n_scored"],
-            "n_missing_terminal": doc["n_missing_terminal"],
+            "n_requested": doc["n_requested"],
+            "n_correct": doc["n_correct"],
             "accuracy": doc["accuracy"],
             "wilson_95": doc["wilson_95"],
+            "n_usable_responses": doc["n_usable_responses"],
+            "usable_response_accuracy": doc["usable_response_accuracy"],
+            "n_missing_terminal": doc["n_missing_terminal"],
             "strict_format_failures": doc["strict_format_failures"],
             "status_counts": doc["status_counts"],
             "by_group_n": {g: v["n"] for g, v in doc["by_group"].items()},

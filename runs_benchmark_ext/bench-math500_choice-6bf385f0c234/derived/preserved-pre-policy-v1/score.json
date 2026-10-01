@@ -1,0 +1,108 @@
+{
+  "stage": "math500_choice",
+  "run_dir": "runs_benchmark_ext/bench-math500_choice-6bf385f0c234",
+  "n_expected": 261,
+  "n_terminal_results": 261,
+  "n_scored": 261,
+  "n_missing_terminal": 0,
+  "accuracy": 0.8314176245210728,
+  "wilson_95": {
+    "low": 0.781266,
+    "high": 0.871955
+  },
+  "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject.",
+  "status_counts": {
+    "ok": 261
+  },
+  "strict_format_failures": 0,
+  "zero_probability_gold": 0,
+  "zero_probability_gold_candidates": 261,
+  "proper_scores": {
+    "n": 261,
+    "excluded_no_valid_probabilities": 0,
+    "brier_mean": 0.2600088122605364,
+    "log_loss_mean": 0.47824276634715,
+    "note": "proper scores only over attempts with usable, finite probabilities; text-only baselines contribute none"
+  },
+  "by_group": {
+    "Algebra": {
+      "n": 72,
+      "correct": 60,
+      "accuracy": 0.8333333333333334,
+      "wilson_95": {
+        "low": 0.730893,
+        "high": 0.902006
+      },
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+    },
+    "Counting & Probability": {
+      "n": 24,
+      "correct": 21,
+      "accuracy": 0.875,
+      "wilson_95": {
+        "low": 0.689961,
+        "high": 0.956557
+      },
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+    },
+    "Geometry": {
+      "n": 18,
+      "correct": 17,
+      "accuracy": 0.9444444444444444,
+      "wilson_95": {
+        "low": 0.742427,
+        "high": 0.990125
+      },
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+    },
+    "Intermediate Algebra": {
+      "n": 44,
+      "correct": 36,
+      "accuracy": 0.8181818181818182,
+      "wilson_95": {
+        "low": 0.680394,
+        "high": 0.904872
+      },
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+    },
+    "Number Theory": {
+      "n": 47,
+      "correct": 37,
+      "accuracy": 0.7872340425531915,
+      "wilson_95": {
+        "low": 0.65096,
+        "high": 0.880103
+      },
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+    },
+    "Prealgebra": {
+      "n": 46,
+      "correct": 38,
+      "accuracy": 0.8260869565217391,
+      "wilson_95": {
+        "low": 0.692766,
+        "high": 0.909142
+      },
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+    },
+    "Precalculus": {
+      "n": 10,
+      "correct": 8,
+      "accuracy": 0.8,
+      "wilson_95": {
+        "low": 0.490162,
+        "high": 0.943318
+      },
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+    }
+  },
+  "by_rotation_variant": {},
+  "attempts_summary": {
+    "n_attempts": 261,
+    "n_uncertain_attempts": 0,
+    "usage_input_tokens_sum": 115490,
+    "usage_output_tokens_sum": 13833,
+    "attempts_without_usage": 0
+  },
+  "publish_note": "per-item lists stripped at publish (item ids/answers reference licensed third-party content); aggregates kept"
+}

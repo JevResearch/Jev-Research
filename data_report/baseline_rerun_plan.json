@@ -1,0 +1,290 @@
+{
+ "generated_by": "scripts/benchmark/raw_recoverability.py (offline, deterministic)",
+ "principle": "minimum rerun = every ok row whose stored recovery stage is NOT parser-stable AND whose complete raw response is missing/truncated; parser-stable rows (exact/stripped) keep their stored answer under any parser and are NOT rerun",
+ "tooling": "scripts/benchmark/run_baseline_revision.py --plan/--live/--score with jev_observatory.revision_run.VersionedRunStore: fresh versioned run dirs (originals never overwritten), complete private raws incl. finish_reason, resume by terminal logical id, active-result pointers, usage accounting (unknown = unknown), bounded concurrency + hard spend cap",
+ "rerun_cells": [
+  {
+   "model": "deepseek/deepseek-v4-flash-0731",
+   "dataset": "gpqa",
+   "n_rows_to_rerun": 28
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash-0731",
+   "dataset": "hle_text_mc",
+   "n_rows_to_rerun": 74
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash-0731",
+   "dataset": "math500_choice",
+   "n_rows_to_rerun": 1
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash-0731",
+   "dataset": "mmlu",
+   "n_rows_to_rerun": 23
+  },
+  {
+   "model": "google/gemma-3-4b-it",
+   "dataset": "hle_text_mc",
+   "n_rows_to_rerun": 13
+  },
+  {
+   "model": "google/gemma-3-4b-it",
+   "dataset": "math500_choice",
+   "n_rows_to_rerun": 203
+  },
+  {
+   "model": "google/gemma-3-4b-it",
+   "dataset": "mmlu",
+   "n_rows_to_rerun": 39
+  },
+  {
+   "model": "ibm-granite/granite-4.0-h-micro",
+   "dataset": "mmlu",
+   "n_rows_to_rerun": 80
+  },
+  {
+   "model": "meta-llama/llama-3.1-8b-instruct",
+   "dataset": "gpqa",
+   "n_rows_to_rerun": 17
+  },
+  {
+   "model": "meta-llama/llama-3.1-8b-instruct",
+   "dataset": "hle_text_mc",
+   "n_rows_to_rerun": 64
+  },
+  {
+   "model": "meta-llama/llama-3.1-8b-instruct",
+   "dataset": "math500_choice",
+   "n_rows_to_rerun": 146
+  },
+  {
+   "model": "meta-llama/llama-3.1-8b-instruct",
+   "dataset": "mmlu",
+   "n_rows_to_rerun": 131
+  },
+  {
+   "model": "mistralai/mistral-nemo",
+   "dataset": "gpqa",
+   "n_rows_to_rerun": 8
+  },
+  {
+   "model": "mistralai/mistral-nemo",
+   "dataset": "hle_text_mc",
+   "n_rows_to_rerun": 16
+  },
+  {
+   "model": "mistralai/mistral-nemo",
+   "dataset": "math500_choice",
+   "n_rows_to_rerun": 36
+  },
+  {
+   "model": "mistralai/mistral-nemo",
+   "dataset": "mmlu",
+   "n_rows_to_rerun": 279
+  },
+  {
+   "model": "mistralai/mistral-small-3.2-24b-instruct",
+   "dataset": "gpqa",
+   "n_rows_to_rerun": 138
+  },
+  {
+   "model": "mistralai/mistral-small-3.2-24b-instruct",
+   "dataset": "hle_text_mc",
+   "n_rows_to_rerun": 341
+  },
+  {
+   "model": "mistralai/mistral-small-3.2-24b-instruct",
+   "dataset": "math500_choice",
+   "n_rows_to_rerun": 459
+  },
+  {
+   "model": "mistralai/mistral-small-3.2-24b-instruct",
+   "dataset": "mmlu",
+   "n_rows_to_rerun": 678
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "dataset": "gpqa",
+   "n_rows_to_rerun": 2
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "dataset": "hle_text_mc",
+   "n_rows_to_rerun": 10
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "dataset": "math500_choice",
+   "n_rows_to_rerun": 2
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "dataset": "mmlu",
+   "n_rows_to_rerun": 3
+  },
+  {
+   "model": "openai/gpt-oss-20b",
+   "dataset": "gpqa",
+   "n_rows_to_rerun": 21
+  },
+  {
+   "model": "openai/gpt-oss-20b",
+   "dataset": "hle_text_mc",
+   "n_rows_to_rerun": 34
+  },
+  {
+   "model": "openai/gpt-oss-20b",
+   "dataset": "math500_choice",
+   "n_rows_to_rerun": 3
+  },
+  {
+   "model": "openai/gpt-oss-20b",
+   "dataset": "mmlu",
+   "n_rows_to_rerun": 13
+  },
+  {
+   "model": "qwen/qwen3.7-flash",
+   "dataset": "gpqa",
+   "n_rows_to_rerun": 208
+  },
+  {
+   "model": "qwen/qwen3.7-flash",
+   "dataset": "hle_text_mc",
+   "n_rows_to_rerun": 388
+  },
+  {
+   "model": "qwen/qwen3.7-flash",
+   "dataset": "math500_choice",
+   "n_rows_to_rerun": 200
+  },
+  {
+   "model": "qwen/qwen3.7-flash",
+   "dataset": "mmlu",
+   "n_rows_to_rerun": 445
+  },
+  {
+   "model": "qwen/qwen3.8-flash",
+   "dataset": "gpqa",
+   "n_rows_to_rerun": 144
+  },
+  {
+   "model": "qwen/qwen3.8-flash",
+   "dataset": "hle_text_mc",
+   "n_rows_to_rerun": 498
+  },
+  {
+   "model": "qwen/qwen3.8-flash",
+   "dataset": "math500_choice",
+   "n_rows_to_rerun": 144
+  },
+  {
+   "model": "qwen/qwen3.8-flash",
+   "dataset": "mmlu",
+   "n_rows_to_rerun": 368
+  },
+  {
+   "model": "qwen/qwen3.8-max-0902",
+   "dataset": "gpqa",
+   "n_rows_to_rerun": 94
+  },
+  {
+   "model": "qwen/qwen3.8-max-0902",
+   "dataset": "mmlu",
+   "n_rows_to_rerun": 128
+  },
+  {
+   "model": "xiaomi/mimo-v2.6-flash",
+   "dataset": "arc",
+   "n_rows_to_rerun": 34
+  },
+  {
+   "model": "xiaomi/mimo-v2.6-flash",
+   "dataset": "gpqa",
+   "n_rows_to_rerun": 325
+  },
+  {
+   "model": "xiaomi/mimo-v2.6-flash",
+   "dataset": "hle_text_mc",
+   "n_rows_to_rerun": 404
+  },
+  {
+   "model": "xiaomi/mimo-v2.6-flash",
+   "dataset": "math500_choice",
+   "n_rows_to_rerun": 92
+  },
+  {
+   "model": "xiaomi/mimo-v2.6-flash",
+   "dataset": "mmlu",
+   "n_rows_to_rerun": 640
+  },
+  {
+   "model": "xiaomi/mimo-v2.6-pro",
+   "dataset": "gpqa",
+   "n_rows_to_rerun": 362
+  },
+  {
+   "model": "xiaomi/mimo-v2.6-pro",
+   "dataset": "math500_choice",
+   "n_rows_to_rerun": 255
+  },
+  {
+   "model": "xiaomi/mimo-v2.6-pro",
+   "dataset": "mmlu",
+   "n_rows_to_rerun": 945
+  },
+  {
+   "model": "z-ai/glm-5.3",
+   "dataset": "gpqa",
+   "n_rows_to_rerun": 39
+  },
+  {
+   "model": "z-ai/glm-5.3",
+   "dataset": "hle_text_mc",
+   "n_rows_to_rerun": 17
+  },
+  {
+   "model": "z-ai/glm-5.3",
+   "dataset": "math500_choice",
+   "n_rows_to_rerun": 13
+  },
+  {
+   "model": "z-ai/glm-5.3",
+   "dataset": "mmlu",
+   "n_rows_to_rerun": 58
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "dataset": "arc",
+   "n_rows_to_rerun": 1
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "dataset": "gpqa",
+   "n_rows_to_rerun": 25
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "dataset": "hle_text_mc",
+   "n_rows_to_rerun": 109
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "dataset": "math500_choice",
+   "n_rows_to_rerun": 1
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "dataset": "mmlu",
+   "n_rows_to_rerun": 26
+  }
+ ],
+ "rerun_total_rows": 8825,
+ "excluded_from_rerun": "rows with stored recovery stage exact/stripped (parser-stable) and rows already settled by pred_strict",
+ "public_aggregates_path": "data_report/baselines/<version>/public_summary.json",
+ "notes": [
+  "v2 raws are truncated excerpts; reparsing them yields V2-only diagnostics, never repaired v3 scores",
+  "v3 rows have no raw output; ALL non-parser-stable v3 rows need rerun",
+  "future runs must store complete private raws (see revision_run)"
+ ]
+}

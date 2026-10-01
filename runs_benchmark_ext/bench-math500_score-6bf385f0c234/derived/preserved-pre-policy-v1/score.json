@@ -1,0 +1,98 @@
+{
+  "stage": "math500_score",
+  "run_dir": "runs_benchmark_ext/bench-math500_score-6bf385f0c234",
+  "n_expected": 273,
+  "n_scored": 273,
+  "n_missing_terminal": 0,
+  "accuracy": 0.13553113553113552,
+  "wilson_95": {
+    "low": 0.099952,
+    "high": 0.181225
+  },
+  "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject.",
+  "exact_concat_note": "item correct only when every digit question is usable and the concatenated digits equal the gold; missing/error items count as incorrect",
+  "status_counts": {
+    "ok": 273
+  },
+  "strict_format_failures": 0,
+  "by_group": {
+    "Algebra": {
+      "n": 75,
+      "correct": 13,
+      "accuracy": 0.17333333333333334,
+      "wilson_95": {
+        "low": 0.104191,
+        "high": 0.274308
+      },
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+    },
+    "Counting & Probability": {
+      "n": 19,
+      "correct": 3,
+      "accuracy": 0.15789473684210525,
+      "wilson_95": {
+        "low": 0.055205,
+        "high": 0.375655
+      },
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+    },
+    "Geometry": {
+      "n": 21,
+      "correct": 1,
+      "accuracy": 0.047619047619047616,
+      "wilson_95": {
+        "low": 0.008456,
+        "high": 0.226694
+      },
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+    },
+    "Intermediate Algebra": {
+      "n": 48,
+      "correct": 4,
+      "accuracy": 0.08333333333333333,
+      "wilson_95": {
+        "low": 0.032884,
+        "high": 0.195533
+      },
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+    },
+    "Number Theory": {
+      "n": 49,
+      "correct": 9,
+      "accuracy": 0.1836734693877551,
+      "wilson_95": {
+        "low": 0.099763,
+        "high": 0.313576
+      },
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+    },
+    "Prealgebra": {
+      "n": 52,
+      "correct": 5,
+      "accuracy": 0.09615384615384616,
+      "wilson_95": {
+        "low": 0.041774,
+        "high": 0.206096
+      },
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+    },
+    "Precalculus": {
+      "n": 9,
+      "correct": 2,
+      "accuracy": 0.2222222222222222,
+      "wilson_95": {
+        "low": 0.063225,
+        "high": 0.547411
+      },
+      "finite_set_caveat": "Wilson intervals are item-sampling diagnostics within this fixed, finite benchmark item set; they are not superpopulation claims and the benchmark does not exhaust the item space of the subject."
+    }
+  },
+  "by_rotation_variant": {},
+  "attempts_summary": {
+    "n_attempts": 273,
+    "n_uncertain_attempts": 0,
+    "usage_input_tokens_sum": 242475,
+    "usage_output_tokens_sum": 15260
+  },
+  "publish_note": "per-item lists stripped at publish (item ids/answers reference licensed third-party content); aggregates kept"
+}

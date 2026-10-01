@@ -1,6 +1,23 @@
 # What underlies jev-1.13.0 - a best-guess reconstruction
 
-**Status.** Working analysis, updated 2026-09-26 (post-probe). Companion to `report/index.html`
+**Status.** Working analysis, updated 2026-09-26 (post-probe), corrected in
+report revision 2 (2026-10-01): latency is labeled the proxy-reported
+upstream service time (`x-envoy-upstream-service-time`, which includes
+upstream processing and the Envoy-upstream network hop and does not certify
+exclusion of application queueing/preprocessing/serialization); the
+sub-0.11 ms read-out bound and the factual overhead-pie decomposition are
+withdrawn (any decomposition is illustrative and conditional); MMLU-Pro is
+quoted all-requested (82.7%); ARC-AGI-2 per-cell figures come from the
+corrected runs (`runs_benchmark_ext_rerun1`, grid identity patched, oracle
+diagnostic protocol recorded, duplicate request-payload pairs 7→0); the
+option-rotation audit is read cluster-aware (140 base items × 3 variants;
+naive McNemar p = 0.83 assumes a failed independence and is not evidence);
+MATH-500 recognition-versus-digit uses the paired 224-item intersection; the
+weighted p(gold) column is descriptive only (no underconfidence /
+over-dispersion inference; HLE is measurably overconfident); the knowledge
+horizon is stated over sampled events; and the chance-corrected confidence
+formula is approximately recoverable, not a proven exact deterministic
+identity. Companion to `report/index.html`
 (section "What Jev appears to be", now illustrated by
 `docs/modern-comparison/architecture-diagram.html`),
 `docs/modern-comparison/ARCHITECTURE-PROBES.md` (the probe battery), and
@@ -18,15 +35,17 @@ marked **(P-battery)**.
 
 **Ground rules honored throughout.** (1) Behavioral evidence only - every
 observation is an API-visible signal (answers, probability vectors, usage token
-counts, server-compute timing headers, billing); nothing here implies weights,
+counts, proxy-reported upstream service-time headers, billing); nothing here implies weights,
 gradients, or serving internals were accessed. (2) Every claim cites repo
 paths; numbers were re-verified against the JSON in this pass, not copied from
 summaries. (3) The 0.01 quantization floor is treated as a hard noise floor:
 no argument rests on a single probability difference < 0.01, and §11 flags
 every place we found one - including in prior documents and in our own drafts.
-(4) Latency slopes are used for *structure* only (one pass vs decode loops),
-never for parameter counts - the server batches our requests with other
-tenants', so marginal milliseconds are a scheduling artifact as much as a
+(4) Latency slopes are used for *structure* only (scoring versus
+autoregressive-decoding patterns),
+never for parameter counts and never as hardware throughput - the service
+batches our requests with other
+users', so marginal milliseconds are a scheduling artifact as much as a
 compute artifact. (5) Jev's identity self-reports are treated as learned text,
 never provenance. (6) Single-call distribution comparisons are read against
 the measured nondeterminism band (repeat TVD 0.034–0.122,
@@ -52,17 +71,17 @@ would force us to abandon or materially rewrite the row.
 
 | Component | Best guess | Tag | Key evidence (paths) | Falsified by |
 |---|---|---|---|---|
-| Output mechanism | A trained probability **read-out over caller-supplied options**, replacing the token-generation head - not sampled text parsed into numbers | confident | 0.01 grid on all 704,277 published probability values (7,887 vectors, K=2–255), zero off-grid; displayed sums bounded one-sided (0.99/1.00, never >1.00 - confirmed live at every K≤12 and at 255, **(P4)**); 9 choice-vs-table argmax mismatches, all at exactly one quantum; `confidence` = chance-corrected p_max; options scored essentially absolutely - no mass dilution K=2→255 **(P3)** (§2A/§2D; `data_report/arch_audits.json`, `data_report/lattice_forensics.json`, `runs_archprobe/probe2/`) | Off-grid probabilities at scale; a displayed sum above 1.00; free-text output; a confidence field not derivable from (p_max, K); systematic p_gold dilution under inert padding |
-| Serving shape | **One forward pass per request** ("self-batching"): every question and option scored from a shared pass over the state; continuous batching across tenants; **no decode loop** | confident | +0.44 ms/question and +0.10 ms/option marginal compute ≈ the prefill cost of the tokens each adds (read-out residual ≤0.11 ms/question, zero per option); upstream flat 74–86 ms at concurrency 1→32; output tokens = serialized response JSON (`runs_archprobe/analysis.json`, `rows.jsonl`; §2B) | Per-question compute growing far above its added-token prefill cost; upstream latency rising with in-flight count; per-output-token timing |
+| Output mechanism | A trained probability **read-out over caller-supplied options**, replacing the token-generation head - not sampled text parsed into numbers | confident | 0.01 grid on all 704,277 published probability values (7,887 vectors, K=2–255), zero off-grid; displayed sums bounded one-sided (0.99/1.00, never >1.00 - confirmed live at every K≤12 and at 255, **(P4)**); 9 choice-vs-table argmax mismatches, all at exactly one quantum; `confidence` ≈ chance-corrected p_max (approximately recoverable, not a proven exact deterministic identity); options scored essentially absolutely - no mass dilution K=2→255 **(P3)** (§2A/§2D; `data_report/arch_audits.json`, `data_report/lattice_forensics.json`, `runs_archprobe/probe2/`) | Off-grid probabilities at scale; a displayed sum above 1.00; free-text output; a confidence field not derivable from (p_max, K); systematic p_gold dilution under inert padding |
+| Serving shape | **Likely one shared scoring pass (leading theory)** ("self-batching"): questions and options scored within a single request, no returned free text; flat timing under concurrency is measured, but batching versus spare capacity versus replicas is not distinguished and internals are unobserved | plausible (leading theory) | +0.44 ms/question and +0.10 ms/option marginal compute ≈ the prefill cost of the tokens each adds (read-out residual within noise, not quoted as a bound); proxy-reported upstream service time flat 74–86 ms at concurrency 1→32 (x-envoy-upstream-service-time; includes upstream processing and the Envoy-upstream network hop; not certified to exclude application queueing/preprocessing/serialization); output tokens = serialized response JSON (`runs_archprobe/analysis.json`, `rows.jsonl`; §2B) | Per-question increments far above its added-token cost; upstream latency rising with in-flight count; per-output-token timing |
 | Compute profile | ~73 ms fixed floor + ~6.0 ms per 1k input tokens, linear to 29k; **no large quadratic (attention-blowup) signature** | confident (measurement) / plausible (transformer reading) | `runs_archprobe/analysis.json` (73.11 ms, 6.053 ms/ktok, R²=0.857); refit: quadratic buys ΔR²=+0.008, top-bin residual +4.8 ms (`arch_audits.json → prefill_shape`) | Strong superlinear compute growth at long prompts beyond batching noise |
 | Input pipeline | Server-side **whitespace normalizer** + fixed request template (~316 tokens on an empty state; affine intercepts 246–258) ahead of tokenization | confident (normalizer) / plausible (template size) | 300 spaces = empty-state count (`runs_archprobe/cleanrun_jev.json`, `tokens_per_char.json`); `tokenizer_fingerprint.json` intercepts | Whitespace-bearing inputs whose counts show a per-space token cost |
 | Tokenizer | Vendor's own **English/Latin-centric BPE**: heavy Latin/punctuation merges; ~1 token per codepoint for Cyrillic, Greek, Arabic, Hebrew, Thai, Devanagari, Hangul, kana, common CJK; digits ~1 each; **byte-level fallback confirmed live (P1)** - rare blocks cost 0.99–1.01 tokens per UTF-8 byte, partially-merged blocks 0.54–0.73; **UTF-8 pipeline confirmed** (lone surrogates rejected, HTTP 400); NFC normalization confirmed; no match among 173 open signatures | confident (mechanism, post-P1) / plausible (vendor's own) | `runs_archprobe/probe2/probe2_analysis.json → p1_fallback`, `runs_archprobe/tokens_per_char_compare.json`, `tokenizer_perscript.json`, `tokenizer_broadscan.json`, `docs/modern-comparison/ARCHITECTURE-PROBES.md` §5b–5c | A tokenizer reproducing the whitespace-free per-script table within ~1 token/sample; acceptance of lone surrogates |
 | Core model class | Transformer-family decoder LM | plausible | LM-like token behavior in Talk traces; linear prefill; capability profile; the vendor's own primer narrative (`SOURCES.md` S10) - no API signal separates attention variants at ≤29k | - (not falsifiable from this API; see §5) |
 | Dense vs MoE | **Not constrained.** Nothing API-visible separates them; the economics do not require MoE | - | §5 | - |
-| Size | **No point estimate - a two-angle band.** Throughput angle (BF16 nameplate 400–2250 TFLOPS × quantization 2–4×, MFU 0.25–0.45, 1–4 shards): ~0.6–49B *active* - honest but loose. Capability angle: ~4–14B dense-equivalent, which does the narrowing. A quantized dense ~4–9B is the parsimonious joint reading; a MoE (~15–100B total) stays possible. Live P2 grid confirms nothing scales with option count beyond tokens | plausible (band); assumptions stated | §4; `data_report/size_estimate.json`; `runs_archprobe/probe2/ → p2_grid` | Vendor disclosure; a matched-protocol evaluation outside the band |
+| Size | **No point estimate - a two-angle band.** Throughput angle (BF16 nameplate 400–2250 TFLOPS × quantization 2–4×, MFU 0.25–0.45, 1–4 shards): ~0.6–49B *active* - honest but loose, and a hardware-dependent scenario calculation (service-time slopes are not hardware throughput measurements; these bands are conditional illustrations, not reliable parameter estimates). Capability angle: ~4–14B dense-equivalent, which does the narrowing. A quantized dense ~4–9B is the parsimonious joint reading; a MoE (~15–100B total) stays possible. Live P2 grid confirms nothing scales with option count beyond tokens | plausible (band); assumptions stated | §4; `data_report/size_estimate.json`; `runs_archprobe/probe2/ → p2_grid` | Vendor disclosure; a matched-protocol evaluation outside the band |
 | Training history | English-dominant pretraining corpus (the tokenizer's per-script coverage is its fossil record); knowledge horizon **solid to Dec 2024, partial to May 2025, none detected Jun–Aug 2025 (P5)**; assistant-shaped **judgement-format post-training** (schema perfection under load, trained abstention rising exactly where knowledge fades, shape-derived confidence); OpenAI-flavored **brand prior inherited from training text** | plausible | §2F, §2G; `runs_archprobe/probe2/probe2_analysis.json → p5_horizon`; `runs_live/FINDINGS.md` §5; `runs_archprobe/analysis.json → ancestry` | Verifiably post-horizon events answered correctly closed-book beyond the P5 fade; identity answers that track deployment facts rather than internet priors |
 | Frontier-teacher distillation | Possible contributor to post-training; **not identifiable** from any API-visible signal we can construct | speculative | §6 | - (under-determined; §6 lists the weak discriminators and their power) |
-| What it is not | Not a frontier model; not retrieval- or cache-assisted; not a wrapper around another vendor's API; not a relabeled *open* model | confident | §7 | One clean counter-instance each (e.g., a post-cutoff fact closed-book; a cache-flat latency component; an upstream round-trip signature; an exact open-tokenizer match) |
+| What it is not | Not a frontier model; not retrieval- or cache-assisted; not a wrapper around another vendor's API; not a relabeled *open* model (each a measurement-weighted leading reading; timing alone does not categorically exclude a wrapper, and an altered tokenizer does not exclude reused/adapted weights) | confident on each direction, not proof of exclusion | §7 | One clean counter-instance each (e.g., a post-cutoff fact closed-book; a cache-flat latency component; an upstream round-trip signature; an exact open-tokenizer match) |
 | Interface limits | ≤255 options/question; score rubrics 2–10 levels; noul = bare scalar with no confidence field; state ≤32k, total ≤64k tokens (vendor-documented) | confident (documented + exercised) | `src/jev_observatory/schema.py`; `SOURCES.md` S4–S6, S9; `runs_live/FINDINGS.md` §2.4 | A served request exceeding a documented limit |
 
 ---
@@ -157,7 +176,10 @@ what it licenses.
 ### 2B. Latency, self-batching, and the shape of serving
 
 All from `runs_archprobe/` (987 calls, 0 errors, `BILLING.json`; server
-compute = `x-envoy-upstream-service-time`, queue-free). Fits re-derived in
+compute = `x-envoy-upstream-service-time`, the proxy-reported upstream
+service time - it includes upstream processing and the Envoy-to-upstream
+network hop and does not certify exclusion of application queueing,
+preprocessing or response serialization (Envoy router-filter docs)). Fits re-derived in
 this pass (`arch_audits.json → prefill_shape, marginal_cost`):
 
 * **Prefill.** upstream = 73.11 ms + 6.053 ms per 1k input tokens over
@@ -171,11 +193,13 @@ this pass (`arch_audits.json → prefill_shape, marginal_cost`):
 * **The read-out is invisible (new decomposition).** Each packed question
   adds ~55.4 input tokens and ~33.4 output tokens; at the measured prefill
   slope its tokens alone predict +0.336 ms, against a measured marginal of
-  +0.442 ms - residual **≤0.11 ms/question** for the entire decision
-  computation. Each option adds ~18.2 input tokens and ~9.6 output tokens;
+  +0.442 ms - a residual inside the ±30–50 ms scatter, deliberately **not
+  quoted as a bound** on the read-out's own cost. Each option adds ~18.2 input tokens and ~9.6 output tokens;
   tokens predict +0.110 ms against a measured +0.102 ms - residual **zero
   within noise** (headcount 1→192 questions: upstream 71→153 ms; optioncount
-  2→255: 65→90 ms; `rows.jsonl`). The whole latency model collapses to:
+  2→255: 65→90 ms; `rows.jsonl`). Any split of the fitted terms is an
+  **illustrative, conditional** model decomposition, not a measured overhead
+  budget. The latency model that fits the data:
   **floor + prefill(all input tokens) + nothing measurable for deciding.**
   That is the one-forward-pass, many-read-outs picture in its strongest form:
   the decision cost is not merely small, it is *accounted for* by the tokens
@@ -187,14 +211,19 @@ this pass (`arch_audits.json → prefill_shape, marginal_cost`):
   `runs_benchmark*/…/score.json → attempts_summary`), at $0
   (`data_report/costs.json`). "Free output" is the natural accounting of a
   prefill-only service. **[confident]**
-* **Continuous batching.** Identical independent requests at concurrency
+* **Flat concurrency (consistent with efficient serving).** Identical
+  independent requests at concurrency
   1→32: median upstream 78.5/80/86/80/74/81.5 ms - flat; client wall bends
   only at c=32 (288→622 ms), which is our own connection pool
   (`analysis.json → concurrency`). One batched 4-question call ≈261 ms vs
   four separate calls ≈1,117 ms (`runs_live/FINDINGS.md` §3): no per-question
-  external round trip exists to hide. **[confident]**
+  round trip appears on the critical path in these measurements. Flatness
+  does not identify batching versus spare capacity or replicas; a
+  conventional frontier-API wrapper is disfavored, not excluded to
+  certainty. **[confident measurement; plausible serving mechanism]**
 * **Cold path.** +353.5 ms median wall for cold TCP+TLS, upstream unaffected
-  (`analysis.json → coldwarm`) - validates the header as the compute signal.
+  (`analysis.json → coldwarm`) - consistent with reading the header as the
+  vendor's service-time signal.
 * **Battery-power caveat (new).** The short tokenizer battery that produced
   the Qwen false lead carries **≤14 tokens of discriminating information per
   probe** (reported counts 313–330 against the ~316-token empty-state
@@ -280,8 +309,10 @@ Scores: `runs_benchmark*/bench-*/derived/score.json` + `weighted_score.json`;
 references with protocol labels:
 `docs/modern-comparison/canonical/comparable-scores.json`.
 
-* **Knowledge MCQ, direct one-shot:** MMLU-Pro 82.8% [82.1, 83.5]
-  (n=12,032); GPQA Diamond 76.5% [70.1, 81.9] (n=196); ARC-Challenge 97.9%
+* **Knowledge MCQ, direct one-shot:** MMLU-Pro 82.7% [82.0, 83.4]
+  (n=12,032, all-requested: missing/strict-format-failure/unusable rows count
+  wrong; the earlier 82.8% was the usable-response figure and is never
+  substituted); GPQA Diamond 76.5% [70.1, 81.9] (n=196); ARC-Challenge 97.9%
   (saturated for every model in the comparison set). Nearest published
   neighbors: Claude 3.7 Sonnet no-thinking 80.7 MMLU-Pro (direct, canonical)
   and 76.8 GPQA (direct, aggregator); Qwen 3.5 9B 82.5 / 77.6 (reasoning
@@ -291,14 +322,28 @@ references with protocol labels:
   band, not lower. **[confident measurement; band is positioning]**
 * **Expert-frontier material:** HLE MC-subset 21.9% [18.4, 25.7] - between
   chance and 2025 rows (GPT-5 26.3 reasoning; DeepSeek V4 Flash 34.8 direct
-  self-reported), roughly half the 2026 frontier (49.5–62.5). ARC-AGI-2
-  public eval: 53.5% per-cell diagnostic, **0/120 exact tasks**
-  (`runs_benchmark_ext/bench-arc_agi2_choice-*/derived/score.json`). Far
+  self-reported), roughly half the 2026 frontier (49.5–62.5). ARC-AGI-2:
+  per-cell diagnostics **59.6% (choice) / 60.7% (score)** on the corrected
+  runs (grid identity patched into the prompt; oracle output shape and
+  palette recorded as an explicit diagnostic protocol, not the official
+  evaluation; duplicate request-payload pairs with different gold fell from
+  7 to 0) and **0/120 exact tasks** on the official all-cells criterion,
+  scored separately under the assisted adapters - assisted adaptation, not
+  an official matched benchmark
+  (`runs_benchmark_ext_rerun1/bench-arc_agi2_{choice,score}-*/derived/score.json`). Far
   below frontier wherever multi-step reasoning carries the item.
   **[confident]**
-* **Recognition ≫ production ("generation tax").** MATH-500 encodable
-  subsets: 83.1% choosing the right MCQ option vs **13.6%** reading the same
-  answers off a per-digit rubric (weighted 4.8%) - same knowledge, different
+* **Recognition ≫ production (adapter-specific burden, not a generation tax).**
+  MATH-500 encodable
+  subsets: 83.1% choosing the right MCQ option vs **13.6%** reading the
+  answers off a per-digit rubric - and the digit rubric is positional and
+  conjunctive (every digit of the decimal in order), so the gap measures that
+  adapter's recognition-to-production burden, not an isolated generation
+  cost. The paired evidence is the 224 items present in both recorded runs:
+  **0.817 vs 0.103** (19 both right, 164 MCQ-only, 4 digit-only, 37 neither;
+  exact McNemar p < 1e-30; `data_report/benchmark_diagnostics/paired_diagnostics.json`),
+  so it is not the same answers being reported differently.
+  Same knowledge, different
   output channel. The Talk ladder completes the picture: character menus
   degenerate under every control; vocabulary menus give 86–100% real words
   and **zero syntax**; coherent text appears only when a local LM supplies
@@ -318,25 +363,47 @@ references with protocol labels:
   are comparable across option counts, and inert menu padding is a safe
   protocol tool (`runs_archprobe/probe2/ → p3_kcal`). **[confident for inert
   padding; semantic distractors untested]**
-* **Position effects are real but unbiased on content-bearing items (new).**
-  Pairing the rotation audit to native-order results by item id: 419 pairs,
-  22 discordant (5.3% flip rate), native 86.6% vs rotated 86.2% on the
-  subset, exact McNemar **p = 0.83** (`arch_audits.json → rotation_pairs`).
-  Option order flips a few percent of answers without moving accuracy - in
+* **Position effects are real but unbiased on content-bearing items (new,
+  cluster-aware).**
+  Pairing the rotation audit to native-order results by item id: 419 scored
+  observations over **140 unique base items (3 variants each; 420
+  requested)**, 22 discordant (5.3% flip rate), native 86.6% vs rotated
+  86.2% on the paired observations. The observations cluster on their base
+  items, so the naive exact McNemar **p = 0.83** assumes an independence the
+  design does not have and is **not quoted as evidence** (a non-significant p
+  is not an equivalence proof). The cluster-aware read (per-base differences,
+  10,000 cluster bootstraps, seed 20260930): mean native-minus-rotated
+  accuracy **+0.36 points, 95% CI [-2.50, +3.33]**
+  (`data_report/benchmark_diagnostics/paired_diagnostics.json →
+  rotation_clusters`; `arch_audits.json → rotation_pairs` carries the naive
+  number with its validity warning).
+  Option order flips a few percent of answers with no detected systematic
+  effect at this resolution - in
   sharp contrast to flat creative menus, where ordering changes the argmax
   almost every time (11 orderings → 10 distinct winners; Spearman vs native
   0.26–0.44 on flat steps vs 0.42–0.88 on sharp ones;
   `runs_live/token_talk_orderprobe.json`, `docs/token-talk-findings.md` §11).
   Position sensitivity scales inversely with content signal - the signature
   of an in-context list reader, not of isolated per-option encoders. The
-  headline "86.2% rotation audit vs 82.8% full set" is **subset selection**
-  (native accuracy on those same 419 items is 86.6%), not a shuffle benefit.
-  **[confident]**
+  headline "86.2% rotation audit vs the full set" is **subset selection**
+  (native accuracy on those same base items is 86.6%), not a shuffle benefit.
+  **[confident on the flip rate; the accuracy difference is bounded, not
+  proven equivalent]**
 
 ### 2E. Calibration and distribution shape
 
-* **Bimodal, not uniformly timid.** MMLU-Pro weighted mean p(gold) = 0.740
-  vs greedy 0.828, but the median item carries p(gold) = 0.93 and p05 = 0.04
+* **Bimodal, not uniformly timid.** (Throughout this document, mean p(gold)
+  is the expected success of stochastically selecting by the displayed
+  probabilities - a descriptive weighted column - and NOT a predicted argmax
+  accuracy; no underconfidence or "over-dispersion" inference is drawn from
+  weighted < greedy. The repaired reliability diagnostics test calibration
+  directly (`data_report/benchmark_diagnostics/calibration.json`): MMLU-Pro
+  is near-calibrated on selected-answer displayed probability while HLE is
+  badly overconfident (mean top displayed probability 0.634 vs 0.219
+  accuracy), so calibration is dataset-dependent and per-task calibration
+  beats any global conservative threshold; displayed values are two-decimal
+  rounded with vector sums 0.99/1.00.) MMLU-Pro weighted mean p(gold) = 0.740
+  vs greedy 0.827, but the median item carries p(gold) = 0.93 and p05 = 0.04
   (`runs_benchmark/bench-mmlu_full-*/derived/weighted_score.json`). Most
   items get near-decisive distributions; a hard tail gets near-zero mass on
   gold - including **213 items (1.8%) at exactly 0.00** (`score.json →
@@ -440,9 +507,11 @@ stopping on short answers, trained abstention, an OpenAI-flavored brand
 prior inherited from assistant text). Serving runs the read-out as prefill:
 one forward pass over state + questions + options, many read-out vectors,
 serialized as the response and billed as free output, continuously batched
-across tenants. The knowledge horizon behaves like a fixed training cutoff
+across tenants. The knowledge horizon behaves, on the sampled dated events,
+like a parametric cutoff
 with a soft edge in spring 2025 (P5: solid to Dec 2024, partial to May 2025,
-none detected Jun–Aug 2025). Whether the post-training signal came substantially from a
+none detected Jun–Aug 2025) - empirical limits tied to the sampled events,
+not an absolute training cutoff. Whether the post-training signal came substantially from a
 frontier teacher (distillation) or from on-policy judgement data is not
 identifiable from anything this API returns; whether the transformer is dense
 or MoE is not identifiable either, and the economics do not need MoE.
@@ -457,7 +526,8 @@ guarantee, not a content guarantee: 213 zero-probability gold outcomes on
 MMLU-Pro alone, §2E). Under our reconstruction, "system one" is primarily a
 *training-and-interface* claim - a language model whose generation was traded
 away for fast structured judgement - and the trade is visible in every
-artifact: the generation tax (83.1 vs 13.6 on the same MATH items), the word
+artifact: the recognition-to-production gap (83.1 vs 13.6 across the
+MATH-500 encodings; 0.817 vs 0.103 on the 224 shared items), the word
 salad of unguided sequential decisions, and the near-free marginal cost of
 deciding.
 
@@ -505,7 +575,7 @@ R - consistent, and equally not a size.
 
 ### Angle 2 - capability band (a dense-equivalent range)
 
-Direct-answer MMLU-Pro 82.8 / GPQA 76.5 sit beside Qwen 3.5 9B (82.5 / 77.6,
+Direct-answer MMLU-Pro 82.7 / GPQA 76.5 sit beside Qwen 3.5 9B (82.5 / 77.6,
 reasoning protocol) and above Claude 3.7 Sonnet no-thinking (80.7 / 76.8,
 direct); the next rung up (Qwen3.8-27B, 84.3 / 82.2) is clearly above Jev
 (`docs/modern-comparison/canonical/comparable-scores.json`). HLE 21.9 and
@@ -642,7 +712,7 @@ upgrade it on any current artifact.
   hit would not prefill the prompt; there is no flat-cost component keyed to
   question content. (b) Novel content is answered, not looked up: fresh
   generator items (`runs_live/FINDINGS.md` §3c, with its easiness caveat) and
-  70,100 ARC-AGI-2 cell decisions at 53.5%. (c) The knowledge horizon
+  70,100 ARC-AGI-2 cell decisions at 59.6% (choice encoding, corrected runs). (c) The knowledge horizon
   *stops with a soft edge*: solid to Dec 2024, fading Jan–May 2025, zero
   Jun–Aug 2025 (P5 dated bisection, §2G) - a live retriever would not have
   a date-shaped fade like that, and the abstention pattern
@@ -651,11 +721,14 @@ upgrade it on any current artifact.
   identical payloads) - a lookup cache is deterministic. (e) 213
   zero-probability gold outcomes on *public* MMLU-Pro text (§2E) is not what
   benchmark-keyed retrieval produces.
-* **Not a wrapper around another vendor's API [confident].** (a) Upstream
+* **Not a wrapper around another vendor's API [confident on the combined
+  evidence; timing alone is not a categorical exclusion].** (a) Upstream
   compute is 73–86 ms flat for ≤2k-token requests at concurrency 1→32 (§2B)
   - there is no room inside those milliseconds for a frontier API round
-  trip, and a wrapped per-question call would serialize (measured instead:
-  batched 4-question call 261 ms vs 4×279 ms separate). (b) The usage
+  trip in the typical case, and a wrapped per-question call would serialize (measured instead:
+  batched 4-question call 261 ms vs 4×279 ms separate); the header alone
+  cannot categorically exclude a hidden upstream wrapper, so the judgment
+  rests on (a)+(b)+(c) together. (b) The usage
   counter follows a tokenizer that matches no public encoding, including
   both OpenAI ones (§2C) - a wrapper would expose its upstream's counting or
   a re-tokenization we could fit. (c) $0.042/M with free output sits one to
@@ -665,7 +738,10 @@ upgrade it on any current artifact.
   does not survive.
 * **Not a relabeled open model [confident within the scanned set].** The
   whitespace-free per-script profile matches none of 173 open tokenizer
-  signatures across 1,215 repos (§2C); both historical "leads" dissolved as
+  signatures (128 scored), so no unmodified open model is Jev; an altered or
+  retrained tokenizer does not by itself exclude reused or adapted weights,
+  and this API cannot prove trained-from-scratch (1,215 repos scanned, §2C).
+  Both historical "leads" dissolved as
   template artifacts (Qwen: §5b of ARCHITECTURE-PROBES; the broadscan's
   sub-token LOO residuals: §2B battery-power caveat). Scope note, stated
   once: a *private* base from another lab cannot be excluded by token
@@ -675,6 +751,9 @@ upgrade it on any current artifact.
   guarantee is the envelope: schema-valid, in-menu, quantized. The content
   is wrong 23.5% of the time on GPQA Diamond and puts exact 0.00 on the
   gold answer 213 times on MMLU-Pro (§2E), beautifully formatted every time.
+  Whether each wrong answer counts as a "hallucination" depends on the
+  definition; schema validity is not truth, and a schema-valid answer can be
+  factually wrong.
 
 ---
 
@@ -708,11 +787,11 @@ the single cheapest measurement with real power.
 | H2 | Relabeled **open** model (e.g. a Qwen/Llama/Hy-MT2 checkpoint behind the read-out) | Marketing's ChatGPT-adjacent framing invites it; the first token fit said Qwen | Per-script table excludes every scanned family (§2C); both "leads" were template artifacts (§2B); identity prior contradicts Qwen specifically | **0.03** | An exact open-tokenizer match appearing post-scan (re-run `tokenizer_broadscan.py` against new releases periodically) |
 | H3 | Relabeled **private/internal** base from another lab (not in any scan) | Counts cannot see private vocabularies; brand prior is OpenAI-flavored | Must still explain the unmatched per-script profile, the whitespace normalizer, and the read-out post-processing - i.e., it converges to H1 with extra steps | **0.10** | P1: a private vocab is still a vocab - fallback-granularity + merge-boundary behavior narrows the space even without a match |
 | H4 | Wrapper/ensemble around external frontier API(s) | None positive; only the brand prior | §7 timing, tokenizer, and economics arguments; flat upstream at c=32 | **0.02** | Any upstream-latency signature inside the 73 ms floor under load (none in 987 calls) |
-| H5 | Retrieval- or cache-assisted answering | 82.8% MMLU-Pro is high for the band, inviting a memorization story | §7 items (a)–(e); **P5 ran: a date-shaped fade (solid→partial→zero) with fictional events refused is parametric-cutoff behavior, not retrieval** | **0.02** | Re-run P5 months apart: a moving horizon would resurrect this | 
+| H5 | Retrieval- or cache-assisted answering | 82.7% MMLU-Pro is high for the band, inviting a memorization story | §7 items (a)–(e); **P5 ran: a date-shaped fade (solid→partial→zero) with fictional events refused is parametric-cutoff behavior, not retrieval** | **0.02** | Re-run P5 months apart: a moving horizon would resurrect this | 
 | H6 | Frontier-teacher **distillation** contributed materially to post-training | Brand prior; recognition≫production; vendor comfort with teacher labels (S1) | Not identifiable; every signal is confounded (§6); the size-tension argument dissolved under the quantized-serving revision | **0.35** | P6 (error-sharing correlation) - low power, the only direct-ish API probe; not staged (needs external teacher APIs) |
 | H7 | **MoE** (small active, larger total) | Cost point typical of 2026 small-active MoE serving; would explain the top of the capability band with less compute per token | Not required: the corrected §4 throughput bound is loose, a quantized dense ~4–9B is parsimonious, and nothing API-visible favors MoE | **0.35** (unconstrained directly; prior-driven) | None exists at this API surface; declare unconstrained |
 | H8 | Non-transformer core (SSM/linear-attention/hybrid) | No quadratic signature to 29k (weak) | Population prior; capability profile is LM-typical; ΔR² test can't separate at these lengths | **0.10** (unconstrained) | Longer-context curvature probes are blocked by the 32k state cap; unconstrained |
-| H9 | Headline capability materially inflated by **benchmark contamination** | MMLU-Pro/ARC are years public; 82.8 is strong for the band | HLE near-floor and ARC-AGI-2 zero-exact are contamination-resistant and weak; rotation audit shows content-driven answers; fresh generators 450/450 (easy, templated - weak) | **0.15** | A *hard* fresh-item suite (post-2024 exam material, private holdout) at MMLU-Pro difficulty - the only real test |
+| H9 | Headline capability materially inflated by **benchmark contamination** | MMLU-Pro/ARC are years public; 82.7 is strong for the band | HLE near-floor and ARC-AGI-2 zero-exact are contamination-resistant and weak; rotation audit shows content-driven answers; fresh generators 450/450 (easy, templated - weak) | **0.15** | A *hard* fresh-item suite (post-2024 exam material, private holdout) at MMLU-Pro difficulty - the only real test |
 | H10 | Multiple heterogeneous models routed behind one endpoint (model field stable) | Nondeterminism is large-ish | Single stable `jev-1.13.0` across 482+ calls; tokenizer counts homogeneous; timing unimodal; batch numerics explain nondeterminism | **0.03** | Bimodality in upstream-latency or token-count distributions at n≫987 (none observed) |
 
 ---
@@ -864,10 +943,14 @@ prior documents and in this analysis:
    as a single-call probability. Correct statement: **at the floor**. (Mean
    values over many quantized observations are legitimate; single-call
    sub-quantum differences are not.)
-2. **Rotation-audit headline (86.2%) vs full-set (82.8%)**: reads as
+2. **Rotation-audit headline (86.2%) vs full-set**: reads as
    "shuffling helps" if unpaired. Paired, it is subset selection (native
-   86.6% on the same 419 items; McNemar p=0.83; `arch_audits.json →
-   rotation_pairs`). Do not cite the unpaired difference.
+   86.6% on the same base items; 419 scored observations clustered on 140
+   base items x 3 variants; the naive McNemar p=0.83 assumes failed
+   independence and is not evidence; cluster-aware CI [-2.50, +3.33] points,
+   not an equivalence proof; `paired_diagnostics.json → rotation_clusters`,
+   `arch_audits.json → rotation_pairs`). Do not cite the unpaired difference
+   or the naive p.
 3. **Interim vs final prefill fits**: the 863-call interim log
    (`runs_archprobe-live.log`: floor 75.85, slope 4.932, R²=0.606) vs the
    987-call final (`analysis.json`: 73.11, 6.053, R²=0.857). The swing
@@ -985,7 +1068,7 @@ prior documents and in this analysis:
     instruction-following, not capability, and conflating them silently is
     how you publish a table of lies. Jev itself is unaffected - it has no
     text format to fail (18 contract-invalid responses in 12,032 MMLU calls,
-    counted as wrong in its 82.8%).
+    counted as wrong in its 82.7%, all-requested).
 25. **Public-leaderboard dependence has a coverage hole exactly where the
     Pareto story lives.** vals.ai carries 133 MMLU-Pro rows and not one
     Gemma/Llama/Granite/Nemo-class commodity model - the cheap end of the

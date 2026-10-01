@@ -1,0 +1,268 @@
+{
+ "generated_by": "scripts/benchmark/benchmark_diagnostics.py (offline, deterministic)",
+ "math500_intersection": {
+  "method": "pair by MATH-500 problem id across the two recorded stage runs; intersection = original shared items present in both",
+  "n_intersection_items": 224,
+  "mcq_accuracy_on_intersection": 0.816964,
+  "digits_accuracy_on_intersection": 0.102679,
+  "paired_table": {
+   "both_correct": 19,
+   "mcq_only": 164,
+   "digits_only": 4,
+   "neither": 37
+  },
+  "mcnemar_exact_p": 0.0,
+  "provenance": [
+   "runs_benchmark_ext/bench-math500_choice-*/results.jsonl",
+   "runs_benchmark_ext/bench-math500_score-*/results.jsonl"
+  ]
+ },
+ "mmlu_matched_subset": {
+  "method": "paired subset = the 1,000 frozen matched MMLU item ids; Jev correctness from the recorded mmlu_full run; baseline rows joined by item id from the recorded v2/v3 result files",
+  "n_paired_items": 1000,
+  "jev_accuracy_on_paired_subset": 0.84,
+  "per_baseline": {
+   "v2": {
+    "deepseek/deepseek-v4-flash-0731": {
+     "n_paired": 1000,
+     "jev_only": 45,
+     "model_only": 81,
+     "mcnemar_exact_p": 0.001709,
+     "protocol": "temperature 0, effort low where accepted"
+    },
+    "google/gemma-3-4b-it": {
+     "n_paired": 1000,
+     "jev_only": 553,
+     "model_only": 25,
+     "mcnemar_exact_p": 0.0,
+     "protocol": "temperature 0, effort low where accepted"
+    },
+    "ibm-granite/granite-4.0-h-micro": {
+     "n_paired": 1000,
+     "jev_only": 539,
+     "model_only": 23,
+     "mcnemar_exact_p": 0.0,
+     "protocol": "temperature 0, effort low where accepted"
+    },
+    "meta-llama/llama-3.1-8b-instruct": {
+     "n_paired": 1000,
+     "jev_only": 516,
+     "model_only": 25,
+     "mcnemar_exact_p": 0.0,
+     "protocol": "temperature 0, effort low where accepted"
+    },
+    "mistralai/mistral-nemo": {
+     "n_paired": 1000,
+     "jev_only": 487,
+     "model_only": 35,
+     "mcnemar_exact_p": 0.0,
+     "protocol": "temperature 0, effort low where accepted"
+    },
+    "mistralai/mistral-small-3.2-24b-instruct": {
+     "n_paired": 1000,
+     "jev_only": 327,
+     "model_only": 43,
+     "mcnemar_exact_p": 0.0,
+     "protocol": "temperature 0, effort low where accepted"
+    },
+    "openai/gpt-oss-120b": {
+     "n_paired": 1000,
+     "jev_only": 124,
+     "model_only": 65,
+     "mcnemar_exact_p": 2.1e-05,
+     "protocol": "temperature 0, effort low where accepted"
+    },
+    "openai/gpt-oss-20b": {
+     "n_paired": 1000,
+     "jev_only": 196,
+     "model_only": 59,
+     "mcnemar_exact_p": 0.0,
+     "protocol": "temperature 0, effort low where accepted"
+    },
+    "qwen/qwen3.7-flash": {
+     "n_paired": 1000,
+     "jev_only": 249,
+     "model_only": 45,
+     "mcnemar_exact_p": 0.0,
+     "protocol": "temperature 0, effort low where accepted"
+    },
+    "qwen/qwen3.8-flash": {
+     "n_paired": 1000,
+     "jev_only": 151,
+     "model_only": 61,
+     "mcnemar_exact_p": 0.0,
+     "protocol": "temperature 0, effort low where accepted"
+    },
+    "qwen/qwen3.8-max-0902": {
+     "n_paired": 1000,
+     "jev_only": 47,
+     "model_only": 81,
+     "mcnemar_exact_p": 0.003374,
+     "protocol": "temperature 0, effort low where accepted"
+    },
+    "xiaomi/mimo-v2.6-flash": {
+     "n_paired": 1000,
+     "jev_only": 107,
+     "model_only": 66,
+     "mcnemar_exact_p": 0.002262,
+     "protocol": "temperature 0, effort low where accepted"
+    },
+    "xiaomi/mimo-v2.6-pro": {
+     "n_paired": 1000,
+     "jev_only": 95,
+     "model_only": 73,
+     "mcnemar_exact_p": 0.104912,
+     "protocol": "temperature 0, effort low where accepted"
+    },
+    "z-ai/glm-5.3": {
+     "n_paired": 1000,
+     "jev_only": 79,
+     "model_only": 73,
+     "mcnemar_exact_p": 0.685209,
+     "protocol": "temperature 0, effort low where accepted"
+    },
+    "z-ai/glm-5.3-flash": {
+     "n_paired": 1000,
+     "jev_only": 59,
+     "model_only": 74,
+     "mcnemar_exact_p": 0.22463,
+     "protocol": "temperature 0, effort low where accepted"
+    }
+   },
+   "v3": {
+    "deepseek/deepseek-v4-flash-0731": {
+     "n_paired": 1000,
+     "jev_only": 43,
+     "model_only": 78,
+     "mcnemar_exact_p": 0.001873,
+     "protocol": "provider-defaults"
+    },
+    "google/gemma-3-4b-it": {
+     "n_paired": 1000,
+     "jev_only": 550,
+     "model_only": 25,
+     "mcnemar_exact_p": 0.0,
+     "protocol": "provider-defaults"
+    },
+    "meta-llama/llama-3.1-8b-instruct": {
+     "n_paired": 1000,
+     "jev_only": 554,
+     "model_only": 31,
+     "mcnemar_exact_p": 0.0,
+     "protocol": "provider-defaults"
+    },
+    "mistralai/mistral-nemo": {
+     "n_paired": 1000,
+     "jev_only": 495,
+     "model_only": 29,
+     "mcnemar_exact_p": 0.0,
+     "protocol": "provider-defaults"
+    },
+    "mistralai/mistral-small-3.2-24b-instruct": {
+     "n_paired": 1000,
+     "jev_only": 326,
+     "model_only": 38,
+     "mcnemar_exact_p": 0.0,
+     "protocol": "provider-defaults"
+    },
+    "openai/gpt-oss-120b": {
+     "n_paired": 1000,
+     "jev_only": 95,
+     "model_only": 73,
+     "mcnemar_exact_p": 0.104912,
+     "protocol": "provider-defaults"
+    },
+    "openai/gpt-oss-20b": {
+     "n_paired": 1000,
+     "jev_only": 162,
+     "model_only": 68,
+     "mcnemar_exact_p": 0.0,
+     "protocol": "provider-defaults"
+    },
+    "qwen/qwen3.7-flash": {
+     "n_paired": 1000,
+     "jev_only": 88,
+     "model_only": 72,
+     "mcnemar_exact_p": 0.235582,
+     "protocol": "provider-defaults"
+    },
+    "qwen/qwen3.8-flash": {
+     "n_paired": 1000,
+     "jev_only": 67,
+     "model_only": 76,
+     "mcnemar_exact_p": 0.503639,
+     "protocol": "provider-defaults"
+    },
+    "xiaomi/mimo-v2.6-flash": {
+     "n_paired": 1000,
+     "jev_only": 92,
+     "model_only": 70,
+     "mcnemar_exact_p": 0.098661,
+     "protocol": "provider-defaults"
+    },
+    "xiaomi/mimo-v2.6-pro": {
+     "n_paired": 1000,
+     "jev_only": 79,
+     "model_only": 70,
+     "mcnemar_exact_p": 0.512356,
+     "protocol": "provider-defaults"
+    },
+    "z-ai/glm-5.3": {
+     "n_paired": 1000,
+     "jev_only": 48,
+     "model_only": 75,
+     "mcnemar_exact_p": 0.018693,
+     "protocol": "provider-defaults"
+    },
+    "z-ai/glm-5.3-flash": {
+     "n_paired": 1000,
+     "jev_only": 65,
+     "model_only": 77,
+     "mcnemar_exact_p": 0.356,
+     "protocol": "provider-defaults"
+    }
+   }
+  }
+ },
+ "rotation_clusters": {
+  "observations": {
+   "n_requested_rotation_observations": 420,
+   "n_paired_observations": 419,
+   "n_unique_base_items": 140,
+   "observation_note": "the scored rotation observations (419 of 420 requested) are REPEATED variants clustered on 140 unique base items; 419 observations are not 419 independent items"
+  },
+  "paired_table_observation_level": {
+   "both_correct": 351,
+   "native_only": 12,
+   "rotated_only": 10
+  },
+  "naive_independent_mcnemar": {
+   "p": 0.8318,
+   "validity": "INVALID independence assumption: discordant pairs are clustered on shared base items, so this p-value is anti-conservative and must be qualified, not quoted as standalone evidence; a non-significant p is NOT an equivalence proof (p=0.83 cannot show the conditions are equivalent)"
+  },
+  "cluster_aware": {
+   "unit": "unique base item (140 clusters; per-base difference = native correct - mean rotated correct)",
+   "mean_difference_native_minus_rotated": 0.003571,
+   "cluster_bootstrap_95_ci": [
+    -0.025,
+    0.033333
+   ],
+   "bootstrap": {
+    "resamples": 10000,
+    "seed": 20260930,
+    "resampling_unit": "base item"
+   },
+   "per_base_sign_counts": {
+    "native_higher": 8,
+    "rotated_higher": 7,
+    "tied": 125
+   },
+   "sign_test_two_sided_p": 1.0
+  },
+  "reporting_rule": "quote the cluster-aware interval and the observation clustering; if the naive McNemar p is mentioned at all it must carry the invalid-independence qualification and the non-equivalence note",
+  "provenance": [
+   "runs_benchmark/bench-mmlu_full-*/results.jsonl",
+   "runs_benchmark/bench-option_rotations-*/results.jsonl"
+  ]
+ }
+}

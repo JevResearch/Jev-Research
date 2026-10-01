@@ -1,0 +1,719 @@
+{
+ "generated_by": "scripts/benchmark/raw_recoverability.py (offline, deterministic)",
+ "recovery_parser_version": "answer-recovery-2.0.0",
+ "sources": {
+  "v2": {
+   "results": "runs_matched_cheap/v2/results.jsonl",
+   "raw": "runs_matched_cheap/raw2/ (content[:400], reasoning[:300] — TRUNCATED; no finish_reason)"
+  },
+  "v3": {
+   "results": "runs_matched_cheap/v3/results.jsonl",
+   "raw": null,
+   "note": "the v3 original runner stored NO raw output; repaired v3 scores can never be claimed from artifacts"
+  }
+ },
+ "do_not_use": "v2 raw excerpts must NOT be used to claim repaired v3 scores: protocols differ (v2 temperature-0/effort-low vs v3 provider defaults) and v3 has no raws at all",
+ "stages": {
+  "v2_raw_recoverability": {
+   "n_terminal_rows": 30544,
+   "n_ok_rows": 30504,
+   "n_parser_stable_rows": 25944,
+   "n_complete_raw_rows": 16375,
+   "n_reparse_candidates": 798,
+   "n_rerun_required_rows": 3762,
+   "truncation_rule": "a raw row is complete only when content < 400 and reasoning < 300 characters (the v2 writer's slice limits); rows at the limit are counted as possibly truncated"
+  },
+  "v2_offline_reparse_diagnostic": {
+   "scope": "V2 ONLY: fixed-parser reparse of complete raw rows; never evidence for v3 and never a chart number",
+   "recovery_parser_version": "answer-recovery-2.0.0",
+   "n_reparsed": 798,
+   "answers_changed_vs_stored_parser": 123,
+   "answers_recovered_now_unrecovered": 69
+  },
+  "v2_per_cell": {
+   "google/gemma-3-4b-it:mmlu": {
+    "n_ok": 963,
+    "n_stable": 941,
+    "n_complete_raws": 394,
+    "n_rerun_required": 11
+   },
+   "mistralai/mistral-nemo:mmlu": {
+    "n_ok": 1000,
+    "n_stable": 854,
+    "n_complete_raws": 370,
+    "n_rerun_required": 129
+   },
+   "meta-llama/llama-3.1-8b-instruct:mmlu": {
+    "n_ok": 1000,
+    "n_stable": 926,
+    "n_complete_raws": 403,
+    "n_rerun_required": 55
+   },
+   "ibm-granite/granite-4.0-h-micro:mmlu": {
+    "n_ok": 1000,
+    "n_stable": 907,
+    "n_complete_raws": 377,
+    "n_rerun_required": 80
+   },
+   "openai/gpt-oss-20b:mmlu": {
+    "n_ok": 1000,
+    "n_stable": 995,
+    "n_complete_raws": 483,
+    "n_rerun_required": 4
+   },
+   "openai/gpt-oss-120b:mmlu": {
+    "n_ok": 1000,
+    "n_stable": 998,
+    "n_complete_raws": 385,
+    "n_rerun_required": 2
+   },
+   "z-ai/glm-5.3-flash:mmlu": {
+    "n_ok": 1000,
+    "n_stable": 994,
+    "n_complete_raws": 365,
+    "n_rerun_required": 6
+   },
+   "qwen/qwen3.8-flash:mmlu": {
+    "n_ok": 1000,
+    "n_stable": 727,
+    "n_complete_raws": 292,
+    "n_rerun_required": 271
+   },
+   "z-ai/glm-5.3:mmlu": {
+    "n_ok": 1000,
+    "n_stable": 998,
+    "n_complete_raws": 378,
+    "n_rerun_required": 2
+   },
+   "qwen/qwen3.7-flash:mmlu": {
+    "n_ok": 1000,
+    "n_stable": 814,
+    "n_complete_raws": 361,
+    "n_rerun_required": 186
+   },
+   "mistralai/mistral-small-3.2-24b-instruct:mmlu": {
+    "n_ok": 1000,
+    "n_stable": 649,
+    "n_complete_raws": 338,
+    "n_rerun_required": 292
+   },
+   "meta-llama/llama-3.1-8b-instruct:gpqa": {
+    "n_ok": 196,
+    "n_stable": 186,
+    "n_complete_raws": 190,
+    "n_rerun_required": 6
+   },
+   "mistralai/mistral-nemo:gpqa": {
+    "n_ok": 196,
+    "n_stable": 192,
+    "n_complete_raws": 192,
+    "n_rerun_required": 4
+   },
+   "ibm-granite/granite-4.0-h-micro:gpqa": {
+    "n_ok": 196,
+    "n_stable": 195,
+    "n_complete_raws": 196,
+    "n_rerun_required": 0
+   },
+   "qwen/qwen3.7-flash:gpqa": {
+    "n_ok": 196,
+    "n_stable": 130,
+    "n_complete_raws": 130,
+    "n_rerun_required": 66
+   },
+   "mistralai/mistral-small-3.2-24b-instruct:gpqa": {
+    "n_ok": 196,
+    "n_stable": 85,
+    "n_complete_raws": 182,
+    "n_rerun_required": 14
+   },
+   "qwen/qwen3.8-flash:gpqa": {
+    "n_ok": 196,
+    "n_stable": 113,
+    "n_complete_raws": 113,
+    "n_rerun_required": 83
+   },
+   "z-ai/glm-5.3:gpqa": {
+    "n_ok": 196,
+    "n_stable": 190,
+    "n_complete_raws": 105,
+    "n_rerun_required": 6
+   },
+   "openai/gpt-oss-120b:gpqa": {
+    "n_ok": 196,
+    "n_stable": 196,
+    "n_complete_raws": 26,
+    "n_rerun_required": 0
+   },
+   "google/gemma-3-4b-it:gpqa": {
+    "n_ok": 196,
+    "n_stable": 196,
+    "n_complete_raws": 196,
+    "n_rerun_required": 0
+   },
+   "openai/gpt-oss-20b:gpqa": {
+    "n_ok": 196,
+    "n_stable": 196,
+    "n_complete_raws": 28,
+    "n_rerun_required": 0
+   },
+   "z-ai/glm-5.3-flash:gpqa": {
+    "n_ok": 196,
+    "n_stable": 190,
+    "n_complete_raws": 93,
+    "n_rerun_required": 6
+   },
+   "meta-llama/llama-3.1-8b-instruct:math500_choice": {
+    "n_ok": 261,
+    "n_stable": 176,
+    "n_complete_raws": 178,
+    "n_rerun_required": 83
+   },
+   "mistralai/mistral-nemo:math500_choice": {
+    "n_ok": 261,
+    "n_stable": 244,
+    "n_complete_raws": 248,
+    "n_rerun_required": 13
+   },
+   "openai/gpt-oss-120b:math500_choice": {
+    "n_ok": 261,
+    "n_stable": 259,
+    "n_complete_raws": 113,
+    "n_rerun_required": 2
+   },
+   "ibm-granite/granite-4.0-h-micro:math500_choice": {
+    "n_ok": 261,
+    "n_stable": 261,
+    "n_complete_raws": 261,
+    "n_rerun_required": 0
+   },
+   "qwen/qwen3.7-flash:math500_choice": {
+    "n_ok": 261,
+    "n_stable": 214,
+    "n_complete_raws": 216,
+    "n_rerun_required": 45
+   },
+   "qwen/qwen3.8-flash:math500_choice": {
+    "n_ok": 261,
+    "n_stable": 117,
+    "n_complete_raws": 120,
+    "n_rerun_required": 141
+   },
+   "z-ai/glm-5.3:math500_choice": {
+    "n_ok": 261,
+    "n_stable": 261,
+    "n_complete_raws": 226,
+    "n_rerun_required": 0
+   },
+   "openai/gpt-oss-20b:math500_choice": {
+    "n_ok": 261,
+    "n_stable": 260,
+    "n_complete_raws": 141,
+    "n_rerun_required": 1
+   },
+   "mistralai/mistral-small-3.2-24b-instruct:math500_choice": {
+    "n_ok": 261,
+    "n_stable": 25,
+    "n_complete_raws": 37,
+    "n_rerun_required": 224
+   },
+   "z-ai/glm-5.3-flash:math500_choice": {
+    "n_ok": 261,
+    "n_stable": 261,
+    "n_complete_raws": 213,
+    "n_rerun_required": 0
+   },
+   "google/gemma-3-4b-it:math500_choice": {
+    "n_ok": 258,
+    "n_stable": 92,
+    "n_complete_raws": 222,
+    "n_rerun_required": 36
+   },
+   "mistralai/mistral-nemo:hle_text_mc": {
+    "n_ok": 494,
+    "n_stable": 486,
+    "n_complete_raws": 490,
+    "n_rerun_required": 4
+   },
+   "meta-llama/llama-3.1-8b-instruct:hle_text_mc": {
+    "n_ok": 494,
+    "n_stable": 454,
+    "n_complete_raws": 472,
+    "n_rerun_required": 22
+   },
+   "ibm-granite/granite-4.0-h-micro:hle_text_mc": {
+    "n_ok": 494,
+    "n_stable": 488,
+    "n_complete_raws": 494,
+    "n_rerun_required": 0
+   },
+   "openai/gpt-oss-120b:hle_text_mc": {
+    "n_ok": 494,
+    "n_stable": 487,
+    "n_complete_raws": 133,
+    "n_rerun_required": 7
+   },
+   "qwen/qwen3.7-flash:hle_text_mc": {
+    "n_ok": 494,
+    "n_stable": 262,
+    "n_complete_raws": 262,
+    "n_rerun_required": 232
+   },
+   "qwen/qwen3.8-flash:hle_text_mc": {
+    "n_ok": 494,
+    "n_stable": 313,
+    "n_complete_raws": 313,
+    "n_rerun_required": 181
+   },
+   "z-ai/glm-5.3:hle_text_mc": {
+    "n_ok": 494,
+    "n_stable": 475,
+    "n_complete_raws": 317,
+    "n_rerun_required": 17
+   },
+   "openai/gpt-oss-20b:hle_text_mc": {
+    "n_ok": 494,
+    "n_stable": 489,
+    "n_complete_raws": 198,
+    "n_rerun_required": 4
+   },
+   "mistralai/mistral-small-3.2-24b-instruct:hle_text_mc": {
+    "n_ok": 494,
+    "n_stable": 199,
+    "n_complete_raws": 462,
+    "n_rerun_required": 32
+   },
+   "google/gemma-3-4b-it:hle_text_mc": {
+    "n_ok": 494,
+    "n_stable": 485,
+    "n_complete_raws": 490,
+    "n_rerun_required": 4
+   },
+   "z-ai/glm-5.3-flash:hle_text_mc": {
+    "n_ok": 494,
+    "n_stable": 472,
+    "n_complete_raws": 264,
+    "n_rerun_required": 20
+   },
+   "qwen/qwen3.8-flash:arc": {
+    "n_ok": 1172,
+    "n_stable": 1172,
+    "n_complete_raws": 1172,
+    "n_rerun_required": 0
+   },
+   "z-ai/glm-5.3:arc": {
+    "n_ok": 1172,
+    "n_stable": 1172,
+    "n_complete_raws": 1160,
+    "n_rerun_required": 0
+   },
+   "z-ai/glm-5.3-flash:arc": {
+    "n_ok": 1172,
+    "n_stable": 1172,
+    "n_complete_raws": 1089,
+    "n_rerun_required": 0
+   },
+   "xiaomi/mimo-v2.6-pro:mmlu": {
+    "n_ok": 1000,
+    "n_stable": 490,
+    "n_complete_raws": 330,
+    "n_rerun_required": 464
+   },
+   "deepseek/deepseek-v4-flash-0731:mmlu": {
+    "n_ok": 1000,
+    "n_stable": 986,
+    "n_complete_raws": 325,
+    "n_rerun_required": 14
+   },
+   "xiaomi/mimo-v2.6-flash:mmlu": {
+    "n_ok": 1000,
+    "n_stable": 665,
+    "n_complete_raws": 354,
+    "n_rerun_required": 301
+   },
+   "qwen/qwen3.8-max-0902:mmlu": {
+    "n_ok": 1000,
+    "n_stable": 872,
+    "n_complete_raws": 54,
+    "n_rerun_required": 128
+   },
+   "deepseek/deepseek-v4-flash-0731:gpqa": {
+    "n_ok": 196,
+    "n_stable": 183,
+    "n_complete_raws": 5,
+    "n_rerun_required": 13
+   },
+   "xiaomi/mimo-v2.6-pro:gpqa": {
+    "n_ok": 196,
+    "n_stable": 18,
+    "n_complete_raws": 5,
+    "n_rerun_required": 177
+   },
+   "xiaomi/mimo-v2.6-flash:gpqa": {
+    "n_ok": 196,
+    "n_stable": 30,
+    "n_complete_raws": 12,
+    "n_rerun_required": 162
+   },
+   "deepseek/deepseek-v4-flash-0731:math500_choice": {
+    "n_ok": 261,
+    "n_stable": 259,
+    "n_complete_raws": 106,
+    "n_rerun_required": 1
+   },
+   "xiaomi/mimo-v2.6-flash:math500_choice": {
+    "n_ok": 261,
+    "n_stable": 208,
+    "n_complete_raws": 166,
+    "n_rerun_required": 42
+   },
+   "xiaomi/mimo-v2.6-pro:math500_choice": {
+    "n_ok": 261,
+    "n_stable": 122,
+    "n_complete_raws": 130,
+    "n_rerun_required": 116
+   },
+   "qwen/qwen3.8-max-0902:gpqa": {
+    "n_ok": 196,
+    "n_stable": 143,
+    "n_complete_raws": 0,
+    "n_rerun_required": 53
+   }
+  },
+  "v3_raw_recoverability": {
+   "n_terminal_rows": 28087,
+   "n_ok_rows": 28087,
+   "n_parser_stable_rows": 23024,
+   "n_complete_raw_rows": 0,
+   "n_reparse_candidates": 0,
+   "n_rerun_required_rows": 5063,
+   "truncation_rule": "a raw row is complete only when content < 400 and reasoning < 300 characters (the v2 writer's slice limits); rows at the limit are counted as possibly truncated"
+  },
+  "v3_per_cell": {
+   "z-ai/glm-5.3:mmlu": {
+    "n_ok": 1000,
+    "n_stable": 944,
+    "n_complete_raws": 0,
+    "n_rerun_required": 56
+   },
+   "z-ai/glm-5.3:gpqa": {
+    "n_ok": 196,
+    "n_stable": 163,
+    "n_complete_raws": 0,
+    "n_rerun_required": 33
+   },
+   "z-ai/glm-5.3:math500_choice": {
+    "n_ok": 261,
+    "n_stable": 248,
+    "n_complete_raws": 0,
+    "n_rerun_required": 13
+   },
+   "meta-llama/llama-3.1-8b-instruct:mmlu": {
+    "n_ok": 1000,
+    "n_stable": 924,
+    "n_complete_raws": 0,
+    "n_rerun_required": 76
+   },
+   "meta-llama/llama-3.1-8b-instruct:gpqa": {
+    "n_ok": 196,
+    "n_stable": 185,
+    "n_complete_raws": 0,
+    "n_rerun_required": 11
+   },
+   "meta-llama/llama-3.1-8b-instruct:math500_choice": {
+    "n_ok": 261,
+    "n_stable": 198,
+    "n_complete_raws": 0,
+    "n_rerun_required": 63
+   },
+   "meta-llama/llama-3.1-8b-instruct:hle_text_mc": {
+    "n_ok": 494,
+    "n_stable": 452,
+    "n_complete_raws": 0,
+    "n_rerun_required": 42
+   },
+   "mistralai/mistral-nemo:mmlu": {
+    "n_ok": 1000,
+    "n_stable": 850,
+    "n_complete_raws": 0,
+    "n_rerun_required": 150
+   },
+   "mistralai/mistral-nemo:gpqa": {
+    "n_ok": 196,
+    "n_stable": 192,
+    "n_complete_raws": 0,
+    "n_rerun_required": 4
+   },
+   "mistralai/mistral-nemo:math500_choice": {
+    "n_ok": 261,
+    "n_stable": 238,
+    "n_complete_raws": 0,
+    "n_rerun_required": 23
+   },
+   "mistralai/mistral-nemo:hle_text_mc": {
+    "n_ok": 494,
+    "n_stable": 482,
+    "n_complete_raws": 0,
+    "n_rerun_required": 12
+   },
+   "google/gemma-3-4b-it:mmlu": {
+    "n_ok": 1000,
+    "n_stable": 972,
+    "n_complete_raws": 0,
+    "n_rerun_required": 28
+   },
+   "google/gemma-3-4b-it:math500_choice": {
+    "n_ok": 261,
+    "n_stable": 94,
+    "n_complete_raws": 0,
+    "n_rerun_required": 167
+   },
+   "google/gemma-3-4b-it:hle_text_mc": {
+    "n_ok": 494,
+    "n_stable": 485,
+    "n_complete_raws": 0,
+    "n_rerun_required": 9
+   },
+   "mistralai/mistral-small-3.2-24b-instruct:mmlu": {
+    "n_ok": 1000,
+    "n_stable": 614,
+    "n_complete_raws": 0,
+    "n_rerun_required": 386
+   },
+   "mistralai/mistral-small-3.2-24b-instruct:gpqa": {
+    "n_ok": 196,
+    "n_stable": 72,
+    "n_complete_raws": 0,
+    "n_rerun_required": 124
+   },
+   "mistralai/mistral-small-3.2-24b-instruct:math500_choice": {
+    "n_ok": 261,
+    "n_stable": 26,
+    "n_complete_raws": 0,
+    "n_rerun_required": 235
+   },
+   "mistralai/mistral-small-3.2-24b-instruct:hle_text_mc": {
+    "n_ok": 494,
+    "n_stable": 185,
+    "n_complete_raws": 0,
+    "n_rerun_required": 309
+   },
+   "z-ai/glm-5.3-flash:mmlu": {
+    "n_ok": 1000,
+    "n_stable": 980,
+    "n_complete_raws": 0,
+    "n_rerun_required": 20
+   },
+   "z-ai/glm-5.3-flash:gpqa": {
+    "n_ok": 196,
+    "n_stable": 177,
+    "n_complete_raws": 0,
+    "n_rerun_required": 19
+   },
+   "z-ai/glm-5.3-flash:math500_choice": {
+    "n_ok": 261,
+    "n_stable": 260,
+    "n_complete_raws": 0,
+    "n_rerun_required": 1
+   },
+   "z-ai/glm-5.3-flash:hle_text_mc": {
+    "n_ok": 494,
+    "n_stable": 405,
+    "n_complete_raws": 0,
+    "n_rerun_required": 89
+   },
+   "google/gemma-3-4b-it:gpqa": {
+    "n_ok": 196,
+    "n_stable": 196,
+    "n_complete_raws": 0,
+    "n_rerun_required": 0
+   },
+   "xiaomi/mimo-v2.6-pro:mmlu": {
+    "n_ok": 1000,
+    "n_stable": 519,
+    "n_complete_raws": 0,
+    "n_rerun_required": 481
+   },
+   "openai/gpt-oss-20b:mmlu": {
+    "n_ok": 1000,
+    "n_stable": 991,
+    "n_complete_raws": 0,
+    "n_rerun_required": 9
+   },
+   "openai/gpt-oss-120b:mmlu": {
+    "n_ok": 1000,
+    "n_stable": 999,
+    "n_complete_raws": 0,
+    "n_rerun_required": 1
+   },
+   "qwen/qwen3.8-flash:mmlu": {
+    "n_ok": 1000,
+    "n_stable": 903,
+    "n_complete_raws": 0,
+    "n_rerun_required": 97
+   },
+   "deepseek/deepseek-v4-flash-0731:mmlu": {
+    "n_ok": 1000,
+    "n_stable": 991,
+    "n_complete_raws": 0,
+    "n_rerun_required": 9
+   },
+   "xiaomi/mimo-v2.6-flash:mmlu": {
+    "n_ok": 1000,
+    "n_stable": 661,
+    "n_complete_raws": 0,
+    "n_rerun_required": 339
+   },
+   "qwen/qwen3.8-max-0902:gpqa": {
+    "n_ok": 196,
+    "n_stable": 155,
+    "n_complete_raws": 0,
+    "n_rerun_required": 41
+   },
+   "qwen/qwen3.7-flash:mmlu": {
+    "n_ok": 1000,
+    "n_stable": 741,
+    "n_complete_raws": 0,
+    "n_rerun_required": 259
+   },
+   "z-ai/glm-5.3-flash:arc": {
+    "n_ok": 1172,
+    "n_stable": 1171,
+    "n_complete_raws": 0,
+    "n_rerun_required": 1
+   },
+   "openai/gpt-oss-120b:gpqa": {
+    "n_ok": 196,
+    "n_stable": 194,
+    "n_complete_raws": 0,
+    "n_rerun_required": 2
+   },
+   "openai/gpt-oss-20b:gpqa": {
+    "n_ok": 196,
+    "n_stable": 175,
+    "n_complete_raws": 0,
+    "n_rerun_required": 21
+   },
+   "qwen/qwen3.8-flash:gpqa": {
+    "n_ok": 196,
+    "n_stable": 135,
+    "n_complete_raws": 0,
+    "n_rerun_required": 61
+   },
+   "deepseek/deepseek-v4-flash-0731:gpqa": {
+    "n_ok": 196,
+    "n_stable": 181,
+    "n_complete_raws": 0,
+    "n_rerun_required": 15
+   },
+   "qwen/qwen3.7-flash:gpqa": {
+    "n_ok": 196,
+    "n_stable": 54,
+    "n_complete_raws": 0,
+    "n_rerun_required": 142
+   },
+   "xiaomi/mimo-v2.6-flash:gpqa": {
+    "n_ok": 196,
+    "n_stable": 33,
+    "n_complete_raws": 0,
+    "n_rerun_required": 163
+   },
+   "xiaomi/mimo-v2.6-pro:gpqa": {
+    "n_ok": 196,
+    "n_stable": 11,
+    "n_complete_raws": 0,
+    "n_rerun_required": 185
+   },
+   "openai/gpt-oss-20b:math500_choice": {
+    "n_ok": 261,
+    "n_stable": 259,
+    "n_complete_raws": 0,
+    "n_rerun_required": 2
+   },
+   "openai/gpt-oss-120b:math500_choice": {
+    "n_ok": 261,
+    "n_stable": 261,
+    "n_complete_raws": 0,
+    "n_rerun_required": 0
+   },
+   "qwen/qwen3.7-flash:math500_choice": {
+    "n_ok": 261,
+    "n_stable": 106,
+    "n_complete_raws": 0,
+    "n_rerun_required": 155
+   },
+   "deepseek/deepseek-v4-flash-0731:math500_choice": {
+    "n_ok": 261,
+    "n_stable": 261,
+    "n_complete_raws": 0,
+    "n_rerun_required": 0
+   },
+   "qwen/qwen3.8-flash:math500_choice": {
+    "n_ok": 261,
+    "n_stable": 258,
+    "n_complete_raws": 0,
+    "n_rerun_required": 3
+   },
+   "xiaomi/mimo-v2.6-flash:math500_choice": {
+    "n_ok": 261,
+    "n_stable": 211,
+    "n_complete_raws": 0,
+    "n_rerun_required": 50
+   },
+   "xiaomi/mimo-v2.6-pro:math500_choice": {
+    "n_ok": 261,
+    "n_stable": 122,
+    "n_complete_raws": 0,
+    "n_rerun_required": 139
+   },
+   "openai/gpt-oss-120b:hle_text_mc": {
+    "n_ok": 494,
+    "n_stable": 491,
+    "n_complete_raws": 0,
+    "n_rerun_required": 3
+   },
+   "openai/gpt-oss-20b:hle_text_mc": {
+    "n_ok": 494,
+    "n_stable": 464,
+    "n_complete_raws": 0,
+    "n_rerun_required": 30
+   },
+   "deepseek/deepseek-v4-flash-0731:hle_text_mc": {
+    "n_ok": 494,
+    "n_stable": 420,
+    "n_complete_raws": 0,
+    "n_rerun_required": 74
+   },
+   "xiaomi/mimo-v2.6-flash:hle_text_mc": {
+    "n_ok": 494,
+    "n_stable": 90,
+    "n_complete_raws": 0,
+    "n_rerun_required": 404
+   },
+   "qwen/qwen3.8-flash:hle_text_mc": {
+    "n_ok": 494,
+    "n_stable": 177,
+    "n_complete_raws": 0,
+    "n_rerun_required": 317
+   },
+   "qwen/qwen3.7-flash:hle_text_mc": {
+    "n_ok": 494,
+    "n_stable": 338,
+    "n_complete_raws": 0,
+    "n_rerun_required": 156
+   },
+   "qwen/qwen3.8-flash:arc": {
+    "n_ok": 1172,
+    "n_stable": 1172,
+    "n_complete_raws": 0,
+    "n_rerun_required": 0
+   },
+   "xiaomi/mimo-v2.6-flash:arc": {
+    "n_ok": 1172,
+    "n_stable": 1138,
+    "n_complete_raws": 0,
+    "n_rerun_required": 34
+   }
+  }
+ }
+}

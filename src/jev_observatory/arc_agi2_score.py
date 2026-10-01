@@ -145,6 +145,7 @@ def aggregate_grid_stage(run_dir: Path | str, *, stage: str) -> dict[str, Any]:
     summary = {
         "stage": stage,
         "run_dir": str(run_dir),
+        "score_schema_version": doc["score_schema_version"],
         "official_task_criterion": ("task solved only when every output cell of "
                                     "every test input is exactly correct "
                                     "(pass@1; no retries by protocol)"),

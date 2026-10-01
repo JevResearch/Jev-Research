@@ -152,7 +152,7 @@ def build_svg() -> str:
                  MUT, 10.5))
     p.append(txt(cx, ty0 + 326, f"Compute: {floor} ms floor + {slope} ms per 1k tokens",
                  MUT, 10.5))
-    p.append(txt(cx, ty0 + 342, "Linear to 29k; deciding adds <= 0.11 ms/question",
+    p.append(txt(cx, ty0 + 342, "Linear to 29k; decide cost below resolution",
                  MUT, 10.5))
     p.append(txt(cx, ty0 + 358, "Heavily batched (options \u00d7 parallel runs)",
                  MUT, 10.5))

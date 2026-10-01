@@ -1,0 +1,15 @@
+{
+  "schema": "aggregate-provenance-1.0.0",
+  "entries": [
+    {
+      "artifact": "score.json",
+      "preserved_as": "runs_benchmark_ext/bench-math500_score-6bf385f0c234/derived/preserved-pre-policy-v1/score.json",
+      "sha256": "3c388ef7d03b9e8a99b9a92a6d4d3e2ffca5f3240c88aa7ae387500c1f463efb",
+      "scoring_version": "benchmark-score-pre-policy-v1 (usable-answered denominator; rotation probability keys un-remapped)",
+      "regenerated_as": {
+        "path": "score.json",
+        "scoring_version": "benchmark-score-2.0.0"
+      }
+    }
+  ]
+}

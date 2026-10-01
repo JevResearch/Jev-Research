@@ -31,7 +31,9 @@ import json
 from pathlib import Path
 
 from chartkit import (BG, GRID, JEV_G, JEV_W, MUTED, TEXT, UI_BLOCK, UNK,
-                      CHEAP_META, load_matched, matched_points,
+                      CHEAP_META, exactly_one, load_matched, load_jev_scores,
+                      matched_points,
+                      paired_mmlu_matched, rotation_diagnostics,
                       TIER_LABEL, era_color, era_legend, jev_diamond, symbol,
                       tip, wrap_subtitle)
 
@@ -43,11 +45,10 @@ REF = json.loads((ROOT / "docs/modern-comparison/canonical/comparable-scores.jso
 
 
 def _gload(pat):
-    return json.loads(Path(glob.glob(str(ROOT / pat))[0]).read_text())
+    return json.loads(Path(exactly_one(ROOT, pat)).read_text())
 
 
-JEV = REF["jev_scores"]
-AGI_W = _gload("runs_benchmark_ext/bench-arc_agi2_choice-*/derived/weighted_score.json")["per_cell_weighted_mean"]
+JEV = load_jev_scores(ROOT)          # authoritative score artifacts, never hardcoded
 MMLU_ITEMS = _gload("runs_benchmark/bench-mmlu_full-*/derived/score.json")["per_item"]
 ROT_ITEMS = _gload("runs_benchmark/bench-option_rotations-*/derived/score.json")["per_item"]
 
@@ -172,7 +173,11 @@ def _matched_entries(mrows, jev_score_for_join):
               f"score {r['accuracy']:.1f}%<br>"
               f"released {r['released'] or 'unknown'}"
               + (" (estimated)" if r.get("date_basis") == "estimated" else "") + "<br>"
-              f"measured cost ${r['cost']:.6f}/question")
+              f"measured cost ${r['cost']:.6f}/question"
+              + (f"<br>wire: {r['wire']}"
+                 + (" (v2-protocol carryover cell)"
+                    if "v2" in str(r.get("wire")) else "")
+                 if r.get("wire") else ""))
         out.append({"name": r["name"] + " \u2020", "score": r["accuracy"],
                     "color": era_color(r.get("released")), "tier": r.get("tier", "none"),
                     "jev": False, "tooltip": tt})
@@ -301,13 +306,22 @@ def rotation_chart():
                         "jev": True, "tooltip": base_tt + "<br>condition: original option order"})
         entries.append({"name": f"{name} - rotated", "score": r_acc, "color": JEV_W,
                         "jev": True, "tooltip": base_tt + "<br>condition: shuffled option order"})
-    subtitle = ("The same 420 MMLU-Pro items re-run with their option order shuffled. "
-                "A consistency check, not a comparison benchmark: no other model publishes "
-                "scores under this protocol, so every bar is Jev (teal = native order, "
-                "amber = rotated). Shuffling flipped "
-                f"{100*flips/npair:.1f}% of the {npair} paired answers with no net direction "
-                "(exact McNemar p = 0.83): content dominates position wherever there is "
-                "content.")
+    rd = rotation_diagnostics(ROOT)
+    obs = rd["observations"]
+    ca = rd["cluster_aware"]
+    _lo, _hi = ca["cluster_bootstrap_95_ci"]
+    subtitle = (f"{obs['n_unique_base_items']} MMLU-Pro base items re-run with their option "
+                f"order rotated: {obs['n_paired_observations']} scored observations of "
+                f"{obs['n_requested_rotation_observations']} requested, 3 variants per item "
+                "(the observations are clustered on their base items and are not "
+                "independent). A consistency check, not a comparison benchmark: no other "
+                "model publishes scores under this protocol, so every bar is Jev (teal = "
+                "native order, amber = rotated). Shuffling flipped "
+                f"{100*flips/npair:.1f}% of the {npair} paired observations with no net "
+                "direction; the cluster-aware native-minus-rotated difference is "
+                f"{100*ca['mean_difference_native_minus_rotated']:+.1f} points "
+                f"(95% CI [{100*_lo:+.1f}, {100*_hi:+.1f}]): no systematic order effect at "
+                "this resolution on these items, and explicitly not an equivalence proof.")
     return bar_chart("Option-rotation audit - Jev vs Jev (consistency, not comparison)",
                      subtitle, entries)
 
@@ -331,13 +345,16 @@ def main() -> int:
     charts = []
     charts.append(vals_chart(
         "mmlu_pro", "MMLU-Pro - broad knowledge (12,032 items)",
-        "Jev: direct one-shot answers (diamonds; teal greedy, amber probability-weighted). "
+        "Jev: direct one-shot answers (diamonds; teal greedy, amber probability-weighted), "
+        "full 12,032-item set, all-requested scoring (contextual leaderboard position; "
+        "the matched 1,000-item-subset comparison against our own baseline runs is charted "
+        "separately below and never mixed with these bars). "
         "Vals rows use the platform harness with per-row reasoning configs (tip shapes).",
         jev_bars([("Jev (greedy)", JEV["mmlu_pro"]["greedy"] * 100, "greedy",
-                   "12,032 graduate-level multiple-choice items"),
+                   "12,032 graduate-level multiple-choice items (all-requested scoring)"),
                   ("Jev (weighted)", JEV["mmlu_pro"]["weighted_mean_p_gold"] * 100,
-                   "weighted", "mean probability placed on the gold option")]),
-        matched=mm_mmlu))
+                   "weighted", "mean probability placed on the gold option (descriptive)")]),
+        ))
     charts.append(vals_chart(
         "gpqa", "GPQA - graduate science (Diamond for Jev)",
         "Vals retired GPQA in Sep 2026 as saturated; rows preserved. Jev: Diamond subset, "
@@ -356,46 +373,78 @@ def main() -> int:
                   ("Jev (weighted)", JEV["arc_challenge"]["weighted_mean_p_gold"] * 100,
                    "weighted", "mean probability on the gold option")]),
         matched=mm_arc))
+    mm_paired = paired_mmlu_matched(ROOT)
+    jev_matched = mm_paired["jev_accuracy_on_paired_subset"] * 100
+    charts.append(matched_only_chart(
+        "Matched MMLU-Pro subset (1,000 items) - this study",
+        f"Our runs of cheap OpenRouter models on the shared 1,000-item MMLU-Pro subset "
+        f"(same items, same format, direct answers) against Jev's accuracy on that exact "
+        f"subset ({jev_matched:.1f}%, paired by item id). The full 12,032-item leaderboard "
+        "chart above is contextual and is never mixed with these bars; partial-coverage "
+        "cells are excluded from both.",
+        mm_mmlu,
+        jev_bars([("Jev (greedy, matched subset)", jev_matched, "greedy",
+                   "1,000-item matched subset, paired by item id")])))
     charts.append(ref_chart(
-        "arc_agi2", "ARC-AGI-2 - abstract puzzles (mixed encodings - read the caption)",
+        "arc_agi2", "ARC-AGI-2 task level - official criterion (mixed protocols - read the caption)",
         "External bars: whole-grid pass@2, semi-private set, reasoning on. Jev cannot emit "
-        "grids. Its exact-grid bars are the protocol-matched pair (0 of 120 tasks solved); "
-        "the per-cell bars are a diagnostic encoding, not comparable to grid-level rows.",
-        jev_bars([("Jev per-cell (greedy)", JEV["arc_agi2_public_eval"]["cell_accuracy_choice"] * 100,
-                   "greedy", "diagnostic: 70,100 individual cell decisions"),
-                  ("Jev per-cell (weighted)", AGI_W * 100, "weighted",
-                   "diagnostic: mean probability on the gold cell color"),
-                  ("Jev exact-grid (greedy)", 0.0, "greedy",
-                   "protocol-matched: 0 of 120 tasks with every cell correct"),
-                  ("Jev exact-grid (weighted)", 0.0, "weighted",
-                   "whole-grid probability is the product of cell probabilities: median "
-                   "~1e-63, indistinguishable from zero")])))
+        "grids; its task row applies the official all-cells criterion to our assisted "
+        "grid-choice adapters (a recorded oracle diagnostic protocol: oracle output shape "
+        "and palette, test-grid identity patched into the prompt), so it is assisted "
+        "adaptation, not an official matched benchmark. The per-cell diagnostics are "
+        "charted separately and never share these bars.",
+        jev_bars([("Jev exact-grid (greedy)",
+                   JEV["arc_agi2_public_eval"]["exact_grid"] * 100, "greedy",
+                   f"official criterion: 0 of {JEV['arc_agi2_public_eval']['n_tasks']} tasks "
+                   "with every cell of every test grid correct")])))
+    charts.append(matched_only_chart(
+        "ARC-AGI-2 per-cell diagnostic - adapter readings (not the official metric)",
+        "Per-cell correctness of the corrected grid runs (the duplicate request-payload "
+        "defect is fixed: zero duplicate pairs remain). Cell-level numbers measure the "
+        "adapter's cell judgements under an explicitly recorded oracle diagnostic protocol "
+        "and are NOT the official ARC-AGI-2 evaluation; they are never compared to "
+        "grid-level rows.",
+        [],
+        jev_bars([("Jev per-cell choice (greedy)",
+                   JEV["arc_agi2_public_eval"]["cell_accuracy_choice"] * 100, "greedy",
+                   f"diagnostic: {JEV['arc_agi2_public_eval']['cells_total']:,} cell "
+                   "decisions (choice encoding)"),
+                  ("Jev per-cell score (greedy)",
+                   JEV["arc_agi2_public_eval"]["cell_accuracy_score"] * 100, "greedy",
+                   "diagnostic: 10-level color-score encoding, same cells")])))
     # rotation audit deliberately not charted: position bias lives in the
     # architecture section ("The order of the options matters"), per audit.
     jev_math = JEV["math500_mcq_adapted"]["greedy"] * 100
     jev_hle = JEV["hle_text_only_mc"]["greedy"] * 100
-    _math_beats = mm_math and max(r["accuracy"] for r in mm_math) > jev_math
     _n_math_beats = sum(1 for r in mm_math if r["accuracy"] > jev_math)
+    _n_math_ties = sum(1 for r in mm_math
+                       if abs(r["accuracy"] - jev_math) < 1e-9)
     _n_hle_beats = sum(1 for r in mm_hle if r["accuracy"] > jev_hle)
-    if _math_beats:
+    _n_hle_ties = sum(1 for r in mm_hle
+                      if abs(r["accuracy"] - jev_hle) < 1e-9)
+    if mm_math:
         charts.append(matched_only_chart(
             "MATH-500 as multiple choice - matched runs (this study)",
             "Our runs of cheap OpenRouter models on Jev's exact 261-item MCQ "
             "conversion - same items, same format, direct answers. The vals "
             "free-form reasoning rows are not shown (protocol mismatch). "
-            f"{_n_math_beats} of {len(mm_math)} matched models beat Jev here.",
+            f"{_n_math_beats} of {len(mm_math)} matched models beat Jev here "
+            f"and {_n_math_ties} tie it exactly; small differences are "
+            "positioning, not statistically established leads.",
             mm_math,
             jev_bars([("Jev (greedy)", jev_math, "greedy", "261 encodable items, MCQ"),
                       ("Jev (weighted)",
                        JEV["math500_mcq_adapted"]["weighted_mean_p_gold"] * 100,
                        "weighted", "mean probability on the gold option")])))
-    if mm_hle and max(r["accuracy"] for r in mm_hle) > jev_hle:
+    if mm_hle:
         charts.append(matched_only_chart(
             "Humanity's Last Exam (MC subset) - matched runs (this study)",
             "Our runs of cheap OpenRouter models on Jev's exact 494-item MC "
             "subset - same items, same format, direct answers. The vals "
             "full-text-set rows are not shown (protocol mismatch). "
-            f"{_n_hle_beats} of {len(mm_hle)} matched models beat Jev here.",
+            f"{_n_hle_beats} of {len(mm_hle)} matched models beat Jev here "
+            f"and {_n_hle_ties} tie it exactly; small differences are "
+            "positioning, not statistically established leads.",
             mm_hle,
             jev_bars([("Jev (greedy)", jev_hle, "greedy", "494 MC items"),
                       ("Jev (weighted)",
@@ -422,21 +471,25 @@ def main() -> int:
             "curated view (top, bottom, and audit-named models); the full extract stays on "
             "disk. Dagger-marked bars are our own matched runs of cheap OpenRouter "
             "models on the identical frozen items under Jev's protocol (direct "
-            "answers, strict parsing, measured costs). HLE and MATH-500 are "
+            "answers, strict parsing, measured costs); only complete v4r1 cells "
+            "(full sampled denominators) are charted, and v2-protocol carryover "
+            "cells are labeled in their tooltips. These charts juxtapose "
+            "publisher-protocol rows, our protocol conversions and our matched "
+            "runs: positions are context, not a single undifferentiated race. HLE "
+            "and MATH-500 are "
             "deliberately NOT charted: Jev's rows there are a "
             "multiple-choice subset and an MCQ conversion respectively, and no published "
             "rows share those protocols - their numbers live in the report table with "
             "caveats instead.</p>\n"
-            + ("<p class=\"lead\">Update: the matched cheap-model runs (dagger "
-               "bars, this study) DO beat Jev on one of those subsets, so that "
-               "chart is revived above as a matched-only comparison - our runs, "
-               "Jev's exact items and format, no external protocol mixing.</p>\n"
-               if (mm_math and max(r["accuracy"] for r in mm_math) > JEV["math500_mcq_adapted"]["greedy"] * 100)
-               or (mm_hle and max(r["accuracy"] for r in mm_hle) > JEV["hle_text_only_mc"]["greedy"] * 100)
+            + (("<p class=\"lead\">Update: the matched cheap-model runs (dagger "
+               "bars, this study) match or beat Jev on these subsets, so those "
+               "charts are shown as matched-only comparisons - our runs, "
+               "Jev's exact items and format, no external protocol mixing.</p>\n")
+               if mm_math or mm_hle
                else "")
             + "".join(charts) + "\n</body></html>\n")
     OUT.write_text(html, encoding="utf-8")
-    print(f"[ok] wrote {OUT.relative_to(ROOT)} ({OUT.stat().st_size:,} bytes); "
+    print(f"[ok] wrote {OUT} ({OUT.stat().st_size:,} bytes); "
           f"{len(charts)} charts")
     return 0
 

@@ -1,0 +1,1418 @@
+{
+ "frozen_plan_version": "baseline-rerun-frozen-active-1.0.0",
+ "generated_by": "scripts/benchmark/freeze_rerun_plan.py (offline; ACTIVE selector)",
+ "corrections_vs_prior_draft": [
+  "scope is ACTIVE publication cells only (merged selector: complete v3 supersedes v2; incomplete v3 falls back to complete v2; v2-only cells = granite/* + qwen3.8-max mmlu carryovers)",
+  "superseded v2 history is labeled uncorrected-superseded, never rerun",
+  "task ids are unique (source_version|model|dataset|item_id)",
+  "prices are CURRENT provider-reported catalog metadata (metadata GET; the earlier fallback-20x-observed heuristic is NOT actual worst-case pricing and is withdrawn)",
+  "prior message arithmetic corrections: 15.62-4.92-4.44+2.09 = 8.35 (not 9.90); 8825-1307-1369 = 6149 (not 6115) — both moot: the ACTIVE-only totals below supersede them"
+ ],
+ "active_selector": {
+  "definition": "mirror of run_matched3.cmd_score cell-level merge",
+  "validated_against": "runs_matched_cheap/v3/summary_v3.json per-cell protocol labels",
+  "n_active_cells": 59,
+  "n_v3_cells": 54,
+  "n_v2_carryover_cells": 5,
+  "v2_carryover_cells": [
+   "ibm-granite/granite-4.0-h-micro:gpqa",
+   "ibm-granite/granite-4.0-h-micro:hle_text_mc",
+   "ibm-granite/granite-4.0-h-micro:math500_choice",
+   "ibm-granite/granite-4.0-h-micro:mmlu",
+   "qwen/qwen3.8-max-0902:mmlu"
+  ],
+  "selector_mismatches_vs_summary_v3": 0
+ },
+ "minimality_audit": {
+  "method": "per ACTIVE row: rerun iff status-ok AND stored recovery stage not parser-stable AND no complete raw evidence in the active source; stored exact rows keep their answer (even wrong ones — selection changes only where the parser could change the answer)",
+  "n_keep_original_rows": 25747,
+  "n_settled_non_ok_rows": 0,
+  "n_offline_salvage_rows": 20,
+  "n_rerun_rows_active": 5271,
+  "note": "historical v2 rows inside v3-active cells are superseded evidence, labeled and never rerun"
+ },
+ "superseded_v2_history": [
+  {
+   "model": "deepseek/deepseek-v4-flash-0731",
+   "dataset": "gpqa",
+   "n_rows": 196,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash-0731",
+   "dataset": "math500_choice",
+   "n_rows": 261,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash-0731",
+   "dataset": "mmlu",
+   "n_rows": 1000,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "google/gemma-3-4b-it",
+   "dataset": "gpqa",
+   "n_rows": 196,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "google/gemma-3-4b-it",
+   "dataset": "hle_text_mc",
+   "n_rows": 494,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "google/gemma-3-4b-it",
+   "dataset": "math500_choice",
+   "n_rows": 261,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "google/gemma-3-4b-it",
+   "dataset": "mmlu",
+   "n_rows": 1000,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "meta-llama/llama-3.1-8b-instruct",
+   "dataset": "gpqa",
+   "n_rows": 196,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "meta-llama/llama-3.1-8b-instruct",
+   "dataset": "hle_text_mc",
+   "n_rows": 494,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "meta-llama/llama-3.1-8b-instruct",
+   "dataset": "math500_choice",
+   "n_rows": 261,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "meta-llama/llama-3.1-8b-instruct",
+   "dataset": "mmlu",
+   "n_rows": 1000,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "mistralai/mistral-nemo",
+   "dataset": "gpqa",
+   "n_rows": 196,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "mistralai/mistral-nemo",
+   "dataset": "hle_text_mc",
+   "n_rows": 494,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "mistralai/mistral-nemo",
+   "dataset": "math500_choice",
+   "n_rows": 261,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "mistralai/mistral-nemo",
+   "dataset": "mmlu",
+   "n_rows": 1000,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "mistralai/mistral-small-3.2-24b-instruct",
+   "dataset": "gpqa",
+   "n_rows": 196,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "mistralai/mistral-small-3.2-24b-instruct",
+   "dataset": "hle_text_mc",
+   "n_rows": 494,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "mistralai/mistral-small-3.2-24b-instruct",
+   "dataset": "math500_choice",
+   "n_rows": 261,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "mistralai/mistral-small-3.2-24b-instruct",
+   "dataset": "mmlu",
+   "n_rows": 1000,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "dataset": "gpqa",
+   "n_rows": 196,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "dataset": "hle_text_mc",
+   "n_rows": 494,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "dataset": "math500_choice",
+   "n_rows": 261,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "dataset": "mmlu",
+   "n_rows": 1000,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "openai/gpt-oss-20b",
+   "dataset": "gpqa",
+   "n_rows": 196,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "openai/gpt-oss-20b",
+   "dataset": "hle_text_mc",
+   "n_rows": 494,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "openai/gpt-oss-20b",
+   "dataset": "math500_choice",
+   "n_rows": 261,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "openai/gpt-oss-20b",
+   "dataset": "mmlu",
+   "n_rows": 1000,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "qwen/qwen3.7-flash",
+   "dataset": "gpqa",
+   "n_rows": 196,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "qwen/qwen3.7-flash",
+   "dataset": "hle_text_mc",
+   "n_rows": 494,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "qwen/qwen3.7-flash",
+   "dataset": "math500_choice",
+   "n_rows": 261,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "qwen/qwen3.7-flash",
+   "dataset": "mmlu",
+   "n_rows": 1000,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "qwen/qwen3.8-flash",
+   "dataset": "arc",
+   "n_rows": 1172,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "qwen/qwen3.8-flash",
+   "dataset": "gpqa",
+   "n_rows": 196,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "qwen/qwen3.8-flash",
+   "dataset": "hle_text_mc",
+   "n_rows": 494,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "qwen/qwen3.8-flash",
+   "dataset": "math500_choice",
+   "n_rows": 261,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "qwen/qwen3.8-flash",
+   "dataset": "mmlu",
+   "n_rows": 1000,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "qwen/qwen3.8-max-0902",
+   "dataset": "gpqa",
+   "n_rows": 196,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "xiaomi/mimo-v2.6-flash",
+   "dataset": "gpqa",
+   "n_rows": 196,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "xiaomi/mimo-v2.6-flash",
+   "dataset": "math500_choice",
+   "n_rows": 261,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "xiaomi/mimo-v2.6-flash",
+   "dataset": "mmlu",
+   "n_rows": 1000,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "xiaomi/mimo-v2.6-pro",
+   "dataset": "gpqa",
+   "n_rows": 196,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "xiaomi/mimo-v2.6-pro",
+   "dataset": "math500_choice",
+   "n_rows": 261,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "xiaomi/mimo-v2.6-pro",
+   "dataset": "mmlu",
+   "n_rows": 1000,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "z-ai/glm-5.3",
+   "dataset": "gpqa",
+   "n_rows": 196,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "z-ai/glm-5.3",
+   "dataset": "math500_choice",
+   "n_rows": 261,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "z-ai/glm-5.3",
+   "dataset": "mmlu",
+   "n_rows": 1000,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "dataset": "arc",
+   "n_rows": 1172,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "dataset": "gpqa",
+   "n_rows": 196,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "dataset": "hle_text_mc",
+   "n_rows": 494,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "dataset": "math500_choice",
+   "n_rows": 261,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "dataset": "mmlu",
+   "n_rows": 1000,
+   "label": "uncorrected-superseded (v2 history kept immutable; active cell is v3 — NOT rerun)"
+  }
+ ],
+ "rerun_cells": [
+  {
+   "model": "deepseek/deepseek-v4-flash-0731",
+   "dataset": "gpqa",
+   "active_source_version": "v3",
+   "n_active_rows": 196,
+   "n_keep_original": 181,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 15,
+   "observed_mean_reported_cost_usd": 0.002064,
+   "expected_cost_usd": 0.031,
+   "wire_max_output_tokens": 32768,
+   "reservation_per_task_usd": 0.126
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash-0731",
+   "dataset": "hle_text_mc",
+   "active_source_version": "v3",
+   "n_active_rows": 494,
+   "n_keep_original": 420,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 74,
+   "observed_mean_reported_cost_usd": 0.003307,
+   "expected_cost_usd": 0.2447,
+   "wire_max_output_tokens": 32768,
+   "reservation_per_task_usd": 0.126
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash-0731",
+   "dataset": "math500_choice",
+   "active_source_version": "v3",
+   "n_active_rows": 261,
+   "n_keep_original": 261,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 0,
+   "observed_mean_reported_cost_usd": 0.000194,
+   "expected_cost_usd": 0.0,
+   "wire_max_output_tokens": 32768,
+   "reservation_per_task_usd": 0.126
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash-0731",
+   "dataset": "mmlu",
+   "active_source_version": "v3",
+   "n_active_rows": 1000,
+   "n_keep_original": 991,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 9,
+   "observed_mean_reported_cost_usd": 0.0006,
+   "expected_cost_usd": 0.0054,
+   "wire_max_output_tokens": 32768,
+   "reservation_per_task_usd": 0.126
+  },
+  {
+   "model": "google/gemma-3-4b-it",
+   "dataset": "gpqa",
+   "active_source_version": "v3",
+   "n_active_rows": 196,
+   "n_keep_original": 196,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 0,
+   "observed_mean_reported_cost_usd": 1.2e-05,
+   "expected_cost_usd": 0.0,
+   "wire_max_output_tokens": 4096,
+   "reservation_per_task_usd": 0.0018
+  },
+  {
+   "model": "google/gemma-3-4b-it",
+   "dataset": "hle_text_mc",
+   "active_source_version": "v3",
+   "n_active_rows": 494,
+   "n_keep_original": 485,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 9,
+   "observed_mean_reported_cost_usd": 3e-05,
+   "expected_cost_usd": 0.0003,
+   "wire_max_output_tokens": 4096,
+   "reservation_per_task_usd": 0.0018
+  },
+  {
+   "model": "google/gemma-3-4b-it",
+   "dataset": "math500_choice",
+   "active_source_version": "v3",
+   "n_active_rows": 261,
+   "n_keep_original": 94,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 167,
+   "observed_mean_reported_cost_usd": 6.8e-05,
+   "expected_cost_usd": 0.0114,
+   "wire_max_output_tokens": 4096,
+   "reservation_per_task_usd": 0.0018
+  },
+  {
+   "model": "google/gemma-3-4b-it",
+   "dataset": "mmlu",
+   "active_source_version": "v3",
+   "n_active_rows": 1000,
+   "n_keep_original": 972,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 28,
+   "observed_mean_reported_cost_usd": 1.4e-05,
+   "expected_cost_usd": 0.0004,
+   "wire_max_output_tokens": 4096,
+   "reservation_per_task_usd": 0.0018
+  },
+  {
+   "model": "ibm-granite/granite-4.0-h-micro",
+   "dataset": "gpqa",
+   "active_source_version": "v2",
+   "n_active_rows": 196,
+   "n_keep_original": 195,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 1,
+   "n_rows_to_rerun": 0,
+   "observed_mean_reported_cost_usd": 5e-06,
+   "expected_cost_usd": 0.0,
+   "wire_max_output_tokens": 4096,
+   "reservation_per_task_usd": 0.0016
+  },
+  {
+   "model": "ibm-granite/granite-4.0-h-micro",
+   "dataset": "hle_text_mc",
+   "active_source_version": "v2",
+   "n_active_rows": 494,
+   "n_keep_original": 488,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 6,
+   "n_rows_to_rerun": 0,
+   "observed_mean_reported_cost_usd": 1.1e-05,
+   "expected_cost_usd": 0.0,
+   "wire_max_output_tokens": 4096,
+   "reservation_per_task_usd": 0.0016
+  },
+  {
+   "model": "ibm-granite/granite-4.0-h-micro",
+   "dataset": "math500_choice",
+   "active_source_version": "v2",
+   "n_active_rows": 261,
+   "n_keep_original": 261,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 0,
+   "observed_mean_reported_cost_usd": 3e-06,
+   "expected_cost_usd": 0.0,
+   "wire_max_output_tokens": 4096,
+   "reservation_per_task_usd": 0.0016
+  },
+  {
+   "model": "ibm-granite/granite-4.0-h-micro",
+   "dataset": "mmlu",
+   "active_source_version": "v2",
+   "n_active_rows": 1000,
+   "n_keep_original": 907,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 13,
+   "n_rows_to_rerun": 80,
+   "observed_mean_reported_cost_usd": 9e-06,
+   "expected_cost_usd": 0.0007,
+   "wire_max_output_tokens": 4096,
+   "reservation_per_task_usd": 0.0016
+  },
+  {
+   "model": "meta-llama/llama-3.1-8b-instruct",
+   "dataset": "gpqa",
+   "active_source_version": "v3",
+   "n_active_rows": 196,
+   "n_keep_original": 185,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 11,
+   "observed_mean_reported_cost_usd": 8e-06,
+   "expected_cost_usd": 0.0001,
+   "wire_max_output_tokens": 1024,
+   "reservation_per_task_usd": 0.0009
+  },
+  {
+   "model": "meta-llama/llama-3.1-8b-instruct",
+   "dataset": "hle_text_mc",
+   "active_source_version": "v3",
+   "n_active_rows": 494,
+   "n_keep_original": 452,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 42,
+   "observed_mean_reported_cost_usd": 1.6e-05,
+   "expected_cost_usd": 0.0007,
+   "wire_max_output_tokens": 1024,
+   "reservation_per_task_usd": 0.0009
+  },
+  {
+   "model": "meta-llama/llama-3.1-8b-instruct",
+   "dataset": "math500_choice",
+   "active_source_version": "v3",
+   "n_active_rows": 261,
+   "n_keep_original": 198,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 63,
+   "observed_mean_reported_cost_usd": 1e-05,
+   "expected_cost_usd": 0.0006,
+   "wire_max_output_tokens": 1024,
+   "reservation_per_task_usd": 0.0009
+  },
+  {
+   "model": "meta-llama/llama-3.1-8b-instruct",
+   "dataset": "mmlu",
+   "active_source_version": "v3",
+   "n_active_rows": 1000,
+   "n_keep_original": 924,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 76,
+   "observed_mean_reported_cost_usd": 7e-06,
+   "expected_cost_usd": 0.0005,
+   "wire_max_output_tokens": 1024,
+   "reservation_per_task_usd": 0.0009
+  },
+  {
+   "model": "mistralai/mistral-nemo",
+   "dataset": "gpqa",
+   "active_source_version": "v3",
+   "n_active_rows": 196,
+   "n_keep_original": 192,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 4,
+   "observed_mean_reported_cost_usd": 7e-06,
+   "expected_cost_usd": 0.0,
+   "wire_max_output_tokens": 1024,
+   "reservation_per_task_usd": 0.0003
+  },
+  {
+   "model": "mistralai/mistral-nemo",
+   "dataset": "hle_text_mc",
+   "active_source_version": "v3",
+   "n_active_rows": 494,
+   "n_keep_original": 482,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 12,
+   "observed_mean_reported_cost_usd": 1.6e-05,
+   "expected_cost_usd": 0.0002,
+   "wire_max_output_tokens": 1024,
+   "reservation_per_task_usd": 0.0003
+  },
+  {
+   "model": "mistralai/mistral-nemo",
+   "dataset": "math500_choice",
+   "active_source_version": "v3",
+   "n_active_rows": 261,
+   "n_keep_original": 238,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 23,
+   "observed_mean_reported_cost_usd": 7e-06,
+   "expected_cost_usd": 0.0002,
+   "wire_max_output_tokens": 1024,
+   "reservation_per_task_usd": 0.0003
+  },
+  {
+   "model": "mistralai/mistral-nemo",
+   "dataset": "mmlu",
+   "active_source_version": "v3",
+   "n_active_rows": 1000,
+   "n_keep_original": 850,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 150,
+   "observed_mean_reported_cost_usd": 8e-06,
+   "expected_cost_usd": 0.0013,
+   "wire_max_output_tokens": 1024,
+   "reservation_per_task_usd": 0.0003
+  },
+  {
+   "model": "mistralai/mistral-small-3.2-24b-instruct",
+   "dataset": "gpqa",
+   "active_source_version": "v3",
+   "n_active_rows": 196,
+   "n_keep_original": 72,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 124,
+   "observed_mean_reported_cost_usd": 4.3e-05,
+   "expected_cost_usd": 0.0053,
+   "wire_max_output_tokens": 4096,
+   "reservation_per_task_usd": 0.0042
+  },
+  {
+   "model": "mistralai/mistral-small-3.2-24b-instruct",
+   "dataset": "hle_text_mc",
+   "active_source_version": "v3",
+   "n_active_rows": 494,
+   "n_keep_original": 185,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 309,
+   "observed_mean_reported_cost_usd": 7.1e-05,
+   "expected_cost_usd": 0.022,
+   "wire_max_output_tokens": 4096,
+   "reservation_per_task_usd": 0.0042
+  },
+  {
+   "model": "mistralai/mistral-small-3.2-24b-instruct",
+   "dataset": "math500_choice",
+   "active_source_version": "v3",
+   "n_active_rows": 261,
+   "n_keep_original": 26,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 235,
+   "observed_mean_reported_cost_usd": 0.000198,
+   "expected_cost_usd": 0.0464,
+   "wire_max_output_tokens": 4096,
+   "reservation_per_task_usd": 0.0042
+  },
+  {
+   "model": "mistralai/mistral-small-3.2-24b-instruct",
+   "dataset": "mmlu",
+   "active_source_version": "v3",
+   "n_active_rows": 1000,
+   "n_keep_original": 614,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 386,
+   "observed_mean_reported_cost_usd": 5.5e-05,
+   "expected_cost_usd": 0.0213,
+   "wire_max_output_tokens": 4096,
+   "reservation_per_task_usd": 0.0042
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "dataset": "gpqa",
+   "active_source_version": "v3",
+   "n_active_rows": 196,
+   "n_keep_original": 194,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 2,
+   "observed_mean_reported_cost_usd": 0.000621,
+   "expected_cost_usd": 0.0012,
+   "wire_max_output_tokens": 16384,
+   "reservation_per_task_usd": 0.0088
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "dataset": "hle_text_mc",
+   "active_source_version": "v3",
+   "n_active_rows": 494,
+   "n_keep_original": 491,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 3,
+   "observed_mean_reported_cost_usd": 0.000429,
+   "expected_cost_usd": 0.0013,
+   "wire_max_output_tokens": 16384,
+   "reservation_per_task_usd": 0.0088
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "dataset": "math500_choice",
+   "active_source_version": "v3",
+   "n_active_rows": 261,
+   "n_keep_original": 261,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 0,
+   "observed_mean_reported_cost_usd": 0.000191,
+   "expected_cost_usd": 0.0,
+   "wire_max_output_tokens": 16384,
+   "reservation_per_task_usd": 0.0088
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "dataset": "mmlu",
+   "active_source_version": "v3",
+   "n_active_rows": 1000,
+   "n_keep_original": 999,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 1,
+   "observed_mean_reported_cost_usd": 0.000168,
+   "expected_cost_usd": 0.0002,
+   "wire_max_output_tokens": 16384,
+   "reservation_per_task_usd": 0.0088
+  },
+  {
+   "model": "openai/gpt-oss-20b",
+   "dataset": "gpqa",
+   "active_source_version": "v3",
+   "n_active_rows": 196,
+   "n_keep_original": 175,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 21,
+   "observed_mean_reported_cost_usd": 0.000463,
+   "expected_cost_usd": 0.0097,
+   "wire_max_output_tokens": 16384,
+   "reservation_per_task_usd": 0.0046
+  },
+  {
+   "model": "openai/gpt-oss-20b",
+   "dataset": "hle_text_mc",
+   "active_source_version": "v3",
+   "n_active_rows": 494,
+   "n_keep_original": 464,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 30,
+   "observed_mean_reported_cost_usd": 0.00036,
+   "expected_cost_usd": 0.0108,
+   "wire_max_output_tokens": 16384,
+   "reservation_per_task_usd": 0.0046
+  },
+  {
+   "model": "openai/gpt-oss-20b",
+   "dataset": "math500_choice",
+   "active_source_version": "v3",
+   "n_active_rows": 261,
+   "n_keep_original": 259,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 2,
+   "observed_mean_reported_cost_usd": 0.00012,
+   "expected_cost_usd": 0.0002,
+   "wire_max_output_tokens": 16384,
+   "reservation_per_task_usd": 0.0046
+  },
+  {
+   "model": "openai/gpt-oss-20b",
+   "dataset": "mmlu",
+   "active_source_version": "v3",
+   "n_active_rows": 1000,
+   "n_keep_original": 991,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 9,
+   "observed_mean_reported_cost_usd": 0.000133,
+   "expected_cost_usd": 0.0012,
+   "wire_max_output_tokens": 16384,
+   "reservation_per_task_usd": 0.0046
+  },
+  {
+   "model": "qwen/qwen3.7-flash",
+   "dataset": "gpqa",
+   "active_source_version": "v3",
+   "n_active_rows": 196,
+   "n_keep_original": 54,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 142,
+   "observed_mean_reported_cost_usd": 0.001443,
+   "expected_cost_usd": 0.2049,
+   "wire_max_output_tokens": 16384,
+   "reservation_per_task_usd": 0.0068
+  },
+  {
+   "model": "qwen/qwen3.7-flash",
+   "dataset": "hle_text_mc",
+   "active_source_version": "v3",
+   "n_active_rows": 494,
+   "n_keep_original": 338,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 156,
+   "observed_mean_reported_cost_usd": 0.000921,
+   "expected_cost_usd": 0.1437,
+   "wire_max_output_tokens": 16384,
+   "reservation_per_task_usd": 0.0068
+  },
+  {
+   "model": "qwen/qwen3.7-flash",
+   "dataset": "math500_choice",
+   "active_source_version": "v3",
+   "n_active_rows": 261,
+   "n_keep_original": 106,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 155,
+   "observed_mean_reported_cost_usd": 0.0009,
+   "expected_cost_usd": 0.1395,
+   "wire_max_output_tokens": 16384,
+   "reservation_per_task_usd": 0.0068
+  },
+  {
+   "model": "qwen/qwen3.7-flash",
+   "dataset": "mmlu",
+   "active_source_version": "v3",
+   "n_active_rows": 1000,
+   "n_keep_original": 741,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 259,
+   "observed_mean_reported_cost_usd": 0.000508,
+   "expected_cost_usd": 0.1316,
+   "wire_max_output_tokens": 16384,
+   "reservation_per_task_usd": 0.0068
+  },
+  {
+   "model": "qwen/qwen3.8-flash",
+   "dataset": "arc",
+   "active_source_version": "v3",
+   "n_active_rows": 1172,
+   "n_keep_original": 1172,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 0,
+   "observed_mean_reported_cost_usd": 0.000111,
+   "expected_cost_usd": 0.0,
+   "wire_max_output_tokens": 16384,
+   "reservation_per_task_usd": 0.0249
+  },
+  {
+   "model": "qwen/qwen3.8-flash",
+   "dataset": "gpqa",
+   "active_source_version": "v3",
+   "n_active_rows": 196,
+   "n_keep_original": 135,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 61,
+   "observed_mean_reported_cost_usd": 0.003571,
+   "expected_cost_usd": 0.2178,
+   "wire_max_output_tokens": 16384,
+   "reservation_per_task_usd": 0.0249
+  },
+  {
+   "model": "qwen/qwen3.8-flash",
+   "dataset": "hle_text_mc",
+   "active_source_version": "v3",
+   "n_active_rows": 494,
+   "n_keep_original": 177,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 317,
+   "observed_mean_reported_cost_usd": 0.005997,
+   "expected_cost_usd": 1.9011,
+   "wire_max_output_tokens": 16384,
+   "reservation_per_task_usd": 0.0249
+  },
+  {
+   "model": "qwen/qwen3.8-flash",
+   "dataset": "math500_choice",
+   "active_source_version": "v3",
+   "n_active_rows": 261,
+   "n_keep_original": 258,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 3,
+   "observed_mean_reported_cost_usd": 0.000378,
+   "expected_cost_usd": 0.0011,
+   "wire_max_output_tokens": 16384,
+   "reservation_per_task_usd": 0.0249
+  },
+  {
+   "model": "qwen/qwen3.8-flash",
+   "dataset": "mmlu",
+   "active_source_version": "v3",
+   "n_active_rows": 1000,
+   "n_keep_original": 903,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 97,
+   "observed_mean_reported_cost_usd": 0.001398,
+   "expected_cost_usd": 0.1356,
+   "wire_max_output_tokens": 16384,
+   "reservation_per_task_usd": 0.0249
+  },
+  {
+   "model": "qwen/qwen3.8-max-0902",
+   "dataset": "gpqa",
+   "active_source_version": "v3",
+   "n_active_rows": 196,
+   "n_keep_original": 155,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 41,
+   "observed_mean_reported_cost_usd": 0.037702,
+   "expected_cost_usd": 1.5458,
+   "wire_max_output_tokens": 16384,
+   "reservation_per_task_usd": 0.3195
+  },
+  {
+   "model": "qwen/qwen3.8-max-0902",
+   "dataset": "mmlu",
+   "active_source_version": "v2",
+   "n_active_rows": 1000,
+   "n_keep_original": 872,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 128,
+   "observed_mean_reported_cost_usd": 0.004526,
+   "expected_cost_usd": 0.5793,
+   "wire_max_output_tokens": 4096,
+   "reservation_per_task_usd": 0.0983
+  },
+  {
+   "model": "xiaomi/mimo-v2.6-flash",
+   "dataset": "arc",
+   "active_source_version": "v3",
+   "n_active_rows": 1172,
+   "n_keep_original": 1138,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 34,
+   "observed_mean_reported_cost_usd": 3.5e-05,
+   "expected_cost_usd": 0.0012,
+   "wire_max_output_tokens": 32768,
+   "reservation_per_task_usd": 0.0292
+  },
+  {
+   "model": "xiaomi/mimo-v2.6-flash",
+   "dataset": "gpqa",
+   "active_source_version": "v3",
+   "n_active_rows": 196,
+   "n_keep_original": 33,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 163,
+   "observed_mean_reported_cost_usd": 0.00384,
+   "expected_cost_usd": 0.6259,
+   "wire_max_output_tokens": 32768,
+   "reservation_per_task_usd": 0.0292
+  },
+  {
+   "model": "xiaomi/mimo-v2.6-flash",
+   "dataset": "hle_text_mc",
+   "active_source_version": "v3",
+   "n_active_rows": 494,
+   "n_keep_original": 90,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 404,
+   "observed_mean_reported_cost_usd": 0.006102,
+   "expected_cost_usd": 2.4651,
+   "wire_max_output_tokens": 32768,
+   "reservation_per_task_usd": 0.0292
+  },
+  {
+   "model": "xiaomi/mimo-v2.6-flash",
+   "dataset": "math500_choice",
+   "active_source_version": "v3",
+   "n_active_rows": 261,
+   "n_keep_original": 211,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 50,
+   "observed_mean_reported_cost_usd": 0.000204,
+   "expected_cost_usd": 0.0102,
+   "wire_max_output_tokens": 32768,
+   "reservation_per_task_usd": 0.0292
+  },
+  {
+   "model": "xiaomi/mimo-v2.6-flash",
+   "dataset": "mmlu",
+   "active_source_version": "v3",
+   "n_active_rows": 1000,
+   "n_keep_original": 661,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 339,
+   "observed_mean_reported_cost_usd": 0.00113,
+   "expected_cost_usd": 0.383,
+   "wire_max_output_tokens": 32768,
+   "reservation_per_task_usd": 0.0292
+  },
+  {
+   "model": "xiaomi/mimo-v2.6-pro",
+   "dataset": "gpqa",
+   "active_source_version": "v3",
+   "n_active_rows": 196,
+   "n_keep_original": 11,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 185,
+   "observed_mean_reported_cost_usd": 0.007448,
+   "expected_cost_usd": 1.3779,
+   "wire_max_output_tokens": 32768,
+   "reservation_per_task_usd": 0.0909
+  },
+  {
+   "model": "xiaomi/mimo-v2.6-pro",
+   "dataset": "math500_choice",
+   "active_source_version": "v3",
+   "n_active_rows": 261,
+   "n_keep_original": 122,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 139,
+   "observed_mean_reported_cost_usd": 0.000595,
+   "expected_cost_usd": 0.0827,
+   "wire_max_output_tokens": 32768,
+   "reservation_per_task_usd": 0.0909
+  },
+  {
+   "model": "xiaomi/mimo-v2.6-pro",
+   "dataset": "mmlu",
+   "active_source_version": "v3",
+   "n_active_rows": 1000,
+   "n_keep_original": 519,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 481,
+   "observed_mean_reported_cost_usd": 0.002352,
+   "expected_cost_usd": 1.1314,
+   "wire_max_output_tokens": 32768,
+   "reservation_per_task_usd": 0.0909
+  },
+  {
+   "model": "z-ai/glm-5.3",
+   "dataset": "gpqa",
+   "active_source_version": "v3",
+   "n_active_rows": 196,
+   "n_keep_original": 163,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 33,
+   "observed_mean_reported_cost_usd": 0.03714,
+   "expected_cost_usd": 1.2256,
+   "wire_max_output_tokens": 32768,
+   "reservation_per_task_usd": 0.4497
+  },
+  {
+   "model": "z-ai/glm-5.3",
+   "dataset": "math500_choice",
+   "active_source_version": "v3",
+   "n_active_rows": 261,
+   "n_keep_original": 248,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 13,
+   "observed_mean_reported_cost_usd": 0.001509,
+   "expected_cost_usd": 0.0196,
+   "wire_max_output_tokens": 32768,
+   "reservation_per_task_usd": 0.4497
+  },
+  {
+   "model": "z-ai/glm-5.3",
+   "dataset": "mmlu",
+   "active_source_version": "v3",
+   "n_active_rows": 1000,
+   "n_keep_original": 944,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 56,
+   "observed_mean_reported_cost_usd": 0.011297,
+   "expected_cost_usd": 0.6326,
+   "wire_max_output_tokens": 32768,
+   "reservation_per_task_usd": 0.4497
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "dataset": "arc",
+   "active_source_version": "v3",
+   "n_active_rows": 1172,
+   "n_keep_original": 1171,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 1,
+   "observed_mean_reported_cost_usd": 7e-05,
+   "expected_cost_usd": 0.0001,
+   "wire_max_output_tokens": 32768,
+   "reservation_per_task_usd": 0.051
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "dataset": "gpqa",
+   "active_source_version": "v3",
+   "n_active_rows": 196,
+   "n_keep_original": 177,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 19,
+   "observed_mean_reported_cost_usd": 0.002848,
+   "expected_cost_usd": 0.0541,
+   "wire_max_output_tokens": 32768,
+   "reservation_per_task_usd": 0.051
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "dataset": "hle_text_mc",
+   "active_source_version": "v3",
+   "n_active_rows": 494,
+   "n_keep_original": 405,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 89,
+   "observed_mean_reported_cost_usd": 0.004137,
+   "expected_cost_usd": 0.3682,
+   "wire_max_output_tokens": 32768,
+   "reservation_per_task_usd": 0.051
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "dataset": "math500_choice",
+   "active_source_version": "v3",
+   "n_active_rows": 261,
+   "n_keep_original": 260,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 1,
+   "observed_mean_reported_cost_usd": 0.000215,
+   "expected_cost_usd": 0.0002,
+   "wire_max_output_tokens": 32768,
+   "reservation_per_task_usd": 0.051
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "dataset": "mmlu",
+   "active_source_version": "v3",
+   "n_active_rows": 1000,
+   "n_keep_original": 980,
+   "n_settled_non_ok": 0,
+   "n_offline_salvage": 0,
+   "n_rows_to_rerun": 20,
+   "observed_mean_reported_cost_usd": 0.000806,
+   "expected_cost_usd": 0.0161,
+   "wire_max_output_tokens": 32768,
+   "reservation_per_task_usd": 0.051
+  }
+ ],
+ "rerun_total_rows": 5271,
+ "expected_total_cost_usd": 13.81,
+ "mixed_time_selective_replacement_protocol": {
+  "statement": "complete-cell summaries combine ORIGINAL parser-stable rows kept from the active source run, offline-salvaged rows (fixed parser over complete v2 raws), and versioned live REPLACEMENTS — selective, mixed-time: each replacement reuses its original row's recorded wire; provider drift between times is uncontrolled",
+  "required_summary_fields": [
+   "original stable exact rows plus justified versioned replacements",
+   "actual gold join on item_id (never re-labeled)",
+   "paired Jev metrics on the shared item set",
+   "complete denominator (all active rows), never accuracy on the rerun subset alone"
+  ]
+ },
+ "reservation_policy": {
+  "mechanism": "revision_run.PersistentBudget: atomic PRE-CALL reservations against one persistent USD ledger (settled + held + in-flight worst-case <= cap); bounded retries inside the per-task reservation; unknown billed cost FAILS CLOSED (reservation held)",
+  "transport_attempts_per_request": 3,
+  "reservation_per_task_usd_formula": "3 * (4096 * input_per_token + wire_max_output_tokens * output_per_token) with CURRENT provider prices",
+  "price_metadata": "data_report/provider_price_metadata.json"
+ },
+ "priority_scope": {
+  "budget_cap_usd": 10.0,
+  "arc_reserved_usd": 2.5,
+  "arc_choice_score": {
+   "conservative_cost_usd": 2.09,
+   "n_requests": 1034,
+   "provider": "typesafe (jev-1.13.0 REMOTE system-one API)",
+   "first": true
+  },
+  "priority_1_active_math_cells": {
+   "cells": [
+    "google/gemma-3-4b-it:v3:167",
+    "meta-llama/llama-3.1-8b-instruct:v3:63",
+    "mistralai/mistral-nemo:v3:23",
+    "mistralai/mistral-small-3.2-24b-instruct:v3:235",
+    "openai/gpt-oss-20b:v3:2",
+    "qwen/qwen3.7-flash:v3:155",
+    "qwen/qwen3.8-flash:v3:3",
+    "xiaomi/mimo-v2.6-flash:v3:50",
+    "xiaomi/mimo-v2.6-pro:v3:139",
+    "z-ai/glm-5.3:v3:13",
+    "z-ai/glm-5.3-flash:v3:1"
+   ],
+   "n_rows": 851,
+   "expected_usd": 0.3121
+  },
+  "priority_2_cheapest_first_complete_cells": {
+   "cells": [
+    "mistralai/mistral-nemo:gpqa:4",
+    "meta-llama/llama-3.1-8b-instruct:gpqa:11",
+    "z-ai/glm-5.3-flash:arc:1",
+    "mistralai/mistral-nemo:hle_text_mc:12",
+    "openai/gpt-oss-120b:mmlu:1",
+    "google/gemma-3-4b-it:hle_text_mc:9",
+    "google/gemma-3-4b-it:mmlu:28",
+    "meta-llama/llama-3.1-8b-instruct:mmlu:76",
+    "ibm-granite/granite-4.0-h-micro:mmlu:80",
+    "meta-llama/llama-3.1-8b-instruct:hle_text_mc:42",
+    "openai/gpt-oss-120b:gpqa:2",
+    "openai/gpt-oss-20b:mmlu:9",
+    "xiaomi/mimo-v2.6-flash:arc:34",
+    "mistralai/mistral-nemo:mmlu:150",
+    "openai/gpt-oss-120b:hle_text_mc:3",
+    "mistralai/mistral-small-3.2-24b-instruct:gpqa:124",
+    "deepseek/deepseek-v4-flash-0731:mmlu:9",
+    "openai/gpt-oss-20b:gpqa:21",
+    "openai/gpt-oss-20b:hle_text_mc:30",
+    "z-ai/glm-5.3-flash:mmlu:20",
+    "mistralai/mistral-small-3.2-24b-instruct:mmlu:386",
+    "mistralai/mistral-small-3.2-24b-instruct:hle_text_mc:309",
+    "deepseek/deepseek-v4-flash-0731:gpqa:15",
+    "z-ai/glm-5.3-flash:gpqa:19",
+    "qwen/qwen3.7-flash:mmlu:259",
+    "qwen/qwen3.8-flash:mmlu:97",
+    "qwen/qwen3.7-flash:hle_text_mc:156",
+    "qwen/qwen3.7-flash:gpqa:142",
+    "qwen/qwen3.8-flash:gpqa:61",
+    "deepseek/deepseek-v4-flash-0731:hle_text_mc:74",
+    "z-ai/glm-5.3-flash:hle_text_mc:89",
+    "xiaomi/mimo-v2.6-flash:mmlu:339",
+    "qwen/qwen3.8-max-0902:mmlu:128",
+    "xiaomi/mimo-v2.6-flash:gpqa:163",
+    "z-ai/glm-5.3:mmlu:56",
+    "xiaomi/mimo-v2.6-pro:mmlu:481",
+    "z-ai/glm-5.3:gpqa:33"
+   ],
+   "n_rows": 3473,
+   "expected_usd": 6.2094
+  },
+  "deferred_needs_more_budget": {
+   "cells": [
+    "xiaomi/mimo-v2.6-pro:gpqa:185",
+    "qwen/qwen3.8-max-0902:gpqa:41",
+    "qwen/qwen3.8-flash:hle_text_mc:317",
+    "xiaomi/mimo-v2.6-flash:hle_text_mc:404"
+   ],
+   "n_rows": 947,
+   "expected_usd": 7.2899
+  }
+ },
+ "by_model": {
+  "deepseek/deepseek-v4-flash-0731": {
+   "n_rows_to_rerun": 98,
+   "expected_cost_usd": 0.2811,
+   "cells": [
+    "gpqa:v3:15",
+    "hle_text_mc:v3:74",
+    "mmlu:v3:9"
+   ]
+  },
+  "google/gemma-3-4b-it": {
+   "n_rows_to_rerun": 204,
+   "expected_cost_usd": 0.0121,
+   "cells": [
+    "hle_text_mc:v3:9",
+    "math500_choice:v3:167",
+    "mmlu:v3:28"
+   ]
+  },
+  "ibm-granite/granite-4.0-h-micro": {
+   "n_rows_to_rerun": 80,
+   "expected_cost_usd": 0.0007,
+   "cells": [
+    "mmlu:v2:80"
+   ]
+  },
+  "meta-llama/llama-3.1-8b-instruct": {
+   "n_rows_to_rerun": 192,
+   "expected_cost_usd": 0.0019,
+   "cells": [
+    "gpqa:v3:11",
+    "hle_text_mc:v3:42",
+    "math500_choice:v3:63",
+    "mmlu:v3:76"
+   ]
+  },
+  "mistralai/mistral-nemo": {
+   "n_rows_to_rerun": 189,
+   "expected_cost_usd": 0.0017,
+   "cells": [
+    "gpqa:v3:4",
+    "hle_text_mc:v3:12",
+    "math500_choice:v3:23",
+    "mmlu:v3:150"
+   ]
+  },
+  "mistralai/mistral-small-3.2-24b-instruct": {
+   "n_rows_to_rerun": 1054,
+   "expected_cost_usd": 0.095,
+   "cells": [
+    "gpqa:v3:124",
+    "hle_text_mc:v3:309",
+    "math500_choice:v3:235",
+    "mmlu:v3:386"
+   ]
+  },
+  "openai/gpt-oss-120b": {
+   "n_rows_to_rerun": 6,
+   "expected_cost_usd": 0.0027,
+   "cells": [
+    "gpqa:v3:2",
+    "hle_text_mc:v3:3",
+    "mmlu:v3:1"
+   ]
+  },
+  "openai/gpt-oss-20b": {
+   "n_rows_to_rerun": 62,
+   "expected_cost_usd": 0.0219,
+   "cells": [
+    "gpqa:v3:21",
+    "hle_text_mc:v3:30",
+    "math500_choice:v3:2",
+    "mmlu:v3:9"
+   ]
+  },
+  "qwen/qwen3.7-flash": {
+   "n_rows_to_rerun": 712,
+   "expected_cost_usd": 0.6197,
+   "cells": [
+    "gpqa:v3:142",
+    "hle_text_mc:v3:156",
+    "math500_choice:v3:155",
+    "mmlu:v3:259"
+   ]
+  },
+  "qwen/qwen3.8-flash": {
+   "n_rows_to_rerun": 478,
+   "expected_cost_usd": 2.2556,
+   "cells": [
+    "gpqa:v3:61",
+    "hle_text_mc:v3:317",
+    "math500_choice:v3:3",
+    "mmlu:v3:97"
+   ]
+  },
+  "qwen/qwen3.8-max-0902": {
+   "n_rows_to_rerun": 169,
+   "expected_cost_usd": 2.1251,
+   "cells": [
+    "gpqa:v3:41",
+    "mmlu:v2:128"
+   ]
+  },
+  "xiaomi/mimo-v2.6-flash": {
+   "n_rows_to_rerun": 990,
+   "expected_cost_usd": 3.4854,
+   "cells": [
+    "arc:v3:34",
+    "gpqa:v3:163",
+    "hle_text_mc:v3:404",
+    "math500_choice:v3:50",
+    "mmlu:v3:339"
+   ]
+  },
+  "xiaomi/mimo-v2.6-pro": {
+   "n_rows_to_rerun": 805,
+   "expected_cost_usd": 2.592,
+   "cells": [
+    "gpqa:v3:185",
+    "math500_choice:v3:139",
+    "mmlu:v3:481"
+   ]
+  },
+  "z-ai/glm-5.3": {
+   "n_rows_to_rerun": 102,
+   "expected_cost_usd": 1.8778,
+   "cells": [
+    "gpqa:v3:33",
+    "math500_choice:v3:13",
+    "mmlu:v3:56"
+   ]
+  },
+  "z-ai/glm-5.3-flash": {
+   "n_rows_to_rerun": 130,
+   "expected_cost_usd": 0.4387,
+   "cells": [
+    "arc:v3:1",
+    "gpqa:v3:19",
+    "hle_text_mc:v3:89",
+    "math500_choice:v3:1",
+    "mmlu:v3:20"
+   ]
+  }
+ },
+ "sources": {
+  "v2": "runs_matched_cheap/v2/results.jsonl (raw excerpts truncated)",
+  "v3": "runs_matched_cheap/v3/results.jsonl (no raws)",
+  "selector": "scripts/benchmark/run_matched3.py cmd_score",
+  "summary": "runs_matched_cheap/v3/summary_v3.json",
+  "tasks": "data_report/baseline_rerun_tasks.jsonl"
+ }
+}

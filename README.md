@@ -9,8 +9,12 @@ the published aggregates in this repository.
 
 **The report page: <https://jevresearch.github.io/Jev-Research/report/>**
 (rendered; the source is [`report/index.html`](report/index.html)).
-Headline: MMLU-Pro 82.8%, GPQA Diamond 76.5%, ~73 ms fixed + ~6 ms/1k-token
-server compute, ~$0.28 per 12k-question MMLU-Pro run - a small, new,
+Measured September 2026 against the service-reported `jev-1.13.0` model
+string; report revision 2 (2026-10-01); an independent evaluation by
+JevResearch, unaffiliated with TypeSafe AI.
+Headline (all-requested scoring): MMLU-Pro 82.7%, GPQA Diamond 76.5%,
+~73 ms fixed + ~6 ms/1k-token proxy-reported upstream service time, ~$0.28 per 12k-question
+MMLU-Pro run - a small, new,
 English-centric model with a probability read-out in place of a generation
 head, not a frontier system.
 
@@ -25,7 +29,7 @@ head, not a frontier system.
 | [`runs_archprobe/`](runs_archprobe/) | architecture-probe analysis, per-call rows, tokenizer studies, the probe2 follow-up battery, billing |
 | [`runs_matched_cheap/`](runs_matched_cheap/) | matched cheap-model baselines (OpenRouter): freeze, smoke, per-call results, summaries, spend |
 | [`runs_live/`](runs_live/) | Talk-to-Jev traces (character / vocabulary-menu / token programs), probes, billing, findings |
-| [`data_report/`](data_report/) | cost model, billing roll-up, architecture + lattice audits, size estimate, probe-2 plan |
+| [`data_report/`](data_report/) | cost model, billing roll-up, architecture + lattice audits, size estimate, probe-2 plan, benchmark calibration/paired diagnostics, raw-recoverability inventory and rerun plan, and the v4r1 active baseline summary (complete/partial cell status) |
 | [`docs/`](docs/) | research write-ups: architecture probes, comparable scores, the vals.ai leaderboard extract, the Talk program |
 | [`ARCHITECTURE-ANALYSIS.md`](ARCHITECTURE-ANALYSIS.md) | the full architecture reconstruction: card, evidence, alternatives ledger, next probes |
 
@@ -45,6 +49,12 @@ dirs and benchmark per-item lists are not bundled). Re-running the *live*
 experiments requires your own `TYPESAFE_API_KEY` (see `.env.example`) and hits
 the paid API.
 
+Re-rendering the page (the bundle's G4 gate proves the shipped page
+byte-for-byte) is re-deriving prose and figures from the published
+aggregates; it is **not** an independent re-scoring. Independently re-scoring
+would require the private raw responses and the licensed item sets, which are
+not redistributed here; the freeze manifests pin their identity by SHA-256.
+
 ## Data availability and licensing
 
 Benchmark **item text is third-party licensed content** (MMLU-Pro is
@@ -58,7 +68,19 @@ and is **not republished here**. This repository publishes instead:
   item identity against those hashes;
 * our own synthetic prompts verbatim (the Talk traces, the architecture-probe
   rows, the tokenizer samples - none is third-party licensed);
-* the complete cost model and billing roll-up.
+* the complete cost model and billing roll-up;
+* benchmark calibration and paired diagnostics aggregates
+  (`data_report/benchmark_diagnostics/`, no item text) and the v4r1 active
+  baseline summary: 42 of 59 (model, dataset) cells complete over their full
+  sampled denominators and charted; 17 partial cells excluded from capability
+  comparisons with per-cell reasons, under a versioned status (v4r1) - never
+  presented as obsolete legacy scores;
+* availability of per-item prediction evidence (item ids, correctness,
+  displayed probabilities): it exists in the working tree
+  (`runs_matched_cheap/v4r1/active_items.jsonl`, stage `per_item` lists) and
+  is available to holders of the datasets on request, but is not
+  redistributed here under the same item-id policy that strips `per_item`
+  lists at publish time.
 
 External comparison scores were fetched from public publisher pages; sources
 and access dates are recorded in `docs/modern-comparison/canonical/` and

@@ -19,8 +19,14 @@ model string measured is the service-reported `jev-1.13.0`.
   were accessed or reconstructed. Architecture statements are inferences from
   API-visible signals: answers, probability vectors, token counts, timing
   headers, billing usage.
-* **Latency slopes are contaminated by multi-tenant batching** and are not
-  convertible to parameter counts.
+* **Latency is proxy-reported upstream service time**
+  (`x-envoy-upstream-service-time`: includes upstream processing and the
+  Envoy-to-upstream network hop, does not certify exclusion of application
+  queueing/preprocessing/serialization). Latency slopes are contaminated by
+  multi-tenant batching and are not convertible to parameter counts.
+* **Probability calibration is dataset-dependent** (near-calibrated on
+  MMLU-Pro, overconfident on HLE) and displayed probabilities are rounded to
+  two decimals (vector sums 0.99/1.00).
 * **Self-reports are learned text.** The model's identity answers are a brand
   prior, not provenance; the tokenizer evidence contradicts the self-report.
 * **MATH-500 / ARC-AGI-2 results are protocol conversions** (multiple-choice,

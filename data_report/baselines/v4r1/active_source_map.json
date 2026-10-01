@@ -1,0 +1,630 @@
+{
+ "schema": "active-source-map-1.0.0",
+ "version": "v4r1",
+ "selector": "run_matched3.cmd_score cell-level merge (v3-preferred)",
+ "sources": {
+  "original_v2": "runs_matched_cheap/v2/results.jsonl",
+  "original_v3": "runs_matched_cheap/v3/results.jsonl",
+  "salvage_raws": "runs_matched_cheap/raw2/ (complete excerpts only)",
+  "replacements": "runs_matched_cheap/v4r1/results.jsonl",
+  "transport_recovery": "runs_matched_cheap/v4r1/transport_recovery.jsonl (+ pointers)",
+  "replacement_raws": "runs_matched_cheap/v4r1/private_raw/ (never published)",
+  "jev_scores": {
+   "mmlu": "runs_benchmark/bench-mmlu_full-*/derived/score.json",
+   "gpqa": "runs_benchmark_ext2/bench-gpqa_diamond-*/derived/score.json",
+   "math500_choice": "runs_benchmark_ext/bench-math500_choice-*/derived/score.json",
+   "hle_text_mc": "runs_benchmark_ext2/bench-hle_text_mc-*/derived/score.json",
+   "arc": "runs_benchmark/bench-arc_test-*/derived/score.json"
+  },
+  "arc_corrected": "runs_benchmark_ext_rerun1/bench-arc_agi2_{choice,score}-d98f20eb693e"
+ },
+ "cells": {
+  "deepseek/deepseek-v4-flash-0731:gpqa": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 196,
+   "counts": {
+    "original_stable": 181,
+    "replacement": 15
+   }
+  },
+  "deepseek/deepseek-v4-flash-0731:hle_text_mc": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 494,
+   "counts": {
+    "original_stable": 420,
+    "replacement": 74
+   }
+  },
+  "deepseek/deepseek-v4-flash-0731:math500_choice": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 261,
+   "counts": {
+    "original_stable": 261
+   }
+  },
+  "deepseek/deepseek-v4-flash-0731:mmlu": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 1000,
+   "counts": {
+    "original_stable": 991,
+    "replacement": 9
+   }
+  },
+  "google/gemma-3-4b-it:gpqa": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 196,
+   "counts": {
+    "original_stable": 196
+   }
+  },
+  "google/gemma-3-4b-it:hle_text_mc": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "partial",
+   "n_requested": 494,
+   "counts": {
+    "original_stable": 485,
+    "replacement_resolved": 3,
+    "replacement_provisional": 6
+   }
+  },
+  "google/gemma-3-4b-it:math500_choice": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "partial",
+   "n_requested": 261,
+   "counts": {
+    "original_stable": 94,
+    "replacement": 143,
+    "replacement_resolved": 18,
+    "replacement_provisional": 6
+   }
+  },
+  "google/gemma-3-4b-it:mmlu": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "partial",
+   "n_requested": 1000,
+   "counts": {
+    "original_stable": 972,
+    "replacement": 3,
+    "replacement_resolved": 13,
+    "replacement_provisional": 12
+   }
+  },
+  "ibm-granite/granite-4.0-h-micro:gpqa": {
+   "active_source_version": "v2",
+   "original_wire_protocol": "v2-temperature0-effort-low",
+   "status": "complete",
+   "n_requested": 196,
+   "counts": {
+    "original_stable": 195,
+    "salvage": 1
+   }
+  },
+  "ibm-granite/granite-4.0-h-micro:hle_text_mc": {
+   "active_source_version": "v2",
+   "original_wire_protocol": "v2-temperature0-effort-low",
+   "status": "complete",
+   "n_requested": 494,
+   "counts": {
+    "original_stable": 488,
+    "salvage": 6
+   }
+  },
+  "ibm-granite/granite-4.0-h-micro:math500_choice": {
+   "active_source_version": "v2",
+   "original_wire_protocol": "v2-temperature0-effort-low",
+   "status": "complete",
+   "n_requested": 261,
+   "counts": {
+    "original_stable": 261
+   }
+  },
+  "ibm-granite/granite-4.0-h-micro:mmlu": {
+   "active_source_version": "v2",
+   "original_wire_protocol": "v2-temperature0-effort-low",
+   "status": "complete",
+   "n_requested": 1000,
+   "counts": {
+    "original_stable": 907,
+    "replacement": 80,
+    "salvage": 13
+   }
+  },
+  "meta-llama/llama-3.1-8b-instruct:gpqa": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 196,
+   "counts": {
+    "original_stable": 185,
+    "replacement": 11
+   }
+  },
+  "meta-llama/llama-3.1-8b-instruct:hle_text_mc": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 494,
+   "counts": {
+    "original_stable": 452,
+    "replacement": 42
+   }
+  },
+  "meta-llama/llama-3.1-8b-instruct:math500_choice": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 261,
+   "counts": {
+    "original_stable": 198,
+    "replacement": 63
+   }
+  },
+  "meta-llama/llama-3.1-8b-instruct:mmlu": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 1000,
+   "counts": {
+    "original_stable": 924,
+    "replacement": 76
+   }
+  },
+  "mistralai/mistral-nemo:gpqa": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 196,
+   "counts": {
+    "original_stable": 192,
+    "replacement": 4
+   }
+  },
+  "mistralai/mistral-nemo:hle_text_mc": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 494,
+   "counts": {
+    "original_stable": 482,
+    "replacement": 12
+   }
+  },
+  "mistralai/mistral-nemo:math500_choice": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 261,
+   "counts": {
+    "original_stable": 238,
+    "replacement": 23
+   }
+  },
+  "mistralai/mistral-nemo:mmlu": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "partial",
+   "n_requested": 1000,
+   "counts": {
+    "original_stable": 850,
+    "replacement": 138,
+    "replacement_pending": 12
+   }
+  },
+  "mistralai/mistral-small-3.2-24b-instruct:gpqa": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 196,
+   "counts": {
+    "original_stable": 72,
+    "replacement": 124
+   }
+  },
+  "mistralai/mistral-small-3.2-24b-instruct:hle_text_mc": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "partial",
+   "n_requested": 494,
+   "counts": {
+    "original_stable": 185,
+    "replacement": 137,
+    "replacement_pending": 172
+   }
+  },
+  "mistralai/mistral-small-3.2-24b-instruct:math500_choice": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 261,
+   "counts": {
+    "original_stable": 26,
+    "replacement": 235
+   }
+  },
+  "mistralai/mistral-small-3.2-24b-instruct:mmlu": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "partial",
+   "n_requested": 1000,
+   "counts": {
+    "original_stable": 614,
+    "replacement": 137,
+    "replacement_pending": 249
+   }
+  },
+  "openai/gpt-oss-120b:gpqa": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 196,
+   "counts": {
+    "original_stable": 194,
+    "replacement": 2
+   }
+  },
+  "openai/gpt-oss-120b:hle_text_mc": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 494,
+   "counts": {
+    "original_stable": 491,
+    "replacement": 3
+   }
+  },
+  "openai/gpt-oss-120b:math500_choice": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 261,
+   "counts": {
+    "original_stable": 261
+   }
+  },
+  "openai/gpt-oss-120b:mmlu": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 1000,
+   "counts": {
+    "original_stable": 999,
+    "replacement": 1
+   }
+  },
+  "openai/gpt-oss-20b:gpqa": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 196,
+   "counts": {
+    "original_stable": 175,
+    "replacement": 21
+   }
+  },
+  "openai/gpt-oss-20b:hle_text_mc": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 494,
+   "counts": {
+    "original_stable": 464,
+    "replacement": 30
+   }
+  },
+  "openai/gpt-oss-20b:math500_choice": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 261,
+   "counts": {
+    "original_stable": 259,
+    "replacement": 2
+   }
+  },
+  "openai/gpt-oss-20b:mmlu": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 1000,
+   "counts": {
+    "original_stable": 991,
+    "replacement": 9
+   }
+  },
+  "qwen/qwen3.7-flash:gpqa": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "partial",
+   "n_requested": 196,
+   "counts": {
+    "original_stable": 54,
+    "replacement": 129,
+    "replacement_pending": 13
+   }
+  },
+  "qwen/qwen3.7-flash:hle_text_mc": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "partial",
+   "n_requested": 494,
+   "counts": {
+    "original_stable": 338,
+    "replacement": 130,
+    "replacement_pending": 26
+   }
+  },
+  "qwen/qwen3.7-flash:math500_choice": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "partial",
+   "n_requested": 261,
+   "counts": {
+    "original_stable": 106,
+    "replacement": 144,
+    "replacement_pending": 11
+   }
+  },
+  "qwen/qwen3.7-flash:mmlu": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "partial",
+   "n_requested": 1000,
+   "counts": {
+    "original_stable": 741,
+    "replacement": 129,
+    "replacement_pending": 130
+   }
+  },
+  "qwen/qwen3.8-flash:arc": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 1172,
+   "counts": {
+    "original_stable": 1172
+   }
+  },
+  "qwen/qwen3.8-flash:gpqa": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 196,
+   "counts": {
+    "original_stable": 135,
+    "replacement": 61
+   }
+  },
+  "qwen/qwen3.8-flash:hle_text_mc": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "partial",
+   "n_requested": 494,
+   "counts": {
+    "original_stable": 177,
+    "replacement": 121,
+    "replacement_pending": 196
+   }
+  },
+  "qwen/qwen3.8-flash:math500_choice": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 261,
+   "counts": {
+    "original_stable": 258,
+    "replacement": 3
+   }
+  },
+  "qwen/qwen3.8-flash:mmlu": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 1000,
+   "counts": {
+    "original_stable": 903,
+    "replacement": 96,
+    "replacement_resolved": 1
+   }
+  },
+  "qwen/qwen3.8-max-0902:gpqa": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 196,
+   "counts": {
+    "original_stable": 155,
+    "replacement": 41
+   }
+  },
+  "qwen/qwen3.8-max-0902:mmlu": {
+   "active_source_version": "v2",
+   "original_wire_protocol": "v2-temperature0-effort-low",
+   "status": "complete",
+   "n_requested": 1000,
+   "counts": {
+    "original_stable": 872,
+    "replacement": 128
+   }
+  },
+  "xiaomi/mimo-v2.6-flash:arc": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 1172,
+   "counts": {
+    "original_stable": 1138,
+    "replacement": 34
+   }
+  },
+  "xiaomi/mimo-v2.6-flash:gpqa": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "partial",
+   "n_requested": 196,
+   "counts": {
+    "replacement": 108,
+    "original_stable": 33,
+    "replacement_pending": 55
+   }
+  },
+  "xiaomi/mimo-v2.6-flash:hle_text_mc": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "partial",
+   "n_requested": 494,
+   "counts": {
+    "replacement": 90,
+    "original_stable": 90,
+    "replacement_pending": 314
+   }
+  },
+  "xiaomi/mimo-v2.6-flash:math500_choice": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 261,
+   "counts": {
+    "original_stable": 211,
+    "replacement": 50
+   }
+  },
+  "xiaomi/mimo-v2.6-flash:mmlu": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "partial",
+   "n_requested": 1000,
+   "counts": {
+    "original_stable": 661,
+    "replacement": 115,
+    "replacement_pending": 224
+   }
+  },
+  "xiaomi/mimo-v2.6-pro:gpqa": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "partial",
+   "n_requested": 196,
+   "counts": {
+    "replacement": 118,
+    "original_stable": 11,
+    "replacement_pending": 67
+   }
+  },
+  "xiaomi/mimo-v2.6-pro:math500_choice": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "partial",
+   "n_requested": 261,
+   "counts": {
+    "original_stable": 122,
+    "replacement": 128,
+    "replacement_pending": 11
+   }
+  },
+  "xiaomi/mimo-v2.6-pro:mmlu": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "partial",
+   "n_requested": 1000,
+   "counts": {
+    "original_stable": 519,
+    "replacement": 124,
+    "replacement_pending": 357
+   }
+  },
+  "z-ai/glm-5.3:gpqa": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 196,
+   "counts": {
+    "original_stable": 163,
+    "replacement": 33
+   }
+  },
+  "z-ai/glm-5.3:math500_choice": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 261,
+   "counts": {
+    "original_stable": 248,
+    "replacement": 13
+   }
+  },
+  "z-ai/glm-5.3:mmlu": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 1000,
+   "counts": {
+    "original_stable": 944,
+    "replacement": 56
+   }
+  },
+  "z-ai/glm-5.3-flash:arc": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 1172,
+   "counts": {
+    "original_stable": 1171,
+    "replacement": 1
+   }
+  },
+  "z-ai/glm-5.3-flash:gpqa": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 196,
+   "counts": {
+    "original_stable": 177,
+    "replacement": 19
+   }
+  },
+  "z-ai/glm-5.3-flash:hle_text_mc": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 494,
+   "counts": {
+    "original_stable": 405,
+    "replacement": 89
+   }
+  },
+  "z-ai/glm-5.3-flash:math500_choice": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 261,
+   "counts": {
+    "original_stable": 260,
+    "replacement": 1
+   }
+  },
+  "z-ai/glm-5.3-flash:mmlu": {
+   "active_source_version": "v3",
+   "original_wire_protocol": "v3-provider-defaults",
+   "status": "complete",
+   "n_requested": 1000,
+   "counts": {
+    "original_stable": 980,
+    "replacement": 20
+   }
+  }
+ },
+ "per_item_file": "data_report/baselines/v4r1/active_items.jsonl"
+}

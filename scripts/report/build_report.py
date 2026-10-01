@@ -57,15 +57,21 @@ def wil(d: dict) -> str:
 
 
 # ---------------------------------------------------------------- data loading
-SC = {s: score(p) for s, p in {
-    "mmlu": "runs_benchmark/bench-mmlu_full-*/derived/score.json",
-    "arc": "runs_benchmark/bench-arc_test-*/derived/score.json",
-    "rot": "runs_benchmark/bench-option_rotations-*/derived/score.json",
-    "math_c": "runs_benchmark_ext/bench-math500_choice-*/derived/score.json",
-    "math_s": "runs_benchmark_ext/bench-math500_score-*/derived/score.json",
-    "gpqa": "runs_benchmark_ext2/bench-gpqa_diamond-*/derived/score.json",
-    "hle": "runs_benchmark_ext2/bench-hle_text_mc-*/derived/score.json",
-}.items()}
+# Authoritative artifact selectors: every score path below comes from the
+# recorded source selectors (data_report/baselines/v4r1/active_source_map.json)
+# or from an explicitly named stage path. No first-arbitrary-glob and no
+# hand-typed scores. score.json here is the policy-2.0.0 regeneration: the
+# headline accuracy is ALL-REQUESTED (missing/invalid/unusable count wrong).
+ACTIVE_MAP = jload("data_report/baselines/v4r1/active_source_map.json")
+ACTIVE = jload("data_report/baselines/v4r1/public_summary.json")
+PAIRED = jload("data_report/benchmark_diagnostics/paired_diagnostics.json")
+CAL = jload("data_report/benchmark_diagnostics/calibration.json")
+JEV_SEL = ACTIVE_MAP["sources"]["jev_scores"]
+SC = {s: score(JEV_SEL[p]) for s, p in {
+    "mmlu": "mmlu", "arc": "arc", "gpqa": "gpqa",
+    "math_c": "math500_choice", "hle": "hle_text_mc"}.items()}
+SC["rot"] = score("runs_benchmark/bench-option_rotations-*/derived/score.json")
+SC["math_s"] = score("runs_benchmark_ext/bench-math500_score-*/derived/score.json")
 WD = {s: score(p) for s, p in {
     "mmlu": "runs_benchmark/bench-mmlu_full-*/derived/weighted_score.json",
     "arc": "runs_benchmark/bench-arc_test-*/derived/weighted_score.json",
@@ -77,9 +83,17 @@ WD = {s: score(p) for s, p in {
     "agi_choice": "runs_benchmark_ext/bench-arc_agi2_choice-*/derived/weighted_score.json",
     "agi_task": "runs_benchmark_ext/bench-arc_agi2_task-*/derived/weighted_score.json",
 }.items()}
-ARCAGI = score("runs_benchmark_ext/bench-arc_agi2_choice-*/derived/score.json")
+# Corrected ARC-AGI-2 choice/score runs (grid-identity fix + recorded oracle
+# diagnostic protocol): selector recorded in active_source_map.sources.arc_corrected.
+# The official task-level criterion keeps its own, separate original run.
+def _arc_corrected(kind: str) -> dict:
+    run = ACTIVE_MAP["sources"]["arc_corrected"].replace("{choice,score}", kind)
+    return jload(f"{run}/derived/score.json")
+
+
+ARCAGI = _arc_corrected("choice")
+ARCAGI_S = _arc_corrected("score")
 ARCAGI_T = score("runs_benchmark_ext/bench-arc_agi2_task-*/derived/score.json")
-ARCAGI_S = score("runs_benchmark_ext/bench-arc_agi2_score-*/derived/score.json")
 # Cell-level contract failures in the multi-question ARC-AGI stages (the
 # per-item strict_format_failure keys there are definitional, not violations;
 # see the note_on_strict_format fields and ARCHITECTURE-ANALYSIS.md §11.15).
@@ -98,14 +112,9 @@ PCC = jload("runs_archprobe/tokens_per_char_compare.json")
 FINGER = jload("runs_archprobe/tokenizer_fingerprint.json")
 COSTS = jload("data_report/costs.json")
 VALS = jload("docs/modern-comparison/canonical/vals-leaderboards-20260926.json")
-MATCHED = {}
-for _mp in ("runs_matched_cheap/v3/summary_v3.json",
-            "runs_matched_cheap/v2/summary_v2.json"):
-    try:
-        MATCHED = jload(_mp)
-        break
-    except Exception:
-        continue
+# Matched-baseline figures come from ONE authoritative source: the v4r1 active
+# summary in ACTIVE (above). The legacy v2/v3 summary files are never read for
+# numbers (unrepaired legacy; per cell status see active_source_map.json).
 try:
     AUDITS = jload("data_report/arch_audits.json")
 except FileNotFoundError:
@@ -137,7 +146,9 @@ JEV_COST = {b: SC[s]["attempts_summary"]["usage_input_tokens_sum"] * 0.042 / 1e6
 
 _BENCH_SVGS = svgs_of("docs/modern-comparison/comparison-graphs.html")
 _CH_KEYS = [("MMLU-Pro -", "mmlu_pro"), ("GPQA -", "gpqa"),
-            ("ARC-Challenge", "arc"), ("ARC-AGI-2", "arc_agi2"),
+            ("ARC-Challenge", "arc"), ("ARC-AGI-2 task level", "arc_agi2_t"),
+            ("ARC-AGI-2 per-cell", "arc_agi2_c"),
+            ("Matched MMLU-Pro subset", "mmlu_m"),
             ("MATH-500 as multiple choice - matched", "math_m"),
             ("Humanity", "hle_m")]
 CHARTS = {}
@@ -213,8 +224,11 @@ NOTES: dict[str, str] = {
         "defaults, per the audit's out-of-spec warning; max_tokens is a bill "
         "guard, not a thinking budget. (v2 pinned temperature 0 + effort low, "
         "which is out of spec for reasoning models and depressed their scores "
-        "and costs; v2 cells survive only where v3 did not re-run - Qwen3.8 "
-        "Max MMLU - and are labeled in the summary.) Answers are parsed "
+        "and costs; v2-protocol carryover cells, kept only where v3 never "
+        "re-ran them, are listed per cell in "
+        "data_report/baselines/v4r1/active_source_map.json "
+        "(visible carryovers, not just Qwen3.8 Max MMLU) and are labeled "
+        "wherever they appear.) Answers are parsed "
         "strictly and, failing that, recovered by a documented deterministic "
         "parser applied identically to every model; unrecovered answers count "
         "as wrong. The cost gap versus vals.ai rows for the same model is "
@@ -241,16 +255,43 @@ NOTES: dict[str, str] = {
         "runs: Jev cannot generate a worked solution or a completed grid, so "
         "those problems were re-encoded as multiple-choice and per-cell "
         "questions. Those numbers say what the model knows, not what it can "
-        "produce.",
-    "greedyw": "Two scorings of the same responses. Greedy takes the model's "
-        "argmax option. The probability-weighted column is the average "
-        "probability Jev itself put on the correct answer, so it reads as the "
-        "model's own expected accuracy. Greedy exceeding weighted nearly "
-        "everywhere (measured on every benchmark) says Jev's distributions "
-        "spread mass onto wrong options more than their accuracy warrants.",
-    "rotations": "A robustness audit: the same items re-run with option order "
+        "produce. The digit read-out variant is adapter-specific: its rubric "
+        "is positional and conjunctive (every digit of the decimal must be "
+        "picked in order), so the MCQ-versus-digit gap measures that "
+        "adapter's recognition-to-production burden, not an isolated "
+        "generation tax. The paired evidence is the 224 MATH-500 items "
+        "present in both recorded runs: 0.817 as MCQ versus 0.103 "
+        "digit-by-digit (19 both right, 164 MCQ-only, 4 digit-only, 37 "
+        "neither; exact McNemar p below 1e-30), "
+        "data_report/benchmark_diagnostics/paired_diagnostics.json. Baseline "
+        "format failures are a separate axis from knowledge and are counted "
+        "separately everywhere (strict-format failures recovered versus "
+        "unrecovered).",
+    "greedyw": "Two scorings of the same responses, kept descriptive. Greedy "
+        "takes the model's argmax option. The probability-weighted column is "
+        "the average probability Jev itself put on the gold option: that is "
+        "the model-implied expected success of stochastically selecting by "
+        "its displayed probabilities, not a predicted argmax accuracy and not "
+        "a calibration statement (the reliability table below tests "
+        "calibration directly). Greedy exceeding weighted nearly everywhere "
+        "shows only where the displayed mass sits relative to the chosen "
+        "answer. Nothing here warrants an underconfidence or "
+        "&ldquo;over-dispersion&rdquo; reading, and on HLE the calibration "
+        "evidence runs the other way (mean top displayed probability ~0.634 "
+        "against 0.219 accuracy).",
+    "rotations": "A robustness audit: MMLU-Pro items re-run with option order "
         "rotated, to check the headline numbers are not an artifact of where "
-        "the answer sits in the list.",
+        "the answer sits in the list. The design is 140 unique base items "
+        "with 3 variants each (native plus rotations; 419 scored observations "
+        "of 420 requested). The observations are clustered on their base "
+        "items and are not independent. The cluster-aware analysis "
+        "(per-base differences, 10,000 cluster bootstraps, seed 20260930) "
+        "gives mean native-minus-rotated accuracy +0.36 points with 95% CI "
+        "[-2.50, +3.33] points: consistent with no systematic order effect "
+        "on these items at this resolution, and explicitly not an "
+        "equivalence proof. The naive independent McNemar p = 0.83 in older "
+        "artifacts assumes independence the design does not have; it is not "
+        "quoted here as evidence.",
     "noversioning": "Every run used the pinned model string reported by the "
         "service; TypeSafe AI does not publish per-version behavioral notes, "
         "so all measurements describe whatever served that string during our "
@@ -296,7 +337,11 @@ NOTES: dict[str, str] = {
         "hardware (~2-4x too low); the second treated the fleet's BF16 "
         "numbers as already effective (~2-4x too low again) - the audit "
         "caught it. The MFU/peak ranges are industry-standard "
-        "serving assumptions, not repo measurements.",
+        "serving assumptions, not repo measurements. All size figures here "
+        "are hardware-dependent scenario calculations: service-time slopes "
+        "are not hardware throughput measurements, so every parameter band "
+        "is an illustration conditional on assumed hardware, quantization "
+        "and utilization, not a reliable parameter estimate.",
     "lattice": "Full lattice forensics: <a href='https://github.com/JevResearch/Jev-Research/blob/main/scripts/report/lattice_forensics.py'>scripts/report/lattice_forensics.py</a> "
         "-&gt; <a href='https://github.com/JevResearch/Jev-Research/blob/main/data_report/lattice_forensics.json'>data_report/lattice_forensics.json</a>, over 704,277 values in 7,887 "
         "published vectors at K=2..255 (probe rows, phase-1 raws, and the "
@@ -316,20 +361,84 @@ NOTES: dict[str, str] = {
         "apportionment rule at the boundaries remains open.",
     "notwrapper": "Each negation is a measurement, not a vibe. Compute grows "
         "linearly with prompt tokens - a cache would not prefill - and the "
-        "knowledge horizon stops at mid-2025 (dated-bisection probe), which a live "
-        "retriever would "
+        "knowledge horizon on the sampled dated-event probes stops at "
+        "mid-2025, which a live retriever would "
         "not. Repeats of identical payloads differ (TVD 0.03-0.12), which a "
-        "lookup would not. Server compute stays 73-86 ms from concurrency "
+        "lookup would not. The proxy-reported upstream service time stays "
+        "73-86 ms from concurrency "
         "1-32, and four batched questions answer in ~261 ms vs ~1,117 ms "
-        "separately - no upstream API round trip fits inside either. The "
+        "separately - timings that disfavor a conventional frontier-API "
+        "wrapper; proximity to the provider's own services, internal routing "
+        "or custom billing remain possible, and a tokenizer mismatch cannot "
+        "rule out reused weights. The "
         "usage counter follows a tokenizer matching none of 173 open "
         "signatures, including both OpenAI encodings. And $0.042/M with free "
         "output sits one to two orders of magnitude below every 2026 "
         "flagship's input list price (roughly 30-240x, before counting "
-        "output they bill at 4-5x their input); reselling frontier inference "
-        "on those terms does not survive. Paths: "
+        "output they bill at 4-5x their input); reselling conventional "
+        "frontier inference on those terms is disfavored. Paths: "
         "<a href='https://github.com/JevResearch/Jev-Research/blob/main/runs_archprobe'>runs_archprobe/</a>, runs_live/FINDINGS.md, "
         "data_report/costs.json.",
+    "envoy": "Latency header: the timing quoted throughout is "
+        "<code>x-envoy-upstream-service-time</code>, which Envoy documents as "
+        "the upstream service time: it includes upstream processing and the "
+        "Envoy-to-upstream network hop, and it does not certify the exclusion "
+        "of application queueing, preprocessing or response serialization "
+        "(source: <a "
+        "href='https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_filters/router_filter#x-envoy-upstream-service-time'>Envoy "
+        "router filter docs</a>). We label it <b>proxy-reported upstream "
+        "service time</b> and read it as the vendor's own accounting of "
+        "server-side work; it is the cleanest public architecture signal we "
+        "have, not a queue-free laboratory clock.",
+    "calib": "Calibration numbers come from the repaired offline diagnostics "
+        "(data_report/benchmark_diagnostics/calibration.json; deterministic, "
+        "bootstrap seed 20260930). The reliability bins use the SELECTED "
+        "answer's displayed probability, whose mean is the model-implied "
+        "expected accuracy of taking that choice, and compare it to observed "
+        "accuracy per bin. Displayed probabilities are rounded to two "
+        "decimals and vector sums are only ever 0.99 or 1.00, so bin "
+        "boundaries carry a &plusmn;0.005 caveat. Calibration is "
+        "dataset-dependent and the high-confidence tail is where it hurts: "
+        "on HLE the mean top displayed probability is ~0.634 against 0.219 "
+        "accuracy (overconfident), while MMLU-Pro reads near-calibrated. "
+        "Prefer task-specific calibration over a global conservative "
+        "threshold.",
+    "coverage": "Baseline revision status (v4r1): the ACTIVE summary "
+        "(data_report/baselines/v4r1/public_summary.json) supersedes the "
+        "older v2/v3 baseline summaries. 42 of 59 (model, dataset) cells are "
+        "complete over their full sampled denominators (31,038 requested "
+        "rows overall) and are the only cells used in capability "
+        "comparisons; 17 cells are partial (1,837 pending replacements plus "
+        "24 provisional transport rows, blocked on budget) and are excluded "
+        "from capability bars, with the exclusion reason and the "
+        "partial-settled diagnostic number recorded per cell. This is "
+        "missing coverage under a versioned status (v4r1), not a silent "
+        "drop: legacy v2/v3 recovered scores remain labeled as legacy and "
+        "are never presented as current. Costs: $25.70 provider-reported "
+        "original rows + $18.31 settled replacements + $1.16 Typesafe ARC "
+        "usage-at-tariff (not invoice-verified); unknown billed costs are "
+        "held as unknown, never treated as free.",
+    "arcproto": "The corrected ARC-AGI-2 choice/score runs "
+        "(runs_benchmark_ext_rerun1) record the diagnostic protocol "
+        "explicitly: oracle output shape and palette are an "
+        "ORACLE_DIAGNOSTIC_PROTOCOL choice, not the official evaluation, and "
+        "the test-grid identity was patched into the prompt (the duplicate "
+        "request-payload pairs that confused different gold grids fell from 7 "
+        "pairs to 0). Per-cell numbers are adapter diagnostics; the official "
+        "task criterion (0 of 120 tasks, all cells of all test grids correct) "
+        "is scored on its own run and is assisted adaptation rather than an "
+        "official matched benchmark.",
+    "derive": "Re-rendering this page (scripts/report/build_report.py over "
+        "the published aggregates) re-derives prose and figures from those "
+        "aggregates byte-for-byte; it is not an independent re-scoring. "
+        "Independently re-scoring would require the private raw responses "
+        "and the licensed item sets, which are not republished; the freeze "
+        "records carry SHA-256 hashes that pin their identity exactly. "
+        "Per-item prediction evidence (item ids, correctness, displayed "
+        "probabilities) is held in the working tree under "
+        "runs_matched_cheap/v4r1/active_items.jsonl and the stage per_item "
+        "lists; it is excluded from the published bundle under the same "
+        "item-id policy that strips per_item lists at publish time.",
 }
 _NUM: dict[str, int] = {}
 _OCC: dict[str, int] = {}
@@ -410,6 +519,7 @@ nav.toc a:hover{text-decoration:underline}
 table.plain th{text-transform:none;font-size:.82rem;letter-spacing:.01em}
 table.wide{font-size:.78rem;min-width:720px}
 table.wide th{font-size:.66rem}
+@media (prefers-reduced-motion: reduce){.rot-slide.active{animation:none}}
 """
 
 
@@ -451,7 +561,7 @@ def _frontier(comp_key: str | None) -> str:
 
 
 def hero() -> str:
-    hle_w = pct(WD["hle"]["weighted_accuracy_mean"])
+    hle_pct = pct(SC["hle"]["accuracy"])
     slides = []
     agi_c = pct(ARCAGI["cell_accuracy_diagnostic"])
     agi_t = pct(ARCAGI["task_accuracy"])
@@ -480,7 +590,7 @@ def hero() -> str:
 <div class="toc-sub"><a href="#arch-onepass">One pass, many read-outs</a> &middot; <a href="#arch-fingerprints">Fingerprints on the read-out</a> &middot; <a href="#arch-order">The order of the options matters</a> &middot; <a href="#arch-tokenizer">A tokenizer nobody recognizes</a> &middot; <a href="#arch-capacity">Limited capacity, in a particular way</a> &middot; <a href="#arch-not">What it is not</a> &middot; <a href="#arch-open">What stays open</a></div></div>
 <div class="toc-sec"><a href="#latency">4 &middot; What the milliseconds say</a></div>
 <div class="toc-sec"><a href="#benchmarks">5 &middot; Benchmarks: where it actually lands</a>
-<div class="toc-sub"><a href="#bench-charts">The charts</a></div></div>
+<div class="toc-sub"><a href="#bench-calib">Calibration</a> &middot; <a href="#bench-charts">The charts</a></div></div>
 <div class="toc-sec"><a href="#pareto">6 &middot; The frontier the cost numbers actually draw</a></div>
 <div class="toc-sec"><a href="#probes">7 &middot; What is it? Three attempts to ask</a>
 <div class="toc-sub"><a href="#probes-talk">Talking to it</a> &middot; <a href="#probes-name">Asking it to choose a name</a> &middot; <a href="#probes-tokens">Counting tokens</a></div></div>
@@ -489,7 +599,7 @@ def hero() -> str:
 <div class="toc-sec"><a href="#refs">Notes</a></div>
 </nav>"""
     return f"""
-<div class="chip">An independent, hands-on evaluation</div>
+<div class="chip">An independent, hands-on evaluation by JevResearch &middot; model pin: service-reported jev-1.13.0 &middot; measurements September 2026 &middot; report revision 2 (2026-10-01)</div>
 <h1>Jev: Not Frontier, But Still Worth Your Attention</h1>
 <p class="sub">TypeSafe AI sells Jev as a frontier-class reasoner that cannot
 hallucinate, built by the co-inventor of ChatGPT - fast, and almost free. We ran it
@@ -509,9 +619,13 @@ is nonetheless genuinely useful for a job that nobody else serves quite this way
 (function(){{
   var box=document.getElementById('herorot');
   var s=box.querySelectorAll('.rot-slide'), i=0, paused=false;
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function show(n){{ i=((n%s.length)+s.length)%s.length;
     for(var k=0;k<s.length;k++) s[k].classList.toggle('active',k===i);
     document.getElementById('rot-count').textContent=(i+1)+' / '+s.length; }}
+  if(reduce){{ paused=true;
+    var rpb=document.getElementById('rot-pause');
+    rpb.innerHTML='&#9654;'; rpb.setAttribute('aria-label','resume rotation'); }}
   setInterval(function(){{ if(!paused) show(i+1); }},6500);
   document.getElementById('rot-prev').addEventListener('click',function(){{show(i-1)}});
   document.getElementById('rot-next').addEventListener('click',function(){{show(i+1)}});
@@ -523,16 +637,19 @@ is nonetheless genuinely useful for a job that nobody else serves quite this way
   box.addEventListener('mouseleave',function(){{box.dataset.hover='0'}});
 }})();
 </script>
-{toc}
 <div class="card tldr"><b>TL;DR.</b> Jev is not a frontier
 model; for example, it misses about a quarter of graduate science questions,
-and scores a mere {hle_w} on HLE. It nonetheless is also not a toy:
+and scores a mere {hle_pct} on HLE. It nonetheless is also not a toy:
 {pct(SC['mmlu']['accuracy'])} MMLU-Pro, {pct(SC['gpqa']['accuracy'])} GPQA,
-~{ARCH['prefill']['fixed_floor_ms']:.0f} ms of server compute per question, and
+~{ARCH['prefill']['fixed_floor_ms']:.0f} ms of proxy-reported upstream service time per question, and
 a full graduate-scale benchmark run for cents. The honest category is
 <i>cheap real-time sub-frontier judgement</i> - routing, rubric grading,
 control-plane decisions - where nothing else on the market combines this
-latency, this price, and probability vectors that never drift schema.</div>"""
+latency, this price, and a strict output contract with high reliability (19
+contract-invalid responses in ~16k benchmark requests; the envelope's
+well-formedness and the question/option contract are separate requirements,
+and contract-invalid is not necessarily malformed JSON).</div>
+{toc}"""
 
 
 # ------------------------------------------------------- sections A: method/arch
@@ -623,6 +740,11 @@ def architecture(v: dict) -> str:
                   / max(lat_big["n_vectors"], 1))
     fmt_total = sum((SC[s].get("strict_format_failures") or 0) for s in SC)
     wmmlu = WD["mmlu"]
+    pi = PAIRED["math500_intersection"]
+    calm = CAL["stages"]["mmlu_full"]
+    calh = CAL["stages"]["hle_text_mc"]
+    mc_n_item = SC["math_c"]["n_expected"]
+    ms_n_item = SC["math_s"]["n_expected"]
     jp = COSTS["prices_usd_per_M"]["Jev"]
     probe_calls = sum(f["calls"] for f in PROBEPLAN["plan"]["per_family"].values())
     probe_cost = PROBEPLAN["plan"]["est_cost_usd_at_0p042_per_M_in"]
@@ -683,67 +805,106 @@ def architecture(v: dict) -> str:
 Jev's behavior through the model stated here. The full ledger - alternative
 hypotheses with probabilities and a falsifier per load-bearing claim - lives
 in <a href="{GH}/ARCHITECTURE-ANALYSIS.md"><code>ARCHITECTURE-ANALYSIS.md</code></a>.</p>
-<div class="card">In one sentence: Jev looks like a <b>small,
+<div class="card">Leading theory, in one sentence: Jev looks like a <b>small,
 English-centric transformer language model</b>, post-trained for judgement
 rather than conversation, served with its <b>generation head replaced by a
 probability read-out</b> over caller-supplied options - every question in a
 request scored from <b>one batched prefill pass</b>, which is why it is fast,
-why its output is free, and why it cannot write you a poem.</div>
+why its output is free, and why it cannot write you a poem. The API alone
+does not identify this uniquely: one pass versus an unexposed equivalent
+pipeline, a replaced head versus other read-out machinery, a decoder
+transformer versus other transformer variants, and trained-from-scratch
+weights versus adapted or distilled ones are all still on the table, as is
+some retrieval/cache/wrapper/open-model-ancestry story. The evidence below
+shifts the odds; the alternatives ledger with probabilities and falsifiers is
+in ARCHITECTURE-ANALYSIS.md.</div>
 <figure>{strip_titles(ARCHDIAG[0])}</figure>
 <table class="plain">
 <tr><th>Component</th><th>Best guess</th><th>Confidence</th></tr>
-<tr><td>Output side</td><td class='cap'>A trained probability read-out over the caller's
-options - a discriminative head where a language head usually goes, with
-choice / score / noul as its three exposed shapes</td><td>Confident</td></tr>
-<tr><td>Serving</td><td class='cap'>One forward pass per request; all questions and options scored from it; continuous batching across tenants (server compute stays flat whether we send 1 or 32 requests at once, and is unchanged by option count); no decode loop</td><td>Confident</td></tr>
-<tr><td>Compute profile</td><td class='cap'>Fixed ~{floor:.0f} ms floor + ~{slope:.0f} ms per 1k input tokens, linear to 29k tokens, with no large quadratic signature. Marginal cost of deciding: +{mq:.2f} ms per extra question and +{mo:.2f} ms per extra option - both about what the added tokens cost.</td><td>Confident (measured)</td></tr>
+<tr><td>Output side</td><td class='cap'>An exposed probability distribution over the
+caller's options (measured: choice / score / noul as its three exposed
+shapes). Whether it is a trained replacement for a generation head is
+leading theory, not a measured fact</td><td>Confident (exposed
+distribution); leading theory (trained replacement)</td></tr>
+<tr><td>Serving</td><td class='cap'>Likely one shared scoring pass (leading
+theory): questions and options are scored within a single request, without
+returned free text. The flat timing under concurrency is measured, but
+batching versus spare capacity versus replicas is not distinguished, and
+internals are unobserved</td><td>Plausible</td></tr>
+<tr><td>Service-time profile</td><td class='cap'>Fixed ~{floor:.0f} ms intercept + ~{slope:.0f} ms per 1k input tokens on the upstream-service header, approximately linear to 29k tokens, with no large quadratic signature. Measured increments: +{mq:.2f} ms per extra question and +{mo:.2f} ms per extra option - both consistent with the added tokens' cost, not isolated decision-head timings.</td><td>Confident (measured)</td></tr>
 <tr><td>Input pipeline</td><td class='cap'>A whitespace normalizer (ASCII runs collapse; NBSP, ZWJ and BOM do not) plus a fixed ~{bp['mergerate_baseline_tokens']}-token template, ahead of the model's own tokenizer</td><td>Confident / plausible</td></tr>
 <tr><td>Tokenizer</td><td class='cap'>The vendor's own English/Latin-centric BPE: heavy Latin merges, ~1 token per codepoint for the major non-Latin scripts, and a byte-level fallback for uncovered characters ({byte_lo:.2f}-{byte_hi:.2f} tokens per UTF-8 byte on the rarest blocks). It matches no known preexisting tokenizer signature (173 tested) and appears to be new.</td><td>Plausible (strong)</td></tr>
-<tr><td>Core</td><td class='cap'>Transformer-family decoder LM; dense vs MoE unknown -
+<tr><td>Core</td><td class='cap'>Transformer-family; dense vs MoE unknown -
 with quantized-serving assumptions the two size angles overlap, so neither
-is forced and MoE stays possible; attention variant unknowable at these
-context lengths</td><td>Plausible / open</td></tr>
-<tr><td>Size</td><td class='cap'>No point estimate. Latency suggests ~{sz_lo:.1f} to {sz_hi:.0f}B active params from prefill throughput (with quantized-serving assumptions); capability suggests {szc_lo:.0f} to {szc_hi:.0f}B dense-equivalent, which does the narrowing. A quantized dense ~{szc_lo:.0f} to {sz_dense_hi:.0f}B is the parsimonious joint reading; a MoE (~{sz_moe_lo:.0f} to {sz_moe_hi:.0f}B total) stays possible</td><td>Plausible</td></tr>
-<tr><td>Training</td><td class='cap'>English-dominant pretraining; knowledge horizon solid to late 2024, partial to ~{hz_solid}, gone by {hz_gone}; judgement-format assistant post-training; OpenAI-flavored brand prior inherited from training text; frontier-teacher contribution: none identifiable, not excluded</td><td>Plausible</td></tr>
-<tr><td>What it is not</td><td class='cap'>Not frontier, not retrieval- or cache-assisted, not a wrapper around another vendor's API, not a relabeled open model</td><td>Confident</td></tr>
+is forced and MoE stays possible; decoder versus other transformer shapes is
+not identified at these context lengths, and attention variant unknowable</td><td>Plausible / open</td></tr>
+<tr><td>Size</td><td class='cap'>No point estimate. The service-time slope,
+read through hardware-dependent scenarios (assumed hardware, quantization,
+utilization), spans ~{sz_lo:.1f} to {sz_hi:.0f}B active parameters - a scenario range,
+not a measured hardware throughput; capability positioning suggests
+{szc_lo:.0f} to {szc_hi:.0f}B dense-equivalent, which is positioning, not an identified
+size. A quantized dense ~{szc_lo:.0f} to {sz_dense_hi:.0f}B is the parsimonious joint reading; a MoE (~{sz_moe_lo:.0f} to {sz_moe_hi:.0f}B total) stays possible</td><td>Plausible</td></tr>
+<tr><td>Training</td><td class='cap'>English-dominant pretraining; on the
+sampled dated-event probes the knowledge horizon reads solid to late 2024,
+partial to ~{hz_solid}, gone by {hz_gone}; judgement-format assistant
+post-training (the fixed output shapes can be served by software as well as
+trained in); OpenAI-flavored brand prior inherited from training text;
+frontier-teacher contribution: none identifiable, not excluded</td><td>Plausible</td></tr>
+<tr><td>What the evidence weighs against</td><td class='cap'>Not frontier
+(measured). Against retrieval/cache assistance, a thin wrapper around another
+vendor's API, and a trivially relabeled open model: each a
+measurement-weighted judgement below, not a proof of exclusion to logical
+certainty</td><td>Confident (directionally)</td></tr>
 </table>
 <p class="cap">See <a href="{GH}/ARCHITECTURE-ANALYSIS.md">ARCHITECTURE-ANALYSIS.md</a>
 &sect;1 for details.</p>
 
 <h3 id="arch-onepass">One pass, many read-outs</h3>
-<p>The latency section below carries the measurements: server compute is a
-fixed floor plus a linear prefill term (~{slope:.0f} ms per 1k input tokens), and the
+<p>The latency section below carries the measurements: the proxy-reported
+upstream service time is a
+fixed floor plus a linear input-token term (~{slope:.0f} ms per 1k input tokens), and the
 decisive numbers are the marginals. Packing one more question into a request
-costs +{mq:.2f} ms. That question brings ~{mcq['input_tokens_per_unit']:.0f} input tokens with it, and
+adds +{mq:.2f} ms on the header. That question brings ~{mcq['input_tokens_per_unit']:.0f} input tokens with it, and
 reading those tokens at the prefill slope is itself worth
-+{mcq['prefill_predicted_ms_per_unit']:.2f} ms - which leaves under {mcq['residual_ms_per_unit']:.2f} ms for the act of
-deciding. An extra option behaves the same way: +{mo:.2f} ms measured, against
++{mcq['prefill_predicted_ms_per_unit']:.2f} ms - leaving a residual inside the noise band, which we
+do not quote as a bound on any head. An extra option behaves the same way: +{mo:.2f} ms measured, against
 the +{mco['prefill_predicted_ms_per_unit']:.2f} ms that its own ~{mco['input_tokens_per_unit']:.0f} tokens already predict. In
-both cases the read-out's own compute is indistinguishable from zero.</p>
+both cases the measured increments are consistent with pure input-token
+scaling: the residual between measured and
+token-predicted marginals sits inside the noise band. That is not an
+isolated measurement of a decision head, and it is not proof of one shared
+pass - it is what prefill-dominated scoring without autoregressive decoding
+would look like from outside, and that is the leading explanation we run
+with.</p>
 <p>The battery re-confirmed this live: across a grid of option counts (2-255)
 crossed with option lengths (2-64 tokens), nothing scaled with the number
 of options beyond the tokens they add
 ({p2g['ols_ms_per_100_options_beyond_tokens']:+.1f} ms per 100 options, inside the &plusmn;{p2g['residual_sd_ms']:.0f} ms
 residual noise). Billed output grows ~{fq:.0f} tokens per question
 and ~{fo:.1f} per option - that is the response JSON serializing itself, which
-is exactly why output can be free: nothing is ever decoded. Upstream compute
+is why output can be priced at zero under the service's billing policy. Upstream service time
 stays flat ({c1['median_upstream_ms']:.0f} ms at concurrency 1, {c32['median_upstream_ms']:.0f} ms at 32) while our own wall
-time bends, so independent requests share a batched path. A four-question
+time bends, consistent with efficient shared serving; the flatness does not
+identify batching versus spare capacity or replicas. A four-question
 batch answers in ~261 ms where the same four questions separately take
-~1,117 ms: there is no hidden per-question round trip anywhere.
+~1,117 ms: no per-question round trip appears on the critical path in these
+measurements.
 &ldquo;System one&rdquo;, under this reading, is as much a serving description
 as a psychological one - prefill, read out, done.</p>
-<figure>{strip_titles(EVID[1])}<figcaption>Server compute vs the number of
+<figure>{strip_titles(EVID[1])}<figcaption>Proxy-reported upstream service
+time vs the number of
 questions packed into one request ({hc_n} probe calls). The dashed line is
 what each question's own added input tokens predict at the prefill slope; the
-points sit on it, which is the whole finding: deciding is free, reading is
-not.</figcaption></figure>
-<p class="cap">In short, what moves server compute:</p>
+points sit on it, which is the whole finding: no separate decision
+increment is resolved at this precision.</figcaption></figure>
+<p class="cap">In short, what moves the measured upstream service time:</p>
 <ul class="cap">
 <li><b>Prompt tokens</b> - the only thing that scales it, and linearly.</li>
 <li><b>Extra questions</b> in a request - only through the tokens they add.</li>
-<li><b>Extra options</b> - only through the tokens they add; the deciding itself is free.</li>
-<li><b>Concurrent requests</b> - flat on the server (shared batching); only our own wall time queues.</li>
+<li><b>Extra options</b> - only through the tokens they add; no separate
+decision increment is resolved at this precision.</li>
+<li><b>Concurrent requests</b> - flat in the header (consistent with efficient
+batched or elastic serving across replicas or spare capacity); only our own wall time bends.</li>
 <li><b>Repeats</b> - every call re-reads the prompt; nothing is cached away.</li>
 </ul>
 
@@ -766,8 +927,9 @@ every sharp vector and every two-option vector sums to exactly
 1.000.{fn('lattice')}</p>
 <p>Two more seams show. In {n_mismatch} vectors the returned choice is not the
 argmax of its own displayed table. Each such gap is exactly one quantum (e.g., 0.01),
-which monotone rounding cannot produce - so the decision is computed at
-pre-display precision while the table is rounded separately. And the choice
+which monotone rounding cannot produce - consistent with a higher-precision
+decision combined with separate display processing; the exact rule is
+unidentified. And the choice
 <code>confidence</code> field is roughly recoverable. It is, to within a
 quantum or two, the chance-corrected top probability:
 <code>(p_max &minus; 1/K) / (1 &minus; 1/K)</code>, where <code>p_max</code>
@@ -775,9 +937,12 @@ is the highest probability in the vector and <code>1/K</code> is what
 guessing would earn across K options. Of {cfc['n']:,} published choice
 vectors, {cfc['exact']:,} match that formula exactly against the displayed
 table, {cfc['within_1_quantum']} are within one quantum, and {cfc['within_2_quanta']} within two. None is further
-off.{fn('readout')} Buyer's note: choice confidence is a
-deterministic function of the vector you were already handed, not a second
-opinion. Score answers use a different shape statistic and noul answers carry
+off.{fn('readout')} The formula is approximately recoverable from the
+displayed vector, not a proven exact deterministic identity; the decision
+itself is only approximately recoverable. Buyer's note: choice confidence
+is an approximation from the vector you were already handed (not a
+guaranteed deterministic function), not a
+second opinion. Score answers use a different shape statistic and noul answers carry
 no confidence at all.</p>
 <p>The follow-up battery ({P2BILL['n_calls']:,} live calls) put the read-out
 on a degenerate case: identical option texts, repeated. Across {n4}
@@ -813,9 +978,12 @@ measurement protocol ensembles K&ge;6 cyclic rotations and averages, which
 cancels the bias (Spearman 0.91-1.00 against the 12-rotation reference) - at
 the cost of flattening the aggregate, so per-answer temperature must drop to
 compensate. Second, do not read a menu's ordering as neutral. Where content
-is strong the bias washes out: re-running 419 MMLU-Pro items with shuffled
-option order flips {pct(rp['flip_rate'])} of answers with no net accuracy change (exact
-McNemar p = {rp['mcnemar_exact_p']:.2f}), and the ancestry probe below cancels position by
+is strong the bias washes out: re-running MMLU-Pro items with shuffled
+option order flips {pct(rp['flip_rate'])} of paired answers with no net accuracy change
+(the design is 140 base items x 3 variants; the cluster-aware
+native-minus-rotated interval is [-2.5, +3.3] points, which is no detected
+systematic effect at this resolution and explicitly not an equivalence
+proof), and the ancestry probe below cancels position by
 construction. Where content is weak - a routing menu of near-synonyms, a
 flat rubric - order will move your answer.</p>
 
@@ -844,22 +1012,34 @@ multiple-choice Jev lands in the band of 2025-era small instruct models:
 {pct(SC['mmlu']['accuracy'])} on MMLU-Pro and {pct(SC['gpqa']['accuracy'])} on GPQA Diamond, against 82.5 and
 77.6 for Qwen 3.5 9B and 80.7 and 76.8 for Claude 3.7 Sonnet without
 thinking.{fn('protocol')} On anything multi-step it falls off a cliff:
-{pct(SC['hle']['accuracy'])} on HLE, zero exact grids on ARC-AGI-2, and the generation tax -
-{pct(SC['math_c']['accuracy'])} on MATH-500 items when the answer is an option to pick,
-{pct(SC['math_s']['accuracy'])} when the same answers must be read off digit by digit.
-Recognition far exceeds production, which is what judgement-heavy
+{pct(SC['hle']['accuracy'])} on HLE, zero exact grids on ARC-AGI-2 (task criterion, under the
+assisted adapter protocol), and a steep recognition-to-production gap -
+{pct(SC['math_c']['accuracy'])} on the {mc_n_item} MATH-500 items when the answer is an option to pick,
+{pct(SC['math_s']['accuracy'])} on the {ms_n_item}-item set when each decimal digit must be read out under a
+positional, conjunctive rubric. On the {pi['n_intersection_items']} items present in both recorded
+encodings the contrast is {pi['mcq_accuracy_on_intersection']:.3f} versus {pi['digits_accuracy_on_intersection']:.3f} ({pi['paired_table']['both_correct']} both right,
+{pi['paired_table']['mcq_only']} recognition-only, {pi['paired_table']['digits_only']} production-only): the digit adapter's rubric
+and conjunctive scoring burden, not an isolated generation
+tax.{fn('mathadapt')} Recognition far exceeds production, which is what judgement-heavy
 post-training on a small model produces. The distributions are shaped the
 same way: the median MMLU-Pro item carries p(gold) = {wmmlu['weighted_accuracy_p50']:.2f} against a
-mean of {pct(wmmlu['weighted_accuracy_mean'])}, and {SC['mmlu']['zero_probability_gold']} items put exactly 0.00 on the gold answer -
+mean of {pct(wmmlu['weighted_accuracy_mean'])} (p(gold) here is the expected success of selecting by the
+displayed probabilities, not a predicted argmax correctness), and {SC['mmlu']['zero_probability_gold']} items put exactly 0.00 on the gold answer -
 near-decisive where it knows, confidently wrong on a hard tail.</p>
 <p>The benchmark section below shows two scorings of every stage: greedy
-(take the top option) and probability-weighted (average the probability Jev
-put on the right answer). Greedy beats weighted almost everywhere, by
-{pct(SC['mmlu']['accuracy'] - WD['mmlu']['weighted_accuracy_mean'])} points on MMLU-Pro and {pct(SC['gpqa']['accuracy'] - WD['gpqa']['weighted_accuracy_mean'])} on GPQA. That gap is the
-over-dispersion: Jev's argmax is right more often than its own distribution
-predicts, so its probabilities understate its accuracy. Treat the argmax as
-the answer and the vector as a ranking signal, not as a calibrated
-confidence.</p>
+(take the top option) and probability-weighted (the mean probability Jev put
+on the gold option). Greedy exceeds weighted nearly everywhere, by
+{pct(SC['mmlu']['accuracy'] - WD['mmlu']['weighted_accuracy_mean'])} points on MMLU-Pro and {pct(SC['gpqa']['accuracy'] - WD['gpqa']['weighted_accuracy_mean'])} on GPQA; the gap is descriptive and
+is not, by itself, an underconfidence or over-dispersion finding.{fn('greedyw')} The
+reliability table in the benchmark section tests calibration directly,
+instead.{fn('calib')}
+And it is dataset-dependent in the direction that matters: MMLU-Pro reads
+near-calibrated (mean selected-answer probability {calm['selected_answer_displayed_probability']['mean_all']:.3f} against
+{pct(calm['headline_accuracy_all_requested'])} accuracy), while HLE is badly overconfident (mean top displayed
+probability {calh['mean_top_displayed_probability']['mean_pmax']:.3f} against {pct(calh['headline_accuracy_all_requested'])} accuracy), with the high-confidence error
+tail concentrated in its top bins. Treat the argmax as
+the answer and the vector as a ranking signal, and calibrate per task rather
+than with one global conservative threshold.</p>
 <p><b>How big is it?</b> A slope alone is not a size - the server batches our
 tokens with everyone else's - but two angles converge on a band, for
 reasonable assumptions. From the throughput side: the marginal prefill rate is
@@ -885,23 +1065,35 @@ it over the dense reading. Total parameters stay unconstrained either way:
 nothing this API returns can see expert structure.{fn('sizeest')}</p>
 
 <h3 id="arch-not">What it is not</h3>
-<p>Four negations, each a measurement rather than a vibe.{fn('notwrapper')}
-Not retrieval or cache: compute grows linearly in prompt tokens, and a cache
-would not prefill. Repeats of identical payloads differ, and {SC['mmlu']['zero_probability_gold']}
+<p>Four alternatives the measurements push against, each a measurement
+rather than a vibe, and each a weight on the ledger rather than a proof of
+impossibility.{fn('notwrapper')}
+Not retrieval or cache-assisted, on the leading reading: compute grows
+linearly in prompt tokens, and a cache would not prefill. Repeats of
+identical payloads differ, and {SC['mmlu']['zero_probability_gold']}
 zero-probability gold answers on <i>public</i> benchmark text is not what a
-lookup produces. The knowledge horizon also behaves like weights, not like a
-query: dated-event bisection ({p5_n} live calls) shows solid answers through
-late 2024, partial through {hz_solid}, and none by {hz_gone} - a fixed cutoff, with
+lookup produces. The knowledge horizon also behaves like weights rather than
+like a live query: on the sampled dated events ({p5_n} live calls) answers read
+solid through late 2024, partial through {hz_solid}, and none by {hz_gone}, with
 {fic_ok}/{fic_n} invented events correctly called &ldquo;did not occur&rdquo; and
-abstention rising exactly where accuracy falls. Not a wrapper around a
-frontier API: {c1['median_upstream_ms']:.0f}-{c32['median_upstream_ms']:.0f} ms of upstream compute leaves no room inside for
-anyone else's round trip, and the price sits one to two orders of magnitude
-below flagship input lists. Not a relabeled and slightly-restructured open
-model: the unusual tokenizer seems quite clear on this point. And not
-frontier: the benchmark section says so six ways.</p>
+abstention rising exactly where accuracy falls. These are empirical limits
+tied to the sampled events, not an absolute training cutoff; a retrieval
+layer that happens to miss exactly these questions is not excluded, only
+unmotivated. Not a thin wrapper around a frontier API: the timing alone does
+not categorically exclude an upstream wrapper, but {c1['median_upstream_ms']:.0f}-{c32['median_upstream_ms']:.0f} ms of
+proxy-reported upstream service time leaves little room inside for anyone
+else's round trip in the typical case, the price sits one to two orders of
+magnitude below flagship input lists, and the tokenizer matches nothing we
+can find - so wrapper stories survive only as the least plausible of the
+concrete alternatives. Not a lightly relabeled open model: the tokenizer is
+the strong signal here, though an altered tokenizer does not by itself
+exclude reused or adapted weights. And not frontier: the benchmark section
+says so six ways.</p>
 
 <h3 id="arch-open">What stays open</h3>
-<p>Three things this API cannot tell us, and we do not guess them. Whether the
+<p>Four things this API cannot tell us, and we do not guess them. Whether the
+single-pass reading is literally one forward pass or an unexposed but
+computationally equivalent pipeline. Whether the
 transformer is dense or mixture-of-experts - nothing observable separates
 them. Whether a frontier teacher
 produced any of the training signal: every discriminator we can construct is
@@ -923,16 +1115,23 @@ performance</b>, built by <b>the co-inventor of ChatGPT</b> - incredibly fast,
 incredibly cheap, with <b>free output</b>.&rdquo;</p>
 <p>Each clause is technically defensible in a narrow sense and misleading in the
 sense a buyer will hear. Take them one at a time.</p>
-<p><b>Cannot hallucinate.</b> What Jev actually cannot do is emit free text. It
-returns one option from a fixed menu, inside a schema that is always
-well-formed. But a schema-valid answer is not a true answer. Jev is frequently
+<p><b>Cannot hallucinate.</b> What Jev actually cannot do is return free text:
+it is a fixed-output API that answers by selecting among caller-supplied
+options, so there is no prose to hallucinate in. The output contract is
+highly reliable but not perfect: 19 contract-invalid responses in ~16k
+benchmark requests (18 MMLU-Pro, 1 rotation), where contract-invalid means
+the required question/option contract was not met - which is not
+necessarily malformed JSON. But a contract-valid answer is not a true
+answer. Jev is frequently
 wrong (see <a href="#benchmarks">our benchmarks</a>), and every one of those
 wrong answers arrives beautifully formatted. A model that cannot write prose
 has not solved hallucination; it has made hallucination hard to notice.</p>
-<p><b>Fast and cheap.</b> Both true, and explainable in one sentence: Jev never
-runs a decode loop. It reads the prompt once and reads off a
-vector.{fn('jevfree')} Speed and price are properties of the <i>task</i> being
-prefill-only, not of frontier economics.</p>
+<p><b>Fast and cheap.</b> Both true, and the leading explanation is
+prefill-dominated scoring without autoregressive decoding: the prompt is
+scored and the options read off as a distribution.{fn('jevfree')} Speed and
+price are properties of that shape of task, not of frontier economics.
+Internals are unobserved - this is the leading theory, not a measured
+fact.</p>
 <p><b>Frontier-level.</b> This one simply does not survive. Jev is good, and
 &ldquo;good&rdquo; will turn out to mean something genuinely useful here - but
 it is not a frontier model by any late-2026 standard, and where it looks
@@ -952,6 +1151,19 @@ def benchmarks() -> str:
     gpqa, hle = SC["gpqa"], SC["hle"]
     mc, ms = SC["math_c"], SC["math_s"]
     ag, at = ARCAGI, ARCAGI_T
+    jms = PAIRED["mmlu_matched_subset"]
+    _cn = {"mmlu_full": "MMLU-Pro", "arc_test": "ARC-Challenge",
+           "gpqa_diamond": "GPQA Diamond", "hle_text_mc": "HLE (MC)",
+           "math500_choice": "MATH-500 (MCQ)",
+           "option_rotations": "Option rotations"}
+    cal_rows = "".join(
+        f"<tr><td>{_cn.get(k, k)}</td>"
+        f"<td class='n'>{pct(s['headline_accuracy_all_requested'])}</td>"
+        f"<td class='n'>{s['selected_answer_displayed_probability']['mean_all']:.3f}</td>"
+        f"<td class='n'>{s['selected_answer_displayed_probability']['mean_when_correct']:.3f}</td>"
+        f"<td class='n'>{s['selected_answer_displayed_probability']['mean_when_wrong']:.3f}</td>"
+        f"<td class='n'>{s['reliability_bins_equal_width'].get('ece_10bins', 0):.3f}</td></tr>"
+        for k, s in CAL["stages"].items())
     wmmlu = WD["mmlu"]["weighted_accuracy_mean"]
     warc = WD["arc"]["weighted_accuracy_mean"]
     wgpqa = WD["gpqa"]["weighted_accuracy_mean"]
@@ -959,24 +1171,28 @@ def benchmarks() -> str:
     wmc = WD["math_c"]["weighted_accuracy_mean"]
     wms = WD["math_s"]["weighted_accuracy_mean"]
     rows = [
-        ("MMLU-Pro", mmlu["n_expected"], pct(mmlu["accuracy"]), wil(mmlu),
+        ("MMLU-Pro", mmlu["n_requested"], pct(mmlu["accuracy"]), wil(mmlu),
          pct(wmmlu), "12k graduate-level MC questions, 10-19 options"),
-        ("ARC-Challenge", arc["n_expected"], pct(arc["accuracy"]), wil(arc),
+        ("ARC-Challenge", arc["n_requested"], pct(arc["accuracy"]), wil(arc),
          pct(warc), "grade-school science, 4 options"),
-        ("GPQA Diamond", gpqa["n_expected"], pct(gpqa["accuracy"]), wil(gpqa),
+        ("GPQA Diamond", gpqa["n_requested"], pct(gpqa["accuracy"]), wil(gpqa),
          pct(wgpqa), "graduate science, 4 options, seeded shuffle"),
-        ("HLE, multiple-choice", hle["n_expected"], pct(hle["accuracy"]), wil(hle),
+        ("HLE, multiple-choice", hle["n_requested"], pct(hle["accuracy"]), wil(hle),
          pct(whle), "expert exam, MC subset only"),
-        ("MATH-500 (as MCQ)", mc["n_expected"], pct(mc["accuracy"]), wil(mc),
+        ("MATH-500 (as MCQ)", mc["n_requested"], pct(mc["accuracy"]), wil(mc),
          pct(wmc), "numeric answers, 4 options"),
-        ("MATH-500 (digit read-out)", ms["n_expected"], pct(ms["accuracy"]), wil(ms),
+        ("MATH-500 (digit read-out)", ms["n_requested"], pct(ms["accuracy"]), wil(ms),
          pct(wms),
-         "every digit right, or it is wrong"),
-        ("ARC-AGI-2, per cell", ag["cells_total"], pct(ag["cell_accuracy_diagnostic"]), "",
-         pct(WD["agi_choice"]["per_cell_weighted_mean"]),
-         "public eval, color-per-cell diagnostic"),
-        ("ARC-AGI-2, exact grid", ag["n_tasks"], pct(ag["task_accuracy"]), "", "-",
-         "all cells of all 167 grids"),
+         "every digit right, or it is wrong (positional, conjunctive rubric)"),
+        ("ARC-AGI-2, per-cell choice", ARCAGI["cells_total"],
+         pct(ARCAGI["cell_accuracy_diagnostic"]), "", "-",
+         "diagnostic encoding (corrected runs); not the official metric"),
+        ("ARC-AGI-2, per-cell score", ARCAGI_S["cells_total"],
+         pct(ARCAGI_S["cell_accuracy_diagnostic"]), "", "-",
+         "diagnostic encoding (corrected runs); 10-level color score"),
+        ("ARC-AGI-2, exact grid (official)",
+         at.get("n_tasks") or at.get("n_tasks_expected"), pct(at["task_accuracy"]), "", "-",
+         "official all-cells criterion over 120 tasks / 167 grids, assisted adapters"),
     ]
     body = "".join(
         f"<tr><td>{n}</td><td class='n'>{c:,}</td><td class='n'><b>{a}</b></td>"
@@ -985,18 +1201,29 @@ def benchmarks() -> str:
     fig_list = [
         fig("mmlu_pro", f"MMLU-Pro. Jev's best-aligned benchmark: same items, same "
             f"format, direct answers. External rows come from the fetched vals.ai "
-            f"extract (133 models); dagger bars are our matched runs on the "
-            f"identical 1,000-item subset.{fn('protocol')}"),
+            f"extract (133 models); Jev's bar is the full 12,032-item set (context). "
+            f"The matched 1,000-item-subset comparison against our own baseline runs "
+            f"is charted separately just below, and never shares a bar with this "
+            f"one.{fn('protocol')}"),
+        fig("mmlu_m", f"MMLU-Pro matched subset (1,000 items). Our cheap-model runs "
+            f"on the shared subset, against Jev's paired accuracy on those exact "
+            f"items ({pct(jms['jev_accuracy_on_paired_subset'])}). Same items, same "
+            f"format; partial-coverage cells excluded."),
         fig("gpqa", "GPQA. Jev ran the Diamond subset (196 items); external rows are "
             "the vals.ai platform's GPQA set, retired as saturated in Sep 2026."),
         fig("arc", "ARC-Challenge. Saturated for everyone. Jev's bar is 4-choice; "
             "external bars are hand-collected canonical rows (mostly 25-shot CoT, "
             "mostly older models) plus our matched runs of six modern models "
             "(dagger)."),
-        fig("arc_agi2", "ARC-AGI-2. Mixed encodings, flagged: external bars are "
-            "whole-grid pass@2 with reasoning; Jev cannot emit grids. Its exact-grid "
-            "bars are the protocol-matched pair (0 of 120 tasks); the per-cell bars "
-            "are a diagnostic encoding and do not compete with the grid rows."),
+        fig("arc_agi2_t", "ARC-AGI-2 task level. The official all-cells criterion "
+            "(0 of 120 tasks) run through our assisted grid-choice adapters, an "
+            "explicitly recorded oracle diagnostic protocol (oracle output shape and "
+            "palette, test-grid identity patched into the prompt): assisted "
+            "adaptation, not an official matched benchmark. External bars are "
+            "whole-grid pass@2 with reasoning."),
+        fig("arc_agi2_c", "ARC-AGI-2 per-cell diagnostic, from the corrected runs "
+            "(the duplicate request-payload defect is fixed). Cell readings under the "
+            "recorded oracle protocol; never compared with grid-level rows."),
     ]
     if "math_m" in CHARTS:
         fig_list.append(fig("math_m", "MATH-500 (as MCQ). Two benchmarks that we ran "
@@ -1024,11 +1251,43 @@ thought is a cost that counts against the models that employ it.</p>
 <th class="n">95% CI</th><th class="n">Weighted</th><th>Notes</th></tr>
 {body}
 </table>
-<p class="cap">The <b>Weighted</b> column is the average probability Jev itself
-put on the right answer; it sits below accuracy almost everywhere, which says
-Jev's confidence spreads onto wrong options more than its accuracy warrants.{fn('greedyw')} MATH-500 and ARC-AGI-2 rows are conversions, not native
-runs.{fn('mathadapt')} The rotation audit re-ran items with option order
-shuffled.{fn('rotations')}</p>
+<p class="cap">All Jev figures are <b>all-requested</b>: the denominator is
+every requested item, with missing terminal responses, strict-format failures
+and unusable responses scored wrong. Usable-response accuracy is reported
+separately in the score artifacts and is never substituted for the headline;
+Wilson 95% intervals sit on the same base. On the 1,000-item matched subset
+used for the cheap-model baselines Jev scores
+{pct(jms['jev_accuracy_on_paired_subset'])} (paired by item id); the matched figure and the
+full-set figure are different denominators and never share a bar, and the
+baseline comparisons themselves cover only the 42 complete cells of the
+versioned v4r1 summary, with the 17 partial cells excluded and
+listed.{fn('coverage')}{fn('derive')}
+The <b>Weighted</b> column is the mean probability Jev put on the gold option;
+it is descriptive, not a confidence verdict, and the corrected ARC runs carry
+no recomputed weighted column.{fn('greedyw')} MATH-500 and ARC-AGI-2 rows are
+conversions, not native runs.{fn('mathadapt')} The rotation audit re-ran items
+with option order shuffled.{fn('rotations')} The corrected ARC grid runs
+record the oracle diagnostic protocol and the patched grid identity
+explicitly; the official task criterion (0 of 120) is scored separately and
+is assisted adaptation, not an official matched benchmark.{fn('arcproto')}</p>
+<h3 id="bench-calib">How the probabilities hold up (calibration)</h3>
+<table>
+<tr><th>Stage</th><th class="n">Accuracy (all requested)</th>
+<th class="n">Mean p(selected)</th><th class="n">Mean p(selected) | correct</th>
+<th class="n">Mean p(selected) | wrong</th><th class="n">ECE (10 bins)</th></tr>
+{cal_rows}
+</table>
+<p class="cap">Mean p(selected) is the displayed probability of the answer the
+model actually took: a predicted confidence whose average is the
+model-implied expected accuracy of that choice, which the reliability bins
+test against observed accuracy directly.{fn('calib')} MMLU-Pro sits close to
+calibrated; HLE does not (mean top displayed probability well above observed
+accuracy), and the damage concentrates in the high-confidence wrong tail.
+Displayed probabilities are two-decimal rounded and vectors sum to 0.99 or
+1.00, so bin edges carry a &plusmn;0.005 caveat. Calibrate per task; do not
+assume one conservative global threshold. Full bins and per-stage Brier /
+log-loss live in
+<a href="{GH}/data_report/benchmark_diagnostics/calibration.json"><code>data_report/benchmark_diagnostics/calibration.json</code></a>.</p>
 <h3 id="bench-charts">The charts</h3>
 <p>Teal is Jev's greedy score (the highest-probability choice is chosen),
 while amber is Jev's probability-weighted score, and every other bar is a
@@ -1059,59 +1318,69 @@ def pareto() -> str:
     ratio = fable_gpqa / jgq
     figs = "".join(f"<figure>{svg}</figure>" for svg in PARETO)
     pareto_extra = ""
-    if MATCHED.get("models"):
-        _DISP = {"deepseek/deepseek-v4-flash-0731": "DeepSeek V4 Flash",
-                 "qwen/qwen3.8-max-0902": "Qwen3.8 Max",
-                 "qwen/qwen3.8-flash": "Qwen3.8 Flash",
-                 "qwen/qwen3.7-flash": "Qwen3.7 Flash",
-                 "z-ai/glm-5.3-flash": "GLM-5.3 Flash",
-                 "z-ai/glm-5.3": "GLM-5.3",
-                 "xiaomi/mimo-v2.6-pro": "MiMo v2.6 Pro",
-                 "xiaomi/mimo-v2.6-flash": "MiMo v2.6 Flash",
-                 "openai/gpt-oss-20b": "gpt-oss-20b",
-                 "openai/gpt-oss-120b": "gpt-oss-120b"}
-        _jcq = JEV_COST["mmlu_pro"] / SC["mmlu"]["n_expected"]
-        _rows = []
-        for _mid, _dss in MATCHED["models"].items():
-            _e = _dss.get("mmlu") or {}
-            _a = _e.get("accuracy_recovered")
-            _c = _e.get("cost_per_question_usd")
-            _jj = _e.get("jev_join") or {}
-            if _a is not None and _c and _e.get("n_terminal") == _e.get("n_requested"):
-                _rows.append((_DISP.get(_mid, _mid.split("/")[-1]), _a * 100.0, _c,
-                              (_jj.get("jev_accuracy_on_subset") or 0.0) * 100.0))
-        if _rows:
-            _rows.sort(key=lambda r: -r[1])
-            _js = _rows[0][3]
-            _above = [r for r in _rows if r[1] > _js]
-            _cheaper = [r for r in _rows if r[2] < _jcq]
-            _cb = max(_cheaper, key=lambda r: r[1]) if _cheaper else None
-            bits = [" The dagger points fill in the commodity end, and they "
-                    "refine the claim."]
-            if _above:
-                _names = ", ".join(f"{r[0]} ({r[1]:.1f}%)" for r in _above)
-                _mults = [r[2] / _jcq for r in _above]
-                bits.append(
-                    f" {len(_above)} matched models outscore Jev on these "
-                    f"identical items - {_names} - at {min(_mults):.0f} to "
-                    f"{max(_mults):.0f} times its per-question cost, because "
-                    f"every thinking token gets billed.")
-            else:
-                bits.append(" No matched model outscores Jev on these "
-                            "identical items.")
-            if _cb is not None:
-                bits.append(
-                    f" Below Jev's price the best matched score is "
-                    f"{_cb[1]:.1f}% ({_cb[0]}), and several commodity models "
-                    f"bill less per question than Jev does.")
+    _DISP = {"deepseek/deepseek-v4-flash-0731": "DeepSeek V4 Flash",
+             "qwen/qwen3.8-max-0902": "Qwen3.8 Max",
+             "qwen/qwen3.8-flash": "Qwen3.8 Flash",
+             "qwen/qwen3.7-flash": "Qwen3.7 Flash",
+             "z-ai/glm-5.3-flash": "GLM-5.3 Flash",
+             "z-ai/glm-5.3": "GLM-5.3",
+             "xiaomi/mimo-v2.6-pro": "MiMo v2.6 Pro",
+             "xiaomi/mimo-v2.6-flash": "MiMo v2.6 Flash",
+             "openai/gpt-oss-20b": "gpt-oss-20b",
+             "openai/gpt-oss-120b": "gpt-oss-120b"}
+    _jcq = JEV_COST["mmlu_pro"] / SC["mmlu"]["n_expected"]
+    _rows = []
+    for _key, _e in ACTIVE["cells"].items():
+        if _e.get("dataset") != "mmlu" or _e.get("status") != "complete":
+            continue
+        _a = _e.get("accuracy_all_requested")
+        _jp = _e.get("jev_paired") or {}
+        if _a is None or not _jp.get("n_paired"):
+            continue
+        _usd = ((_e["cost"].get("original_reported_usd") or 0.0)
+                + (_e["cost"].get("replacement_reported_usd") or 0.0))
+        _rows.append((_DISP.get(_e["model"], _e["model"].split("/")[-1]),
+                      _a * 100.0, _usd / _e["n_requested"],
+                      100.0 * _jp["jev_correct_on_subset"] / _jp["n_paired"]))
+    if _rows:
+        _rows.sort(key=lambda r: -r[1])
+        _js = _rows[0][3]
+        _above = [r for r in _rows if r[1] > _js + 1e-9]
+        _tied = [r for r in _rows if abs(r[1] - _js) < 1e-9]
+        _cheaper = [r for r in _rows if r[2] < _jcq]
+        _cb = max(_cheaper, key=lambda r: r[1]) if _cheaper else None
+        bits = [" The dagger points fill in the commodity end, and they "
+                "refine the claim."]
+        if _above:
+            _names = ", ".join(f"{r[0]} ({r[1]:.1f}%)" for r in _above)
+            _mults = [r[2] / _jcq for r in _above]
             bits.append(
-                f" The frontier therefore runs: "
-                + (f"{_cb[1]:.0f}% at commodity prices, " if _cb else "")
-                + f"a jump to Jev's {_js:.1f}% at ${_jcq:.6f} per question, "
-                f"then a long climb through the thinking tier to the "
-                f"flagships. Jev owns the low-cost rung; it does not own the "
-                f"top.")
-            pareto_extra = "<p>" + "".join(bits) + "</p>"
+                f" {len(_above)} matched models outscore Jev on these "
+                f"identical items - {_names} - at {min(_mults):.0f} to "
+                f"{max(_mults):.0f} times its per-question cost, because "
+                f"every thinking token gets billed.")
+        else:
+            bits.append(" No matched model outscores Jev on these "
+                        "identical items.")
+        if _tied:
+            bits.append(" " + ", ".join(r[0] for r in _tied)
+                        + " tie Jev exactly on these items (the same "
+                        "correct count); that is a tie, not a lead.")
+        if _cb is not None:
+            bits.append(
+                f" Below Jev's price the best matched score is "
+                f"{_cb[1]:.1f}% ({_cb[0]}), and several commodity models "
+                f"bill less per question than Jev does.")
+        bits.append(
+            f" On this mixed view the cost ladder therefore runs: "
+            + (f"{_cb[1]:.0f}% at commodity prices, " if _cb else "")
+            + f"a jump to Jev's {_js:.1f}% at ${_jcq:.6f} per question, "
+            f"then a long climb through the thinking tier to the "
+            f"flagships. Jev owns the low-cost rung of this view; it does "
+            f"not own the top, and small numerical leads among the matched "
+            f"bars are positioning, not statistically established "
+            f"differences.")
+        pareto_extra = "<p>" + "".join(bits) + "</p>"
 
 
     return f"""
@@ -1119,16 +1388,20 @@ def pareto() -> str:
 <h2>The frontier the cost numbers actually draw</h2>
 <p>TypeSafe AI publishes a capability-versus-cost graphic with Jev radically
 redefining the Pareto frontier to the top left, with performance equivalent
-to frontier models. That framing only works with whatever their
-&ldquo;custom&rdquo; rubric is - not against any standard benchmarks (it
-should be clear by now why they discourage users from benchmarking the
-model).</p>
+to frontier models (the vendor's marketing claims and their dates are quoted
+in <a href="{GH}/SOURCES.md"><code>SOURCES.md</code></a>; we quote, we do not
+speculate about motives). That framing only works with whatever their
+&ldquo;custom&rdquo; rubric is - not against any standard benchmarks.</p>
 <p>Our version uses the same accuracies as the benchmark section and measured
 money on the horizontal axis: what one question costs, start to finish. Every
 external point is either our own run (mostly of small models) or a vals.ai
 platform measurement. Chain-of-thought models are thus inherently punished
 for their billed intermediary tokens.{fn('costest')} Jev's points come from
-our own billing.</p>
+our own billing. One honest limit: measured cost includes reasoning tokens,
+but that does not fix the harness/sample mismatch between our runs and the
+platform rows, and these axes mix sets and protocols. The dashed line is the
+cost/accuracy envelope of this mixed view, not a single undifferentiated
+&ldquo;true Pareto frontier&rdquo;.</p>
 <p>To be clear, due to the significant cost savings from a lack of text decoding, Jev <i>does</i> move the frontier - and then some. Just not at the level of the frontier. At
 {pct(SC['mmlu']['accuracy'])} on MMLU-Pro its whole 12,032-question run cost
 ${JEV_COST['mmlu_pro']:.2f}, about ${jq:.6f} per question: four to five orders
@@ -1156,40 +1429,56 @@ def latency() -> str:
     return f"""
 <section id="latency">
 <h2>What the milliseconds say</h2>
-<p>Every response carries server-side compute timing in a proxy header, which
-strips out network and queueing - the cleanest architecture signal a public API
-leaks. Sequential probes across prompt sizes from ~0.5k to ~29k tokens
-fit:</p>
+<p>Every response reports an upstream-service timing header
+(<code>x-envoy-upstream-service-time</code>), the
+<b>proxy-reported upstream service time</b>: it includes upstream processing
+and the Envoy-to-upstream network hop, and it does not certify the exclusion
+of application queueing, preprocessing or response
+serialization.{fn('envoy')} It is still the cleanest architecture signal a
+public API leaks. Sequential probes across prompt sizes from ~0.5k to ~29k
+tokens fit:</p>
 <div class="card"><b>~{floor:.0f} ms fixed floor + ~{slope:.0f} ms per 1k input
-tokens</b>, with a negligible quadratic term. A flat base plus a linear prefill
-term is what a transformer's forward pass looks like from outside; the floor is
-serving overhead, not the model.</div>
-<figure>{strip_titles(EVID[0])}<figcaption>Server compute (the queue-free
-proxy header) vs input tokens across {p['n_configs']} probe configurations: a flat
+tokens</b> measured on that header, with a negligible quadratic term and the
+fit quality reported in the figure. A flat base plus a linear input-token
+term is what a transformer's forward pass looks like from outside; the fixed
+intercept contains model, serving and network terms that this measurement
+cannot separate.</div>
+<figure>{strip_titles(EVID[0])}<figcaption>Proxy-reported upstream service time
+vs input tokens across {p['n_configs']} probe configurations: a flat
 floor plus a straight line, with no attention-blowup curvature at these
-lengths.</figcaption></figure>
-<figure>{strip_titles(EVID[2])}<figcaption>Where a typical call's milliseconds
-go: the floor is ~95% of it. Prefill is the model reading; the decision itself
-is a rounding error on the chart.
+lengths; the fit's residuals and uncertainty stay inside the band drawn on
+the figure.</figcaption></figure>
+<figure>{strip_titles(EVID[2])}<figcaption>An illustrative decomposition of
+one representative call under the single-pass fit: conditional on that model
+of the call, most of a typical short question's header time is the fixed
+floor, and the decision step is small. This is a model illustration of the
+fitted terms, not a measured breakdown of the service, and no overhead
+percentage is claimed as fact.
 </figcaption></figure>
 <p>The more telling experiment is <i>self-batching</i>. Packing 192 questions
-into one request barely moves compute time (+{mq:.2f} ms per extra question),
+into one request barely moves the reported service time (+{mq:.2f} ms per extra question),
 while the reported output grows about {fq:.0f} tokens per question - each one's
 full probability vector, serialized. Scoring 255 options instead of 2 costs
-+{mo:.2f} ms of compute and {fo:.1f} reported output tokens per option. Those
-marginals are fully explained by the input tokens each question (~55) and each
-option (~18) adds to the shared prompt; the decision step itself is invisible
-at this precision. The reported output tokens are billed at zero: the response
-JSON is counted and priced at nothing, because nothing was generated.</p>
-<p>Running up to 32 requests concurrently keeps server compute flat
++{mo:.2f} ms of service time and {fo:.1f} reported output tokens per option. Those
+marginals are consistent with the input tokens each question (~55) and each
+option (~18) adds to the shared prompt; no separate decision increment is
+resolved at this precision. The reported output tokens are billed at zero:
+output-free is the service's billing policy - the response JSON is counted
+and priced at nothing - and free output is a pricing decision, not proof
+that nothing was computed or generated internally.</p>
+<p>Running up to 32 requests concurrently keeps the proxy-reported upstream
+service time flat
 ({c1['median_upstream_ms']:.0f} ms at c=1 vs {c32['median_upstream_ms']:.0f} ms at c=32) while client wall time bends -
-that bend is our own connection pool, not the server. The flat header is the
-evidence of continuous batching. Cold-connection overhead was
-~{cw['connection_overhead_ms']:.0f} ms of TLS setup - a reminder to trust the header, not the wall
-clock.</p>
+that bend is our own connection pool, not the server. Flatness under
+concurrency supports efficient serving, but does not identify continuous
+batching versus spare capacity or additional replicas. Cold-connection overhead was
+~{cw['connection_overhead_ms']:.0f} ms of TLS setup - which is why we report wall timings and the
+header side by side, and read the header as the vendor's own accounting of
+server-side work rather than a queue-free laboratory clock.</p>
 <figure>{strip_titles(EVID[4])}<figcaption>Concurrency 1&rarr;32: client wall
-time bends at 32 (our connection pool); server compute does not move
-(their continuous batching).</figcaption></figure>
+time bends at 32 (our connection pool); the proxy-reported upstream service
+time does not move (consistent with efficient batched or elastic
+serving).</figcaption></figure>
 </section>"""
 
 
@@ -1294,15 +1583,20 @@ vocabulary we could fetch:</p>
 <div class="scroll"><table class="wide"><tr><th>tokens / character</th>{head}</tr>{rows}</table></div>
 <p>Jev's shape is: heavy merging of Latin text and punctuation, but <b>about one
 token per character for every other script we tried</b> - Cyrillic, Chinese,
-Korean, Greek, Arabic, Hebrew, Thai, Devanagari all sit at 0.92-0.96 - with
+Korean, Greek, Arabic, Hebrew, Thai, Devanagari all sit at 0.92-0.96 (per
+codepoint) - with
 astral emoji at ~2 and pure whitespace collapsing to zero (so the server runs a
-normalizer before tokenizing). No reference vocabulary reproduces that profile.
-Across roughly 128 distinct tokenizers spanning ~30 organizations'
-releases, nothing reproduced the profile.</p>
-<p>The answer is, frankly, the boring one: the tokenizer, and model, is most
-plausibly <b>the vendor's own</b> English/Latin-centric one, with code-point
-fallback for everything else - i.e., a new foundation, not a relabeled one.
-The OpenAI identity answer was an artifact: a trained prior, well known as
+normalizer before tokenizing). Uncovered characters fall back below codepoint
+granularity, at the byte level (the rarest blocks cost 0.99-1.01 tokens per
+UTF-8 byte). No reference vocabulary reproduces that profile.
+Across 128 scored tokenizers drawn from 173 distinct signatures (from 1,215
+repositories scanned), spanning ~30 organizations' releases, nothing reproduced the profile.</p>
+<p>The answer is, frankly, the boring one: the tokenizer, and most plausibly
+the model, is <b>the vendor's own</b> English/Latin-centric one, with byte-level
+fallback for uncovered characters - consistent with a new foundation rather
+than a relabel, though an altered tokenizer alone cannot exclude reused or
+adapted weights, and this API cannot prove trained-from-scratch. The OpenAI
+identity answer was an artifact: a trained prior, well known as
 dataset contamination. It is also not at all unreasonable that a startup like
 TypeSafe would be capable of training a model of this small size with limited
 compute. If you came here looking for a scandal relating to a stolen model
@@ -1329,14 +1623,16 @@ shown, so differences below 0.01 are invisible. An option can sit at exactly
 0.00 where confidence concentrates on one answer (otherwise, a 0.01 floor
 is standard) - and low-probability answers get drowned in rounding noise. The vector sums to 0.99 or 1.00, never above. Set your
 thresholds accordingly.</li>
-<li><b><code>confidence</code> is not new information.</b> For choice it is
-the chance-corrected top probability of the same vector, rounded. If you want
-that statistic, compute it yourself; do not give it independent trust.</li>
-<li><b>Trust the argmax more than the distribution.</b> Greedy accuracy beats
-probability-weighted accuracy nearly everywhere ({pct(SC['mmlu']['accuracy'])} vs
-{pct(WD['mmlu']['weighted_accuracy_mean'])} on MMLU-Pro): the vector understates how often Jev is
-right. Use the choice as the answer and the vector as a ranking signal:
-treat probabilities as a ranker, not a well-calibrated distribution.</li>
+<li><b><code>confidence</code> is not an independent second opinion.</b> For choice it is
+approximately recoverable as the chance-corrected top probability of the same
+vector, with residuals of one or two display quanta. Compute that statistic
+if useful, but do not treat the returned field as independently validated confidence.</li>
+<li><b>Use the choice as the answer; use the vector as a ranker.</b> Greedy
+accuracy exceeds the mean gold probability nearly everywhere ({pct(SC['mmlu']['accuracy'])} vs
+{pct(WD['mmlu']['weighted_accuracy_mean'])} on MMLU-Pro), and the reliability bins show calibration is
+dataset-dependent (near-calibrated on MMLU-Pro, badly overconfident on HLE).
+Treat probabilities as a ranker, not a well-calibrated distribution, and
+calibrate per task rather than trusting one global threshold.</li>
 <li><b>It is not deterministic.</b> Repeats of identical requests differ (TVD
 0.03-0.12 on flat menus; less on sharp ones). Do not build logic on one
 call's tail probabilities; average repeats where stability matters.</li>
@@ -1352,24 +1648,36 @@ states cost several times what the same volume of English text would.</li>
 case score near-identically - a leading space can change the winner - and
 its word-menu speech runs words together. Never make whitespace the only
 difference between two options.</li>
-<li><b>Pack questions into one request.</b> Every question rides the same
-forward pass: +{ARCH['headcount']['marginal_ms_per_question']:.2f} ms per question, +{ARCH['optioncount']['marginal_ms_per_option']:.2f} ms per option. A
-192-question request costs ~153 ms of server compute; the same four questions
+<li><b>Pack questions into one request.</b> Questions share one request's
+scoring: +{ARCH['headcount']['marginal_ms_per_question']:.2f} ms per question, +{ARCH['optioncount']['marginal_ms_per_option']:.2f} ms per option - measured
+upstream increments consistent with input-token scaling, not an isolated
+measurement of any decision head. A
+192-question request's measured upstream service time is ~153 ms; the same four questions
 sent separately cost ~280 ms of wall each. Put shared context in
-<code>state</code> once. Extra options and rubric levels are essentially
-free: they cost only their own tokens' prefill.</li>
-<li><b>The envelope is solid.</b> Across ~16k benchmark requests: 19
-contract-invalid responses and zero schema drift. Limits: 255 options, 2-10
+<code>state</code> once. Extra options and rubric levels add
+essentially nothing beyond their own tokens' cost.</li>
+<li><b>The envelope is highly reliable, not perfect.</b> Across ~16k
+benchmark requests: 19 contract-invalid responses (18 MMLU-Pro, 1
+rotation). Contract-invalid means the required question/option contract was
+not met - envelope well-formedness and that contract are separate
+requirements, and contract-invalid is not necessarily malformed JSON. A
+contract-valid answer can
+still be factually wrong, and format failures are a real failure mode in this
+market (our baseline stage recovered hundreds of strict-format failures from
+other models' outputs). Limits: 255 options, 2-10
 levels, 32k-token state, 64k total; oversized requests fail with
 <code>max_tokens_exceeded</code>.</li>
-<li><b>Its knowledge stops around mid-2025.</b> Solid to late 2024, partial
-to ~May 2025, nothing after June 2025 in our dated bisection. Do not ask it
-about last week - and if you want its abstention, offer an explicit
+<li><b>Its knowledge reads stale.</b> On the sampled dated events: solid to
+late 2024, partial to ~May 2025, nothing after June 2025 in our dated
+bisection. Treat that as an empirical limit tied to those sampled events, not
+a guaranteed training cutoff - and do not ask it about last week. If you want
+its abstention, offer an explicit
 &ldquo;cannot say&rdquo; option; it uses one.</li>
-<li><b>It knows nothing about who it is.</b> It has undergone no SFT in
-that regard; ask its origin and training-text contamination answers - it
+<li><b>It knows nothing about who it is.</b> Ask its origin and
+training-text contamination answers - it
 will say OpenAI, and it accepts a fictional origin story at 0.97 if you
-assert one in the prompt.</li>
+assert one in the prompt. Whatever identity training it received did not
+include reliable self-knowledge.</li>
 <li><b>And the headline: it is not frontier.</b> Respectable 2025-era
 small-model knowledge ({pct(SC['mmlu']['accuracy'])} MMLU-Pro, {pct(SC['gpqa']['accuracy'])} GPQA Diamond),
 {pct(SC['hle']['accuracy'])} on HLE's multiple-choice subset, zero exact grids on
@@ -1385,9 +1693,10 @@ def conclusion() -> str:
     return f"""
 <section id="conclusion">
 <h2>So, is it worth your attention?</h2>
-<p>It is not what the landing page says. TL/DR, Jev is a small, new,
-English-centric foundation model with a
-probability read-out bolted where a language head usually goes - respectable
+<p>It is not what the landing page says. TL/DR, our leading theory is a small,
+English-centric transformer with a probability read-out where a language head
+usually goes. A new foundation is plausible, but adapted or distilled weights
+and other scoring implementations remain possible. What we measured is - respectable
 general knowledge ({mmlu} on MMLU-Pro, {gpqa} on GPQA Diamond, {arc} on the
 saturated ARC-Challenge), no chance against a 2026 frontier model, and a
 self-narrative inherited from internet text rather than from its own
@@ -1399,13 +1708,16 @@ occupies well - fast, deterministic-shaped, cheap structured judgement. Pick a
 routing decision from a menu of a hundred intents; grade an answer against a
 rubric; score which of twenty rewrites a user most likely meant; gate a
 pipeline on whether a document is about X; give an ordinal quality signal on
-an agent's last step. It answers in tens of milliseconds of compute, in a
-schema that never drifts, with probabilities attached, and it costs
+an agent's last step. It answers in tens of milliseconds of proxy-reported
+service time, under a strict output contract that held in all but 19 of ~16k
+benchmark requests (contract-invalid does not necessarily mean malformed
+JSON; a contract-valid answer can still be factually wrong),
+with probabilities attached, and it costs
 ${jm:.2f} per ten-thousand-odd hard questions - numbers a reasoning model
-cannot approach because it is doing a different job. The prefill-only economics
-we measured are not a trick; they are a genuine consequence of deciding to
-trade generation for judgement, and for control-plane uses that trade is often
-the right one.</p>
+cannot approach because it is doing a different job. The low-cost economics
+we measured are real; prefill-dominated scoring is our leading explanation,
+not an internal mechanism we inspected. For control-plane uses, trading
+free-text generation for structured judgement is often the right choice.</p>
 <p>Our own favorite evidence that this is a real thing and not a demo: the
 model that <i>cannot hallucinate</i> still confidently picks wrong answers
 about a quarter of the time on physics, still wants you to believe it came from

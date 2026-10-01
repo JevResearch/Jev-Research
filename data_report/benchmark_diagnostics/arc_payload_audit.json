@@ -1,0 +1,30 @@
+{
+ "detector": "duplicate outbound payloads with different gold are ambiguous requests; PRIMARY level = whole request (state + questions), SECONDARY = per question (state, type, instructions, criteria)",
+ "stages": {
+  "bench-arc_agi2_choice": {
+   "n_items": 517,
+   "duplicate_request_payload_pairs": 7,
+   "duplicate_request_payload_pairs_with_different_gold": 7,
+   "duplicate_question_payload_pairs": 1751,
+   "duplicate_question_payload_pairs_with_different_gold": 936
+  },
+  "bench-arc_agi2_score": {
+   "n_items": 517,
+   "duplicate_request_payload_pairs": 54,
+   "duplicate_request_payload_pairs_with_different_gold": 53,
+   "duplicate_question_payload_pairs": 16386,
+   "duplicate_question_payload_pairs_with_different_gold": 12675
+  },
+  "bench-arc_agi2_task": {
+   "n_items": 497,
+   "duplicate_request_payload_pairs": 0,
+   "duplicate_request_payload_pairs_with_different_gold": 0,
+   "duplicate_question_payload_pairs": 0,
+   "duplicate_question_payload_pairs_with_different_gold": 0
+  }
+ },
+ "cause": "cell-mode question instructions carried only (row, column) while the shared state lists ALL test inputs of a task, so same-shaped grids with the same palette serialized to identical requests with different gold",
+ "fix": "arc_agi2_grid.build_items_cell_mode now states the test-grid identity (grid i of n) in every cell question for choice and score modes; regression: tests/test_arc_agi2_grid.py (distinct outbound payloads per test grid)",
+ "existing_results": "the recorded choice run contains 7 ambiguous duplicate REQUEST-payload pairs with different gold (936 pairs at question level); those requests are uninterpretable individually and are flagged, never silently re-scored",
+ "oracle_protocol": "cell_choice palette and cell counts are derived from the GOLD output grids — an explicitly recorded diagnostic protocol, not official ARC-AGI-2 evaluation"
+}

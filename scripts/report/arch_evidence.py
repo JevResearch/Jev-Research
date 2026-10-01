@@ -5,7 +5,7 @@ Reads runs_archprobe/{analysis.json,rows.jsonl} (written by
 scripts/benchmark/run_arch_probe.py) and emits
 docs/modern-comparison/architecture-evidence.html with:
   * prefill: server-compute time vs input tokens (with the linear fit),
-  * concurrency: client wall vs server compute across in-flight count,
+  * concurrency: client wall vs upstream service time across in-flight count,
   * ancestry: position-balanced family preference (the OpenAI-prior result),
   * output tokens vs option count (the self-batched read-out signature).
 
@@ -53,10 +53,10 @@ def prefill_chart(a):
     b1, b0 = np.polyfit(xs, ys, 1)  # polyfit returns [slope, intercept]
     p = [_svg_open(W, H)]
     p.append(f'<text x="24" y="30" fill="{TEXT}" font-size="17" font-weight="600">'
-             'Prefill: server compute vs input tokens</text>')
+             'Prefill: upstream service time vs input tokens</text>')
     p.append(f'<text x="24" y="48" fill="{MUTED}" font-size="11.5">'
              f'upstream_ms &#8776; {b0:.0f} ms + {b1:.1f} ms per 1k tokens '
-             '(queue-free server time; ~200k tok/s marginal)</text>')
+             '(proxy-reported upstream service time; ~200k tok/s marginal)</text>')
     for gx in range(0, int(xmx) + 1, 5):
         x = L + gx / xmx * (W - L - R)
         p.append(f'<line x1="{x:.0f}" y1="{T}" x2="{x:.0f}" y2="{H-B}" stroke="{GRID}"/>')
@@ -91,10 +91,11 @@ def concurrency_chart(a):
     ymx = max(max(walls), max(ups)) * 1.12
     p = [_svg_open(W, H)]
     p.append(f'<text x="24" y="30" fill="{TEXT}" font-size="17" font-weight="600">'
-             'Concurrency: client wall vs server compute</text>')
+             'Concurrency: client wall vs upstream service time</text>')
     p.append(f'<text x="24" y="48" fill="{MUTED}" font-size="11.5">'
              'wall (red) bends up past c=16 but upstream (teal) stays flat - '
-             'that is our connection pool, not a server limit</text>')
+             'that is our connection pool; flat upstream is consistent with '
+             'efficient serving (batching vs spare capacity is not identified)</text>')
     for gx in cs:
         x = L + gx / xmx * (W - L - R)
         p.append(f'<line x1="{x:.0f}" y1="{T}" x2="{x:.0f}" y2="{H-B}" stroke="{GRID}"/>')
@@ -117,7 +118,7 @@ def concurrency_chart(a):
     p.append(line(walls, RED))
     p.append(line(ups, TEAL))
     p.append(f'<text x="{W-R-190}" y="{T+16}" fill="{RED}" font-size="12">&#9679; client wall</text>')
-    p.append(f'<text x="{W-R-190}" y="{T+34}" fill="{TEAL}" font-size="12">&#9679; server compute</text>')
+    p.append(f'<text x="{W-R-190}" y="{T+34}" fill="{TEAL}" font-size="12">&#9679; upstream service time</text>')
     p.append(f'<text x="{(W-L-R)/2+L:.0f}" y="{H-12}" fill="{MUTED}" font-size="11" '
              'text-anchor="middle">concurrent requests in flight</text>')
     p.append("</svg>")
@@ -199,7 +200,7 @@ def headcount_chart(a):
     mq = a["headcount"]["marginal_ms_per_question"]
     p = [_svg_open(W, H)]
     p.append(f'<text x="24" y="30" fill="{TEXT}" font-size="17" font-weight="600">'
-             'Self-batching: server compute vs questions in one request</text>')
+             'Self-batching: upstream service time vs questions in one request</text>')
     p.append(f'<text x="24" y="48" fill="{MUTED}" font-size="11.5">'
              f'measured +{mq:.2f} ms per extra question; dashed = what that question&#39;s '
              'own ~55 input tokens predict at the prefill slope - the decision '
@@ -228,25 +229,27 @@ def headcount_chart(a):
 
 
 def compute_pie(a):
-    """Where the ~77 ms of a typical MMLU-Pro call goes (measured components)."""
+    """Illustrative decomposition of one typical call (conditional on the
+    single-pass fit). Not a measured overhead breakdown; the decision term is
+    deliberately not drawn, being below this measurement's resolution."""
     import math
     floor = a["prefill"]["fixed_floor_ms"]
     slope = a["prefill"]["ms_per_1k_input_tokens"]
     tok = 560.0
     prefill = slope * tok / 1000.0
-    decide = 0.106
-    total = floor + prefill + decide
+    total = floor + prefill
     parts = [("serving floor", floor, MUTED),
-             (f"prefill ({tok:.0f} input tokens)", prefill, ACCENT),
-             ("decision read-out", decide, AMBER)]
+             (f"prefill ({tok:.0f} input tokens)", prefill, ACCENT)]
     W, H = 940, 340
     cx, cy, r = 300, 185, 118
     p = [_svg_open(W, H)]
     p.append(f'<text x="24" y="30" fill="{TEXT}" font-size="17" font-weight="600">'
-             'Anatomy of one typical call (~77 ms server compute)</text>')
+             'Illustrative anatomy of one typical call (conditional model split)</text>')
     p.append(f'<text x="24" y="48" fill="{MUTED}" font-size="11.5">'
-             'a ~560-token MMLU-Pro question: the floor is serving overhead, prefill is the '
-             'model reading, deciding is what the read-out adds</text>')
+             'a ~560-token MMLU-Pro question, split by the fitted terms: the floor is '
+             'serving overhead plus whatever the header covers, prefill is the '
+             'model reading; any decision cost is below this measurement\'s resolution. '
+             'Illustrative, not a measured overhead breakdown</text>')
     ang = -math.pi / 2
     for name, val, color in parts:
         frac = val / total
@@ -374,7 +377,9 @@ and self-batched answers. Read with the caveats in the paired findings document:
 this is behavioral evidence consistent with an architecture, not a proof of one,
 and it does not identify weights or provenance.</p>
 <h2>1. Prefill cost</h2>{st(prefill_chart(a))}
-<p class="cap">Server compute (the queue-free x-envoy header) grows
+<p class="cap">Proxy-reported upstream service time (x-envoy-upstream-service-time:
+includes upstream processing and the Envoy-to-upstream network hop, does not
+certify exclusion of application queueing/preprocessing/serialization) grows
 ~{a['prefill']['ms_per_1k_input_tokens']:.1f} ms per 1k input tokens on top of a
 ~{a['prefill']['fixed_floor_ms']:.0f} ms floor (R² {a['prefill']['r2_linear']:.2f},
 {a['prefill']['token_range'][0]/1000:.0f}k-{a['prefill']['token_range'][1]/1000:.0f}k tokens).
@@ -382,6 +387,11 @@ A fixed floor plus a linear per-token term is what transformer prefill looks
 like; there is no large quadratic term at these lengths. The floor is
 per-request serving overhead, not the model itself.</p>
 <h2>2. Self-batched compute (headcount)</h2>{st(headcount_chart(a))}{st(compute_pie(a))}
+<p class="cap">The pie is an <b>illustrative</b> decomposition of one
+representative call under the single-pass fit (the fitted serving floor plus
+the prefill term); it is not a measured overhead breakdown, no overhead
+percentage is claimed as fact, and the decision term is not drawn because it
+is below this measurement's resolution.</p>
 <p class="cap">Packing up to 192 questions into one request barely moves server
 compute (+{a['headcount']['marginal_ms_per_question']:.2f} ms per extra question - about what its own
 ~55 added input tokens cost at the prefill slope) while billed output tokens

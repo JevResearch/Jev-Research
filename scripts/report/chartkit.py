@@ -140,6 +140,44 @@ g.ptrow .fatten{fill:transparent;stroke:none}
      }
    }
  });
+ // keyboard + touch parity: every tooltip row is focusable and tappable
+ function place(g){
+   var r = g.getBoundingClientRect();
+   tip.innerHTML = g.getAttribute('data-tip');
+   tip.style.display = 'block';
+   var x = r.right + 8, y = r.top;
+   if (x + 340 > window.innerWidth) x = Math.max(8, r.left - 348);
+   if (y + 140 > window.innerHeight) y = Math.max(8, window.innerHeight - 150);
+   tip.style.left = x + 'px'; tip.style.top = y + 'px';
+   var svg = g.ownerSVGElement;
+   if (svg && svg.getAttribute('data-isolate') === '1') {
+     svg.classList.add('isolate');
+     var rr = svg.querySelectorAll('g.isorow');
+     for (var i = 0; i < rr.length; i++) rr[i].classList.toggle('hot', rr[i] === g);
+   }
+ }
+ function arm(){
+   var rr = document.querySelectorAll('g[data-tip]');
+   for (var i = 0; i < rr.length; i++) {
+     if (rr[i].getAttribute('tabindex') === null) {
+       rr[i].setAttribute('tabindex', '0');
+       rr[i].setAttribute('role', 'img');
+       rr[i].setAttribute('aria-label',
+         rr[i].getAttribute('data-tip').replace(/<br[^>]*>/gi, '; ').replace(/<[^>]+>/g, ''));
+     }
+   }
+ }
+ if (document.readyState !== 'loading') arm();
+ document.addEventListener('DOMContentLoaded', arm);
+ document.addEventListener('focusin', function(e){
+   var g = e.target && e.target.closest ? e.target.closest('g[data-tip]') : null;
+   if (g) place(g);
+ });
+ document.addEventListener('focusout', function(){ tip.style.display = 'none'; });
+ document.addEventListener('click', function(e){
+   var g = e.target && e.target.closest ? e.target.closest('g[data-tip]') : null;
+   if (g) { place(g); }
+ });
 })();
 ]]></script>'''
 
@@ -193,47 +231,137 @@ CHEAP_META = {
 }
 
 
+def exactly_one(root, pattern: str) -> Path:
+    """Require exactly one glob hit (no arbitrary first-match selection)."""
+    hits = sorted(root.glob(pattern))
+    if len(hits) != 1:
+        raise RuntimeError(
+            f"expected exactly 1 hit for {pattern!r}, found {len(hits)}: "
+            f"{[str(h) for h in hits]}")
+    return hits[0]
+
+
 def load_matched(root) -> dict:
-    """summary.json from the matched cheap-model runs, or {} before completion."""
-    p = root / "runs_matched_cheap/v3/summary_v3.json"
-    if not p.exists():
-        p = root / "runs_matched_cheap/v2/summary_v2.json"
-    if not p.exists():
-        p = root / "runs_matched_cheap/summary.json"
-    if not p.exists():
-        return {}
-    return json.loads(p.read_text())
+    """The SOLE authoritative matched-baseline source: the v4r1 active summary
+    (data_report/baselines/v4r1/public_summary.json), whose cells carry
+    all-requested accuracy over full sampled denominators, complete/partial
+    status and paired Jev metrics. Missing artifacts FAIL CLOSED; there is no
+    legacy v2/v3 summary fallback (those summaries are unrepaired legacy and
+    are never presented as current)."""
+    for need in ("data_report/baselines/v4r1/public_summary.json",
+                 "data_report/baselines/v4r1/active_source_map.json"):
+        p = root / need
+        if not p.exists():
+            raise FileNotFoundError(
+                f"authoritative baseline artifact missing (fail closed, no "
+                f"legacy fallback): {need}")
+    return json.loads(
+        (root / "data_report/baselines/v4r1/public_summary.json").read_text())
+
+
+def load_jev_scores(root) -> dict:
+    """Jev's own scores, read from the regenerated score.json artifacts through
+    the recorded source selectors (active_source_map.json). Nothing is
+    hardcoded; greedy is the ALL-REQUESTED headline accuracy and weighted is
+    the mean displayed probability on the gold option (descriptive only)."""
+    amap = json.loads(
+        (root / "data_report/baselines/v4r1/active_source_map.json").read_text())
+    sel = amap["sources"]["jev_scores"]
+
+    def one(pattern: str) -> dict:
+        return json.loads(exactly_one(root, pattern).read_text())
+
+    def stage(pattern: str) -> dict:
+        s = one(pattern)
+        w = one(pattern.replace("score.json", "weighted_score.json"))
+        return {"greedy": s["accuracy"],
+                "weighted_mean_p_gold": w["weighted_accuracy_mean"],
+                "n": s.get("n_requested") or s.get("n_expected")}
+
+    out = {
+        "mmlu_pro": stage(sel["mmlu"]),
+        "arc_challenge": stage(sel["arc"]),
+        "gpqa_diamond": stage(sel["gpqa"]),
+        "math500_mcq_adapted": stage(sel["math500_choice"]),
+        "hle_text_only_mc": stage(sel["hle_text_mc"]),
+        "math500_digit_readout": stage(
+            "runs_benchmark_ext/bench-math500_score-*/derived/score.json"),
+    }
+    corr = amap["sources"]["arc_corrected"]
+    ch = one(corr.replace("{choice,score}", "choice") + "/derived/score.json")
+    sc = one(corr.replace("{choice,score}", "score") + "/derived/score.json")
+    tk = one("runs_benchmark_ext/bench-arc_agi2_task-*/derived/score.json")
+    out["arc_agi2_public_eval"] = {
+        "cell_accuracy_choice": ch["cell_accuracy_diagnostic"],
+        "cell_accuracy_score": sc["cell_accuracy_diagnostic"],
+        "cells_total": ch["cells_total"],
+        "exact_grid": tk["task_accuracy"],
+        "n_tasks": tk.get("n_tasks_expected") or tk.get("n_tasks"),
+    }
+    return out
+
+
+def paired_mmlu_matched(root) -> dict:
+    """The paired matched-subset MMLU figure (repaired diagnostics)."""
+    d = json.loads(
+        (root / "data_report/benchmark_diagnostics/paired_diagnostics.json").read_text())
+    return d["mmlu_matched_subset"]
+
+
+def rotation_diagnostics(root) -> dict:
+    """Cluster-aware option-rotation diagnostics (repaired diagnostics)."""
+    d = json.loads(
+        (root / "data_report/benchmark_diagnostics/paired_diagnostics.json").read_text())
+    return d["rotation_clusters"]
 
 
 def matched_points(summary: dict, ds: str) -> list[dict]:
-    """Chart-ready rows: {id,name,short,released,tier,basis,accuracy,cost,n,...}."""
+    """Chart-ready rows from the v4r1 active summary cells:
+    {id,name,short,released,tier,basis,accuracy,cost,n,...}.
+
+    Contract (regression-tested in tests/test_report_chart_sources.py):
+      * only cells with status == 'complete' are charted; partial cells are
+        skipped even when their original rows looked complete, and
+        partial_settled_accuracy is NEVER used;
+      * accuracy is the all-requested accuracy_all_requested over the FULL
+        sampled denominator (n_requested);
+      * cost is the current definition: provider-reported original +
+        replacement spend over the same denominator;
+      * wire = the cell's original wire protocol (v2 carryovers visible);
+      * jev_join carries the repaired paired Jev metric
+        (jev_correct_on_subset / n_paired)."""
     out = []
-    for mid, dss in (summary.get("models") or {}).items():
-        e = dss.get(ds)
-        if not e:
+    for key, e in (summary.get("cells") or {}).items():
+        if e.get("dataset") != ds:
             continue
-        if (e.get("accuracy_recovered") is None
-                and e.get("accuracy_all_requested") is None):
-            continue
-        if (e.get("n_terminal") or 0) < e.get("n_requested", 1):
-            continue  # incomplete runs are not charted
+        if e.get("status") != "complete" or not e.get("complete"):
+            continue                       # 17 partial cells: never charted
+        acc = e.get("accuracy_all_requested")
+        if acc is None:
+            continue                       # fail closed; never legacy values
+        mid = e["model"]
         short, rel, tier, basis = CHEAP_META.get(
             mid, (mid.split("/")[-1], None, "none", None))
-        acc = e.get("accuracy_recovered")
-        if acc is None:
-            acc = e.get("accuracy_all_requested")
-        if acc is None:
-            continue
-        unre = e.get("unrecovered", e.get("format_failed", 0))
+        cost = e.get("cost") or {}
+        usd = ((cost.get("original_reported_usd") or 0.0)
+               + (cost.get("replacement_reported_usd") or 0.0))
+        n = e["n_requested"]
+        jp = e.get("jev_paired") or {}
+        n_pair = jp.get("n_paired") or 0
+        unre = (e.get("effects") or {}).get("unrecovered_settled", 0)
         out.append({
             "id": mid, "name": short, "short": short, "released": rel,
             "tier": tier, "date_basis": basis,
             "accuracy": acc * 100,
-            "cost": e.get("cost_per_question_usd"),
-            "n": e.get("n_requested"),
-            "fmt_pct": 100 * unre / max(e.get("n_terminal", 1), 1),
-            "jev_join": e.get("jev_join"),
-            "latency_ms": e.get("median_latency_ms"),
+            "cost": usd / n if n else None,
+            "n": n,
+            "n_correct": e.get("n_correct"),
+            "fmt_pct": 100 * unre / max(n, 1),
+            "jev_join": ({"jev_accuracy_on_subset":
+                          jp["jev_correct_on_subset"] / n_pair}
+                         if n_pair else None),
+            "wire": e.get("original_wire_protocol"),
+            "cell": key,
         })
     out.sort(key=lambda r: -r["accuracy"])
     return out

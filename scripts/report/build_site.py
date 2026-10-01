@@ -74,6 +74,14 @@ INCLUDE_FILES = [
     "data_report/probe2_plan.json",
     "data_report/size_estimate.json",
     "data_report/jevbot_examples.json",
+    "data_report/benchmark_diagnostics/calibration.json",
+    "data_report/benchmark_diagnostics/paired_diagnostics.json",
+    "data_report/benchmark_diagnostics/arc_payload_audit.json",
+    "data_report/raw_recoverability_inventory.json",
+    "data_report/baseline_rerun_plan.json",
+    "data_report/baseline_rerun_frozen_plan.json",
+    "data_report/baselines/v4r1/public_summary.json",
+    "data_report/baselines/v4r1/active_source_map.json",
     "runs_matched_cheap/freeze_cheap.json",
     "runs_matched_cheap/smoke_cheap.json",
     "runs_matched_cheap/results.jsonl",
@@ -128,7 +136,8 @@ INTERNAL_ALLOW = {
     "runs_matched_cheap/v2/results.jsonl",
     "runs_matched_cheap/v3/results.jsonl",
 }
-BENCH_DIRS = ("runs_benchmark", "runs_benchmark_ext", "runs_benchmark_ext2")
+BENCH_DIRS = ("runs_benchmark", "runs_benchmark_ext", "runs_benchmark_ext2",
+              "runs_benchmark_ext_rerun1")
 
 BANNED_COMPONENTS = {"raw", "data", "models", "__pycache__", ".venv",
                      ".pytest_cache", "runs_reviewed", "runs_matched",
@@ -140,7 +149,8 @@ BANNED_NAME_RE = re.compile(
     r"(^runs_live_spec_.*\.json$|_spec\.json$|aborted-|aborted1|\.log$|\.exit$"
     r"|GATE\.md$|handoff|parent-|continuation|screen|TALK-AUDIT|\.egg-info$)", re.I)
 
-STRIP_LISTS = ("per_item", "model_returned_values", "missing_logical_ids")
+STRIP_LISTS = ("per_item", "model_returned_values", "missing_logical_ids",
+               "missing_items")
 
 TEXT_SUFFIX = {".html", ".json", ".py", ".md", ".sh", ".toml", ".lock",
                ".example", ".txt", ".js", ".css"}
@@ -220,12 +230,13 @@ def build() -> list[str]:
     # benchmark runs: derived aggregates + freeze records, per-stage usage
     for bench in BENCH_DIRS:
         for run in sorted((ROOT / bench).glob("bench-*")):
-            for name in ("score.json", "weighted_score.json", "usage_summary.json"):
+            for name in ("score.json", "weighted_score.json", "usage_summary.json",
+                         "aggregate_provenance.json"):
                 f = run / "derived" / name
                 if not f.exists():
                     continue
                 doc = json.loads(f.read_text())
-                if name != "usage_summary.json":
+                if name not in ("usage_summary.json", "aggregate_provenance.json"):
                     removed = [k for k in STRIP_LISTS if k in doc]
                     for k in removed:
                         doc.pop(k)
@@ -233,6 +244,18 @@ def build() -> list[str]:
                         "per-item lists stripped at publish (item ids/answers "
                         "reference licensed third-party content); aggregates kept")
                 out = BUNDLE / rel(f)
+                out.parent.mkdir(parents=True, exist_ok=True)
+                out.write_text(json.dumps(doc, indent=2) + "\n")
+            # preserved pre-policy aggregates (provenance chain) ship stripped too
+            pre = run / "derived" / "preserved-pre-policy-v1" / "score.json"
+            if pre.exists():
+                doc = json.loads(pre.read_text())
+                for k in STRIP_LISTS:
+                    doc.pop(k, None)
+                doc["publish_note"] = (
+                    "per-item lists stripped at publish (item ids/answers "
+                    "reference licensed third-party content); aggregates kept")
+                out = BUNDLE / rel(pre)
                 out.parent.mkdir(parents=True, exist_ok=True)
                 out.write_text(json.dumps(doc, indent=2) + "\n")
         fz = ROOT / bench / "freeze"
@@ -332,6 +355,8 @@ GATED_GLOBS = ("runs_benchmark*/bench-*/items.jsonl",
                "runs_matched_cheap/attempts.jsonl",
                "runs_matched_cheap/v2/results.jsonl",
                "runs_matched_cheap/v3/results.jsonl",
+               "runs_matched_cheap/v4r1/results.jsonl",
+               "runs_matched_cheap/v4r1/transport_recovery.jsonl",
                "boolq_spec.json", "boolq_paired_spec.json", "mmlu_pilot_spec.json")
 # Whitelist: our own authored prose (synthetic probe corpora, research docs).
 # A phrase only counts as a leak if it is NOT already in our public documents.
@@ -377,6 +402,24 @@ def _rss_mb() -> int:
     return resource.getrusage(resource.RUSAGE_SELF).ru_maxrss // 1024
 
 
+def _row_windows(row):
+    """Windows from every long string field of a jsonl ledger row (results and
+    attempts ledgers can embed outbound payloads or model echoes; any licensed
+    text carried along must be gated, not silently skipped)."""
+    if not isinstance(row, dict):
+        return
+    st = row.get("state")
+    if isinstance(st, str):
+        yield from _windows(st)
+    for v in row.values():
+        if isinstance(v, str) and len(v) > 40 and v is not st:
+            yield from _windows(v)
+        elif isinstance(v, dict):
+            for vv in v.values():
+                if isinstance(vv, str) and len(vv) > 40:
+                    yield from _windows(vv)
+
+
 def gated_hashes() -> set:
     """Hash set of licensed-content windows, per-source boilerplate-filtered."""
     keep: set[bytes] = set()
@@ -399,6 +442,16 @@ def gated_hashes() -> set:
                         continue
                     units += 1
                     for w in _outbound_windows(item):
+                        h = _wh(w)
+                        counts[h] = counts.get(h, 0) + 1
+            elif f.name.endswith(".jsonl"):
+                for line in f.open(encoding="utf-8", errors="ignore"):
+                    try:
+                        item = json.loads(line)
+                    except json.JSONDecodeError:
+                        continue
+                    units += 1
+                    for w in _row_windows(item):
                         h = _wh(w)
                         counts[h] = counts.get(h, 0) + 1
             else:
@@ -570,8 +623,12 @@ the published aggregates in this repository.
 
 **The report page: <https://jevresearch.github.io/Jev-Research/report/>**
 (rendered; the source is [`report/index.html`](report/index.html)).
-Headline: MMLU-Pro 82.8%, GPQA Diamond 76.5%, ~73 ms fixed + ~6 ms/1k-token
-server compute, ~$0.28 per 12k-question MMLU-Pro run - a small, new,
+Measured September 2026 against the service-reported `jev-1.13.0` model
+string; report revision 2 (2026-10-01); an independent evaluation by
+JevResearch, unaffiliated with TypeSafe AI.
+Headline (all-requested scoring): MMLU-Pro 82.7%, GPQA Diamond 76.5%,
+~73 ms fixed + ~6 ms/1k-token proxy-reported upstream service time, ~$0.28 per 12k-question
+MMLU-Pro run - a small, new,
 English-centric model with a probability read-out in place of a generation
 head, not a frontier system.
 
@@ -586,7 +643,7 @@ head, not a frontier system.
 | [`runs_archprobe/`](runs_archprobe/) | architecture-probe analysis, per-call rows, tokenizer studies, the probe2 follow-up battery, billing |
 | [`runs_matched_cheap/`](runs_matched_cheap/) | matched cheap-model baselines (OpenRouter): freeze, smoke, per-call results, summaries, spend |
 | [`runs_live/`](runs_live/) | Talk-to-Jev traces (character / vocabulary-menu / token programs), probes, billing, findings |
-| [`data_report/`](data_report/) | cost model, billing roll-up, architecture + lattice audits, size estimate, probe-2 plan |
+| [`data_report/`](data_report/) | cost model, billing roll-up, architecture + lattice audits, size estimate, probe-2 plan, benchmark calibration/paired diagnostics, raw-recoverability inventory and rerun plan, and the v4r1 active baseline summary (complete/partial cell status) |
 | [`docs/`](docs/) | research write-ups: architecture probes, comparable scores, the vals.ai leaderboard extract, the Talk program |
 | [`ARCHITECTURE-ANALYSIS.md`](ARCHITECTURE-ANALYSIS.md) | the full architecture reconstruction: card, evidence, alternatives ledger, next probes |
 
@@ -606,6 +663,12 @@ dirs and benchmark per-item lists are not bundled). Re-running the *live*
 experiments requires your own `TYPESAFE_API_KEY` (see `.env.example`) and hits
 the paid API.
 
+Re-rendering the page (the bundle's G4 gate proves the shipped page
+byte-for-byte) is re-deriving prose and figures from the published
+aggregates; it is **not** an independent re-scoring. Independently re-scoring
+would require the private raw responses and the licensed item sets, which are
+not redistributed here; the freeze manifests pin their identity by SHA-256.
+
 ## Data availability and licensing
 
 Benchmark **item text is third-party licensed content** (MMLU-Pro is
@@ -619,7 +682,19 @@ and is **not republished here**. This repository publishes instead:
   item identity against those hashes;
 * our own synthetic prompts verbatim (the Talk traces, the architecture-probe
   rows, the tokenizer samples - none is third-party licensed);
-* the complete cost model and billing roll-up.
+* the complete cost model and billing roll-up;
+* benchmark calibration and paired diagnostics aggregates
+  (`data_report/benchmark_diagnostics/`, no item text) and the v4r1 active
+  baseline summary: 42 of 59 (model, dataset) cells complete over their full
+  sampled denominators and charted; 17 partial cells excluded from capability
+  comparisons with per-cell reasons, under a versioned status (v4r1) - never
+  presented as obsolete legacy scores;
+* availability of per-item prediction evidence (item ids, correctness,
+  displayed probabilities): it exists in the working tree
+  (`runs_matched_cheap/v4r1/active_items.jsonl`, stage `per_item` lists) and
+  is available to holders of the datasets on request, but is not
+  redistributed here under the same item-id policy that strips `per_item`
+  lists at publish time.
 
 External comparison scores were fetched from public publisher pages; sources
 and access dates are recorded in `docs/modern-comparison/canonical/` and
@@ -656,8 +731,14 @@ model string measured is the service-reported `jev-1.13.0`.
   were accessed or reconstructed. Architecture statements are inferences from
   API-visible signals: answers, probability vectors, token counts, timing
   headers, billing usage.
-* **Latency slopes are contaminated by multi-tenant batching** and are not
-  convertible to parameter counts.
+* **Latency is proxy-reported upstream service time**
+  (`x-envoy-upstream-service-time`: includes upstream processing and the
+  Envoy-to-upstream network hop, does not certify exclusion of application
+  queueing/preprocessing/serialization). Latency slopes are contaminated by
+  multi-tenant batching and are not convertible to parameter counts.
+* **Probability calibration is dataset-dependent** (near-calibrated on
+  MMLU-Pro, overconfident on HLE) and displayed probabilities are rounded to
+  two decimals (vector sums 0.99/1.00).
 * **Self-reports are learned text.** The model's identity answers are a brand
   prior, not provenance; the tokenizer evidence contradicts the self-report.
 * **MATH-500 / ARC-AGI-2 results are protocol conversions** (multiple-choice,
@@ -726,6 +807,10 @@ def main() -> None:
                  "data_report/probe2_plan.json",
                  "data_report/size_estimate.json",
                  "data_report/jevbot_examples.json",
+                 "data_report/benchmark_diagnostics/calibration.json",
+                 "data_report/benchmark_diagnostics/paired_diagnostics.json",
+                 "data_report/baselines/v4r1/public_summary.json",
+                 "data_report/baselines/v4r1/active_source_map.json",
                  "runs_matched_cheap/summary.json",
                  "runs_matched_cheap/v2/summary_v2.json",
                  "runs_matched_cheap/v3/summary_v3.json",

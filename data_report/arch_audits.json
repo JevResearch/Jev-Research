@@ -95,7 +95,8 @@
   ]
  },
  "rotation_pairs": {
-  "method": "pair rotation-audit items to their native-order results by base item id (rotation ids carry a :permN suffix); exact two-sided McNemar on discordant pairs. Wilson CIs in score.json are item-sampling diagnostics.",
+  "method": "pair rotation-audit items to their native-order results by base item id (rotation ids carry a :permN suffix); exact two-sided McNemar on discordant pairs, NAIVE: the pairs are clustered on shared base items so the independence assumption fails. Wilson CIs in score.json are item-sampling diagnostics.",
+  "validity": "INVALID independence assumption for the naive McNemar p: discordant pairs cluster on 140 unique base items (3 variants each). Quote the cluster-aware analysis from data_report/benchmark_diagnostics/paired_diagnostics.json (rotation_clusters) instead; a non-significant p is not an equivalence proof.",
   "n_paired": 419,
   "both_correct": 351,
   "native_only": 12,
