@@ -8,7 +8,16 @@ Stages, in order (the returned stage records which one fired):
 1. ``exact``           — the trimmed content is exactly one allowed key.
 2. ``stripped``        — the content, stripped of wrapping punctuation/
                          quotes/backticks, is exactly one allowed key.
-3. ``answer_pattern``  — an EXPLICIT answer statement ("The answer is X",
+3. ``final_line_key``  — the FULL final non-empty line of the content, with
+                         markdown wrappers/punctuation stripped safely, is
+                         EXACTLY one allowed key (e.g. an explanation full of
+                         uppercase letters ending in a bare ``"\n\nD"``).
+                         Recognised BEFORE the ambiguity check: earlier
+                         A/B/equation mentions never block it, and an explicit
+                         final answer line outranks earlier explicit
+                         statements.  Never a final-word/last-letter guess:
+                         the whole line must be the key and nothing else.
+4. ``answer_pattern``  — an EXPLICIT answer statement ("The answer is X",
                          "final answer: X", "Choose option X.", "option X")
                          with the key matched as a full token against the
                          actual allowed keys.  The LAST valid explicit
@@ -17,16 +26,16 @@ Stages, in order (the returned stage records which one fired):
                          A statement is NOT an unambiguous explicit answer —
                          and never recovers — when it is negated ("option C is
                          wrong") or disjunctive ("A or B").
-4. ``isolated_key``    — a full-token key mention, only when exactly ONE
+5. ``isolated_key``    — a full-token key mention, only when exactly ONE
                          distinct key is mentioned anywhere in the content.
                          Two or more distinct mentions are ambiguous and
                          return unrecovered — never "last mention wins".
-5. ``reasoning_channel`` — stages 3 then 4 over the reasoning text, only when
+6. ``reasoning_channel`` — stages 4 then 5 over the reasoning text, only when
                          the content is empty (thinking models that spent the
                          whole output budget in the reasoning channel); the
                          isolated-key scan in this stage is limited to the
                          trailing REASONING_TAIL_CHARS characters.
-6. ``unrecovered``     — counted as wrong.
+7. ``unrecovered``     — counted as wrong.
 
 Explicitly excluded heuristics (they inflate recovered accuracy by guessing
 and are GONE): first-character guessing, substring matching ("o10" is not
@@ -46,10 +55,10 @@ from __future__ import annotations
 
 import re
 
-RECOVERY_SPEC_VERSION = "answer-recovery-2.0.0"
+RECOVERY_SPEC_VERSION = "answer-recovery-2.1.0"
 
-STAGES = ("exact", "stripped", "answer_pattern", "isolated_key",
-          "reasoning_channel", "unrecovered")
+STAGES = ("exact", "stripped", "final_line_key", "answer_pattern",
+          "isolated_key", "reasoning_channel", "unrecovered")
 
 REASONING_TAIL_CHARS = 40
 
@@ -83,6 +92,11 @@ def recovery_spec() -> dict:
         "explicit_preference": ("the LAST unambiguous explicit answer "
                                 "statement wins; negated and disjunctive "
                                 "statements never recover"),
+        "final_line_key": ("the FULL final non-empty line stripped of "
+                           "markdown wrappers/punctuation is EXACTLY one "
+                           "allowed key: recognised before the ambiguity "
+                           "check and outranking earlier explicit statements; "
+                           "never a final-word/last-letter guess"),
         "ambiguity": ("two or more distinct isolated key mentions recover "
                       "nothing"),
         "excluded_heuristics": ["first_character_guessing", "substring_matching",
@@ -192,6 +206,23 @@ def _isolated_key(text: str, keyset: set[str]) -> str | None:
     return next(iter(seen)) if len(seen) == 1 else None
 
 
+def _final_line_key(text: str, keyset: set[str]) -> str | None:
+    """The unambiguous terminal answer line: the FULL final non-empty line,
+    wrappers/punctuation stripped safely, is EXACTLY one allowed key.
+
+    Explanatory uppercase mentions earlier in the content never block it;
+    anything else on the final line (extra words, substrings, disjunctions)
+    rejects it — no final-word/last-letter guessing.
+    """
+    lines = [ln for ln in text.splitlines() if ln.strip()]
+    if not lines:
+        return None
+    candidate = lines[-1].strip().strip(STRIP_CHARS)
+    if not candidate or any(ch.isspace() for ch in candidate):
+        return None
+    return _resolve_token(candidate, keyset, casefold=False)
+
+
 def recover_choice(text: str | None, keys: list[str],
                    reasoning: str | None = None) -> tuple[str | None, str]:
     """Deterministic, documented recovery. Returns (key|None, stage).
@@ -224,6 +255,9 @@ def recover_choice(text: str | None, keys: list[str],
     stripped_hit = _resolve_token(stripped, keyset, casefold=False)
     if stripped_hit is not None and " " not in stripped:
         return stripped_hit, "stripped"
+    hit = _final_line_key(content, keyset)
+    if hit is not None:
+        return hit, "final_line_key"
     hit = _explicit_answer(content, keyset)
     if hit is not None:
         return hit, "answer_pattern"

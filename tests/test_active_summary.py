@@ -45,12 +45,16 @@ def test_accuracy_uses_full_sampled_denominator():
         assert sum(b["counts"].values()) == b["n_requested"], cell
 
 
-def test_mimo_pro_math_is_partial_regression():
-    """The stale checkpoint claimed this cell complete at 108/139."""
+def test_mimo_pro_math_completeness_is_count_derived():
+    """Regression against the stale checkpoint that called this cell complete
+    at 108/139: completeness must be DERIVED from counts (all rows settled),
+    never asserted.  Now fully settled: complete with the full denominator."""
     b = SUMMARY["cells"]["xiaomi/mimo-v2.6-pro:math500_choice"]
-    assert b["complete"] is False
-    assert b["n_pending_replacements"] > 0
-    assert b["accuracy_all_requested"] is None
+    assert b["n_pending_replacements"] == 0
+    assert b["n_provisional_transport"] == 0
+    assert b["complete"] is True
+    assert b["accuracy_all_requested"] == round(b["n_correct"] / b["n_requested"], 6)
+    assert sum(b["counts"].values()) == b["n_requested"] == 261
 
 
 def test_salvage_rows_included():

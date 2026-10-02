@@ -8,8 +8,12 @@ in their tooltips.
 
 Reasoning-tier symbols: rounder = less thinking, pointier = more:
 circle none, hexagon low, pentagon medium, square high, triangle xhigh,
-plus max; an underlying dot is always drawn. Jev gets a white-ringed
-diamond, unique on every chart.
+plus max; an underlying dot is always drawn. Thinking that is simply not
+recorded (missing config, no documented non-thinking metadata) renders as
+that bare dot - "thinking unspecified" - and is NEVER tiered "none":
+unknown is not zero thinking, and not a bad score. Only explicit "none"
+configs, non-reasoning slugs or documented no-effort models get the ring.
+Jev gets a white-ringed diamond, unique on every chart.
 
 Tooltips/hover: every row is a <g class="mrow" data-tip="...">; one shared
 script (UI_BLOCK, embedded in each SVG so it survives lifting into the
@@ -31,10 +35,16 @@ GRID = "#242a38"; JEV_G = "#38e1c8"; JEV_W = "#f5b342"; UNK = "#7d8590"
 ERA_MIN = (2023, 1)   # everything <= 2023 clamps to the reddest stop
 ERA_MAX = (2026, 9)
 
-TIER_SIDES = {"none": 0, "low": 6, "medium": 5, "high": 4, "xhigh": 3, "max": -1}
+TIER_SIDES = {"none": 0, "low": 6, "medium": 5, "high": 4, "xhigh": 3, "max": -1,
+              "unspecified": None}
 TIER_LABEL = {"none": "no reasoning", "low": "low reasoning",
               "medium": "medium reasoning", "high": "high reasoning",
-              "xhigh": "very high reasoning", "max": "max reasoning"}
+              "xhigh": "very high reasoning", "max": "max reasoning",
+              "unspecified": "thinking unspecified"}
+# tooltip parenthetical, shared by every chart so the mapping is one string
+TIER_TIP = {"none": "none", "low": "low", "medium": "medium",
+            "high": "high", "xhigh": "xhigh", "max": "max",
+            "unspecified": "thinking unspecified"}
 
 
 def _months(ym: str) -> int:
@@ -63,6 +73,8 @@ def era_color(released: str | None) -> str:
 def symbol(cx: float, cy: float, tier: str, color: str, r: float = 5.0) -> str:
     out = [f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="1.8" fill="{color}"/>']
     sides = TIER_SIDES.get(tier, 0)
+    if sides is None:            # thinking unspecified: bare dot, no ring
+        return "".join(out)
     if sides == -1:
         out.append(f'<path d="M {cx-r:.1f} {cy:.1f} L {cx+r:.1f} {cy:.1f} '
                    f'M {cx:.1f} {cy-r:.1f} L {cx:.1f} {cy+r:.1f} '
@@ -106,7 +118,10 @@ svg.isolate .mlabel{opacity:0;transition:opacity .12s}
 svg.isolate g.hot .mlabel{opacity:1}
 svg.isolate .jevlabel{opacity:1}
 g.mrow{cursor:default}
-g.ptrow .fatten{fill:transparent;stroke:none}
+/* hit-target circles stay (pointer/keyboard area) but are fully transparent:
+   SVG's default fill is BLACK, so an unstyled .fatten rendered as a solid
+   black disc around every marker (the old selector only covered g.ptrow). */
+.fatten{fill:transparent;stroke:none}
 </style>
 <script type="text/javascript"><![CDATA[
 (function(){
@@ -196,39 +211,121 @@ def era_legend(x: int, y: int) -> str:
     p.append(f'<rect x="{gx + 168}" y="{y - 9}" width="10" height="9" fill="{UNK}"/>')
     p.append(f'<text x="{gx + 182}" y="{y}" fill="{MUTED}" font-size="9.5">date n/a</text>')
     sx = gx + 240
-    p.append(f'<text x="{sx}" y="{y}" fill="{MUTED}" font-size="10.5" font-weight="600">shape = reasoning</text>')
-    sx += 122
-    for tier in ("none", "low", "medium", "high", "xhigh", "max"):
+    p.append(f'<text x="{sx}" y="{y}" fill="{MUTED}" font-size="10.5" font-weight="600">shape = thinking</text>')
+    sx += 104
+    # concise solid-vs-ring mapping: bare dot = unspecified, ring = explicit none
+    p.append(symbol(sx, y - 4, "unspecified", MUTED, 4.2))
+    p.append(f'<text x="{sx + 8}" y="{y}" fill="{MUTED}" font-size="9.5">unspecified</text>')
+    sx += 66
+    p.append(symbol(sx, y - 4, "none", MUTED, 4.2))
+    p.append(f'<text x="{sx + 8}" y="{y}" fill="{MUTED}" font-size="9.5">none</text>')
+    sx += 40
+    for tier in ("low", "medium", "high", "xhigh", "max"):
         p.append(symbol(sx, y - 4, tier, MUTED, 4.2))
         sx += 13
+    p.append(f'<text x="{sx + 4}" y="{y}" fill="{MUTED}" font-size="9.5">low &rarr; max</text>')
+    sx += 62
     p.append(f'<text x="{sx + 14}" y="{y}" fill="{MUTED}" font-size="9.5">&dagger; our '
              'matched run</text>')
     return "".join(p)
 
 
 # ---------------------------------------------------------------- matched runs
-# Cheap-model matched baselines (runs_matched_cheap/, OpenRouter, identical
-# frozen items, direct answers, reasoning_effort=low where supported,
-# strict parsing, format failures counted as wrong).
+# Cheap-model matched baselines (runs_matched_cheap/, run through OpenRouter,
+# identical frozen items, direct answers, strict parsing, format failures
+# counted as wrong). Display tiers are epistemic, never name-guessed: a cell's
+# recorded wire effort wins; documented no-effort models (no reasoning knob to
+# set at all) are "none"; everything else run at undocumented provider
+# defaults is "unspecified" (the bare-dot marker), NOT "high" by brand.
 CHEAP_META = {
     "meta-llama/llama-3.1-8b-instruct": ("Llama 3.1 8B", "2024-07", "none", "documented"),
     "mistralai/mistral-nemo": ("Mistral Nemo", "2024-07", "none", "documented"),
-    "openai/gpt-oss-20b": ("gpt-oss-20b", "2025-08", "medium", "documented"),
-    "openai/gpt-oss-120b": ("gpt-oss-120b", "2025-08", "medium", "documented"),
-    "ibm-granite/granite-4.0-h-micro": ("Granite 4.0 Micro", "2025-06", "medium", "estimated"),
+    "openai/gpt-oss-20b": ("gpt-oss-20b", "2025-08", "unspecified", "documented"),
+    "openai/gpt-oss-120b": ("gpt-oss-120b", "2025-08", "unspecified", "documented"),
+    "ibm-granite/granite-4.0-h-micro": ("Granite 4.0 Micro", "2025-06", "unspecified", "estimated"),
     "google/gemma-3-4b-it": ("Gemma 3 4B", "2025-03", "none", "documented"),
-    "qwen/qwen3.7-flash": ("Qwen3.7 Flash", "2026-06", "high", "estimated"),
-    "qwen/qwen3.7-flash@think": ("Qwen3.7 Flash (thinking)", "2026-06", "low", "estimated"),
-    "qwen/qwen3.8-max-0902": ("Qwen3.8 Max", "2026-08", "high", "documented"),
-    "xiaomi/mimo-v2.6-pro": ("MiMo v2.6 Pro", "2026-05", "high", "documented"),
-    "xiaomi/mimo-v2.6-flash": ("MiMo v2.6 Flash", "2026-05", "high", "documented"),
+    "qwen/qwen3.7-flash": ("Qwen3.7 Flash", "2026-06", "unspecified", "estimated"),
+    "qwen/qwen3.7-flash@think": ("Qwen3.7 Flash (thinking)", "2026-06", "unspecified", "estimated"),
+    "qwen/qwen3.8-max-0902": ("Qwen3.8 Max", "2026-08", "low", "documented"),
+    "xiaomi/mimo-v2.6-pro": ("MiMo v2.6 Pro", "2026-05", "unspecified", "documented"),
+    "xiaomi/mimo-v2.6-flash": ("MiMo v2.6 Flash", "2026-05", "unspecified", "documented"),
     "mistralai/mistral-small-3.2-24b-instruct": ("Mistral Small 3.2", "2025-09", "none", "estimated"),
-    "z-ai/glm-5.3-flash": ("GLM-5.3 Flash", "2026-08", "high", "documented"),
-    "qwen/qwen3.8-flash": ("Qwen3.8 Flash", "2026-08", "high", "estimated"),
-    "qwen/qwen3.8-flash@think": ("Qwen3.8 Flash (thinking)", "2026-08", "low", "estimated"),
-    "deepseek/deepseek-v4-flash-0731": ("DeepSeek V4 Flash", "2025-07", "high", "documented"),
-    "z-ai/glm-5.3": ("GLM-5.3", "2026-08", "max", "documented"),
+    "z-ai/glm-5.3-flash": ("GLM-5.3 Flash", "2026-08", "unspecified", "documented"),
+    "qwen/qwen3.8-flash": ("Qwen3.8 Flash", "2026-08", "unspecified", "estimated"),
+    "qwen/qwen3.8-flash@think": ("Qwen3.8 Flash (thinking)", "2026-08", "unspecified", "estimated"),
+    "deepseek/deepseek-v4-flash-0731": ("DeepSeek V4 Flash", "2025-07", "unspecified", "documented"),
+    "z-ai/glm-5.3": ("GLM-5.3", "2026-08", "unspecified", "documented"),
 }
+
+# Documented non-reasoning / no-effort models: there is no thinking knob to
+# set, so "none" here is knowledge, not a guess.
+NONREASONING_MODELS = {
+    "meta-llama/llama-3.1-8b-instruct", "mistralai/mistral-nemo",
+    "google/gemma-3-4b-it", "mistralai/mistral-small-3.2-24b-instruct",
+}
+
+
+def matched_tier(model_id: str, wire: str | None) -> str:
+    """Display reasoning tier for a matched cell: recorded wire effort first,
+    documented non-reasoning metadata second, otherwise "unspecified".
+    An explicit reasoning-off record can override to "none"; an unknown
+    provider default can never become "high" by model name."""
+    w = (wire or "").lower()
+    if "effort-none" in w or "reasoning-disabled" in w or "reasoning-disabled-false" in w:
+        return "none"                # explicit off record overrides unknown
+    if "effort-low" in w:
+        return "low"                 # e.g. v2 wire: reasoning_effort=low, temp 0
+    if "effort-medium" in w:
+        return "medium"
+    if "effort-high" in w:
+        return "high"
+    if "effort-max" in w or "effort-xhigh" in w:
+        return "max"
+    if model_id in NONREASONING_MODELS:
+        return "none"
+    return "unspecified"
+
+
+# Explicit reasoning-level tokens that vals product slugs carry by name
+# (documented naming, not brand inference). A bare "-thinking" token says
+# thinking exists but names no level, so it stays "unspecified".
+_SLUG_LEVEL = (("-high-reasoning", "high"), ("-low-reasoning", "low"),
+               ("-medium-reasoning", "medium"), ("-max-reasoning", "max"))
+# Product lines documented as having no reasoning mode at all ("known
+# documented nonthinking" - knowledge, never a brand-based guess).
+NONTHINKING_SLUGS = (
+    "non-reasoning", "no-thinking", "gpt-3.5-turbo", "gpt-4o", "gpt-4.1",
+    "gpt-4-", "claude-3-5-haiku", "claude-3-5-sonnet", "claude-3-opus",
+    "claude-3-haiku", "command-r-plus", "command-a-", "jamba",
+    "gemini-1.5-", "gemini-2.0-flash-001", "gemini-2.0-flash-exp",
+    "llama4-maverick", "grok-2-1212", "mistral-large-2411", "deepseek-v3",
+)
+
+
+def vals_tier(slug: str, row: dict) -> str:
+    """Display reasoning tier for a fetched vals row, epistemically:
+    the row's own recorded config first (reasoning_effort / compute_effort),
+    then explicit slug naming, then documented non-thinking product lines,
+    else "unspecified". A missing config is UNKNOWN, never "none" and never
+    "high" inferred from the model's name."""
+    ce = (row.get("compute_effort") or "").lower()
+    re_ = (row.get("reasoning_effort") or "").lower()
+    level = {"max": "max", "xhigh": "xhigh", "high": "high",
+             "medium": "medium", "low": "low"}
+    if ce == "max":
+        return "max"
+    if ce in level:
+        return level[ce]
+    if re_ == "none":
+        return "none"
+    if re_ in level:
+        return level[re_]
+    for tok, t in _SLUG_LEVEL:
+        if tok in slug:
+            return t
+    if any(tok in slug for tok in NONTHINKING_SLUGS):
+        return "none"
+    return "unspecified"
 
 
 def exactly_one(root, pattern: str) -> Path:
@@ -340,8 +437,10 @@ def matched_points(summary: dict, ds: str) -> list[dict]:
         if acc is None:
             continue                       # fail closed; never legacy values
         mid = e["model"]
-        short, rel, tier, basis = CHEAP_META.get(
-            mid, (mid.split("/")[-1], None, "none", None))
+        short, rel, _meta_tier, basis = CHEAP_META.get(
+            mid, (mid.split("/")[-1], None, "unspecified", None))
+        wire = e.get("original_wire_protocol")
+        tier = matched_tier(mid, wire)
         cost = e.get("cost") or {}
         usd = ((cost.get("original_reported_usd") or 0.0)
                + (cost.get("replacement_reported_usd") or 0.0))
@@ -360,7 +459,7 @@ def matched_points(summary: dict, ds: str) -> list[dict]:
             "jev_join": ({"jev_accuracy_on_subset":
                           jp["jev_correct_on_subset"] / n_pair}
                          if n_pair else None),
-            "wire": e.get("original_wire_protocol"),
+            "wire": wire,
             "cell": key,
         })
     out.sort(key=lambda r: -r["accuracy"])

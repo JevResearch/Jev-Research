@@ -36,7 +36,8 @@ import math
 from pathlib import Path
 
 from chartkit import (BG, GRID, JEV_G, JEV_W, MUTED, TEXT, UI_BLOCK, UNK,
-                      exactly_one, load_matched, load_jev_scores, matched_points,
+                      TIER_TIP, exactly_one, load_matched, load_jev_scores,
+                      matched_points, vals_tier,
                       TIER_LABEL, era_color, era_legend, jev_diamond, symbol,
                       tip, wrap_subtitle)
 
@@ -58,10 +59,7 @@ CHARTS = [
      "Vals.ai platform measurements (chain-of-thought included in the cost, so reasoning "
      "counts against the models that use it), plus our own matched runs (dagger); "
      "Jev from our billing: $0.042/M input tokens, "
-     "output free. Dashed line: the cost/accuracy envelope of this mixed view - from the "
-     "upper right, down to the left: each step down-left is cheaper and worse. It is a "
-     "positioning envelope across mixed sets and protocols, not a single undifferentiated "
-     "true Pareto frontier. Hover a point to isolate it.",
+     "output free. Hover a point to isolate it.",
      "runs_benchmark/bench-mmlu_full-*/derived/score.json"),
     ("gpqa", "GPQA: score vs measured cost per question",
      "Same basis. Jev: Diamond subset (196 items), direct answers, seeded option shuffle.",
@@ -106,7 +104,8 @@ def chart(bkey, title, subtitle, jev_glob, jev_g, jev_w, n_items):
             continue
         if m["cost_per_test"] <= 0:
             continue
-        pts.append((m["cost_per_test"], m["accuracy"], m))
+        pts.append((m["cost_per_test"], m["accuracy"],
+                    {**m, "slug": slug, "tier": vals_tier(slug, m)}))
     scores = [a for _, a, _ in pts]
     costs = [c for c, _, _ in pts]
     jc = jev_cost_per_question(jev_glob)
@@ -169,21 +168,18 @@ def chart(bkey, title, subtitle, jev_glob, jev_g, jev_w, n_items):
     costs = [c for c, _, _ in pts]
     for c, a, m in pts:
         color = era_color(m.get("released"))
-        tier = m.get("tier", "none")
+        tier = m.get("tier", "unspecified")
         sr = _rank(a, scores)
         cr = _rank(c, costs, reverse=True)
         rel = m.get("released") or "unknown"
         basis = m.get("date_basis") or "n/a"
+        _tl = TIER_TIP.get(tier, "thinking unspecified")
         if m.get("jev_join") is not None or m.get("fmt_pct") is not None:
-            _tl = {"none": "none", "low": "low", "medium": "medium",
-                   "high": "high", "xhigh": "xhigh", "max": "max"}.get(tier, "none")
             tt = (f"<b>{_html.escape(m['name'])} ({_tl})</b><br>"
                   f"score {a:.1f}% &mdash; #{sr} of {n_all}<br>"
                   f"cost ${c:.6f}/question &mdash; #{cr} of {n_all}<br>"
                   f"released {rel}" + (" (estimated)" if basis == "estimated" else ""))
         else:
-            _tl = {"none": "none", "low": "low", "medium": "medium",
-                   "high": "high", "xhigh": "xhigh", "max": "max"}.get(tier, "none")
             tt = (f"<b>{_html.escape(m['name'])} ({_tl})</b><br>"
                   f"score {a:.1f}% &mdash; #{sr} of {n_all}<br>"
                   f"cost ${c:.5f}/question &mdash; #{cr} of {n_all}<br>"
@@ -241,20 +237,14 @@ def main():
             "tokens, output free) and its scores read from the regenerated score "
             "artifacts (all-requested). Color is release era (red &le;2023 &rarr; purple "
             "&rarr; blue 2026; gray = date not established); marker shape is the "
-            "row's reasoning tier. The dashed line is the cost/accuracy envelope of "
-            "this mixed view: from the upper right, down to the left. It is a "
-            "positioning envelope across mixed sets and protocols (publisher rows, "
-            "our protocol conversions, our matched runs), not a single "
-            "undifferentiated true Pareto frontier. All models are labeled; hover or "
-            "focus any point to isolate it and see score rank, cost rank, release date "
-            "and tier. "
-            "Measured cost includes reasoning tokens but does not fix the "
-            "harness/sample mismatch between our runs and the platform rows. "
-            "Dagger-marked points are our own matched runs of a dozen cheap "
-            "OpenRouter models on the identical frozen items (direct answers, one "
-            "attempt, strict parsing, provider-reported costs) - they fill the "
-            "commodity end of the market that the vals boards do not cover, and only "
-            "complete v4r1 cells (full sampled denominators) are charted. "
+            "row's reasoning tier (solid dot = thinking unspecified, ring = none). "
+            "All models are labeled; hover or focus any point to isolate it and see "
+            "score rank, cost rank, release date and tier. "
+            "Dagger-marked points are our own matched runs of a dozen models "
+            "on the identical frozen items (direct answers, one attempt, strict "
+            "parsing, provider-reported costs) - they fill the commodity end of the "
+            "market that the vals boards do not cover, and only complete v4r1 cells "
+            "(full sampled denominators) are charted. "
             "HLE and MATH-500 are not charted here: Jev's rows on those benchmarks "
             "are a multiple-choice subset and an MCQ conversion, and no fair "
             "cost/score comparison exists against free-form or full-set references. "

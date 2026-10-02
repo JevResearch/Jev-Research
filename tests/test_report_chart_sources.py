@@ -4,11 +4,16 @@ Regression for the P0-1 publication blocker: the capability/pareto charts must
 be generated from the authoritative v4r1 active summary
 (data_report/baselines/v4r1/public_summary.json + active_source_map.json), not
 from the stale pre-repair runs_matched_cheap/v3/summary_v3.json. Contract:
-  * every one of the 42 complete cells appears, with its all-requested
-    accuracy over the FULL sampled denominator and the current cost definition;
-  * all 17 partial cells are excluded (never partial_settled_accuracy);
+  * every complete cell appears (counts derived from the summary's totals -
+    59/59 complete, 0 partial under parser answer-recovery-2.1.0), with its
+    all-requested accuracy over the FULL sampled denominator and the current
+    cost definition;
+  * partial cells are excluded if any appear (never
+    partial_settled_accuracy);
   * the corrected Mistral Small MATH-500 figure is the 217/261 tie with Jev,
     not the legacy 2.7% parser artifact;
+  * the resolved matched-MMLU inversion regression: Qwen3.8 Max 872/1000 =
+    87.2% stays above Qwen3.8 Flash 863/1000 = 86.3%;
   * missing authoritative artifacts fail closed (no legacy fallback);
   * no legacy accuracy_recovered preference anywhere in the chart data path;
   * rendered chart rows equal the authoritative source rows (source-to-plot).
@@ -33,6 +38,12 @@ import pareto_graphs as pg           # noqa: E402
 DATASETS = ["mmlu", "arc", "gpqa", "math500_choice", "hle_text_mc"]
 
 
+def _totals():
+    pub = json.loads(
+        (ROOT / "data_report/baselines/v4r1/public_summary.json").read_text())
+    return pub["totals"]
+
+
 def _cells(status):
     pub = json.loads(
         (ROOT / "data_report/baselines/v4r1/public_summary.json").read_text())
@@ -49,8 +60,11 @@ def _rows():
 def test_every_complete_cell_charts_source_values():
     rows = _rows()
     comp = _cells("complete")
-    assert len(comp) == 42
-    assert set(rows) == set(comp), "charted cells must equal the 42 complete cells"
+    t = _totals()
+    assert len(comp) == t["n_complete_cells"] == 59   # current data: 59/59
+    assert t["n_partial_cells"] == 0
+    assert t["n_requested"] == 31038                  # full sampled rows
+    assert set(rows) == set(comp), "charted cells must equal the complete cells"
     for key, r in rows.items():
         e = comp[key]
         assert r["accuracy"] == pytest.approx(e["accuracy_all_requested"] * 100)
@@ -67,8 +81,10 @@ def test_every_complete_cell_charts_source_values():
 def test_all_partial_cells_excluded_and_partial_accuracy_unused():
     rows = set(_rows())
     partial = set(_cells("partial"))
-    assert len(partial) == 17
+    t = _totals()
+    assert len(partial) == t["n_partial_cells"] == 0
     assert not rows & partial
+    assert rows == set(_cells("complete"))     # ALL complete cells charted
     src = (ROOT / "scripts/report/chartkit.py").read_text()
     assert '.get("partial_settled_accuracy"' not in src
     assert '["partial_settled_accuracy"]' not in src
@@ -76,6 +92,19 @@ def test_all_partial_cells_excluded_and_partial_accuracy_unused():
     assert '["accuracy_recovered"]' not in src
     for e in _cells("partial").values():
         assert e["accuracy_all_requested"] is None
+
+
+def test_matched_mmlu_max_beats_flash_current_numbers():
+    """The re-parsed headline cell: Max 872/1000 = 87.2% > Flash 863/1000 =
+    86.3% (the old 45-vs-210 inversion is gone and must never return)."""
+    rows = chartkit.matched_points(chartkit.load_matched(ROOT), "mmlu")
+    by_id = {r["id"]: r for r in rows}
+    mx, fl = by_id["qwen/qwen3.8-max-0902"], by_id["qwen/qwen3.8-flash"]
+    assert (mx["n_correct"], mx["n"]) == (872, 1000)
+    assert (fl["n_correct"], fl["n"]) == (863, 1000)
+    assert mx["accuracy"] == pytest.approx(87.2, abs=1e-3)
+    assert fl["accuracy"] == pytest.approx(86.3, abs=1e-3)
+    assert mx["accuracy"] > fl["accuracy"]
 
 
 def test_mistral_small_math_is_the_current_tie_not_legacy_2_7():
@@ -135,10 +164,10 @@ def test_rendered_chart_rows_equal_source_rows(tmp_path, monkeypatch):
     tips = _tips(cmp_h)
     matched_tips = [t for t in tips
                     if "measured cost $" in t and "/question" in t]
-    # exactly the 42 complete cells plotted; the 17 partial cells absent
-    assert len(matched_tips) == 42
+    # exactly the complete cells plotted (59 today); partial cells absent
+    assert len(matched_tips) == _totals()["n_complete_cells"]
     rows = _rows()
-    assert len(rows) == 42
+    assert len(rows) == _totals()["n_complete_cells"]
     for key, r in rows.items():
         score = f"score {r['accuracy']:.1f}%"
         assert any(r["name"] in t and score in t for t in matched_tips), \

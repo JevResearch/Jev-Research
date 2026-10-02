@@ -266,8 +266,6 @@ def compute_pie(a):
         p.append(f'<text x="522" y="{ly}" fill="{TEXT}" font-size="13">{_esc(name)}: '
                  f'{val:.1f} ms ({val/total*100:.1f}%)</text>')
         ly += 30
-    p.append(f'<text x="500" y="{ly+8}" fill="{MUTED}" font-size="11">response serialization is CPU-side and not in the header; '
-             'output tokens are billed at $0.</text>')
     p.append("</svg>")
     return "".join(p)
 

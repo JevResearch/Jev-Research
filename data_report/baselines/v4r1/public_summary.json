@@ -3,15 +3,45 @@
  "version": "v4r1",
  "generated_by": "scripts/benchmark/build_active_summary.py",
  "denominator_policy": "every cell's denominator is its FULL original sampled set (n_requested) joined to actual gold by item_id — never the rerun subset; accuracy is emitted ONLY for complete cells",
+ "parser_revision": {
+  "version": "answer-recovery-2.1.0",
+  "overrides_file": "runs_matched_cheap/v4r1/derived/prediction_overrides-answer-recovery-2.1.0.jsonl",
+  "overrides_sha256": "b1779ce68ca84ea8f72595d42bffd96b88686b7165366cab0ac2f8de13d44958",
+  "source_raw_sha256": {
+   "runs_matched_cheap/v4r1/private_raw/deepseek_deepseek-v4-flash-0731.jsonl": "4eeb7b2c3dbf866944e90080a902d17a3605d9a980fb1e2617363419cdab93de",
+   "runs_matched_cheap/v4r1/private_raw/google_gemma-3-4b-it.jsonl": "024f6d07da2912c1a9586842215b2c32fe007d0d2fefd07b99c20d9aef053d70",
+   "runs_matched_cheap/v4r1/private_raw/ibm-granite_granite-4.0-h-micro.jsonl": "677ffc7193edd88f2169039b614290a4b1082ebe212e98e6706b1156b742d962",
+   "runs_matched_cheap/v4r1/private_raw/meta-llama_llama-3.1-8b-instruct.jsonl": "2fd543fd089aee152455c89f0d77af567bbd9269d29109ea55794824ce30cd91",
+   "runs_matched_cheap/v4r1/private_raw/mistralai_mistral-nemo.jsonl": "9c51a4d798cb7148fb587b7c4029ec884312f58e4d6494eb49f2f03ef6f7fccf",
+   "runs_matched_cheap/v4r1/private_raw/mistralai_mistral-small-3.2-24b-instruct.jsonl": "0d577adf68f842d74e5dcd96e72890d2520dec380ff1893178e2d9544c287887",
+   "runs_matched_cheap/v4r1/private_raw/openai_gpt-oss-120b.jsonl": "1b7e21cb2eb2175cc605b650b75e74a3fedb83137503ee4fd958d5e7dc2c04ab",
+   "runs_matched_cheap/v4r1/private_raw/openai_gpt-oss-20b.jsonl": "ecd7fe9251f3c09934c8d9490b6bb1de7a8cadedf3fd03ca7f9500ff165c8301",
+   "runs_matched_cheap/v4r1/private_raw/qwen_qwen3.7-flash.jsonl": "f834346b76124e1cd404aef042c985a7d60d76f427cd4ee48c789b585a0b9813",
+   "runs_matched_cheap/v4r1/private_raw/qwen_qwen3.8-flash.jsonl": "91d5dde2210a006327acfd4e69734dfbb0b5bd2fdc4e71294105a82886d4c5ba",
+   "runs_matched_cheap/v4r1/private_raw/qwen_qwen3.8-max-0902.jsonl": "8cf1880328b5be538ead9d019187d6a2041f37c50fb26d43acdca4ec5c4743ae",
+   "runs_matched_cheap/v4r1/private_raw/xiaomi_mimo-v2.6-flash.jsonl": "c19e5890232654ea66db1d6e7785239a5ae3cb08fed96dba483acf2f4bee7647",
+   "runs_matched_cheap/v4r1/private_raw/xiaomi_mimo-v2.6-pro.jsonl": "338080c400d3276c7a15549773e6844ee84438287024a48b1d4b6ceacfe38b0e",
+   "runs_matched_cheap/v4r1/private_raw/z-ai_glm-5.3-flash.jsonl": "3c884625274d893e849792b0703c7e13ec6fb6b1af5e540513d0212bf13f08e5",
+   "runs_matched_cheap/v4r1/private_raw/z-ai_glm-5.3.jsonl": "62b40ace1452aacafa1407ca6818af38a1e7146bbaca6cdd9d0454311b85dc0e"
+  },
+  "n_overrides_applied": 1157,
+  "note": "derived, versioned prediction overrides over stored complete raws; append-only originals untouched; costs not re-counted"
+ },
  "mixed_time_note": "original stable rows (original run time/wire) + offline salvages + versioned replacements (original wire preserved): selective mixed-time replacement; provider drift uncontrolled",
+ "provider_routing_provenance": {
+  "gemma_replacements": "model google/gemma-3-4b-it pinned to the DeepInfra PAID route (provider.order ['deepinfra/bf16'], allow_fallbacks=false; ROUTING only — generation parameters unchanged); actual provider + generation id + error metadata recorded in private_raw",
+  "gemma_originals": "provider UNKNOWN — original raws carry no provider info; free-route use is NOT claimed",
+  "routing_confound": "gemma rows mix unpinned original runs with DeepInfra-pinned replacements: backend provider differs across the mixed-time row classes — a recorded confound, never silently averaged away",
+  "residual_429_cause": "OpenRouter body metadata: 'google/gemma-3-4b-it is temporarily rate-limited upstream' (upstream rate limit — not account quota or billing); remaining provisional rows excluded, not retried endlessly"
+ },
  "totals": {
   "n_cells": 59,
-  "n_complete_cells": 42,
-  "n_partial_cells": 17,
+  "n_complete_cells": 59,
+  "n_partial_cells": 0,
   "n_requested": 31038,
-  "n_correct_settled": 18613,
-  "n_pending_replacements": 1837,
-  "n_provisional_transport": 24
+  "n_correct_settled": 19723,
+  "n_pending_replacements": 0,
+  "n_provisional_transport": 0
  },
  "cells": {
   "deepseek/deepseek-v4-flash-0731:gpqa": {
@@ -226,35 +256,37 @@
    "n_requested": 494,
    "counts": {
     "original_stable": 485,
-    "replacement_resolved": 3,
-    "replacement_provisional": 6
+    "replacement_resolved": 9
    },
    "n_correct": 67,
    "cost": {
     "original_reported_usd": 0.0138,
     "original_n_billed": 485,
     "original_n_unknown": 0,
-    "replacement_reported_usd": 0.00034,
-    "replacement_n_billed": 3,
-    "replacement_n_unknown": 0,
+    "replacement_reported_usd": 0.000776,
+    "replacement_n_billed": 7,
+    "replacement_n_unknown": 2,
     "replacement_n_attempts_billed": 0,
     "bill_note": "provider-reported per-item costs; unknown = counted unknown, never free"
    },
    "effects": {
-    "strict_format_failures_recovered": 0,
+    "strict_format_failures_recovered": 3,
     "unrecovered_settled": 3,
     "cap_finish_length_replacements": 0,
     "finish_reason_unknown_original_rows": 485
    },
    "n_gold_join_mismatch": 0,
-   "n_settled": 488,
+   "n_settled": 494,
    "n_pending_replacements": 0,
-   "n_provisional_transport": 6,
-   "complete": false,
-   "status": "partial",
-   "accuracy_all_requested": null,
-   "partial_settled_accuracy": 0.137295,
-   "exclusion_reason": "0 pending replacement(s), 6 unresolved provisional transport row(s) — NOT chartable; partial_settled_accuracy is diagnostic only"
+   "n_provisional_transport": 0,
+   "complete": true,
+   "status": "complete",
+   "accuracy_all_requested": 0.135628,
+   "jev_paired": {
+    "n_paired": 494,
+    "jev_correct_on_subset": 108,
+    "note": "paired on item_id; baseline correctness joined per row"
+   }
   },
   "google/gemma-3-4b-it:math500_choice": {
    "model": "google/gemma-3-4b-it",
@@ -266,35 +298,37 @@
    "counts": {
     "original_stable": 94,
     "replacement": 143,
-    "replacement_resolved": 18,
-    "replacement_provisional": 6
+    "replacement_resolved": 24
    },
-   "n_correct": 134,
+   "n_correct": 140,
    "cost": {
     "original_reported_usd": 0.000749,
     "original_n_billed": 94,
     "original_n_unknown": 0,
-    "replacement_reported_usd": 0.017684,
-    "replacement_n_billed": 161,
-    "replacement_n_unknown": 0,
+    "replacement_reported_usd": 0.018028,
+    "replacement_n_billed": 165,
+    "replacement_n_unknown": 2,
     "replacement_n_attempts_billed": 0,
     "bill_note": "provider-reported per-item costs; unknown = counted unknown, never free"
    },
    "effects": {
-    "strict_format_failures_recovered": 135,
+    "strict_format_failures_recovered": 141,
     "unrecovered_settled": 25,
     "cap_finish_length_replacements": 0,
     "finish_reason_unknown_original_rows": 94
    },
    "n_gold_join_mismatch": 0,
-   "n_settled": 255,
+   "n_settled": 261,
    "n_pending_replacements": 0,
-   "n_provisional_transport": 6,
-   "complete": false,
-   "status": "partial",
-   "accuracy_all_requested": null,
-   "partial_settled_accuracy": 0.52549,
-   "exclusion_reason": "0 pending replacement(s), 6 unresolved provisional transport row(s) — NOT chartable; partial_settled_accuracy is diagnostic only"
+   "n_provisional_transport": 0,
+   "complete": true,
+   "status": "complete",
+   "accuracy_all_requested": 0.536398,
+   "jev_paired": {
+    "n_paired": 261,
+    "jev_correct_on_subset": 217,
+    "note": "paired on item_id; baseline correctness joined per row"
+   }
   },
   "google/gemma-3-4b-it:mmlu": {
    "model": "google/gemma-3-4b-it",
@@ -306,35 +340,37 @@
    "counts": {
     "original_stable": 972,
     "replacement": 3,
-    "replacement_resolved": 13,
-    "replacement_provisional": 12
+    "replacement_resolved": 25
    },
-   "n_correct": 313,
+   "n_correct": 314,
    "cost": {
     "original_reported_usd": 0.012164,
     "original_n_billed": 972,
     "original_n_unknown": 0,
-    "replacement_reported_usd": 0.000515,
-    "replacement_n_billed": 16,
-    "replacement_n_unknown": 0,
+    "replacement_reported_usd": 0.000893,
+    "replacement_n_billed": 25,
+    "replacement_n_unknown": 3,
     "replacement_n_attempts_billed": 0,
     "bill_note": "provider-reported per-item costs; unknown = counted unknown, never free"
    },
    "effects": {
-    "strict_format_failures_recovered": 8,
-    "unrecovered_settled": 7,
+    "strict_format_failures_recovered": 10,
+    "unrecovered_settled": 12,
     "cap_finish_length_replacements": 0,
     "finish_reason_unknown_original_rows": 972
    },
    "n_gold_join_mismatch": 0,
-   "n_settled": 988,
+   "n_settled": 1000,
    "n_pending_replacements": 0,
-   "n_provisional_transport": 12,
-   "complete": false,
-   "status": "partial",
-   "accuracy_all_requested": null,
-   "partial_settled_accuracy": 0.316802,
-   "exclusion_reason": "0 pending replacement(s), 12 unresolved provisional transport row(s) — NOT chartable; partial_settled_accuracy is diagnostic only"
+   "n_provisional_transport": 0,
+   "complete": true,
+   "status": "complete",
+   "accuracy_all_requested": 0.314,
+   "jev_paired": {
+    "n_paired": 1000,
+    "jev_correct_on_subset": 840,
+    "note": "paired on item_id; baseline correctness joined per row"
+   }
   },
   "ibm-granite/granite-4.0-h-micro:gpqa": {
    "model": "ibm-granite/granite-4.0-h-micro",
@@ -796,35 +832,37 @@
    "n_requested": 1000,
    "counts": {
     "original_stable": 850,
-    "replacement": 138,
-    "replacement_pending": 12
+    "replacement": 150
    },
-   "n_correct": 367,
+   "n_correct": 369,
    "cost": {
     "original_reported_usd": 0.004882,
     "original_n_billed": 850,
     "original_n_unknown": 0,
-    "replacement_reported_usd": 0.001876,
-    "replacement_n_billed": 138,
+    "replacement_reported_usd": 0.002465,
+    "replacement_n_billed": 150,
     "replacement_n_unknown": 0,
     "replacement_n_attempts_billed": 0,
     "bill_note": "provider-reported per-item costs; unknown = counted unknown, never free"
    },
    "effects": {
-    "strict_format_failures_recovered": 86,
-    "unrecovered_settled": 12,
-    "cap_finish_length_replacements": 4,
+    "strict_format_failures_recovered": 95,
+    "unrecovered_settled": 14,
+    "cap_finish_length_replacements": 6,
     "finish_reason_unknown_original_rows": 850
    },
    "n_gold_join_mismatch": 0,
-   "n_settled": 988,
-   "n_pending_replacements": 12,
+   "n_settled": 1000,
+   "n_pending_replacements": 0,
    "n_provisional_transport": 0,
-   "complete": false,
-   "status": "partial",
-   "accuracy_all_requested": null,
-   "partial_settled_accuracy": 0.371457,
-   "exclusion_reason": "12 pending replacement(s), 0 unresolved provisional transport row(s) — NOT chartable; partial_settled_accuracy is diagnostic only"
+   "complete": true,
+   "status": "complete",
+   "accuracy_all_requested": 0.369,
+   "jev_paired": {
+    "n_paired": 1000,
+    "jev_correct_on_subset": 840,
+    "note": "paired on item_id; baseline correctness joined per row"
+   }
   },
   "mistralai/mistral-small-3.2-24b-instruct:gpqa": {
    "model": "mistralai/mistral-small-3.2-24b-instruct",
@@ -837,7 +875,7 @@
     "original_stable": 72,
     "replacement": 124
    },
-   "n_correct": 82,
+   "n_correct": 83,
    "cost": {
     "original_reported_usd": 0.001956,
     "original_n_billed": 72,
@@ -860,7 +898,7 @@
    "n_provisional_transport": 0,
    "complete": true,
    "status": "complete",
-   "accuracy_all_requested": 0.418367,
+   "accuracy_all_requested": 0.423469,
    "jev_paired": {
     "n_paired": 196,
     "jev_correct_on_subset": 150,
@@ -876,35 +914,37 @@
    "n_requested": 494,
    "counts": {
     "original_stable": 185,
-    "replacement": 137,
-    "replacement_pending": 172
+    "replacement": 309
    },
-   "n_correct": 31,
+   "n_correct": 42,
    "cost": {
     "original_reported_usd": 0.015903,
     "original_n_billed": 185,
     "original_n_unknown": 0,
-    "replacement_reported_usd": 0.006092,
-    "replacement_n_billed": 137,
+    "replacement_reported_usd": 0.015729,
+    "replacement_n_billed": 309,
     "replacement_n_unknown": 0,
     "replacement_n_attempts_billed": 0,
     "bill_note": "provider-reported per-item costs; unknown = counted unknown, never free"
    },
    "effects": {
-    "strict_format_failures_recovered": 104,
-    "unrecovered_settled": 17,
+    "strict_format_failures_recovered": 247,
+    "unrecovered_settled": 22,
     "cap_finish_length_replacements": 0,
     "finish_reason_unknown_original_rows": 185
    },
    "n_gold_join_mismatch": 0,
-   "n_settled": 322,
-   "n_pending_replacements": 172,
+   "n_settled": 494,
+   "n_pending_replacements": 0,
    "n_provisional_transport": 0,
-   "complete": false,
-   "status": "partial",
-   "accuracy_all_requested": null,
-   "partial_settled_accuracy": 0.096273,
-   "exclusion_reason": "172 pending replacement(s), 0 unresolved provisional transport row(s) — NOT chartable; partial_settled_accuracy is diagnostic only"
+   "complete": true,
+   "status": "complete",
+   "accuracy_all_requested": 0.08502,
+   "jev_paired": {
+    "n_paired": 494,
+    "jev_correct_on_subset": 108,
+    "note": "paired on item_id; baseline correctness joined per row"
+   }
   },
   "mistralai/mistral-small-3.2-24b-instruct:math500_choice": {
    "model": "mistralai/mistral-small-3.2-24b-instruct",
@@ -956,35 +996,37 @@
    "n_requested": 1000,
    "counts": {
     "original_stable": 614,
-    "replacement": 137,
-    "replacement_pending": 249
+    "replacement": 386
    },
-   "n_correct": 446,
+   "n_correct": 577,
    "cost": {
     "original_reported_usd": 0.013404,
     "original_n_billed": 614,
     "original_n_unknown": 0,
-    "replacement_reported_usd": 0.01029,
-    "replacement_n_billed": 137,
+    "replacement_reported_usd": 0.036197,
+    "replacement_n_billed": 386,
     "replacement_n_unknown": 0,
     "replacement_n_attempts_billed": 0,
     "bill_note": "provider-reported per-item costs; unknown = counted unknown, never free"
    },
    "effects": {
-    "strict_format_failures_recovered": 102,
-    "unrecovered_settled": 8,
-    "cap_finish_length_replacements": 1,
+    "strict_format_failures_recovered": 284,
+    "unrecovered_settled": 20,
+    "cap_finish_length_replacements": 6,
     "finish_reason_unknown_original_rows": 614
    },
    "n_gold_join_mismatch": 0,
-   "n_settled": 751,
-   "n_pending_replacements": 249,
+   "n_settled": 1000,
+   "n_pending_replacements": 0,
    "n_provisional_transport": 0,
-   "complete": false,
-   "status": "partial",
-   "accuracy_all_requested": null,
-   "partial_settled_accuracy": 0.593875,
-   "exclusion_reason": "249 pending replacement(s), 0 unresolved provisional transport row(s) — NOT chartable; partial_settled_accuracy is diagnostic only"
+   "complete": true,
+   "status": "complete",
+   "accuracy_all_requested": 0.577,
+   "jev_paired": {
+    "n_paired": 1000,
+    "jev_correct_on_subset": 840,
+    "note": "paired on item_id; baseline correctness joined per row"
+   }
   },
   "openai/gpt-oss-120b:gpqa": {
    "model": "openai/gpt-oss-120b",
@@ -1322,35 +1364,37 @@
    "n_requested": 196,
    "counts": {
     "original_stable": 54,
-    "replacement": 129,
-    "replacement_pending": 13
+    "replacement": 142
    },
-   "n_correct": 122,
+   "n_correct": 140,
    "cost": {
     "original_reported_usd": 0.029112,
     "original_n_billed": 54,
     "original_n_unknown": 0,
-    "replacement_reported_usd": 0.207639,
-    "replacement_n_billed": 129,
+    "replacement_reported_usd": 0.229915,
+    "replacement_n_billed": 142,
     "replacement_n_unknown": 0,
     "replacement_n_attempts_billed": 0,
     "bill_note": "provider-reported per-item costs; unknown = counted unknown, never free"
    },
    "effects": {
-    "strict_format_failures_recovered": 90,
-    "unrecovered_settled": 17,
-    "cap_finish_length_replacements": 65,
+    "strict_format_failures_recovered": 100,
+    "unrecovered_settled": 20,
+    "cap_finish_length_replacements": 71,
     "finish_reason_unknown_original_rows": 54
    },
    "n_gold_join_mismatch": 0,
-   "n_settled": 183,
-   "n_pending_replacements": 13,
+   "n_settled": 196,
+   "n_pending_replacements": 0,
    "n_provisional_transport": 0,
-   "complete": false,
-   "status": "partial",
-   "accuracy_all_requested": null,
-   "partial_settled_accuracy": 0.666667,
-   "exclusion_reason": "13 pending replacement(s), 0 unresolved provisional transport row(s) — NOT chartable; partial_settled_accuracy is diagnostic only"
+   "complete": true,
+   "status": "complete",
+   "accuracy_all_requested": 0.714286,
+   "jev_paired": {
+    "n_paired": 196,
+    "jev_correct_on_subset": 150,
+    "note": "paired on item_id; baseline correctness joined per row"
+   }
   },
   "qwen/qwen3.7-flash:hle_text_mc": {
    "model": "qwen/qwen3.7-flash",
@@ -1361,35 +1405,37 @@
    "n_requested": 494,
    "counts": {
     "original_stable": 338,
-    "replacement": 130,
-    "replacement_pending": 26
+    "replacement": 156
    },
-   "n_correct": 72,
+   "n_correct": 77,
    "cost": {
     "original_reported_usd": 0.135835,
     "original_n_billed": 338,
     "original_n_unknown": 0,
-    "replacement_reported_usd": 0.227818,
-    "replacement_n_billed": 130,
-    "replacement_n_unknown": 0,
+    "replacement_reported_usd": 0.272586,
+    "replacement_n_billed": 153,
+    "replacement_n_unknown": 3,
     "replacement_n_attempts_billed": 0,
     "bill_note": "provider-reported per-item costs; unknown = counted unknown, never free"
    },
    "effects": {
-    "strict_format_failures_recovered": 83,
-    "unrecovered_settled": 18,
-    "cap_finish_length_replacements": 91,
+    "strict_format_failures_recovered": 103,
+    "unrecovered_settled": 20,
+    "cap_finish_length_replacements": 112,
     "finish_reason_unknown_original_rows": 338
    },
    "n_gold_join_mismatch": 0,
-   "n_settled": 468,
-   "n_pending_replacements": 26,
+   "n_settled": 494,
+   "n_pending_replacements": 0,
    "n_provisional_transport": 0,
-   "complete": false,
-   "status": "partial",
-   "accuracy_all_requested": null,
-   "partial_settled_accuracy": 0.153846,
-   "exclusion_reason": "26 pending replacement(s), 0 unresolved provisional transport row(s) — NOT chartable; partial_settled_accuracy is diagnostic only"
+   "complete": true,
+   "status": "complete",
+   "accuracy_all_requested": 0.15587,
+   "jev_paired": {
+    "n_paired": 494,
+    "jev_correct_on_subset": 108,
+    "note": "paired on item_id; baseline correctness joined per row"
+   }
   },
   "qwen/qwen3.7-flash:math500_choice": {
    "model": "qwen/qwen3.7-flash",
@@ -1400,35 +1446,37 @@
    "n_requested": 261,
    "counts": {
     "original_stable": 106,
-    "replacement": 144,
-    "replacement_pending": 11
+    "replacement": 155
    },
-   "n_correct": 228,
+   "n_correct": 238,
    "cost": {
     "original_reported_usd": 0.024854,
     "original_n_billed": 106,
     "original_n_unknown": 0,
-    "replacement_reported_usd": 0.193731,
-    "replacement_n_billed": 144,
-    "replacement_n_unknown": 0,
+    "replacement_reported_usd": 0.208049,
+    "replacement_n_billed": 153,
+    "replacement_n_unknown": 2,
     "replacement_n_attempts_billed": 0,
     "bill_note": "provider-reported per-item costs; unknown = counted unknown, never free"
    },
    "effects": {
-    "strict_format_failures_recovered": 105,
-    "unrecovered_settled": 13,
-    "cap_finish_length_replacements": 44,
+    "strict_format_failures_recovered": 113,
+    "unrecovered_settled": 15,
+    "cap_finish_length_replacements": 49,
     "finish_reason_unknown_original_rows": 106
    },
    "n_gold_join_mismatch": 0,
-   "n_settled": 250,
-   "n_pending_replacements": 11,
+   "n_settled": 261,
+   "n_pending_replacements": 0,
    "n_provisional_transport": 0,
-   "complete": false,
-   "status": "partial",
-   "accuracy_all_requested": null,
-   "partial_settled_accuracy": 0.912,
-   "exclusion_reason": "11 pending replacement(s), 0 unresolved provisional transport row(s) — NOT chartable; partial_settled_accuracy is diagnostic only"
+   "complete": true,
+   "status": "complete",
+   "accuracy_all_requested": 0.911877,
+   "jev_paired": {
+    "n_paired": 261,
+    "jev_correct_on_subset": 217,
+    "note": "paired on item_id; baseline correctness joined per row"
+   }
   },
   "qwen/qwen3.7-flash:mmlu": {
    "model": "qwen/qwen3.7-flash",
@@ -1439,35 +1487,37 @@
    "n_requested": 1000,
    "counts": {
     "original_stable": 741,
-    "replacement": 129,
-    "replacement_pending": 130
+    "replacement": 259
    },
-   "n_correct": 723,
+   "n_correct": 842,
    "cost": {
     "original_reported_usd": 0.157574,
     "original_n_billed": 741,
     "original_n_unknown": 0,
-    "replacement_reported_usd": 0.147834,
-    "replacement_n_billed": 129,
-    "replacement_n_unknown": 0,
+    "replacement_reported_usd": 0.294135,
+    "replacement_n_billed": 250,
+    "replacement_n_unknown": 9,
     "replacement_n_attempts_billed": 0,
     "bill_note": "provider-reported per-item costs; unknown = counted unknown, never free"
    },
    "effects": {
-    "strict_format_failures_recovered": 73,
-    "unrecovered_settled": 14,
-    "cap_finish_length_replacements": 39,
+    "strict_format_failures_recovered": 167,
+    "unrecovered_settled": 26,
+    "cap_finish_length_replacements": 69,
     "finish_reason_unknown_original_rows": 741
    },
    "n_gold_join_mismatch": 0,
-   "n_settled": 870,
-   "n_pending_replacements": 130,
+   "n_settled": 1000,
+   "n_pending_replacements": 0,
    "n_provisional_transport": 0,
-   "complete": false,
-   "status": "partial",
-   "accuracy_all_requested": null,
-   "partial_settled_accuracy": 0.831034,
-   "exclusion_reason": "130 pending replacement(s), 0 unresolved provisional transport row(s) — NOT chartable; partial_settled_accuracy is diagnostic only"
+   "complete": true,
+   "status": "complete",
+   "accuracy_all_requested": 0.842,
+   "jev_paired": {
+    "n_paired": 1000,
+    "jev_correct_on_subset": 840,
+    "note": "paired on item_id; baseline correctness joined per row"
+   }
   },
   "qwen/qwen3.8-flash:arc": {
    "model": "qwen/qwen3.8-flash",
@@ -1559,35 +1609,38 @@
    "n_requested": 494,
    "counts": {
     "original_stable": 177,
-    "replacement": 121,
-    "replacement_pending": 196
+    "replacement": 307,
+    "replacement_resolved": 10
    },
-   "n_correct": 84,
+   "n_correct": 138,
    "cost": {
     "original_reported_usd": 0.570038,
     "original_n_billed": 177,
     "original_n_unknown": 0,
-    "replacement_reported_usd": 0.880731,
-    "replacement_n_billed": 121,
-    "replacement_n_unknown": 0,
+    "replacement_reported_usd": 2.114304,
+    "replacement_n_billed": 298,
+    "replacement_n_unknown": 19,
     "replacement_n_attempts_billed": 0,
     "bill_note": "provider-reported per-item costs; unknown = counted unknown, never free"
    },
    "effects": {
-    "strict_format_failures_recovered": 103,
-    "unrecovered_settled": 2,
-    "cap_finish_length_replacements": 98,
+    "strict_format_failures_recovered": 253,
+    "unrecovered_settled": 8,
+    "cap_finish_length_replacements": 248,
     "finish_reason_unknown_original_rows": 177
    },
    "n_gold_join_mismatch": 0,
-   "n_settled": 298,
-   "n_pending_replacements": 196,
+   "n_settled": 494,
+   "n_pending_replacements": 0,
    "n_provisional_transport": 0,
-   "complete": false,
-   "status": "partial",
-   "accuracy_all_requested": null,
-   "partial_settled_accuracy": 0.281879,
-   "exclusion_reason": "196 pending replacement(s), 0 unresolved provisional transport row(s) — NOT chartable; partial_settled_accuracy is diagnostic only"
+   "complete": true,
+   "status": "complete",
+   "accuracy_all_requested": 0.279352,
+   "jev_paired": {
+    "n_paired": 494,
+    "jev_correct_on_subset": 108,
+    "note": "paired on item_id; baseline correctness joined per row"
+   }
   },
   "qwen/qwen3.8-flash:math500_choice": {
    "model": "qwen/qwen3.8-flash",
@@ -1724,7 +1777,7 @@
     "original_stable": 872,
     "replacement": 128
    },
-   "n_correct": 828,
+   "n_correct": 872,
    "cost": {
     "original_reported_usd": 2.748682,
     "original_n_billed": 872,
@@ -1747,7 +1800,7 @@
    "n_provisional_transport": 0,
    "complete": true,
    "status": "complete",
-   "accuracy_all_requested": 0.828,
+   "accuracy_all_requested": 0.872,
    "jev_paired": {
     "n_paired": 1000,
     "jev_correct_on_subset": 840,
@@ -1803,36 +1856,38 @@
    "original_wire_protocol": "v3-provider-defaults",
    "n_requested": 196,
    "counts": {
-    "replacement": 108,
-    "original_stable": 33,
-    "replacement_pending": 55
+    "replacement": 163,
+    "original_stable": 33
    },
-   "n_correct": 106,
+   "n_correct": 161,
    "cost": {
     "original_reported_usd": 0.017808,
     "original_n_billed": 33,
     "original_n_unknown": 0,
-    "replacement_reported_usd": 0.240749,
-    "replacement_n_billed": 108,
+    "replacement_reported_usd": 0.440354,
+    "replacement_n_billed": 163,
     "replacement_n_unknown": 0,
     "replacement_n_attempts_billed": 0,
     "bill_note": "provider-reported per-item costs; unknown = counted unknown, never free"
    },
    "effects": {
-    "strict_format_failures_recovered": 86,
-    "unrecovered_settled": 16,
-    "cap_finish_length_replacements": 9,
+    "strict_format_failures_recovered": 134,
+    "unrecovered_settled": 22,
+    "cap_finish_length_replacements": 23,
     "finish_reason_unknown_original_rows": 33
    },
    "n_gold_join_mismatch": 0,
-   "n_settled": 141,
-   "n_pending_replacements": 55,
+   "n_settled": 196,
+   "n_pending_replacements": 0,
    "n_provisional_transport": 0,
-   "complete": false,
-   "status": "partial",
-   "accuracy_all_requested": null,
-   "partial_settled_accuracy": 0.751773,
-   "exclusion_reason": "55 pending replacement(s), 0 unresolved provisional transport row(s) — NOT chartable; partial_settled_accuracy is diagnostic only"
+   "complete": true,
+   "status": "complete",
+   "accuracy_all_requested": 0.821429,
+   "jev_paired": {
+    "n_paired": 196,
+    "jev_correct_on_subset": 150,
+    "note": "paired on item_id; baseline correctness joined per row"
+   }
   },
   "xiaomi/mimo-v2.6-flash:hle_text_mc": {
    "model": "xiaomi/mimo-v2.6-flash",
@@ -1842,36 +1897,38 @@
    "original_wire_protocol": "v3-provider-defaults",
    "n_requested": 494,
    "counts": {
-    "replacement": 90,
-    "original_stable": 90,
-    "replacement_pending": 314
+    "replacement": 404,
+    "original_stable": 90
    },
-   "n_correct": 58,
+   "n_correct": 172,
    "cost": {
     "original_reported_usd": 0.079873,
     "original_n_billed": 90,
     "original_n_unknown": 0,
-    "replacement_reported_usd": 0.404138,
-    "replacement_n_billed": 90,
+    "replacement_reported_usd": 1.837567,
+    "replacement_n_billed": 404,
     "replacement_n_unknown": 0,
     "replacement_n_attempts_billed": 0,
     "bill_note": "provider-reported per-item costs; unknown = counted unknown, never free"
    },
    "effects": {
-    "strict_format_failures_recovered": 61,
-    "unrecovered_settled": 17,
-    "cap_finish_length_replacements": 19,
+    "strict_format_failures_recovered": 300,
+    "unrecovered_settled": 66,
+    "cap_finish_length_replacements": 103,
     "finish_reason_unknown_original_rows": 90
    },
    "n_gold_join_mismatch": 0,
-   "n_settled": 180,
-   "n_pending_replacements": 314,
+   "n_settled": 494,
+   "n_pending_replacements": 0,
    "n_provisional_transport": 0,
-   "complete": false,
-   "status": "partial",
-   "accuracy_all_requested": null,
-   "partial_settled_accuracy": 0.322222,
-   "exclusion_reason": "314 pending replacement(s), 0 unresolved provisional transport row(s) — NOT chartable; partial_settled_accuracy is diagnostic only"
+   "complete": true,
+   "status": "complete",
+   "accuracy_all_requested": 0.348178,
+   "jev_paired": {
+    "n_paired": 494,
+    "jev_correct_on_subset": 108,
+    "note": "paired on item_id; baseline correctness joined per row"
+   }
   },
   "xiaomi/mimo-v2.6-flash:math500_choice": {
    "model": "xiaomi/mimo-v2.6-flash",
@@ -1923,35 +1980,37 @@
    "n_requested": 1000,
    "counts": {
     "original_stable": 661,
-    "replacement": 115,
-    "replacement_pending": 224
+    "replacement": 339
    },
-   "n_correct": 674,
+   "n_correct": 840,
    "cost": {
     "original_reported_usd": 0.092746,
     "original_n_billed": 661,
     "original_n_unknown": 0,
-    "replacement_reported_usd": 0.165789,
-    "replacement_n_billed": 115,
+    "replacement_reported_usd": 0.59285,
+    "replacement_n_billed": 339,
     "replacement_n_unknown": 0,
     "replacement_n_attempts_billed": 0,
     "bill_note": "provider-reported per-item costs; unknown = counted unknown, never free"
    },
    "effects": {
-    "strict_format_failures_recovered": 75,
-    "unrecovered_settled": 19,
-    "cap_finish_length_replacements": 5,
+    "strict_format_failures_recovered": 219,
+    "unrecovered_settled": 59,
+    "cap_finish_length_replacements": 24,
     "finish_reason_unknown_original_rows": 661
    },
    "n_gold_join_mismatch": 0,
-   "n_settled": 776,
-   "n_pending_replacements": 224,
+   "n_settled": 1000,
+   "n_pending_replacements": 0,
    "n_provisional_transport": 0,
-   "complete": false,
-   "status": "partial",
-   "accuracy_all_requested": null,
-   "partial_settled_accuracy": 0.868557,
-   "exclusion_reason": "224 pending replacement(s), 0 unresolved provisional transport row(s) — NOT chartable; partial_settled_accuracy is diagnostic only"
+   "complete": true,
+   "status": "complete",
+   "accuracy_all_requested": 0.84,
+   "jev_paired": {
+    "n_paired": 1000,
+    "jev_correct_on_subset": 840,
+    "note": "paired on item_id; baseline correctness joined per row"
+   }
   },
   "xiaomi/mimo-v2.6-pro:gpqa": {
    "model": "xiaomi/mimo-v2.6-pro",
@@ -1961,36 +2020,38 @@
    "original_wire_protocol": "v3-provider-defaults",
    "n_requested": 196,
    "counts": {
-    "replacement": 118,
-    "original_stable": 11,
-    "replacement_pending": 67
+    "replacement": 185,
+    "original_stable": 11
    },
-   "n_correct": 101,
+   "n_correct": 170,
    "cost": {
     "original_reported_usd": 0.002548,
     "original_n_billed": 11,
     "original_n_unknown": 0,
-    "replacement_reported_usd": 0.6978,
-    "replacement_n_billed": 118,
+    "replacement_reported_usd": 1.244739,
+    "replacement_n_billed": 185,
     "replacement_n_unknown": 0,
     "replacement_n_attempts_billed": 0,
     "bill_note": "provider-reported per-item costs; unknown = counted unknown, never free"
    },
    "effects": {
-    "strict_format_failures_recovered": 98,
-    "unrecovered_settled": 18,
-    "cap_finish_length_replacements": 11,
+    "strict_format_failures_recovered": 150,
+    "unrecovered_settled": 31,
+    "cap_finish_length_replacements": 17,
     "finish_reason_unknown_original_rows": 11
    },
    "n_gold_join_mismatch": 0,
-   "n_settled": 129,
-   "n_pending_replacements": 67,
+   "n_settled": 196,
+   "n_pending_replacements": 0,
    "n_provisional_transport": 0,
-   "complete": false,
-   "status": "partial",
-   "accuracy_all_requested": null,
-   "partial_settled_accuracy": 0.782946,
-   "exclusion_reason": "67 pending replacement(s), 0 unresolved provisional transport row(s) — NOT chartable; partial_settled_accuracy is diagnostic only"
+   "complete": true,
+   "status": "complete",
+   "accuracy_all_requested": 0.867347,
+   "jev_paired": {
+    "n_paired": 196,
+    "jev_correct_on_subset": 150,
+    "note": "paired on item_id; baseline correctness joined per row"
+   }
   },
   "xiaomi/mimo-v2.6-pro:math500_choice": {
    "model": "xiaomi/mimo-v2.6-pro",
@@ -2001,35 +2062,37 @@
    "n_requested": 261,
    "counts": {
     "original_stable": 122,
-    "replacement": 128,
-    "replacement_pending": 11
+    "replacement": 139
    },
-   "n_correct": 249,
+   "n_correct": 260,
    "cost": {
     "original_reported_usd": 0.019154,
     "original_n_billed": 122,
     "original_n_unknown": 0,
-    "replacement_reported_usd": 0.127489,
-    "replacement_n_billed": 127,
+    "replacement_reported_usd": 0.137415,
+    "replacement_n_billed": 138,
     "replacement_n_unknown": 1,
     "replacement_n_attempts_billed": 0,
     "bill_note": "provider-reported per-item costs; unknown = counted unknown, never free"
    },
    "effects": {
-    "strict_format_failures_recovered": 101,
+    "strict_format_failures_recovered": 110,
     "unrecovered_settled": 1,
     "cap_finish_length_replacements": 0,
     "finish_reason_unknown_original_rows": 122
    },
    "n_gold_join_mismatch": 0,
-   "n_settled": 250,
-   "n_pending_replacements": 11,
+   "n_settled": 261,
+   "n_pending_replacements": 0,
    "n_provisional_transport": 0,
-   "complete": false,
-   "status": "partial",
-   "accuracy_all_requested": null,
-   "partial_settled_accuracy": 0.996,
-   "exclusion_reason": "11 pending replacement(s), 0 unresolved provisional transport row(s) — NOT chartable; partial_settled_accuracy is diagnostic only"
+   "complete": true,
+   "status": "complete",
+   "accuracy_all_requested": 0.996169,
+   "jev_paired": {
+    "n_paired": 261,
+    "jev_correct_on_subset": 217,
+    "note": "paired on item_id; baseline correctness joined per row"
+   }
   },
   "xiaomi/mimo-v2.6-pro:mmlu": {
    "model": "xiaomi/mimo-v2.6-pro",
@@ -2040,35 +2103,37 @@
    "n_requested": 1000,
    "counts": {
     "original_stable": 519,
-    "replacement": 124,
-    "replacement_pending": 357
+    "replacement": 481
    },
-   "n_correct": 559,
+   "n_correct": 852,
    "cost": {
     "original_reported_usd": 0.327587,
     "original_n_billed": 519,
     "original_n_unknown": 0,
-    "replacement_reported_usd": 0.316872,
-    "replacement_n_billed": 124,
+    "replacement_reported_usd": 2.127884,
+    "replacement_n_billed": 481,
     "replacement_n_unknown": 0,
     "replacement_n_attempts_billed": 0,
     "bill_note": "provider-reported per-item costs; unknown = counted unknown, never free"
    },
    "effects": {
-    "strict_format_failures_recovered": 94,
-    "unrecovered_settled": 16,
-    "cap_finish_length_replacements": 2,
+    "strict_format_failures_recovered": 350,
+    "unrecovered_settled": 66,
+    "cap_finish_length_replacements": 30,
     "finish_reason_unknown_original_rows": 519
    },
    "n_gold_join_mismatch": 0,
-   "n_settled": 643,
-   "n_pending_replacements": 357,
+   "n_settled": 1000,
+   "n_pending_replacements": 0,
    "n_provisional_transport": 0,
-   "complete": false,
-   "status": "partial",
-   "accuracy_all_requested": null,
-   "partial_settled_accuracy": 0.869362,
-   "exclusion_reason": "357 pending replacement(s), 0 unresolved provisional transport row(s) — NOT chartable; partial_settled_accuracy is diagnostic only"
+   "complete": true,
+   "status": "complete",
+   "accuracy_all_requested": 0.852,
+   "jev_paired": {
+    "n_paired": 1000,
+    "jev_correct_on_subset": 840,
+    "note": "paired on item_id; baseline correctness joined per row"
+   }
   },
   "z-ai/glm-5.3:gpqa": {
    "model": "z-ai/glm-5.3",
@@ -2401,7 +2466,7 @@
  },
  "cost_totals": {
   "original_reported_usd": 25.702311,
-  "replacement_reported_usd": 18.310267,
+  "replacement_reported_usd": 24.236766,
   "typesafe_arc_tariff_derived_usd": 1.160391372,
   "typesafe_arc_plan_worstcase_usd": 2.09,
   "typesafe_note": "usage x tariff (choice 13,910,533 tok = $0.584242386 + score 13,717,833 tok = $0.576148986 at $0.042/M); NOT invoice-verified; budget keeps the 2.09 conservative allocation"

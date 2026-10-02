@@ -66,6 +66,56 @@ TRANSPORT_ATTEMPTS = 3            # bounded retries per logical request
 RETRY_STATUS = {0, 429, 500, 502, 503, 504}   # kept for reference; policy lives
                                              # in revision_run.is_retryable_status
 RESERVATION_SAFETY_INPUT_TOKENS = 4096
+# conservative pre-call INPUT bounds per dataset (audited max/safe usage
+# bound): HLE prompts are long — the flat 4096 estimate underbound them
+RESERVATION_INPUT_TOKENS = {"hle_text_mc": 16384, "gpqa": 8192,
+                            "mmlu": 8192, "math500_choice": 8192, "arc": 8192}
+# paid provider routing pin for the rate-limited model (ROUTING ONLY — never
+# generation parameters): same model google/gemma-3-4b-it on the DeepInfra
+# paid endpoint (parent-verified endpoints metadata /tmp/jev-gemma-endpoints.json;
+# original raws carry no provider info — free-route use is NOT claimed)
+GEMMA_ROUTE_PIN = {"order": ["deepinfra/bf16"], "allow_fallbacks": False}
+GEMMA_MODEL = "google/gemma-3-4b-it"
+
+
+def _route_pinned(model: str) -> bool:
+    return model == GEMMA_MODEL
+
+
+def _route_label(task: dict) -> str:
+    return ("deepinfra/bf16-paid-pinned" if _route_pinned(str(task["model"]))
+            else "provider-default")
+
+
+def _extra_body_for(task: dict) -> dict | None:
+    """Original wire generation params preserved; paid-route pin added for the
+    rate-limited model as a top-level `provider` ROUTING directive only."""
+    eb = dict((task.get("wire") or {}).get("extra_body") or {})
+    if _route_pinned(str(task["model"])):
+        eb["provider"] = dict(GEMMA_ROUTE_PIN)
+    return eb or None
+
+
+class AttemptCost:
+    """Multi-attempt bill accounting: sums KNOWN attempt costs and flags any
+    unknown charge (fail closed).  A 429 with no usage followed by a 200 with
+    cost must sum the known cost and never crash or silently drop the bill."""
+
+    def __init__(self) -> None:
+        self.known_sum = 0.0
+        self.unknown = False
+
+    def add(self, cost: object) -> None:
+        if isinstance(cost, (int, float)) and not isinstance(cost, bool):
+            self.known_sum += float(cost)
+        else:
+            self.unknown = True
+
+    @property
+    def reported(self) -> float | None:
+        """Total to bill when fully known; None when any attempt's cost is
+        unknown (the worst-case reservation then stays held — never free)."""
+        return None if self.unknown else round(self.known_sum, 8)
 KEY_ENV_NAME = "OPENROUTER_API_KEY"
 
 _HERE = Path(__file__).resolve().parent
@@ -88,12 +138,15 @@ def _lid(task: dict) -> str:
 
 
 def _max_cost_of(prices: dict[str, dict[str, float]], task: dict) -> float:
-    """Worst-case pre-call reservation: bounded retries x (generous input at
-    the provider input price + the FULL configured output cap at output price)."""
+    """Worst-case pre-call reservation: bounded retries x (audited max/safe
+    input bound at the provider input price + the FULL configured output cap
+    at output price)."""
     wire = task.get("wire") or {}
     rate = prices[str(task["model"])]
     max_out = int(wire.get("max_output_tokens") or 4096)
-    per_call = (RESERVATION_SAFETY_INPUT_TOKENS * rate["input_per_token"]
+    est_in = RESERVATION_INPUT_TOKENS.get(str(task["dataset"]),
+                                          RESERVATION_SAFETY_INPUT_TOKENS)
+    per_call = (est_in * rate["input_per_token"]
                 + max_out * rate["output_per_token"])
     return TRANSPORT_ATTEMPTS * per_call
 
@@ -245,22 +298,27 @@ def cmd_live(version: str, spend_cap: float, credentials_file: Path,
                           reasoning_effort=wire_d.get("reasoning_effort"),
                           max_output_tokens=int(wire_d.get("max_output_tokens")
                                                 or 4096),
-                          extra_body=wire_d.get("extra_body"))
+                          extra_body=_extra_body_for(task))
         payload = build_chat_payload(req, wire)
         transport = transport_for(model)
-        cost_sum: float | None = 0.0
+        # attempt cost accounting: sum KNOWN attempt costs, flag any unknown
+        # charge — never crash on the known+unknown mix (a 429 with no usage
+        # followed by a 200 with cost must still record the bill)
+        ac = AttemptCost()
         resp = None
         body = None
+        body_parse_error = None
         for attempt in range(1, TRANSPORT_ATTEMPTS + 1):
             resp = transport.post(CHAT_PATH, payload)
-            body = (json.loads(resp.body.decode("utf-8", "replace"))
-                    if resp.body else None)
+            try:
+                body = (json.loads(resp.body.decode("utf-8", "replace"))
+                        if resp.body else None)
+            except json.JSONDecodeError as exc:
+                # never lose the bill record to a decode error
+                body = None
+                body_parse_error = type(exc).__name__
             usage = (body or {}).get("usage") if isinstance(body, dict) else None
-            c = (usage or {}).get("cost")
-            if isinstance(c, (int, float)) and not isinstance(c, bool):
-                cost_sum += float(c)          # every attempt is billed & counted
-            else:
-                cost_sum = None               # fail closed downstream
+            ac.add((usage or {}).get("cost"))
             if resp.status_code == 200 or not is_retryable_status(resp.status_code):
                 break
             if attempt < TRANSPORT_ATTEMPTS:
@@ -286,22 +344,34 @@ def cmd_live(version: str, spend_cap: float, credentials_file: Path,
             "recovery_stage": stage,
             "correct_strict": pred_strict == rcm2.gold_of(items) if pred_strict else False,
             "correct_recovered": pred == rcm2.gold_of(items) if pred else False,
-            "cost_reported": cost_sum,
+            "cost_reported": ac.reported,
+            "cost_known_sum": round(ac.known_sum, 8),
+            "cost_unknown_attempt": ac.unknown,
             "source_version": task.get("source_version"),
             "source_recovery_stage": task.get("source_recovery_stage"),
+            "route": _route_label(task),
             "wire": wire_d,
             "terminal": True,
             "protocol": "selective-replacement (original recorded wire preserved)",
         }
-        # COMPLETE private raw evidence (never truncated, never published)
+        # COMPLETE private raw evidence (never truncated, never published):
+        # provider + generation id + error metadata recorded per user followup
         store.append_raw(record["logical_request_id"], {
             "model": model, "content": content, "reasoning": reasoning,
             "finish_reason": finish, "http_status": resp.status_code,
+            "provider": (body or {}).get("provider") if isinstance(body, dict) else None,
+            "generation_id": (body or {}).get("id") if isinstance(body, dict) else None,
+            "error": (body or {}).get("error") if isinstance(body, dict) else None,
+            "body_parse_error": body_parse_error,
+            "route": _route_label(task),
+            "attempts": attempt,
         })
         store.record_usage(record["logical_request_id"], {
             "input_tokens": (usage or {}).get("prompt_tokens"),
             "output_tokens": (usage or {}).get("completion_tokens"),
-            "cost_usd": cost_sum,
+            "cost_usd": ac.reported,
+            "cost_known_sum": round(ac.known_sum, 8),
+            "cost_unknown_attempt": ac.unknown,
         })
         return record
 
@@ -397,7 +467,7 @@ def main() -> int:
     ap.add_argument("--spend-cap", type=float, default=DEFAULT_SPEND_CAP_USD,
                     help="HARD worst-case exposure cap in USD (persistent ledger)")
     ap.add_argument("--credentials-file", type=Path,
-                    default=Path("/tmp/jev-private-credentials-47rujcux/credentials.json"),
+                    default=Path("/tmp/jev-private-credentials-followup-4_3bi4a4/credentials.json"),
                     help="private credentials JSON (values are never printed)")
     ap.add_argument("--datasets", default="",
                     help="comma list of datasets to dispatch (priority staging; "

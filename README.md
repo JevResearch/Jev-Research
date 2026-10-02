@@ -71,10 +71,7 @@ and is **not republished here**. This repository publishes instead:
 * the complete cost model and billing roll-up;
 * benchmark calibration and paired diagnostics aggregates
   (`data_report/benchmark_diagnostics/`, no item text) and the v4r1 active
-  baseline summary: 42 of 59 (model, dataset) cells complete over their full
-  sampled denominators and charted; 17 partial cells excluded from capability
-  comparisons with per-cell reasons, under a versioned status (v4r1) - never
-  presented as obsolete legacy scores;
+  baseline summary: 59 of 59 (model, dataset) cells complete over their full sampled denominators and charted, under a versioned status (v4r1) - never presented as obsolete legacy scores;
 * availability of per-item prediction evidence (item ids, correctness,
   displayed probabilities): it exists in the working tree
   (`runs_matched_cheap/v4r1/active_items.jsonl`, stage `per_item` lists) and

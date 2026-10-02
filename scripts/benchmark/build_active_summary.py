@@ -36,9 +36,11 @@ if str(_HERE) not in sys.path:
 
 import collections
 import glob
+import hashlib
 import json
 
-from jev_observatory.answer_recovery import recover_choice
+from jev_observatory.answer_recovery import (RECOVERY_SPEC_VERSION,
+                                             recover_choice)
 
 from freeze_rerun_plan import (PARSER_STABLE_STAGES, V2_CONTENT_LIMIT,
                                V2_REASONING_LIMIT, _raw2_index, _raw_complete,
@@ -140,6 +142,26 @@ def _v4r1_state() -> tuple[dict[str, dict], dict[str, int], dict[str, str]]:
     return resolved, n_attempts, finish
 
 
+def _load_overrides() -> tuple[dict[str, dict], dict]:
+    """Derived, versioned prediction overrides (explicit parser revision +
+    source-hash provenance; verified before use)."""
+    prov_path = V4R1_DIR / "derived" / "override_provenance.json"
+    if not prov_path.exists():
+        return {}, {}
+    prov = json.loads(prov_path.read_text(encoding="utf-8"))
+    path = ROOT / prov["overrides_file"]
+    digest = hashlib.sha256(path.read_bytes()).hexdigest()
+    if digest != prov.get("overrides_sha256"):
+        raise RuntimeError(
+            f"{prov_path}: override file hash mismatch — refusing to apply")
+    rows = {}
+    for line in path.read_text(encoding="utf-8").split("\n"):
+        if line.strip():
+            rec = json.loads(line)
+            rows[str(rec["lid"])] = rec
+    return rows, prov
+
+
 def build() -> dict:
     raws = _raw2_index()
     keys = _item_keys()
@@ -156,6 +178,8 @@ def build() -> dict:
 
     active = active_cell_selector(v2_rows, v3_rows, n_req, v3_models)
     repl, n_attempts, finish = _v4r1_state()
+    overrides, override_prov = _load_overrides()
+    n_overrides_applied = 0
 
     per_cell: dict[str, dict] = {}
     items_out: list[dict] = []
@@ -255,6 +279,7 @@ def build() -> dict:
                     counts[klass] += 1
                     ok = bool(rep.get("correct_recovered"))
                     pred = rep.get("pred_recovered")
+                    stage = str(rep.get("recovery_stage"))
                     if rep.get("gold") is not None and rep.get("gold") != gold:
                         block["n_gold_join_mismatch"] += 1  # type: ignore[index]
                     cost = rep.get("cost_reported")
@@ -270,12 +295,30 @@ def build() -> dict:
                         block["effects"]["strict_format_failures_recovered"] += 1  # type: ignore[index]
                     elif not rep.get("pred_recovered"):
                         block["effects"]["unrecovered_settled"] += 1  # type: ignore[index]
+            ov = overrides.get(lid)
+            if ov is not None and klass in ("salvage", "replacement",
+                                           "replacement_resolved"):
+                # DERIVED prediction override (versioned parser revision);
+                # originals untouched, costs not re-counted
+                pred = ov.get("pred_recovered")
+                stage = str(ov.get("recovery_stage"))
+                ok = bool(pred) and pred == gold
+                n_overrides_applied += 1
             if klass in ("original_stable", "settled_non_ok", "salvage",
                          "replacement", "replacement_resolved"):
                 if ok:
                     correct += 1
             item_rec.update({
                 "row_class": klass,
+                "prediction_override": ov is not None,
+                "parser_revision": (RECOVERY_SPEC_VERSION
+                                    if ov is not None else None),
+                "provider_route": ("deepinfra/bf16-paid-pinned"
+                                   if (klass.startswith("replacement")
+                                       and model == "google/gemma-3-4b-it")
+                                   else ("provider-unknown-original"
+                                         if not klass.startswith("replacement")
+                                         else "provider-default")),
                 "protocol": (block["original_wire_protocol"]
                              if klass in ("original_stable", "settled_non_ok",
                                           "salvage")
@@ -283,12 +326,14 @@ def build() -> dict:
                 "correct_recovered": ok if klass in (
                     "original_stable", "settled_non_ok", "salvage",
                     "replacement", "replacement_resolved") else None,
-                "recovery_stage": stage if klass != "salvage" else "salvage-reparse",
+                "recovery_stage": (stage if klass != "salvage"
+                                   else (stage if ov is not None
+                                         else "salvage-reparse")),
                 "cost_reported_usd": (row.get("cost_reported")
-                                      if klass in ("original_stable",)
+                                      if not klass.startswith("replacement")
                                       else (rep.get("cost_reported")
-                                            if klass.startswith("replacement")
-                                            and klass != "replacement_pending"
+                                            if klass not in ("replacement_pending",
+                                                             "replacement_provisional")
                                             else None)),
                 "n_recovery_attempts": n_attempts.get(lid, 0),
                 "finish_reason": finish.get(lid),
@@ -344,10 +389,41 @@ def build() -> dict:
                                "sampled set (n_requested) joined to actual gold "
                                "by item_id — never the rerun subset; accuracy is "
                                "emitted ONLY for complete cells"),
+        "parser_revision": {
+            "version": RECOVERY_SPEC_VERSION,
+            "overrides_file": override_prov.get("overrides_file"),
+            "overrides_sha256": override_prov.get("overrides_sha256"),
+            "source_raw_sha256": override_prov.get("source_raw_sha256"),
+            "n_overrides_applied": n_overrides_applied,
+            "note": ("derived, versioned prediction overrides over stored "
+                     "complete raws; append-only originals untouched; costs "
+                     "not re-counted"),
+        },
         "mixed_time_note": ("original stable rows (original run time/wire) + "
                             "offline salvages + versioned replacements "
                             "(original wire preserved): selective mixed-time "
                             "replacement; provider drift uncontrolled"),
+        "provider_routing_provenance": {
+            "gemma_replacements": ("model google/gemma-3-4b-it pinned to the "
+                                   "DeepInfra PAID route (provider.order "
+                                   "['deepinfra/bf16'], allow_fallbacks=false; "
+                                   "ROUTING only — generation parameters "
+                                   "unchanged); actual provider + generation "
+                                   "id + error metadata recorded in private_raw"),
+            "gemma_originals": ("provider UNKNOWN — original raws carry no "
+                                "provider info; free-route use is NOT claimed"),
+            "routing_confound": ("gemma rows mix unpinned original runs with "
+                                 "DeepInfra-pinned replacements: backend "
+                                 "provider differs across the mixed-time row "
+                                 "classes — a recorded confound, never "
+                                 "silently averaged away"),
+            "residual_429_cause": ("OpenRouter body metadata: 'google/"
+                                   "gemma-3-4b-it is temporarily rate-limited "
+                                   "upstream' (upstream rate limit — not "
+                                   "account quota or billing); remaining "
+                                   "provisional rows excluded, not retried "
+                                   "endlessly"),
+        },
         "totals": {
             "n_cells": len(per_cell),
             "n_complete_cells": totals["n_complete_cells"],

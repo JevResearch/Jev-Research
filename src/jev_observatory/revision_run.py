@@ -130,6 +130,8 @@ class PersistentBudget:
         self.path = Path(path) if path is not None else None
         self.cap_usd = float(cap_usd)
         self._lock = threading.Lock()
+        self._mem_state: dict[str, Any] | None = (
+            self._default_state() if path is None else None)
         if self.path is not None:
             if self.path.exists():
                 recorded = json.loads(
@@ -159,7 +161,8 @@ class PersistentBudget:
         """
         with self._lock:
             if self.path is None:
-                return fn(self._default_state())
+                # in-memory ledger: state persists on the instance
+                return fn(self._mem_state)
             self.path.parent.mkdir(parents=True, exist_ok=True)
             lock_path = self.path.with_name(self.path.name + ".lock")
             with lock_path.open("a+") as lock_fh:

@@ -131,3 +131,53 @@ def test_case_handling_is_explicit():
 def test_empty_keys_refused():
     with pytest.raises(ValueError):
         recover_choice("A", [])
+
+# --------------------- final_line_key (unambiguous terminal answer lines) ---
+KEYS_ABCD = ["A", "B", "C", "D"]
+
+
+def test_final_standalone_line_beats_earlier_letter_mentions():
+    # the 51-row defect shape: explanation full of uppercase letters/equations,
+    # final paragraph is a bare key
+    text = ("Since A and B are eliminated and equation F reduces to G, "
+            "we compare C against A again.\n\nD")
+    assert recover_choice(text, KEYS_ABCD) == ("D", "final_line_key")
+
+
+def test_final_line_key_outranks_earlier_explicit_statement():
+    text = "The answer is C, because A and B fail.\n\nD"
+    assert recover_choice(text, KEYS_ABCD) == ("D", "final_line_key")
+
+
+def test_final_line_key_strips_markdown_and_punctuation():
+    for wrapper in ("**D**", "(D)", "D.", "D:", "- D", "`D`", "**D**."):
+        assert recover_choice(f"Because A and B differ.\n\n{wrapper}",
+                              KEYS_ABCD) == ("D", "final_line_key"), wrapper
+
+
+def test_final_line_non_key_rejected():
+    # not a key on the final line -> falls through, never last-letter guess
+    pred, stage = recover_choice("A and B are wrong.\n\ncat", KEYS_ABCD)
+    assert pred != "D" and stage in ("unrecovered", "isolated_key")
+    pred, stage = recover_choice("Equation F holds.\n\nD1", KEYS_ABCD)
+    assert pred is None and stage == "unrecovered"   # substring "D" never
+
+
+def test_final_line_disjunction_rejected():
+    pred, stage = recover_choice("We saw A and B earlier.\n\nA or B", KEYS_ABCD)
+    assert pred is None and stage == "unrecovered"
+
+
+def test_final_line_key_resolves_ambiguity_but_not_plain_ambiguity():
+    # final bare key resolves otherwise-ambiguous content ...
+    assert recover_choice("Maybe A, maybe B.\n\nC", KEYS_ABCD) == ("C", "final_line_key")
+    # ... while ambiguity without a terminal line stays unrecovered
+    pred, stage = recover_choice("Maybe A, maybe B.", KEYS_ABCD)
+    assert pred is None and stage == "unrecovered"
+
+
+def test_final_line_key_math_style_keys():
+    keys = ["o0", "o1", "o2", "o3"]
+    assert recover_choice("o1 and o2 both appear in the derivation.\n\no3",
+                          keys) == ("o3", "final_line_key")
+    assert recover_choice("o1 and o2 appear.\n\no10", keys)[0] is None

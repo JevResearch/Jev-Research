@@ -82,6 +82,9 @@ INCLUDE_FILES = [
     "data_report/baseline_rerun_frozen_plan.json",
     "data_report/baselines/v4r1/public_summary.json",
     "data_report/baselines/v4r1/active_source_map.json",
+    # sanitized new-parser override provenance (aggregate counts + SHA-256 of
+    # the private raws, no item text): ships the answer-recovery-2.1.0 counts
+    "runs_matched_cheap/v4r1/derived/override_provenance.json",
     "runs_matched_cheap/freeze_cheap.json",
     "runs_matched_cheap/smoke_cheap.json",
     "runs_matched_cheap/results.jsonl",
@@ -585,7 +588,18 @@ def verify_render(bundle: Path) -> str | None:
 
 # ------------------------------------------------------------- scaffolding
 def write_scaffolding() -> None:
-    (BUNDLE / "README.md").write_text(README_TEXT, encoding="utf-8")
+    # coverage counts are derived from the active summary at render time
+    _t = json.loads((ROOT / "data_report/baselines/v4r1/public_summary.json")
+                    .read_text())["totals"]
+    _status = (f"{_t['n_complete_cells']} of {_t['n_cells']} (model, dataset) "
+               f"cells complete over their full sampled denominators and charted")
+    if _t["n_partial_cells"]:
+        _status += (f"; {_t['n_partial_cells']} partial cells excluded from "
+                    f"capability comparisons with per-cell reasons")
+    _status += (", under a versioned status (v4r1) - never "
+                "presented as obsolete legacy scores")
+    (BUNDLE / "README.md").write_text(
+        README_TEXT.replace("{CELL_STATUS}", _status), encoding="utf-8")
     (BUNDLE / "LICENSE").write_text(LICENSE_TEXT, encoding="utf-8")
     (BUNDLE / "NOTICE.md").write_text(NOTICE_TEXT, encoding="utf-8")
     (BUNDLE / ".gitignore").write_text(
@@ -685,10 +699,7 @@ and is **not republished here**. This repository publishes instead:
 * the complete cost model and billing roll-up;
 * benchmark calibration and paired diagnostics aggregates
   (`data_report/benchmark_diagnostics/`, no item text) and the v4r1 active
-  baseline summary: 42 of 59 (model, dataset) cells complete over their full
-  sampled denominators and charted; 17 partial cells excluded from capability
-  comparisons with per-cell reasons, under a versioned status (v4r1) - never
-  presented as obsolete legacy scores;
+  baseline summary: {CELL_STATUS};
 * availability of per-item prediction evidence (item ids, correctness,
   displayed probabilities): it exists in the working tree
   (`runs_matched_cheap/v4r1/active_items.jsonl`, stage `per_item` lists) and

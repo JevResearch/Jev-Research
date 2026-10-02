@@ -1,0 +1,356 @@
+{
+ "schema": "prediction-override-provenance-1.0.0",
+ "parser_version": "answer-recovery-2.1.0",
+ "overrides_file": "runs_matched_cheap/v4r1/derived/prediction_overrides-answer-recovery-2.1.0.jsonl",
+ "overrides_sha256": "b1779ce68ca84ea8f72595d42bffd96b88686b7165366cab0ac2f8de13d44958",
+ "source_raw_sha256": {
+  "runs_matched_cheap/v4r1/private_raw/deepseek_deepseek-v4-flash-0731.jsonl": "4eeb7b2c3dbf866944e90080a902d17a3605d9a980fb1e2617363419cdab93de",
+  "runs_matched_cheap/v4r1/private_raw/google_gemma-3-4b-it.jsonl": "024f6d07da2912c1a9586842215b2c32fe007d0d2fefd07b99c20d9aef053d70",
+  "runs_matched_cheap/v4r1/private_raw/ibm-granite_granite-4.0-h-micro.jsonl": "677ffc7193edd88f2169039b614290a4b1082ebe212e98e6706b1156b742d962",
+  "runs_matched_cheap/v4r1/private_raw/meta-llama_llama-3.1-8b-instruct.jsonl": "2fd543fd089aee152455c89f0d77af567bbd9269d29109ea55794824ce30cd91",
+  "runs_matched_cheap/v4r1/private_raw/mistralai_mistral-nemo.jsonl": "9c51a4d798cb7148fb587b7c4029ec884312f58e4d6494eb49f2f03ef6f7fccf",
+  "runs_matched_cheap/v4r1/private_raw/mistralai_mistral-small-3.2-24b-instruct.jsonl": "0d577adf68f842d74e5dcd96e72890d2520dec380ff1893178e2d9544c287887",
+  "runs_matched_cheap/v4r1/private_raw/openai_gpt-oss-120b.jsonl": "1b7e21cb2eb2175cc605b650b75e74a3fedb83137503ee4fd958d5e7dc2c04ab",
+  "runs_matched_cheap/v4r1/private_raw/openai_gpt-oss-20b.jsonl": "ecd7fe9251f3c09934c8d9490b6bb1de7a8cadedf3fd03ca7f9500ff165c8301",
+  "runs_matched_cheap/v4r1/private_raw/qwen_qwen3.7-flash.jsonl": "f834346b76124e1cd404aef042c985a7d60d76f427cd4ee48c789b585a0b9813",
+  "runs_matched_cheap/v4r1/private_raw/qwen_qwen3.8-flash.jsonl": "91d5dde2210a006327acfd4e69734dfbb0b5bd2fdc4e71294105a82886d4c5ba",
+  "runs_matched_cheap/v4r1/private_raw/qwen_qwen3.8-max-0902.jsonl": "8cf1880328b5be538ead9d019187d6a2041f37c50fb26d43acdca4ec5c4743ae",
+  "runs_matched_cheap/v4r1/private_raw/xiaomi_mimo-v2.6-flash.jsonl": "c19e5890232654ea66db1d6e7785239a5ae3cb08fed96dba483acf2f4bee7647",
+  "runs_matched_cheap/v4r1/private_raw/xiaomi_mimo-v2.6-pro.jsonl": "338080c400d3276c7a15549773e6844ee84438287024a48b1d4b6ceacfe38b0e",
+  "runs_matched_cheap/v4r1/private_raw/z-ai_glm-5.3-flash.jsonl": "3c884625274d893e849792b0703c7e13ec6fb6b1af5e540513d0212bf13f08e5",
+  "runs_matched_cheap/v4r1/private_raw/z-ai_glm-5.3.jsonl": "62b40ace1452aacafa1407ca6818af38a1e7146bbaca6cdd9d0454311b85dc0e"
+ },
+ "policy": "append-only originals untouched; no cost re-counting; overrides change PREDICTIONS only, derived and versioned",
+ "totals": {
+  "n_reparsed": 5291,
+  "n_overrides": 1157,
+  "before_correct": 2662,
+  "after_correct": 2905
+ },
+ "per_cell": {
+  "deepseek/deepseek-v4-flash-0731:gpqa": {
+   "n_reparsed": 15,
+   "n_prediction_changed": 0,
+   "before_correct": 3,
+   "after_correct": 3
+  },
+  "deepseek/deepseek-v4-flash-0731:hle_text_mc": {
+   "n_reparsed": 74,
+   "n_prediction_changed": 0,
+   "before_correct": 14,
+   "after_correct": 14
+  },
+  "deepseek/deepseek-v4-flash-0731:mmlu": {
+   "n_reparsed": 9,
+   "n_prediction_changed": 0,
+   "before_correct": 5,
+   "after_correct": 5
+  },
+  "google/gemma-3-4b-it:hle_text_mc": {
+   "n_reparsed": 9,
+   "n_prediction_changed": 0,
+   "before_correct": 0,
+   "after_correct": 0
+  },
+  "google/gemma-3-4b-it:math500_choice": {
+   "n_reparsed": 167,
+   "n_prediction_changed": 10,
+   "before_correct": 112,
+   "after_correct": 112
+  },
+  "google/gemma-3-4b-it:mmlu": {
+   "n_reparsed": 28,
+   "n_prediction_changed": 0,
+   "before_correct": 5,
+   "after_correct": 5
+  },
+  "ibm-granite/granite-4.0-h-micro:gpqa": {
+   "n_reparsed": 1,
+   "n_prediction_changed": 0,
+   "before_correct": 1,
+   "after_correct": 1
+  },
+  "ibm-granite/granite-4.0-h-micro:hle_text_mc": {
+   "n_reparsed": 6,
+   "n_prediction_changed": 0,
+   "before_correct": 1,
+   "after_correct": 1
+  },
+  "ibm-granite/granite-4.0-h-micro:mmlu": {
+   "n_reparsed": 93,
+   "n_prediction_changed": 1,
+   "before_correct": 22,
+   "after_correct": 22
+  },
+  "meta-llama/llama-3.1-8b-instruct:gpqa": {
+   "n_reparsed": 11,
+   "n_prediction_changed": 0,
+   "before_correct": 1,
+   "after_correct": 1
+  },
+  "meta-llama/llama-3.1-8b-instruct:hle_text_mc": {
+   "n_reparsed": 42,
+   "n_prediction_changed": 0,
+   "before_correct": 3,
+   "after_correct": 3
+  },
+  "meta-llama/llama-3.1-8b-instruct:math500_choice": {
+   "n_reparsed": 63,
+   "n_prediction_changed": 0,
+   "before_correct": 16,
+   "after_correct": 16
+  },
+  "meta-llama/llama-3.1-8b-instruct:mmlu": {
+   "n_reparsed": 76,
+   "n_prediction_changed": 0,
+   "before_correct": 19,
+   "after_correct": 19
+  },
+  "mistralai/mistral-nemo:gpqa": {
+   "n_reparsed": 4,
+   "n_prediction_changed": 0,
+   "before_correct": 0,
+   "after_correct": 0
+  },
+  "mistralai/mistral-nemo:hle_text_mc": {
+   "n_reparsed": 12,
+   "n_prediction_changed": 0,
+   "before_correct": 1,
+   "after_correct": 1
+  },
+  "mistralai/mistral-nemo:math500_choice": {
+   "n_reparsed": 23,
+   "n_prediction_changed": 0,
+   "before_correct": 15,
+   "after_correct": 15
+  },
+  "mistralai/mistral-nemo:mmlu": {
+   "n_reparsed": 150,
+   "n_prediction_changed": 1,
+   "before_correct": 38,
+   "after_correct": 38
+  },
+  "mistralai/mistral-small-3.2-24b-instruct:gpqa": {
+   "n_reparsed": 124,
+   "n_prediction_changed": 8,
+   "before_correct": 51,
+   "after_correct": 52
+  },
+  "mistralai/mistral-small-3.2-24b-instruct:hle_text_mc": {
+   "n_reparsed": 309,
+   "n_prediction_changed": 8,
+   "before_correct": 23,
+   "after_correct": 23
+  },
+  "mistralai/mistral-small-3.2-24b-instruct:math500_choice": {
+   "n_reparsed": 235,
+   "n_prediction_changed": 28,
+   "before_correct": 210,
+   "after_correct": 210
+  },
+  "mistralai/mistral-small-3.2-24b-instruct:mmlu": {
+   "n_reparsed": 386,
+   "n_prediction_changed": 48,
+   "before_correct": 199,
+   "after_correct": 200
+  },
+  "openai/gpt-oss-120b:gpqa": {
+   "n_reparsed": 2,
+   "n_prediction_changed": 0,
+   "before_correct": 2,
+   "after_correct": 2
+  },
+  "openai/gpt-oss-120b:hle_text_mc": {
+   "n_reparsed": 3,
+   "n_prediction_changed": 0,
+   "before_correct": 0,
+   "after_correct": 0
+  },
+  "openai/gpt-oss-120b:mmlu": {
+   "n_reparsed": 1,
+   "n_prediction_changed": 0,
+   "before_correct": 1,
+   "after_correct": 1
+  },
+  "openai/gpt-oss-20b:gpqa": {
+   "n_reparsed": 21,
+   "n_prediction_changed": 0,
+   "before_correct": 9,
+   "after_correct": 9
+  },
+  "openai/gpt-oss-20b:hle_text_mc": {
+   "n_reparsed": 30,
+   "n_prediction_changed": 0,
+   "before_correct": 2,
+   "after_correct": 2
+  },
+  "openai/gpt-oss-20b:math500_choice": {
+   "n_reparsed": 2,
+   "n_prediction_changed": 0,
+   "before_correct": 2,
+   "after_correct": 2
+  },
+  "openai/gpt-oss-20b:mmlu": {
+   "n_reparsed": 9,
+   "n_prediction_changed": 0,
+   "before_correct": 4,
+   "after_correct": 4
+  },
+  "qwen/qwen3.7-flash:gpqa": {
+   "n_reparsed": 142,
+   "n_prediction_changed": 45,
+   "before_correct": 79,
+   "after_correct": 92
+  },
+  "qwen/qwen3.7-flash:hle_text_mc": {
+   "n_reparsed": 156,
+   "n_prediction_changed": 7,
+   "before_correct": 29,
+   "after_correct": 29
+  },
+  "qwen/qwen3.7-flash:math500_choice": {
+   "n_reparsed": 155,
+   "n_prediction_changed": 79,
+   "before_correct": 130,
+   "after_correct": 132
+  },
+  "qwen/qwen3.7-flash:mmlu": {
+   "n_reparsed": 259,
+   "n_prediction_changed": 117,
+   "before_correct": 188,
+   "after_correct": 210
+  },
+  "qwen/qwen3.8-flash:gpqa": {
+   "n_reparsed": 61,
+   "n_prediction_changed": 0,
+   "before_correct": 32,
+   "after_correct": 32
+  },
+  "qwen/qwen3.8-flash:hle_text_mc": {
+   "n_reparsed": 317,
+   "n_prediction_changed": 0,
+   "before_correct": 90,
+   "after_correct": 90
+  },
+  "qwen/qwen3.8-flash:math500_choice": {
+   "n_reparsed": 3,
+   "n_prediction_changed": 0,
+   "before_correct": 1,
+   "after_correct": 1
+  },
+  "qwen/qwen3.8-flash:mmlu": {
+   "n_reparsed": 97,
+   "n_prediction_changed": 0,
+   "before_correct": 46,
+   "after_correct": 46
+  },
+  "qwen/qwen3.8-max-0902:gpqa": {
+   "n_reparsed": 41,
+   "n_prediction_changed": 0,
+   "before_correct": 18,
+   "after_correct": 18
+  },
+  "qwen/qwen3.8-max-0902:mmlu": {
+   "n_reparsed": 128,
+   "n_prediction_changed": 66,
+   "before_correct": 45,
+   "after_correct": 89
+  },
+  "xiaomi/mimo-v2.6-flash:arc": {
+   "n_reparsed": 34,
+   "n_prediction_changed": 0,
+   "before_correct": 34,
+   "after_correct": 34
+  },
+  "xiaomi/mimo-v2.6-flash:gpqa": {
+   "n_reparsed": 163,
+   "n_prediction_changed": 78,
+   "before_correct": 111,
+   "after_correct": 130
+  },
+  "xiaomi/mimo-v2.6-flash:hle_text_mc": {
+   "n_reparsed": 404,
+   "n_prediction_changed": 141,
+   "before_correct": 118,
+   "after_correct": 141
+  },
+  "xiaomi/mimo-v2.6-flash:math500_choice": {
+   "n_reparsed": 50,
+   "n_prediction_changed": 29,
+   "before_correct": 49,
+   "after_correct": 49
+  },
+  "xiaomi/mimo-v2.6-flash:mmlu": {
+   "n_reparsed": 339,
+   "n_prediction_changed": 145,
+   "before_correct": 200,
+   "after_correct": 244
+  },
+  "xiaomi/mimo-v2.6-pro:gpqa": {
+   "n_reparsed": 185,
+   "n_prediction_changed": 84,
+   "before_correct": 134,
+   "after_correct": 160
+  },
+  "xiaomi/mimo-v2.6-pro:math500_choice": {
+   "n_reparsed": 139,
+   "n_prediction_changed": 78,
+   "before_correct": 138,
+   "after_correct": 138
+  },
+  "xiaomi/mimo-v2.6-pro:mmlu": {
+   "n_reparsed": 481,
+   "n_prediction_changed": 180,
+   "before_correct": 339,
+   "after_correct": 387
+  },
+  "z-ai/glm-5.3-flash:arc": {
+   "n_reparsed": 1,
+   "n_prediction_changed": 0,
+   "before_correct": 1,
+   "after_correct": 1
+  },
+  "z-ai/glm-5.3-flash:gpqa": {
+   "n_reparsed": 19,
+   "n_prediction_changed": 0,
+   "before_correct": 11,
+   "after_correct": 11
+  },
+  "z-ai/glm-5.3-flash:hle_text_mc": {
+   "n_reparsed": 89,
+   "n_prediction_changed": 0,
+   "before_correct": 25,
+   "after_correct": 25
+  },
+  "z-ai/glm-5.3-flash:math500_choice": {
+   "n_reparsed": 1,
+   "n_prediction_changed": 0,
+   "before_correct": 0,
+   "after_correct": 0
+  },
+  "z-ai/glm-5.3-flash:mmlu": {
+   "n_reparsed": 20,
+   "n_prediction_changed": 0,
+   "before_correct": 12,
+   "after_correct": 12
+  },
+  "z-ai/glm-5.3:gpqa": {
+   "n_reparsed": 33,
+   "n_prediction_changed": 1,
+   "before_correct": 21,
+   "after_correct": 21
+  },
+  "z-ai/glm-5.3:math500_choice": {
+   "n_reparsed": 13,
+   "n_prediction_changed": 1,
+   "before_correct": 13,
+   "after_correct": 13
+  },
+  "z-ai/glm-5.3:mmlu": {
+   "n_reparsed": 56,
+   "n_prediction_changed": 2,
+   "before_correct": 39,
+   "after_correct": 39
+  }
+ }
+}

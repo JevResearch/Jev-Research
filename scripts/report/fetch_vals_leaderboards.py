@@ -10,12 +10,15 @@ compute effort, provider), plus curated display metadata per slug:
   date_basis  "slug" (date embedded in the slug) | "documented" (repo/press)
               | "estimated" (family ordering)
   tier        reasoning tier for the chart symbols:
-              none / low / medium / high / xhigh / max
+              none / low / medium / high / xhigh / max / unspecified
 
-The tier comes from the row's own config where present (reasoning_effort,
-compute_effort, -thinking / non-reasoning slug tokens), else from the
-family default. Costs are the vals platform's measured cost_per_test, which
-already includes any chain-of-thought the model burns.
+The tier comes from the row's own recorded config where present
+(reasoning_effort, compute_effort), then explicit slug naming
+(non-reasoning slug or a named level such as -high-reasoning), then known
+documented non-thinking product lines; a missing config is "unspecified"
+(the bare-dot marker), never a family-default guess and never "none".
+Costs are the vals platform's measured cost_per_test, which already
+includes any chain-of-thought the model burns.
 
 Network required. Run:  python scripts/report/fetch_vals_leaderboards.py
 """
@@ -411,17 +414,8 @@ DISPLAY: dict[str, str] = {
     "poolside/laguna-m.1": "Laguna M.1",
 }
 
-# family default reasoning tiers where the row config is silent
-TIER_DEFAULTS = {
-    "o1": "high", "o3": "high", "o4": "high",
-    "gpt-5": "high", "gpt-6": "high",
-    "gemini-2.0-flash-thinking": "medium", "gemini-2.5": "medium",
-    "gemini-3": "high", "magistral": "high", "deepseek-r1": "high",
-    "kimi-k2-thinking": "high", "kimi-k2.5": "high", "kimi-k3": "high",
-    "glm-5": "high", "muse_spark_1_3_max": "max", "muse_spark": "high",
-    "nemotron-3-ultra": "high", "inkling": "medium",
-    "claude-fable": "high", "claude-opus-5": "high", "claude-sonnet-5": "high",
-}
+# (family-default tier guessing removed: a missing config is "unspecified",
+# and a model brand never implies a reasoning level. See chartkit.vals_tier.)
 
 
 def date_basis(slug: str) -> str:
@@ -431,28 +425,11 @@ def date_basis(slug: str) -> str:
 
 
 def tier_of(slug: str, row: dict) -> str:
-    ce = (row.get("compute_effort") or "").lower()
-    re_ = (row.get("reasoning_effort") or "").lower()
-    if ce == "max":
-        return "max"
-    if re_ in ("max", "xhigh"):
-        return "xhigh"
-    if re_ == "high":
-        return "high"
-    if re_ == "medium":
-        return "medium"
-    if re_ == "low":
-        return "low"
-    if re_ == "none":
-        return "none"
-    if "non-reasoning" in slug:
-        return "none"
-    if "-thinking" in slug or "reasoning" in slug:
-        return "high"
-    for key, t in TIER_DEFAULTS.items():
-        if key in slug:
-            return t
-    return "none"
+    """Epistemic tier resolution (shared with the chart code via chartkit):
+    explicit recorded config > explicit slug naming > documented non-thinking
+    > "unspecified". Missing config is NOT "none" and NOT "high"."""
+    from chartkit import vals_tier
+    return vals_tier(slug, row)
 
 
 def main() -> int:

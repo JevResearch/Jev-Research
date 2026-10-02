@@ -70,36 +70,33 @@
   "google/gemma-3-4b-it:hle_text_mc": {
    "active_source_version": "v3",
    "original_wire_protocol": "v3-provider-defaults",
-   "status": "partial",
+   "status": "complete",
    "n_requested": 494,
    "counts": {
     "original_stable": 485,
-    "replacement_resolved": 3,
-    "replacement_provisional": 6
+    "replacement_resolved": 9
    }
   },
   "google/gemma-3-4b-it:math500_choice": {
    "active_source_version": "v3",
    "original_wire_protocol": "v3-provider-defaults",
-   "status": "partial",
+   "status": "complete",
    "n_requested": 261,
    "counts": {
     "original_stable": 94,
     "replacement": 143,
-    "replacement_resolved": 18,
-    "replacement_provisional": 6
+    "replacement_resolved": 24
    }
   },
   "google/gemma-3-4b-it:mmlu": {
    "active_source_version": "v3",
    "original_wire_protocol": "v3-provider-defaults",
-   "status": "partial",
+   "status": "complete",
    "n_requested": 1000,
    "counts": {
     "original_stable": 972,
     "replacement": 3,
-    "replacement_resolved": 13,
-    "replacement_provisional": 12
+    "replacement_resolved": 25
    }
   },
   "ibm-granite/granite-4.0-h-micro:gpqa": {
@@ -215,12 +212,11 @@
   "mistralai/mistral-nemo:mmlu": {
    "active_source_version": "v3",
    "original_wire_protocol": "v3-provider-defaults",
-   "status": "partial",
+   "status": "complete",
    "n_requested": 1000,
    "counts": {
     "original_stable": 850,
-    "replacement": 138,
-    "replacement_pending": 12
+    "replacement": 150
    }
   },
   "mistralai/mistral-small-3.2-24b-instruct:gpqa": {
@@ -236,12 +232,11 @@
   "mistralai/mistral-small-3.2-24b-instruct:hle_text_mc": {
    "active_source_version": "v3",
    "original_wire_protocol": "v3-provider-defaults",
-   "status": "partial",
+   "status": "complete",
    "n_requested": 494,
    "counts": {
     "original_stable": 185,
-    "replacement": 137,
-    "replacement_pending": 172
+    "replacement": 309
    }
   },
   "mistralai/mistral-small-3.2-24b-instruct:math500_choice": {
@@ -257,12 +252,11 @@
   "mistralai/mistral-small-3.2-24b-instruct:mmlu": {
    "active_source_version": "v3",
    "original_wire_protocol": "v3-provider-defaults",
-   "status": "partial",
+   "status": "complete",
    "n_requested": 1000,
    "counts": {
     "original_stable": 614,
-    "replacement": 137,
-    "replacement_pending": 249
+    "replacement": 386
    }
   },
   "openai/gpt-oss-120b:gpqa": {
@@ -347,45 +341,41 @@
   "qwen/qwen3.7-flash:gpqa": {
    "active_source_version": "v3",
    "original_wire_protocol": "v3-provider-defaults",
-   "status": "partial",
+   "status": "complete",
    "n_requested": 196,
    "counts": {
     "original_stable": 54,
-    "replacement": 129,
-    "replacement_pending": 13
+    "replacement": 142
    }
   },
   "qwen/qwen3.7-flash:hle_text_mc": {
    "active_source_version": "v3",
    "original_wire_protocol": "v3-provider-defaults",
-   "status": "partial",
+   "status": "complete",
    "n_requested": 494,
    "counts": {
     "original_stable": 338,
-    "replacement": 130,
-    "replacement_pending": 26
+    "replacement": 156
    }
   },
   "qwen/qwen3.7-flash:math500_choice": {
    "active_source_version": "v3",
    "original_wire_protocol": "v3-provider-defaults",
-   "status": "partial",
+   "status": "complete",
    "n_requested": 261,
    "counts": {
     "original_stable": 106,
-    "replacement": 144,
-    "replacement_pending": 11
+    "replacement": 155
    }
   },
   "qwen/qwen3.7-flash:mmlu": {
    "active_source_version": "v3",
    "original_wire_protocol": "v3-provider-defaults",
-   "status": "partial",
+   "status": "complete",
    "n_requested": 1000,
    "counts": {
     "original_stable": 741,
-    "replacement": 129,
-    "replacement_pending": 130
+    "replacement": 259
    }
   },
   "qwen/qwen3.8-flash:arc": {
@@ -410,12 +400,12 @@
   "qwen/qwen3.8-flash:hle_text_mc": {
    "active_source_version": "v3",
    "original_wire_protocol": "v3-provider-defaults",
-   "status": "partial",
+   "status": "complete",
    "n_requested": 494,
    "counts": {
     "original_stable": 177,
-    "replacement": 121,
-    "replacement_pending": 196
+    "replacement": 307,
+    "replacement_resolved": 10
    }
   },
   "qwen/qwen3.8-flash:math500_choice": {
@@ -472,23 +462,21 @@
   "xiaomi/mimo-v2.6-flash:gpqa": {
    "active_source_version": "v3",
    "original_wire_protocol": "v3-provider-defaults",
-   "status": "partial",
+   "status": "complete",
    "n_requested": 196,
    "counts": {
-    "replacement": 108,
-    "original_stable": 33,
-    "replacement_pending": 55
+    "replacement": 163,
+    "original_stable": 33
    }
   },
   "xiaomi/mimo-v2.6-flash:hle_text_mc": {
    "active_source_version": "v3",
    "original_wire_protocol": "v3-provider-defaults",
-   "status": "partial",
+   "status": "complete",
    "n_requested": 494,
    "counts": {
-    "replacement": 90,
-    "original_stable": 90,
-    "replacement_pending": 314
+    "replacement": 404,
+    "original_stable": 90
    }
   },
   "xiaomi/mimo-v2.6-flash:math500_choice": {
@@ -504,45 +492,41 @@
   "xiaomi/mimo-v2.6-flash:mmlu": {
    "active_source_version": "v3",
    "original_wire_protocol": "v3-provider-defaults",
-   "status": "partial",
+   "status": "complete",
    "n_requested": 1000,
    "counts": {
     "original_stable": 661,
-    "replacement": 115,
-    "replacement_pending": 224
+    "replacement": 339
    }
   },
   "xiaomi/mimo-v2.6-pro:gpqa": {
    "active_source_version": "v3",
    "original_wire_protocol": "v3-provider-defaults",
-   "status": "partial",
+   "status": "complete",
    "n_requested": 196,
    "counts": {
-    "replacement": 118,
-    "original_stable": 11,
-    "replacement_pending": 67
+    "replacement": 185,
+    "original_stable": 11
    }
   },
   "xiaomi/mimo-v2.6-pro:math500_choice": {
    "active_source_version": "v3",
    "original_wire_protocol": "v3-provider-defaults",
-   "status": "partial",
+   "status": "complete",
    "n_requested": 261,
    "counts": {
     "original_stable": 122,
-    "replacement": 128,
-    "replacement_pending": 11
+    "replacement": 139
    }
   },
   "xiaomi/mimo-v2.6-pro:mmlu": {
    "active_source_version": "v3",
    "original_wire_protocol": "v3-provider-defaults",
-   "status": "partial",
+   "status": "complete",
    "n_requested": 1000,
    "counts": {
     "original_stable": 519,
-    "replacement": 124,
-    "replacement_pending": 357
+    "replacement": 481
    }
   },
   "z-ai/glm-5.3:gpqa": {
