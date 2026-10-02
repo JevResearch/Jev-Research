@@ -24,6 +24,15 @@ labels except Jev's and the hovered one and shows a tooltip with name, score
 + rank, cost + rank, release date, reasoning tier. Jev: white-ringed
 diamonds.
 
+Score-axis floors (author): the y axis is rebased to start at 30% for
+MMLU-Pro and 25% for GPQA - grid, points and the frontier projection all use
+the same rebased transform, so nothing is rescaled or re-valued. Data below
+the floor is clipped at the plot edge (never clamped up to the floor, never
+re-valued), and the frontier polyline is clipped with it so no line is drawn
+outside the plot. Both charts share one SVG size (1280x1025 - the earlier
+820 height plus a 25% vertical stretch; width, header, footer and fonts
+unchanged).
+
 Output: docs/modern-comparison/pareto-frontiers.html
   python scripts/report/pareto_graphs.py
 """
@@ -70,6 +79,14 @@ CHARTS = [
 # nothing about Jev is hardcoded in this chart code.
 JEV_SCORES = load_jev_scores(ROOT)
 _JEV_KEY = {"mmlu_pro": "mmlu_pro", "gpqa": "gpqa_diamond"}
+
+# Author: score-axis floor per chart (%), and one shared SVG size for both
+# charts (H 820 -> 1025 = +25% vertical stretch; width unchanged).
+Y_FLOOR = {"mmlu_pro": 30.0, "gpqa": 25.0}
+SVG_W, SVG_H = 1280, 1025
+# the thinking-unspecified dot on THIS plot is 60% larger than the shared
+# legend dot (r 1.8 -> 2.88): an SVG circle radius, pareto points only.
+UNK_DOT_R = 1.8 * 1.6
 
 
 def frontier(pts):
@@ -119,8 +136,9 @@ def chart(bkey, title, subtitle, jev_glob, jev_g, jev_w, n_items):
         pts.append((r["cost"], r["accuracy"], mm))
     n_all = len(pts)
 
-    W, H = 1280, 820
+    W, H = SVG_W, SVG_H
     L, R, B = 88, 48, 68
+    yfloor = Y_FLOOR[bkey]
     xs = costs + [jc]
     lo = math.floor(math.log10(min(xs))) - 0.35
     hi = math.ceil(math.log10(max(xs))) + 0.35
@@ -130,7 +148,9 @@ def chart(bkey, title, subtitle, jev_glob, jev_g, jev_w, n_items):
         return L + (math.log10(c) - lo) / (hi - lo) * (W - L - R)
 
     def Y(v):
-        return H - B - v / ymax * (H - top - B)
+        # rebased: [yfloor, ymax] -> [H-B, top]; below-floor values fall
+        # below the plot edge and are clipped there (never clamped).
+        return H - B - (v - yfloor) / (ymax - yfloor) * (H - top - B)
 
     sub, sub_end = wrap_subtitle((L + W - R) // 2, 54, subtitle, width=175, size=12, anchor="middle")
     top = sub_end + 54
@@ -141,7 +161,9 @@ def chart(bkey, title, subtitle, jev_glob, jev_g, jev_w, n_items):
          f'<text x="{(L + W - R) // 2}" y="32" fill="{TEXT}" font-size="20" '
          f'font-weight="700" text-anchor="middle">'
          f'{_html.escape(title)}</text>',
-         sub, era_legend((L + W - R) // 2 - 300, sub_end + 26)]
+         sub, era_legend((L + W - R) // 2 - 300, sub_end + 26),
+         f'<clipPath id="plotclip-{bkey}"><rect x="{L}" y="{top}" '
+         f'width="{W - L - R}" height="{H - B - top}"/></clipPath>']
     # gridlines
     e = math.ceil(lo)
     while e <= hi:
@@ -151,13 +173,16 @@ def chart(bkey, title, subtitle, jev_glob, jev_g, jev_w, n_items):
         p.append(f'<text x="{x:.0f}" y="{H - B + 18}" fill="{MUTED}" font-size="12" '
                  f'text-anchor="middle">${c:g}</text>')
         e += 1
-    gy = 0
+    gy = yfloor                 # floor tick first: its label must show
     while gy <= ymax:
         y = Y(gy)
         p.append(f'<line x1="{L}" y1="{y:.0f}" x2="{W - R}" y2="{y:.0f}" stroke="{GRID}"/>')
         p.append(f'<text x="{L - 8}" y="{y + 4:.0f}" fill="{MUTED}" font-size="12" '
                  f'text-anchor="end">{gy:.0f}</text>')
         gy += 20
+    # everything below the floor is clipped at the plot edge (marks, labels,
+    # the frontier polyline) - hidden/clipped, never clamped up to the floor.
+    p.append(f'<g clip-path="url(#plotclip-{bkey})">')
     # frontier
     fr = frontier([(c, a) for c, a, _ in pts] + [(jc, jev_g)])
     p.append('<polyline points="' + " ".join(f"{X(x):.1f},{Y(y):.1f}" for x, y in fr)
@@ -186,7 +211,7 @@ def chart(bkey, title, subtitle, jev_glob, jev_g, jev_w, n_items):
                   f"released {rel}" + (" (estimated)" if basis == "estimated" else ""))
         p.append(f'<g class="mrow isorow" {tip(tt)}>')
         p.append(f'<circle class="fatten" cx="{X(c):.1f}" cy="{Y(a):.1f}" r="14"/>')
-        p.append(symbol(X(c), Y(a), tier, color, 5.2))
+        p.append(symbol(X(c), Y(a), tier, color, 5.2, unk_r=UNK_DOT_R))
         p.append(f'<text class="mlabel" x="{X(c) + 9:.1f}" y="{Y(a) - 7:.1f}" '
                  f'fill="{color}" font-size="8.4" opacity="0.92">'
                  f'{_html.escape(m["name"])}</text>')
@@ -211,6 +236,7 @@ def chart(bkey, title, subtitle, jev_glob, jev_g, jev_w, n_items):
     p.append(f'<text class="mlabel jevlabel" x="{X(jc) + 11:.1f}" y="{Y(jev_w) + 4:.1f}" '
              f'fill="{JEV_W}" font-size="10">Jev (weighted)</text>')
     p.append('</g>')
+    p.append('</g>')   # close the plot-clip group
     p.append(f'<text x="{(W - L - R) / 2 + L:.0f}" y="{H - 16}" fill="{MUTED}" '
              f'font-size="13" text-anchor="middle">Cost per question (USD, log scale)</text>')
     p.append(f'<text x="20" y="{(H - top - B) / 2 + top:.0f}" fill="{MUTED}" font-size="13" '

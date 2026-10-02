@@ -70,9 +70,15 @@ def era_color(released: str | None) -> str:
     return "#%02x%02x%02x" % (round(r * 255), round(g * 255), round(b * 255))
 
 
-def symbol(cx: float, cy: float, tier: str, color: str, r: float = 5.0) -> str:
-    out = [f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="1.8" fill="{color}"/>']
+def symbol(cx: float, cy: float, tier: str, color: str, r: float = 5.0,
+           unk_r: float = 1.8) -> str:
+    """Marker for a reasoning tier. unk_r is the bare-dot radius used ONLY for
+    the 'thinking unspecified' dot (the pareto plot passes a larger one; the
+    shared legend and every other marker keep the default 1.8). It is an SVG
+    circle radius - never a glyph or font-size change."""
     sides = TIER_SIDES.get(tier, 0)
+    dot = unk_r if sides is None else 1.8
+    out = [f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{dot:g}" fill="{color}"/>']
     if sides is None:            # thinking unspecified: bare dot, no ring
         return "".join(out)
     if sides == -1:
@@ -197,6 +203,72 @@ g.mrow{cursor:default}
 ]]></script>'''
 
 
+# ------------------------------------------------------- legend layout math
+# The thinking-tier legend is laid out from explicit advance-width metrics,
+# never by eyeballed pixel offsets or spaces inside SVG text: every group is
+# [symbol(s) LEFT of label] with balanced padding, and groups sit a fixed
+# margin apart so no label can appear attached to the next mark.
+_ADV = {" ": 0.30, "i": 0.28, "l": 0.26, "t": 0.37, "f": 0.33, "r": 0.38,
+        "m": 0.86, "w": 0.79, "s": 0.53, "\u2020": 0.55, "\u2192": 0.80,
+        "\u2264": 0.60, "-": 0.35}
+LEGEND_SYM_R = 4.2        # nominal symbol box radius in the legend row
+LEGEND_PAD = 7.0          # balanced gap: symbol box edge -> its label
+LEGEND_GROUP_GAP = 18.0   # between groups (author: 16-20px)
+LEGEND_SHAPE_STEP = 13.0  # between the grouped reasoning shapes
+LEGEND_LABEL_SIZE = 9.5
+_LEGEND_HEADER = "shape = thinking"
+_LEGEND_HEADER_SIZE = 10.5
+
+
+def text_w(s: str, size: float) -> float:
+    """Conservative advance width of s at font-size size (system-ui class).
+    Unknown glyphs fall back to 0.62em - a deliberate overestimate so the
+    computed layout can never overlap on any ordinary UI font."""
+    return sum(_ADV.get(ch, 0.62) for ch in s) * size
+
+
+def tier_legend_layout(x: float) -> list[dict]:
+    """Explicit positions for the thinking-tier legend groups starting at x.
+    Returns one dict per group: {x, w, tiers, symbols, label, label_x,
+    label_w}. Each group draws its symbol(s) LEFT of the label with balanced
+    padding (LEGEND_PAD on the symbol side); consecutive groups are exactly
+    LEGEND_GROUP_GAP apart."""
+    groups: list[dict] = []
+
+    def place(tiers: list[str], label: str) -> None:
+        nonlocal x
+        if tiers:
+            syms = [x + LEGEND_SYM_R + i * LEGEND_SHAPE_STEP
+                    for i in range(len(tiers))]
+            label_x = syms[-1] + LEGEND_SYM_R + LEGEND_PAD
+        else:
+            syms, label_x = [], x
+        lw = text_w(label, LEGEND_LABEL_SIZE)
+        groups.append({"x": x, "w": label_x + lw - x, "tiers": tiers,
+                       "symbols": syms, "label": label, "label_x": label_x,
+                       "label_w": lw})
+        x = label_x + lw + LEGEND_GROUP_GAP
+
+    place(["unspecified"], "Unspecified")
+    place(["none"], "None")
+    place(["low", "medium", "high", "xhigh", "max"], "Low \u2192 Max")
+    place([], "\u2020 our matched run")
+    return groups
+
+
+def _tier_legend_start(x: float) -> float:
+    """x of the first tier group when the legend row is drawn at era_legend(x)."""
+    return (x + 46 + 240 + text_w(_LEGEND_HEADER, _LEGEND_HEADER_SIZE)
+            + LEGEND_GROUP_GAP)
+
+
+def legend_end_x(x: float) -> float:
+    """Right edge of the legend row (the dagger label's end) when drawn at
+    era_legend(x, ...) - used to prove the row fits every chart width."""
+    g = tier_legend_layout(_tier_legend_start(x))
+    return g[-1]["x"] + g[-1]["w"]
+
+
 def era_legend(x: int, y: int) -> str:
     """Gradient strip + tier shapes + Jev diamond legend row."""
     p = []
@@ -211,22 +283,18 @@ def era_legend(x: int, y: int) -> str:
     p.append(f'<rect x="{gx + 168}" y="{y - 9}" width="10" height="9" fill="{UNK}"/>')
     p.append(f'<text x="{gx + 182}" y="{y}" fill="{MUTED}" font-size="9.5">date n/a</text>')
     sx = gx + 240
-    p.append(f'<text x="{sx}" y="{y}" fill="{MUTED}" font-size="10.5" font-weight="600">shape = thinking</text>')
-    sx += 104
-    # concise solid-vs-ring mapping: bare dot = unspecified, ring = explicit none
-    p.append(symbol(sx, y - 4, "unspecified", MUTED, 4.2))
-    p.append(f'<text x="{sx + 8}" y="{y}" fill="{MUTED}" font-size="9.5">unspecified</text>')
-    sx += 66
-    p.append(symbol(sx, y - 4, "none", MUTED, 4.2))
-    p.append(f'<text x="{sx + 8}" y="{y}" fill="{MUTED}" font-size="9.5">none</text>')
-    sx += 40
-    for tier in ("low", "medium", "high", "xhigh", "max"):
-        p.append(symbol(sx, y - 4, tier, MUTED, 4.2))
-        sx += 13
-    p.append(f'<text x="{sx + 4}" y="{y}" fill="{MUTED}" font-size="9.5">low &rarr; max</text>')
-    sx += 62
-    p.append(f'<text x="{sx + 14}" y="{y}" fill="{MUTED}" font-size="9.5">&dagger; our '
-             'matched run</text>')
+    p.append(f'<text x="{sx}" y="{y}" fill="{MUTED}" '
+             f'font-size="{_LEGEND_HEADER_SIZE}" font-weight="600">'
+             f'{_LEGEND_HEADER}</text>')
+    # metric layout: symbol LEFT of each label, balanced padding, fixed group
+    # margin - see tier_legend_layout (regression-tested for padding/overlap).
+    for g in tier_legend_layout(_tier_legend_start(x)):
+        for tier, cx in zip(g["tiers"], g["symbols"]):
+            p.append(symbol(cx, y - 4, tier, MUTED, LEGEND_SYM_R))
+        label = (g["label"].replace("\u2192", "&rarr;")
+                 .replace("\u2020", "&dagger;"))
+        p.append(f'<text x="{g["label_x"]:.1f}" y="{y}" fill="{MUTED}" '
+                 f'font-size="{LEGEND_LABEL_SIZE}">{label}</text>')
     return "".join(p)
 
 

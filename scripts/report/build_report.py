@@ -838,13 +838,11 @@ not identified at these context lengths, and the attention variant is unknowable
 <tr><td>Size</td><td class='cap'>The service-time slope,
 read through hardware-dependent scenarios (assumed hardware, quantization,
 utilization), spans ~{sz_lo:.1f} to {sz_hi:.0f}B active parameters. Capability positioning suggests
-{szc_lo:.0f} to {szc_hi:.0f}B dense-equivalent, which is positioning, not an identified
-size. A quantized dense ~{szc_lo:.0f} to {sz_dense_hi:.0f}B is the parsimonious joint reading; a MoE (~{sz_moe_lo:.0f} to {sz_moe_hi:.0f}B total) stays possible</td><td>Plausible</td></tr>
+{szc_lo:.0f} to {szc_hi:.0f}B dense-equivalent. A quantized dense ~{szc_lo:.0f} to {sz_dense_hi:.0f}B is the parsimonious joint reading; a MoE (~{sz_moe_lo:.0f} to {sz_moe_hi:.0f}B total) stays possible</td><td>Plausible</td></tr>
 <tr><td>Training</td><td class='cap'>English-dominant pretraining; on the
 sampled dated-event probes the knowledge horizon reads solid to late 2024,
 partial to ~{hz_solid}, gone by {hz_gone}; judgement-format assistant
-post-training (the fixed output shapes can be served by software as well as
-trained in); OpenAI-flavored brand prior inherited from training text;
+post-training; OpenAI-flavored brand prior inherited from training text;
 frontier-teacher contribution: none identifiable, not excluded</td><td>Confident / Plausible</td></tr>
 <tr><td>What the evidence weighs against</td><td class='cap'>Not frontier
 (measured). Against retrieval/cache assistance, a thin wrapper around another
@@ -862,9 +860,7 @@ sizes from ~0.5k to ~29k tokens fit:</p>
 <div class="card"><b>~{floor:.0f} ms fixed floor + ~{slope:.0f} ms per 1k input
 tokens</b> measured on that header, with a negligible quadratic term and the
 fit quality reported in the figure. A flat base plus a linear input-token
-term is what a transformer's forward pass looks like from outside; the fixed
-intercept contains model, serving and network terms that this measurement
-cannot separate.</div>
+term is what a transformer's forward pass looks like from outside.</div>
 <figure>{strip_titles(EVID[0])}<figcaption>Proxy-reported upstream service time
 vs input tokens across {p['n_configs']} probe configurations: a flat
 floor plus a straight line, with no attention-blowup curvature at these
@@ -1029,11 +1025,11 @@ assisted adapter protocol), and a steep recognition-to-production gap -
 {pct(SC['math_s']['accuracy'])} on the {ms_n_item}-item set when each decimal digit must be read out under a
 positional, conjunctive rubric. On the {pi['n_intersection_items']} items present in both recorded
 encodings the contrast is {pi['mcq_accuracy_on_intersection']:.3f} versus {pi['digits_accuracy_on_intersection']:.3f}.{fn('mathadapt')} Recognition far exceeds production, which is what judgement-heavy
-post-training on a small model produces. The distributions are shaped the
-same way: on a typical MMLU-Pro item Jev gives the correct answer
-{wmmlu['weighted_accuracy_p50']*100:.0f}% probability, but its average is {pct(wmmlu['weighted_accuracy_mean'])};
-{SC['mmlu']['zero_probability_gold']} questions assign it zero -
-near-decisive where it knows, confidently wrong on a hard tail.</p>
+post-training on a small model produces. On half the MMLU-Pro questions, Jev
+assigns the correct answer at least {wmmlu['weighted_accuracy_p50']*100:.0f}% probability. Across all questions the
+average is {wmmlu['weighted_accuracy_mean']*100:.0f}%, and on {SC['mmlu']['zero_probability_gold']} questions it assigns the correct
+answer zero probability. It is decisive on familiar questions, but can be
+confidently wrong on the difficult ones.</p>
 <p>The benchmark section below shows two scorings of every stage: greedy
 (take the top option) and probability-weighted (the mean probability Jev put
 on the gold option). Greedy exceeds weighted nearly everywhere, by
@@ -1203,10 +1199,11 @@ def benchmarks() -> str:
             "the vals.ai platform's GPQA set."),
         fig("arc", "ARC-Challenge. Jev answers directly; dagger-marked bars "
             "are our matched model runs."),
-        fig("arc_agi2", "ARC-AGI-2. Published rows score whole tasks, pass@2; "
-            "Jev answers directly. Italic, crosshatched Jev bars score cells "
-            "with output dimensions and colors supplied, not whole tasks. "
-            f"Jev solves 0 of 120 complete tasks.{fn('arcproto')}"),
+        fig("arc_agi2", "ARC-AGI-2. Published rows score whole tasks, generally "
+            "pass@2 on a semi-private set; Jev answers the public set directly. "
+            "Italic, crosshatched Jev bars score individual cells with the "
+            "correct output dimensions and colors supplied, so they are not "
+            f"comparable to whole-task scores. Jev solves 0 of 120 complete tasks.{fn('arcproto')}"),
     ]
     if "math_m" in CHARTS:
         fig_list.append(fig("math_m", "MATH-500 (as MCQ). Two benchmarks that we ran "
