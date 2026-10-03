@@ -600,7 +600,7 @@ def licensed_scan(bundle: Path) -> list[str]:
 def verify_render(bundle: Path) -> str | None:
     target = bundle / "report" / "index.html"
     original = target.read_bytes()
-    env = dict(os.environ, JEVO_ROOT=str(bundle))
+    env = dict(os.environ, JEVO_ROOT=str(bundle), PYTHONDONTWRITEBYTECODE="1")
     out = subprocess.run(
         [sys.executable, str(bundle / "scripts/report/build_report.py")],
         capture_output=True, text=True, env=env, cwd=str(bundle))
@@ -871,20 +871,22 @@ def main() -> None:
     build()
     write_scaffolding()
 
+    # Re-rendering can create files: scan the final tree, not a pre-render
+    # snapshot, and mint the manifest only after every gate has passed.
     problems: list[str] = []
-    problems += structural_scan(BUNDLE)
-    problems += secret_scan(BUNDLE)
-    problems += licensed_scan(BUNDLE)
     err = verify_render(BUNDLE)
     if err:
         problems.append("G4 " + err)
-    n = manifest()
-    print(f"[bundle] {n} files")
+    problems += structural_scan(BUNDLE)
+    problems += secret_scan(BUNDLE)
+    problems += licensed_scan(BUNDLE)
     if problems:
         print(f"[bundle] FAILED: {len(problems)} problem(s)")
         for x in problems[:60]:
             print("   ", x)
         sys.exit(1)
+    n = manifest()
+    print(f"[bundle] {n} files")
     print("[bundle] all gates green: structure, secrets, licensed content, re-render")
 
 
