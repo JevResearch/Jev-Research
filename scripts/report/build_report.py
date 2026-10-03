@@ -610,8 +610,8 @@ def hero() -> str:
 </nav>"""
     return f"""
 <div class="chip">An independent, hands-on evaluation by JevResearch &middot; model pin: service-reported jev-1.13.0 &middot; measurements September 2026 &middot; report revision 3 (2026-10-03)</div>
-<p class="cap">A short <a href="{CP}">counterpoint</a> covers the follow-up
-probe round and the public architecture debate.</p>
+<p class="cap">A short <a href="{CP}">counterpoint</a> to Archer Hume&rsquo;s
+<a href="https://archerhume.com/posts/jevs-architecture-unmasked/"><i>Jev&rsquo;s Architecture Unmasked</i></a>.</p>
 <h1>Jev: Not Frontier, But Still Worth Your Attention</h1>
 <p class="sub">TypeSafe AI sells Jev as a frontier-class reasoner that cannot
 hallucinate, built by the co-inventor of ChatGPT - fast, and almost free. We ran it

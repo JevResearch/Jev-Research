@@ -35,9 +35,9 @@ def test_no_may_cliff_or_hard_cutoff_claim():
         assert "partial to ~May" not in text and "partial to May 2025" not in text
         assert "gone by" not in text and "nothing after June 2025" not in text
         assert "May 2025" not in text and "June 2025" not in text
-    # the counterpoint may quote the old reading exactly once, to withdraw it
-    assert CP.count("partial through May 2025") == 1
-    assert "reading was overstated" in CP
+    # the author cut removed the retrospective changelog line entirely
+    assert "partial through May 2025" not in CP
+    assert "reading was overstated" not in CP
     assert "not a declared training" in HTML
     assert "strongest on 2024-era facts" in HTML
 
@@ -47,9 +47,7 @@ def test_no_new_foundation_or_qwen_identification():
         assert "new foundation" not in text
         assert "relabeled open model" not in text
         assert "No discernible preexisting lineage" not in text
-    # the counterpoint's single mention withdraws the old claim
-    assert CP.count("new foundation") == 1 and "too strong" in CP
-    assert "A Qwen-derived model remains possible" in CP
+    assert "new foundation" not in CP and "too strong" not in CP
     assert "Qwen-base classification" not in HTML       # never a positive claim
 
 
@@ -70,7 +68,7 @@ def test_false_controls_use_corrected_16_of_16():
 def test_header_claim_is_september_dated():
     assert "In our September timing campaign, responses reported" in HTML
     assert "Every response reports an upstream-service timing header" not in HTML
-    assert "no longer exposes the service-time header" in CP
+    assert "twofold cost of question text" in re.sub(r"\s+", " ", CP)
 
 
 def test_padding_conclusion_not_absolute():
@@ -80,7 +78,7 @@ def test_padding_conclusion_not_absolute():
 
 def test_counterpoint_is_short_and_uninflated():
     words = re.sub(r"<[^>]+>", " ", build_counterpoint.BODY).split()
-    assert 400 <= len(words) <= 520            # the author's ~450-word draft
+    assert len(words) <= 520            # author-cut draft; no padded prose
 
 
 # ------------------------------------------------------------- exports

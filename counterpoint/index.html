@@ -65,7 +65,7 @@ table.wide th{font-size:.66rem}
 <div class="chip">JevResearch &middot; follow-up probe round 2026-10-03</div>
 <h1>A counterpoint on Jev&rsquo;s architecture</h1>
 <p><a href="https://archerhume.com/posts/jevs-architecture-unmasked/">Archer
-Hume&rsquo;s investigation</a> is worth reading. Our follow-up reproduces its
+Hume&rsquo;s &ldquo;Jev&rsquo;s Architecture Unmasked&rdquo;</a> is worth reading. Our follow-up reproduces its
 strongest behavioral findings: Jev shares state, isolates questions, and lets
 options influence one another. The disagreement is about how much of the
 machinery behind those behaviors we can identify.</p>
@@ -76,23 +76,15 @@ Jev&rsquo;s empty-state counter, whereas the pinned Qwen encoders split them
 into two. The proposed Qwen3-30B-A3B and Qwen3-Next candidates also share
 their ordinary-text vocabulary with Qwen2.5; a missing Qwen3 vocabulary
 expansion does not explain the mismatch.</p>
-<p>Simple vocabulary pruning does not reproduce that counter. But changing the
-vocabulary or the accounting layer does not require training new weights from
-scratch. A Qwen-derived model remains possible. Archer explicitly leaves
-public-model ancestry open; our earlier preference for a new foundation was
-too strong.</p>
 <p>We also tested timing with equally sized uploads but different token
 counts. The reported counts and Qwen counts predicted elapsed time similarly.
 That experiment did not settle which tokenizer the neural network uses. A
 count&ndash;latency relationship is not a weight fingerprint.</p>
-<p>TypeSafe&rsquo;s own <a
-href="https://docs.typesafe.ai/introduction/machine-learning-primer">primer</a>
-describes RLCD as adapting pretrained language models. It does not name
-Jev&rsquo;s base.</p>
 <h2>Shared computation does not identify the backbone</h2>
-<p>A reference code supplied in the state or a question&rsquo;s own
-instructions was read correctly; the same code hidden in another question was
-unavailable. Adding an irrelevant option also shifted the odds between
+<p>Each request can contain several questions about shared context. We put a
+test code in one question and asked another to identify it. It could not. The
+same code was readable from the shared context or the question&rsquo;s own
+instructions. Adding an irrelevant option also shifted the odds between
 existing answers, reproducing Archer&rsquo;s result. These findings support
 shared context, isolated question processing, and joint consideration of
 options.</p>
@@ -101,23 +93,19 @@ is not exclusive to it: a block-masked encoder can encode the state once and
 let isolated questions reuse it. Likewise, fast inference does not identify
 sparse experts or a parameter count without knowing the serving hardware.
 Those are architecture hypotheses, not recovered internals.</p>
-<p>We have not resolved the claimed twofold cost of question tokens. Our
-current endpoint no longer exposes the service-time header, and elapsed-time
-measurements were too noisy to settle the incremental ratio.</p>
-<h2>The knowledge horizon needed another look</h2>
-<p>Our earlier &ldquo;partial through May 2025&rdquo; reading was overstated.
-Questions about actual outcomes, rather than event dates, found good recall on
-selected October 2024 facts but little reliable recall of 2025 results. The
-candidate Qwens also struggled with recent facts; that resemblance does not
-identify Jev&rsquo;s parent model.</p>
-<p><a href="../data_report/followup_20261003/knowledge-questions.json">Try the same questions</a>, or inspect
-the <a href="../data_report/followup_20261003/knowledge-answer-key.json">answer key and sources</a>. The <a
-href="../docs/modern-comparison/FOLLOWUP-METHODS.md">methods and recorded evidence</a> contain the detailed
-comparisons.</p>
+<p>Our tests have not independently established the claimed twofold cost of
+question text.</p>
 <p>The practical conclusion survives: Jev is an inexpensive judgment service,
 not a frontier reasoner. We now have a clearer account of its behavior than of
 its family tree.</p>
 <footer><a href="https://jevresearch.github.io/Jev-Research/report/">&larr; back to the main report</a> &middot;
 <a href="https://archerhume.com/posts/jevs-architecture-unmasked/">Archer
-Hume&rsquo;s article</a></footer>
+Hume&rsquo;s &ldquo;Jev&rsquo;s Architecture Unmasked&rdquo;</a> &middot;
+<a href="../data_report/followup_20261003/knowledge-questions.json">Knowledge
+probes</a> &middot; <a
+href="../data_report/followup_20261003/knowledge-answer-key.json">answer
+key</a> &middot; <a
+href="../docs/modern-comparison/FOLLOWUP-METHODS.md">methods</a> &middot;
+<a href="../docs/modern-comparison/KNOWLEDGE-REPLAY.md">API replay
+instructions</a></footer>
 </main></body></html>

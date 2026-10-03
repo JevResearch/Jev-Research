@@ -138,7 +138,7 @@ INCLUDE_DIRS = [
 ]
 DOCS_ALLOW = {  # only these survive under docs/modern-comparison/
     "ARCHITECTURE-PROBES.md", "COMPARABLE-SCORES.md", "REFERENCE-MATRIX.md",
-    "FOLLOWUP-METHODS.md",
+    "FOLLOWUP-METHODS.md", "KNOWLEDGE-REPLAY.md",
     "comparison-graphs.html", "pareto-frontiers.html", "architecture-evidence.html",
     "architecture-diagram.html",
     "canonical",
