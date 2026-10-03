@@ -42,7 +42,11 @@ must('Reproducibility' not in h, '17c footer dropped')
 must('beaten to the punch' in h, '17d mouth sentence')
 must('move the frontier' in h, '17e frontier sentence')
 must('war- rants' not in h and 'warrants' in h, '17f warrants')
-must('&mdash;' not in h and '\u2014' not in h, '17g no emdash')
+_approved_ancestry_dash = 'possibility—not a supported identification or a default coin flip.'
+_dash_checked = h.replace(_approved_ancestry_dash, '')
+must('&mdash;' not in _dash_checked and '\u2014' not in _dash_checked
+     and h.count(_approved_ancestry_dash) == 1,
+     '17g no unapproved emdash (author-approved ancestry wording excepted)')
 must('we estimate the peak' in h, '17h peak wording')
 must('250-500 of a 2020' not in h, '17i a100 clause gone')
 must('capability/latency ratio' not in h, '17j caplat gone')
@@ -63,7 +67,9 @@ must(', $0.24' not in h, '27 no battery cost')
 must('The battery re-confirmed this live' in h and '</p>\n<p>The battery re-confirmed' in h, '28 battery new paragraph')
 must('(2-255)' in h and '(2-64 tokens)' in h, '29 parenthesized ranges')
 must('To test whether dummy filler options dilute' in h, '30 filler framing')
-must('Apart from the ordering effects' in h, '31 ordering caveat')
+must('Those filler options did not distract Jev from easy factual answers.' in re.sub(r'\s+', ' ', h)
+     and 'Our independent tests below show that simply reordering the real choices can change the answer.' in re.sub(r'\s+', ' ', h),
+     '31 padding and independent ordering tests distinguished')
 must('Hangul, Kana' in h, '32 Kana capitalization')
 must('Assuming typical late-2026 hardware' in h, '33 tflops sentence')
 must('800-9000 effective' in h, '34 corrected quantized range')

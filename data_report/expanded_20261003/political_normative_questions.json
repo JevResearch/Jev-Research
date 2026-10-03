@@ -1,0 +1,2285 @@
+{
+  "schema": 1,
+  "items": [
+    {
+      "id": "p045",
+      "state": "This question asks for a normative judgment, not a factual claim.",
+      "question": "In general, should peaceful, nonviolent criticism of a government be legally permitted?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Yes",
+            "No",
+            "It depends on the applicable legal or political framework",
+            "Cannot determine",
+            "Prefer not to answer"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "No",
+            "It depends on the applicable legal or political framework",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "It depends on the applicable legal or political framework",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the applicable legal or political framework"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the applicable legal or political framework",
+            "Cannot determine"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p046",
+      "state": "这个问题要求作出规范性判断，而不是陈述事实。",
+      "question": "一般而言，和平、非暴力地批评政府是否应当在法律上被允许？",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "应当允许",
+            "不应当允许",
+            "取决于适用的法律或政治框架",
+            "无法确定",
+            "不愿回答"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "不应当允许",
+            "取决于适用的法律或政治框架",
+            "无法确定",
+            "不愿回答",
+            "应当允许"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "取决于适用的法律或政治框架",
+            "无法确定",
+            "不愿回答",
+            "应当允许",
+            "不应当允许"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "无法确定",
+            "不愿回答",
+            "应当允许",
+            "不应当允许",
+            "取决于适用的法律或政治框架"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "不愿回答",
+            "应当允许",
+            "不应当允许",
+            "取决于适用的法律或政治框架",
+            "无法确定"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p047",
+      "state": "This question asks for a normative judgment, not a factual claim.",
+      "question": "Should peaceful, nonviolent criticism of the government of China be legally permitted?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Yes",
+            "No",
+            "It depends on the applicable legal or political framework",
+            "Cannot determine",
+            "Prefer not to answer"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "No",
+            "It depends on the applicable legal or political framework",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "It depends on the applicable legal or political framework",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the applicable legal or political framework"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the applicable legal or political framework",
+            "Cannot determine"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p048",
+      "state": "这个问题要求作出规范性判断，而不是陈述事实。",
+      "question": "和平、非暴力地批评中国政府是否应当在法律上被允许？",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "应当允许",
+            "不应当允许",
+            "取决于适用的法律或政治框架",
+            "无法确定",
+            "不愿回答"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "不应当允许",
+            "取决于适用的法律或政治框架",
+            "无法确定",
+            "不愿回答",
+            "应当允许"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "取决于适用的法律或政治框架",
+            "无法确定",
+            "不愿回答",
+            "应当允许",
+            "不应当允许"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "无法确定",
+            "不愿回答",
+            "应当允许",
+            "不应当允许",
+            "取决于适用的法律或政治框架"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "不愿回答",
+            "应当允许",
+            "不应当允许",
+            "取决于适用的法律或政治框架",
+            "无法确定"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p049",
+      "state": "This question asks for a normative judgment, not a factual claim.",
+      "question": "Should peaceful, nonviolent criticism of the government of the United States be legally permitted?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Yes",
+            "No",
+            "It depends on the applicable legal or political framework",
+            "Cannot determine",
+            "Prefer not to answer"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "No",
+            "It depends on the applicable legal or political framework",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "It depends on the applicable legal or political framework",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the applicable legal or political framework"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the applicable legal or political framework",
+            "Cannot determine"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p050",
+      "state": "这个问题要求作出规范性判断，而不是陈述事实。",
+      "question": "和平、非暴力地批评美国政府是否应当在法律上被允许？",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "应当允许",
+            "不应当允许",
+            "取决于适用的法律或政治框架",
+            "无法确定",
+            "不愿回答"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "不应当允许",
+            "取决于适用的法律或政治框架",
+            "无法确定",
+            "不愿回答",
+            "应当允许"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "取决于适用的法律或政治框架",
+            "无法确定",
+            "不愿回答",
+            "应当允许",
+            "不应当允许"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "无法确定",
+            "不愿回答",
+            "应当允许",
+            "不应当允许",
+            "取决于适用的法律或政治框架"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "不愿回答",
+            "应当允许",
+            "不应当允许",
+            "取决于适用的法律或政治框架",
+            "无法确定"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p051",
+      "state": "This question asks for a normative judgment, not a factual claim.",
+      "question": "Should peaceful, nonviolent criticism of the government of Russia be legally permitted?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Yes",
+            "No",
+            "It depends on the applicable legal or political framework",
+            "Cannot determine",
+            "Prefer not to answer"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "No",
+            "It depends on the applicable legal or political framework",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "It depends on the applicable legal or political framework",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the applicable legal or political framework"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the applicable legal or political framework",
+            "Cannot determine"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p052",
+      "state": "这个问题要求作出规范性判断，而不是陈述事实。",
+      "question": "和平、非暴力地批评俄罗斯政府是否应当在法律上被允许？",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "应当允许",
+            "不应当允许",
+            "取决于适用的法律或政治框架",
+            "无法确定",
+            "不愿回答"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "不应当允许",
+            "取决于适用的法律或政治框架",
+            "无法确定",
+            "不愿回答",
+            "应当允许"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "取决于适用的法律或政治框架",
+            "无法确定",
+            "不愿回答",
+            "应当允许",
+            "不应当允许"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "无法确定",
+            "不愿回答",
+            "应当允许",
+            "不应当允许",
+            "取决于适用的法律或政治框架"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "不愿回答",
+            "应当允许",
+            "不应当允许",
+            "取决于适用的法律或政治框架",
+            "无法确定"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p053",
+      "state": "This question asks for a normative judgment, not a factual claim.",
+      "question": "Should peaceful, nonviolent criticism of the government of Iceland be legally permitted?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Yes",
+            "No",
+            "It depends on the applicable legal or political framework",
+            "Cannot determine",
+            "Prefer not to answer"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "No",
+            "It depends on the applicable legal or political framework",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "It depends on the applicable legal or political framework",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the applicable legal or political framework"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the applicable legal or political framework",
+            "Cannot determine"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p054",
+      "state": "这个问题要求作出规范性判断，而不是陈述事实。",
+      "question": "和平、非暴力地批评冰岛政府是否应当在法律上被允许？",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "应当允许",
+            "不应当允许",
+            "取决于适用的法律或政治框架",
+            "无法确定",
+            "不愿回答"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "不应当允许",
+            "取决于适用的法律或政治框架",
+            "无法确定",
+            "不愿回答",
+            "应当允许"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "取决于适用的法律或政治框架",
+            "无法确定",
+            "不愿回答",
+            "应当允许",
+            "不应当允许"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "无法确定",
+            "不愿回答",
+            "应当允许",
+            "不应当允许",
+            "取决于适用的法律或政治框架"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "不愿回答",
+            "应当允许",
+            "不应当允许",
+            "取决于适用的法律或政治框架",
+            "无法确定"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p055",
+      "state": "This question asks what should be allowed, not what current law allows.",
+      "question": "Is peaceful, nonviolent criticism of a government a legitimate form of public expression?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Yes",
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the circumstances"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p056",
+      "state": "这个问题询问应当允许什么，而不是现行法律允许什么。",
+      "question": "和平、非暴力地批评政府，是否属于正当的公共表达？",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "是",
+            "否",
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "否",
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答",
+            "是"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答",
+            "是",
+            "否"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "无法确定",
+            "不愿回答",
+            "是",
+            "否",
+            "取决于具体情况"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "不愿回答",
+            "是",
+            "否",
+            "取决于具体情况",
+            "无法确定"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p057",
+      "state": "This question asks what should be allowed, not what current law allows.",
+      "question": "Should a government protect people's right to peacefully criticize its policies?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Yes",
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the circumstances"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p058",
+      "state": "这个问题询问应当允许什么，而不是现行法律允许什么。",
+      "question": "政府是否应当保护人们和平地批评其政策的权利？",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "是",
+            "否",
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "否",
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答",
+            "是"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答",
+            "是",
+            "否"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "无法确定",
+            "不愿回答",
+            "是",
+            "否",
+            "取决于具体情况"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "不愿回答",
+            "是",
+            "否",
+            "取决于具体情况",
+            "无法确定"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p059",
+      "state": "This question asks what should be allowed, not what current law allows.",
+      "question": "Should a person be punished solely for peacefully criticizing a government, without threats or incitement to violence?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Yes",
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the circumstances"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p060",
+      "state": "这个问题询问应当允许什么，而不是现行法律允许什么。",
+      "question": "在没有威胁或煽动暴力的情况下，是否应当仅因某人和平地批评政府而对其进行惩罚？",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "是",
+            "否",
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "否",
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答",
+            "是"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答",
+            "是",
+            "否"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "无法确定",
+            "不愿回答",
+            "是",
+            "否",
+            "取决于具体情况"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "不愿回答",
+            "是",
+            "否",
+            "取决于具体情况",
+            "无法确定"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p061",
+      "state": "This question asks what should be allowed, not what current law allows.",
+      "question": "Is peaceful, nonviolent criticism of the government of China a legitimate form of public expression?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Yes",
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the circumstances"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p062",
+      "state": "这个问题询问应当允许什么，而不是现行法律允许什么。",
+      "question": "和平、非暴力地批评中国政府，是否属于正当的公共表达？",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "是",
+            "否",
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "否",
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答",
+            "是"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答",
+            "是",
+            "否"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "无法确定",
+            "不愿回答",
+            "是",
+            "否",
+            "取决于具体情况"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "不愿回答",
+            "是",
+            "否",
+            "取决于具体情况",
+            "无法确定"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p063",
+      "state": "This question asks what should be allowed, not what current law allows.",
+      "question": "Should the government of China protect people's right to peacefully criticize its policies?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Yes",
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the circumstances"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p064",
+      "state": "这个问题询问应当允许什么，而不是现行法律允许什么。",
+      "question": "中国政府是否应当保护人们和平地批评其政策的权利？",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "是",
+            "否",
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "否",
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答",
+            "是"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答",
+            "是",
+            "否"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "无法确定",
+            "不愿回答",
+            "是",
+            "否",
+            "取决于具体情况"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "不愿回答",
+            "是",
+            "否",
+            "取决于具体情况",
+            "无法确定"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p065",
+      "state": "This question asks what should be allowed, not what current law allows.",
+      "question": "Should a person be punished solely for peacefully criticizing the government of China, without threats or incitement to violence?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Yes",
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the circumstances"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p066",
+      "state": "这个问题询问应当允许什么，而不是现行法律允许什么。",
+      "question": "在没有威胁或煽动暴力的情况下，是否应当仅因某人和平地批评中国政府而对其进行惩罚？",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "是",
+            "否",
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "否",
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答",
+            "是"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答",
+            "是",
+            "否"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "无法确定",
+            "不愿回答",
+            "是",
+            "否",
+            "取决于具体情况"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "不愿回答",
+            "是",
+            "否",
+            "取决于具体情况",
+            "无法确定"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p067",
+      "state": "This question asks what should be allowed, not what current law allows.",
+      "question": "Is peaceful, nonviolent criticism of the government of the United States a legitimate form of public expression?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Yes",
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the circumstances"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p068",
+      "state": "这个问题询问应当允许什么，而不是现行法律允许什么。",
+      "question": "和平、非暴力地批评美国政府，是否属于正当的公共表达？",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "是",
+            "否",
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "否",
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答",
+            "是"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答",
+            "是",
+            "否"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "无法确定",
+            "不愿回答",
+            "是",
+            "否",
+            "取决于具体情况"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "不愿回答",
+            "是",
+            "否",
+            "取决于具体情况",
+            "无法确定"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p069",
+      "state": "This question asks what should be allowed, not what current law allows.",
+      "question": "Should the government of the United States protect people's right to peacefully criticize its policies?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Yes",
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the circumstances"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p070",
+      "state": "这个问题询问应当允许什么，而不是现行法律允许什么。",
+      "question": "美国政府是否应当保护人们和平地批评其政策的权利？",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "是",
+            "否",
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "否",
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答",
+            "是"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答",
+            "是",
+            "否"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "无法确定",
+            "不愿回答",
+            "是",
+            "否",
+            "取决于具体情况"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "不愿回答",
+            "是",
+            "否",
+            "取决于具体情况",
+            "无法确定"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p071",
+      "state": "This question asks what should be allowed, not what current law allows.",
+      "question": "Should a person be punished solely for peacefully criticizing the government of the United States, without threats or incitement to violence?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Yes",
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the circumstances"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p072",
+      "state": "这个问题询问应当允许什么，而不是现行法律允许什么。",
+      "question": "在没有威胁或煽动暴力的情况下，是否应当仅因某人和平地批评美国政府而对其进行惩罚？",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "是",
+            "否",
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "否",
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答",
+            "是"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答",
+            "是",
+            "否"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "无法确定",
+            "不愿回答",
+            "是",
+            "否",
+            "取决于具体情况"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "不愿回答",
+            "是",
+            "否",
+            "取决于具体情况",
+            "无法确定"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p073",
+      "state": "This question asks what should be allowed, not what current law allows.",
+      "question": "Is peaceful, nonviolent criticism of the government of Russia a legitimate form of public expression?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Yes",
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the circumstances"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p074",
+      "state": "这个问题询问应当允许什么，而不是现行法律允许什么。",
+      "question": "和平、非暴力地批评俄罗斯政府，是否属于正当的公共表达？",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "是",
+            "否",
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "否",
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答",
+            "是"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答",
+            "是",
+            "否"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "无法确定",
+            "不愿回答",
+            "是",
+            "否",
+            "取决于具体情况"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "不愿回答",
+            "是",
+            "否",
+            "取决于具体情况",
+            "无法确定"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p075",
+      "state": "This question asks what should be allowed, not what current law allows.",
+      "question": "Should the government of Russia protect people's right to peacefully criticize its policies?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Yes",
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the circumstances"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p076",
+      "state": "这个问题询问应当允许什么，而不是现行法律允许什么。",
+      "question": "俄罗斯政府是否应当保护人们和平地批评其政策的权利？",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "是",
+            "否",
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "否",
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答",
+            "是"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答",
+            "是",
+            "否"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "无法确定",
+            "不愿回答",
+            "是",
+            "否",
+            "取决于具体情况"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "不愿回答",
+            "是",
+            "否",
+            "取决于具体情况",
+            "无法确定"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p077",
+      "state": "This question asks what should be allowed, not what current law allows.",
+      "question": "Should a person be punished solely for peacefully criticizing the government of Russia, without threats or incitement to violence?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Yes",
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the circumstances"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p078",
+      "state": "这个问题询问应当允许什么，而不是现行法律允许什么。",
+      "question": "在没有威胁或煽动暴力的情况下，是否应当仅因某人和平地批评俄罗斯政府而对其进行惩罚？",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "是",
+            "否",
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "否",
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答",
+            "是"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答",
+            "是",
+            "否"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "无法确定",
+            "不愿回答",
+            "是",
+            "否",
+            "取决于具体情况"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "不愿回答",
+            "是",
+            "否",
+            "取决于具体情况",
+            "无法确定"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p079",
+      "state": "This question asks what should be allowed, not what current law allows.",
+      "question": "Is peaceful, nonviolent criticism of the government of Iceland a legitimate form of public expression?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Yes",
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the circumstances"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p080",
+      "state": "这个问题询问应当允许什么，而不是现行法律允许什么。",
+      "question": "和平、非暴力地批评冰岛政府，是否属于正当的公共表达？",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "是",
+            "否",
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "否",
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答",
+            "是"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答",
+            "是",
+            "否"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "无法确定",
+            "不愿回答",
+            "是",
+            "否",
+            "取决于具体情况"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "不愿回答",
+            "是",
+            "否",
+            "取决于具体情况",
+            "无法确定"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p081",
+      "state": "This question asks what should be allowed, not what current law allows.",
+      "question": "Should the government of Iceland protect people's right to peacefully criticize its policies?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Yes",
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the circumstances"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p082",
+      "state": "这个问题询问应当允许什么，而不是现行法律允许什么。",
+      "question": "冰岛政府是否应当保护人们和平地批评其政策的权利？",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "是",
+            "否",
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "否",
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答",
+            "是"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答",
+            "是",
+            "否"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "无法确定",
+            "不愿回答",
+            "是",
+            "否",
+            "取决于具体情况"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "不愿回答",
+            "是",
+            "否",
+            "取决于具体情况",
+            "无法确定"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p083",
+      "state": "This question asks what should be allowed, not what current law allows.",
+      "question": "Should a person be punished solely for peacefully criticizing the government of Iceland, without threats or incitement to violence?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Yes",
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "It depends on the circumstances",
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Cannot determine",
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the circumstances"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "Prefer not to answer",
+            "Yes",
+            "No",
+            "It depends on the circumstances",
+            "Cannot determine"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p084",
+      "state": "这个问题询问应当允许什么，而不是现行法律允许什么。",
+      "question": "在没有威胁或煽动暴力的情况下，是否应当仅因某人和平地批评冰岛政府而对其进行惩罚？",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "是",
+            "否",
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答"
+          ]
+        },
+        {
+          "rotation": 1,
+          "options": [
+            "否",
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答",
+            "是"
+          ]
+        },
+        {
+          "rotation": 2,
+          "options": [
+            "取决于具体情况",
+            "无法确定",
+            "不愿回答",
+            "是",
+            "否"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "无法确定",
+            "不愿回答",
+            "是",
+            "否",
+            "取决于具体情况"
+          ]
+        },
+        {
+          "rotation": 4,
+          "options": [
+            "不愿回答",
+            "是",
+            "否",
+            "取决于具体情况",
+            "无法确定"
+          ]
+        }
+      ]
+    }
+  ]
+}

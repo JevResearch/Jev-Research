@@ -1,0 +1,104 @@
+{
+ "items": {
+  "hs_ws2024": {
+   "source_url": "https://en.wikipedia.org/wiki/2024_World_Series",
+   "source_sha256": "162484e8fb19d93ae085f9f76eac686157193210c4ccb52312edacfde708bf82",
+   "verified": true
+  },
+  "hs_ballon2024": {
+   "source_url": "https://en.wikipedia.org/wiki/2024_Ballon_d%27Or",
+   "source_sha256": "b41ba233d139780224e167162bdf5bfd487359e6fa00b82d68d83bfb07bb6844",
+   "verified": true
+  },
+  "hs_nobelpeace2024": {
+   "source_url": "https://www.nobelprize.org/prizes/peace/2024/summary/",
+   "source_sha256": "0a02f31d4605d4f1b3e84361abec9305b6c5a2f161fcec3ebc9d322bb948f2e4",
+   "verified": true
+  },
+  "hs_heisman2024": {
+   "source_url": "https://en.wikipedia.org/wiki/Heisman_Trophy",
+   "source_sha256": "bef55b6e1850f4f7778b6a81eca03743b2f47dcb45c7cb4277ad0ecc49e9b3f2",
+   "verified": true
+  },
+  "hs_sblx": {
+   "source_url": "https://en.wikipedia.org/wiki/Super_Bowl_LIX",
+   "source_sha256": "0198db4500f28a38673a14c4586120808adfee09bfb7742ddb497d4a2e55ccc7",
+   "verified": true
+  },
+  "hs_ao2025w": {
+   "source_url": "https://en.wikipedia.org/wiki/2025_Australian_Open_%E2%80%93_Women%27s_singles",
+   "source_sha256": "a42b1c6a04c2d93264990d8410c8d1d96e4683601affdb551b2112e63994a6d5",
+   "verified": true
+  },
+  "hs_sixnations2025": {
+   "source_url": "https://en.wikipedia.org/wiki/2025_Six_Nations_Championship",
+   "source_sha256": "bc97e6abc5f6d038f5a8fe8e2abe29140d5adf6fee3ead828f42297e461e5fd4",
+   "verified": true
+  },
+  "hs_oscar2025": {
+   "source_url": "https://en.wikipedia.org/wiki/97th_Academy_Awards",
+   "source_sha256": "acb76af4a5d7a1aa5d5cc733fe1339a075dc35d3566027bf8497cadf19c90763",
+   "verified": true
+  },
+  "hs_pope2025": {
+   "source_url": "https://en.wikipedia.org/wiki/2025_papal_conclave",
+   "source_sha256": "669ecf5ab8982f3c9a2624da86372dc26a2a811c7cbc40d0d493045dd59ee4f7",
+   "verified": true
+  },
+  "hs_eurovision2025": {
+   "source_url": "https://en.wikipedia.org/wiki/Eurovision_Song_Contest_2025",
+   "source_sha256": "e45591247a0cac347dfb766b6bb2b02290053493506a4156997faf2b46888a1a",
+   "verified": true
+  },
+  "hs_cannes2025": {
+   "source_url": "https://en.wikipedia.org/wiki/2025_Cannes_Film_Festival",
+   "source_sha256": "0824ad4eff6512a096b8f088d0bc7ddec97b469c34eb672abc5d08499d617645",
+   "verified": true
+  },
+  "hs_nba2025": {
+   "source_url": "https://en.wikipedia.org/wiki/2025_NBA_Finals",
+   "source_sha256": "e4f1148b656b1bf5ef7ee426cc4fbc29dda0affa2e5c633b381f28ccb253ae80",
+   "verified": true
+  },
+  "hs_usopen2025": {
+   "source_url": "https://en.wikipedia.org/wiki/2025_U.S._Open_(golf)",
+   "source_sha256": "519d62a264af0221040e6d2f55932f59c9acfb8db798218eaf49ea287e63e119",
+   "verified": true
+  },
+  "hs_wimb2025w": {
+   "source_url": "https://en.wikipedia.org/wiki/2025_Wimbledon_Championships",
+   "source_sha256": "fafd228f3d7b6e95dec4e13c046e310e29e6f3896851acae3f078b1e3fe502ad",
+   "verified": true
+  },
+  "hs_cwc2025": {
+   "source_url": "https://en.wikipedia.org/wiki/2025_FIFA_Club_World_Cup_final",
+   "source_sha256": "9cb313be323f1981906be684d82693648edf19838fbed470fa060c77aba63018",
+   "verified": true
+  },
+  "hs_anchorage": {
+   "source_url": "https://en.wikipedia.org/wiki/2025_Russia%E2%80%93United_States_summit",
+   "source_sha256": "9c5daa4a04696655c433bf055a68afe7dc4221a726f617d03d3ca2f959f7cbb6",
+   "verified": true
+  },
+  "hs_wc2022": {
+   "source_url": "https://en.wikipedia.org/wiki/2022_FIFA_World_Cup_final",
+   "source_sha256": "bb2509592a3099a818cc7c79b6ee7e1077d02cda6b4eac1e713b12bb1cc30678",
+   "verified": true
+  },
+  "hs_sblviii": {
+   "source_url": "https://en.wikipedia.org/wiki/Super_Bowl_LVIII",
+   "source_sha256": "efa2030b5aaa8d2e87b3fc9d6c413d7386057f9ad543b86f375e5d28474ed30e",
+   "verified": true
+  },
+  "hs_wimb2023m": {
+   "source_url": "https://en.wikipedia.org/wiki/2023_Wimbledon_Championships",
+   "source_sha256": "33e9e37e69a437f455560065d149475ce001fcb101b5bdbf139cdc3843c231a6",
+   "verified": true
+  },
+  "hs_starliner": {
+   "source_url": "https://www.nasa.gov/news-release/nasa-boeing-welcome-starliner-spacecraft-to-earth-close-mission/",
+   "source_sha256": "f7ab1c4a4ca38e9598413723ccd871713f7babba0b3ac53c693f7d5b7953995c",
+   "verified": true
+  }
+ }
+}

@@ -1,0 +1,187 @@
+{
+  "schema": 1,
+  "study": "matched multilingual direct inference",
+  "source": "human-translated XNLI1.0 test",
+  "n_distinct_premises": 1200,
+  "menu_orders_per_question": 2,
+  "languages": [
+    "en",
+    "zh",
+    "ar",
+    "ru",
+    "de",
+    "es"
+  ],
+  "jev_model": "jev-1.13.0",
+  "qwen_model": "qwen/qwen3.5-9b",
+  "qwen_reasoning": "off",
+  "qwen_temperature": 0,
+  "bootstrap_seed": 2026100316,
+  "n_bootstrap": 5000,
+  "results": [
+    {
+      "language": "en",
+      "jev_accuracy": 0.8754166666666666,
+      "qwen_accuracy": 0.8325,
+      "jev_minus_qwen": 0.042916666666666665,
+      "jev_minus_qwen_CI": [
+        0.025,
+        0.06125
+      ],
+      "english_drop_jev": 0.0,
+      "english_drop_qwen": 0.0,
+      "difference_of_english_drops": 0.0,
+      "difference_of_drops_pointwise_95CI": [
+        0.0,
+        0.0
+      ],
+      "difference_of_drops_99CI_bonferroni5": [
+        0.0,
+        0.0
+      ],
+      "common_english_bothorders_correct_n": 921,
+      "common_english_subset_jev_accuracy": 1.0,
+      "common_english_subset_qwen_accuracy": 1.0,
+      "jev_menu_disagreement_n": 25,
+      "qwen_menu_disagreement_n": 79
+    },
+    {
+      "language": "zh",
+      "jev_accuracy": 0.77375,
+      "qwen_accuracy": 0.7129166666666666,
+      "jev_minus_qwen": 0.060833333333333336,
+      "jev_minus_qwen_CI": [
+        0.04041666666666666,
+        0.08166666666666667
+      ],
+      "english_drop_jev": 0.10166666666666667,
+      "english_drop_qwen": 0.11958333333333333,
+      "difference_of_english_drops": -0.017916666666666668,
+      "difference_of_drops_pointwise_95CI": [
+        -0.0425,
+        0.006666666666666667
+      ],
+      "difference_of_drops_99CI_bonferroni5": [
+        -0.05,
+        0.015416666666666667
+      ],
+      "common_english_bothorders_correct_n": 921,
+      "common_english_subset_jev_accuracy": 0.8626492942453855,
+      "common_english_subset_qwen_accuracy": 0.8137893593919653,
+      "jev_menu_disagreement_n": 32,
+      "qwen_menu_disagreement_n": 103
+    },
+    {
+      "language": "ar",
+      "jev_accuracy": 0.7891666666666667,
+      "qwen_accuracy": 0.7245833333333334,
+      "jev_minus_qwen": 0.06458333333333334,
+      "jev_minus_qwen_CI": [
+        0.045,
+        0.085
+      ],
+      "english_drop_jev": 0.08625,
+      "english_drop_qwen": 0.10791666666666666,
+      "difference_of_english_drops": -0.021666666666666667,
+      "difference_of_drops_pointwise_95CI": [
+        -0.04541666666666667,
+        0.00125
+      ],
+      "difference_of_drops_99CI_bonferroni5": [
+        -0.052083333333333336,
+        0.008335416666666711
+      ],
+      "common_english_bothorders_correct_n": 921,
+      "common_english_subset_jev_accuracy": 0.8805646036916395,
+      "common_english_subset_qwen_accuracy": 0.8268186753528773,
+      "jev_menu_disagreement_n": 38,
+      "qwen_menu_disagreement_n": 123
+    },
+    {
+      "language": "ru",
+      "jev_accuracy": 0.775,
+      "qwen_accuracy": 0.71625,
+      "jev_minus_qwen": 0.05875,
+      "jev_minus_qwen_CI": [
+        0.0375,
+        0.07876041666666651
+      ],
+      "english_drop_jev": 0.10041666666666667,
+      "english_drop_qwen": 0.11625,
+      "difference_of_english_drops": -0.015833333333333335,
+      "difference_of_drops_pointwise_95CI": [
+        -0.039177083333333335,
+        0.007916666666666667
+      ],
+      "difference_of_drops_99CI_bonferroni5": [
+        -0.04708333333333333,
+        0.015416666666666667
+      ],
+      "common_english_bothorders_correct_n": 921,
+      "common_english_subset_jev_accuracy": 0.8713355048859935,
+      "common_english_subset_qwen_accuracy": 0.8170466883821933,
+      "jev_menu_disagreement_n": 35,
+      "qwen_menu_disagreement_n": 87
+    },
+    {
+      "language": "de",
+      "jev_accuracy": 0.80375,
+      "qwen_accuracy": 0.7279166666666667,
+      "jev_minus_qwen": 0.07583333333333334,
+      "jev_minus_qwen_CI": [
+        0.05665625,
+        0.09541666666666666
+      ],
+      "english_drop_jev": 0.07166666666666667,
+      "english_drop_qwen": 0.10458333333333333,
+      "difference_of_english_drops": -0.032916666666666664,
+      "difference_of_drops_pointwise_95CI": [
+        -0.054177083333333334,
+        -0.012083333333333333
+      ],
+      "difference_of_drops_99CI_bonferroni5": [
+        -0.06166875,
+        -0.00625
+      ],
+      "common_english_bothorders_correct_n": 921,
+      "common_english_subset_jev_accuracy": 0.9158523344191096,
+      "common_english_subset_qwen_accuracy": 0.8631921824104235,
+      "jev_menu_disagreement_n": 31,
+      "qwen_menu_disagreement_n": 70
+    },
+    {
+      "language": "es",
+      "jev_accuracy": 0.82375,
+      "qwen_accuracy": 0.76375,
+      "jev_minus_qwen": 0.06,
+      "jev_minus_qwen_CI": [
+        0.04041666666666666,
+        0.07958333333333334
+      ],
+      "english_drop_jev": 0.051666666666666666,
+      "english_drop_qwen": 0.06875,
+      "difference_of_english_drops": -0.017083333333333332,
+      "difference_of_drops_pointwise_95CI": [
+        -0.03916666666666667,
+        0.004166666666666667
+      ],
+      "difference_of_drops_99CI_bonferroni5": [
+        -0.044583333333333336,
+        0.010416666666666666
+      ],
+      "common_english_bothorders_correct_n": 921,
+      "common_english_subset_jev_accuracy": 0.9256243213897937,
+      "common_english_subset_qwen_accuracy": 0.8789359391965255,
+      "jev_menu_disagreement_n": 23,
+      "qwen_menu_disagreement_n": 90
+    }
+  ],
+  "average_nonenglish_difference_of_drops": -0.021083333333333332,
+  "average_difference_95CI": [
+    -0.03766666666666667,
+    -0.004333333333333333
+  ],
+  "source_plan_sha256": "58c14be04a4bf3e5621efc223f8505c6260624247a27fc180a5b769a5071adfa",
+  "source_paper": "https://arxiv.org/abs/1809.05053",
+  "raw_text_release": "No raw source sentences or request bodies redistributed; derived scores only."
+}

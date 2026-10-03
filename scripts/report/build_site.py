@@ -76,6 +76,12 @@ INCLUDE_FILES = [
     "data_report/jevbot_examples.json",
     "data_report/benchmark_diagnostics/calibration.json",
     "data_report/benchmark_diagnostics/paired_diagnostics.json",
+    "data_report/expanded_20261003/multilingual_heldout_aggregates.json",
+    "data_report/expanded_20261003/political_comparison_aggregates.json",
+    "data_report/expanded_20261003/political_factual_questions.json",
+    "data_report/expanded_20261003/political_factual_answer_key.json",
+    "data_report/expanded_20261003/political_normative_questions.json",
+    "data_report/expanded_20261003/political_model_responses.jsonl",
     "data_report/benchmark_diagnostics/arc_payload_audit.json",
     "data_report/raw_recoverability_inventory.json",
     "data_report/baseline_rerun_plan.json",
@@ -137,7 +143,7 @@ INCLUDE_DIRS = [
     "runs_archprobe",
 ]
 DOCS_ALLOW = {  # only these survive under docs/modern-comparison/
-    "ARCHITECTURE-PROBES.md", "COMPARABLE-SCORES.md", "REFERENCE-MATRIX.md",
+    "ARCHITECTURE-PROBES.md", "COMPARABLE-SCORES.md", "REFERENCE-MATRIX.md", "MULTILINGUAL-COMPARISON.md", "POLITICAL-COMPARISON.md", "PEKKA-REPLAY.md",
     "FOLLOWUP-METHODS.md", "KNOWLEDGE-REPLAY.md",
     "comparison-graphs.html", "pareto-frontiers.html", "architecture-evidence.html",
     "architecture-diagram.html",
@@ -188,6 +194,10 @@ def rel(p: Path) -> str:
 
 def banned_path(r: str) -> bool:
     parts = r.split("/")
+    if r.startswith("runs_archprobe/expanded_20261003/"):
+        # This wave releases reviewed derived exports explicitly via
+        # INCLUDE_FILES, not operational ledgers, headers or staging traces.
+        return True
     if r.startswith("runs_archprobe/followup_20261003/") and parts[-1] in FOLLOWUP_SKIP:
         return True                       # own traces + plans ship; see above
     # runs_matched_cheap ledgers carry item ids, answer letters, usage and cost

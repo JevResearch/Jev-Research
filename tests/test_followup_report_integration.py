@@ -73,12 +73,18 @@ def test_header_claim_is_september_dated():
 
 def test_padding_conclusion_not_absolute():
     assert "essentially absolutely" not in HTML
-    assert "not diluted by inert padding" in HTML
+    visible = re.sub(r"\s+", " ", HTML)
+    assert "Those filler options did not distract Jev from easy factual answers." in visible
+    assert "Our independent tests below show that simply reordering the real choices can change the answer." in visible
 
 
 def test_counterpoint_is_short_and_uninflated():
     words = re.sub(r"<[^>]+>", " ", build_counterpoint.BODY).split()
-    assert len(words) <= 520            # author-cut draft; no padded prose
+    # Author requested the political/language comparison and a central
+    # ancestry assessment after the original short draft; keep it readable.
+    assert len(words) <= 800
+    for anchor in ('counter-ancestry', 'counter-language', 'counter-politics'):
+        assert f'id="{anchor}"' in CP
 
 
 # ------------------------------------------------------------- exports

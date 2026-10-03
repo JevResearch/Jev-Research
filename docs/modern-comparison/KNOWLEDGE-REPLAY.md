@@ -1,10 +1,11 @@
 # Replaying the knowledge probe (API instructions)
 
-**Detailed Pekka-specific guide:** [PEKKA-REPLAY.md](PEKKA-REPLAY.md)
+For a complete, forwardable Jev-versus-Qwen recipe, see [Pekka’s replay guide](PEKKA-REPLAY.md).
 
-
-Replay the 48 public prompts (`data_report/followup_20261003/knowledge-questions.json`:
-24 items × 2 option rotations) with `scripts/benchmark/replay_knowledge.py`.
+Reproduce our **Jev** results with your own TypeSafe API key, then run the same
+questions against Qwen if desired. `scripts/benchmark/replay_knowledge.py` replays
+the 48 public prompts (`data_report/followup_20261003/knowledge-questions.json`:
+24 items × 2 option rotations) and also accepts your own question file.
 Python 3.12+ required. Every API call is billable; nothing runs without the
 opt-in below. Use `--limit 4` for a smoke run.
 
@@ -49,7 +50,31 @@ response, usage, choice, strict/recovered/graded fields); existing output files
 are refused. Output budget defaults to 512 tokens (for the original reference
 cap use `--max-output-tokens 300`). See `--help`.
 
-## Arena web (no API key)
+## Add your own questions
+
+Copy `knowledge-questions.json` to `my-questions.json`, keeping its `items` /
+`variants` structure. Each item needs a unique `id`, a `question`, and one or
+more variants with a `rotation` label and ordered `options`:
+
+```json
+{"items":[{"id":"my01","question":"Your question here",
+  "variants":[{"rotation":0,"options":["First answer","Second answer"]}]}]}
+```
+
+Run it directly against Jev:
+
+```bash
+.venv/bin/python scripts/benchmark/replay_knowledge.py --provider jev \
+  --questions my-questions.json --output /tmp/pekka-jev-custom.jsonl
+```
+
+Use that same `--questions my-questions.json` with `--provider openrouter` and
+`--model qwen/qwen3-30b-a3b-instruct-2507` for Qwen. A custom answer key is
+optional: grade manually, or provide `--answer-key my-answer-key.json` using the
+published key's structure and matching item IDs and rotation labels. The key
+is never sent to either model.
+
+## Arena web (optional Qwen comparison; no API key)
 
 The web UI needs none of the keys above: paste each variant from
 `knowledge-arena-replay.txt` into a **fresh** chat, pick

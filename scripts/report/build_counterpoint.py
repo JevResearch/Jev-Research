@@ -41,40 +41,72 @@ except Exception:                          # standalone fallback (identical look
 
 # Author-approved counterpoint text (kept verbatim; links resolved below).
 BODY = """<h1>A counterpoint on Jev&rsquo;s architecture</h1>
-<p><a href="https://archerhume.com/posts/jevs-architecture-unmasked/">Archer
-Hume&rsquo;s &ldquo;Jev&rsquo;s Architecture Unmasked&rdquo;</a> is worth reading. Our follow-up reproduces its
-strongest behavioral findings: Jev shares state, isolates questions, and lets
-options influence one another. The disagreement is about how much of the
-machinery behind those behaviors we can identify.</p>
-<h2>The tokenizer is not a pedigree</h2>
-<p>Jev&rsquo;s reported counts really differ from the proposed Qwen tokenizers.
-For example, <code>zzz</code> and <code>______</code> each add one token to
-Jev&rsquo;s empty-state counter, whereas the pinned Qwen encoders split them
-into two. The proposed Qwen3-30B-A3B and Qwen3-Next candidates also share
-their ordinary-text vocabulary with Qwen2.5; a missing Qwen3 vocabulary
-expansion does not explain the mismatch.</p>
-<p>We also tested timing with equally sized uploads but different token
-counts. The reported counts and Qwen counts predicted elapsed time similarly.
-That experiment did not settle which tokenizer the neural network uses. A
-count&ndash;latency relationship is not a weight fingerprint.</p>
-<h2>Shared computation does not identify the backbone</h2>
+<p>Our investigation of Jev was conducted independently, before we encountered
+<a href="https://archerhume.com/posts/jevs-architecture-unmasked/">Archer Hume&rsquo;s
+&ldquo;Jev&rsquo;s Architecture Unmasked&rdquo;</a>. The studies agree on shared context,
+isolated questions, and interacting options. After reading his report, we ran
+additional probes to compare the results and test the remaining architectural claims.</p>
+<h2 id="counter-ancestry">Does the evidence point to Qwen?</h2>
+<p>The measured evidence points away from a straightforward Qwen rebrand. We have
+found no compelling basis for identifying Qwen as Jev&rsquo;s parent, and it should
+not be presented as the leading explanation. Qwen-derived weights remain an
+unresolved possibility&mdash;not a supported identification or a default coin flip.</p>
+<p>The current article itself says that the pretrained model is unknown. Our
+comparisons add three important differences: Jev&rsquo;s reported tokenization,
+its language-understanding accuracy, and its political responses. Together,
+these make &ldquo;trivially relabelled Qwen&rdquo; a poor description of the observed
+service. The direct behavioral comparisons below use Qwen3.5 9B; the tokenizer
+audits also cover the proposed Qwen3 and Qwen3-Next encoders.</p>
+<h2 id="counter-tokenizer">A different counting profile</h2>
+<p>Jev&rsquo;s reported counts differ from the public Qwen encoders. For example,
+<code>zzz</code> and <code>______</code> each add one token to Jev&rsquo;s
+empty-state counter, while the pinned Qwen encoders split them into two.
+Across our broader audit, none of the 128 scored public tokenizers reproduced
+the full measured profile.</p>
+<h2 id="counter-language">Better matched language understanding</h2>
+<p>On 1,200 held-out human-translated inference cases, Jev outperformed Qwen3.5 9B
+in all six tested languages. English accuracy was 87.5% against 83.3%; the other
+languages ranged from 77.4% to 82.4% for Jev and 71.3% to 76.4% for Qwen. Both
+performed best in English, but Jev&rsquo;s drop was slightly smaller on average
+when moving to another language. <a href="https://jevresearch.github.io/Jev-Research/#bench-language">The main report has the chart and paired results.</a></p>
+<h2 id="counter-politics">A different political profile</h2>
+<p>We sent the same politically sensitive questions to both services in English
+and Chinese, rotating the menus and repeating each order. Jev identified the
+government actually administering Taiwan as Taipei in all 40 runs; Qwen chose
+Beijing in all 40. In Chinese, Qwen denied that the UN&rsquo;s August 2022 Xinjiang
+assessment existed in 16 of 20 runs, while Jev answered correctly in all 20.
+Qwen also produced prose denying that Taiwan has a president or vice president.
+Jev answered the election questions directly.</p>
+<p>The difference survived clearer normative wording: asked in Chinese whether
+peaceful criticism of China&rsquo;s government is legitimate, Jev answered yes
+in all 20 runs. Qwen answered yes five times, no three, conditionally five, and
+refused seven. Both models passed the non-political control cases. These were
+not merely a parser failure: the differences concentrated
+on politically sensitive questions. <a href="https://jevresearch.github.io/Jev-Research/#bench-politics">Matched results and methods.</a></p>
+<h2 id="counter-similarities">What matches, and what remains unsettled</h2>
+<p>Qwen was among the closest counters on Archer&rsquo;s short-string probe set,
+and the small dated-knowledge comparison produced some similar hit-and-miss
+patterns. Those are similarities worth testing, but they are not distinctive
+parent-model signatures. We also disregard Jev&rsquo;s self-identification:
+its brand stories change with the prompt and menu.</p>
+<p>Our equally sized-upload timing comparison did not distinguish the reported
+counter from Qwen counts as a processing proxy. We have not independently
+established the claimed twofold cost of question text.</p>
+<h2 id="counter-computation">Shared computation</h2>
 <p>Each request can contain several questions about shared context. We put a
 test code in one question and asked another to identify it. It could not. The
-same code was readable from the shared context or the question&rsquo;s own
+same code was readable from shared context or the question&rsquo;s own
 instructions. Adding an irrelevant option also shifted the odds between
-existing answers, reproducing Archer&rsquo;s result. These findings support
-shared context, isolated question processing, and joint consideration of
-options.</p>
-<p>A causal decoder remains a sensible premise. However, shared-state caching
-is not exclusive to it: a block-masked encoder can encode the state once and
-let isolated questions reuse it. Likewise, fast inference does not identify
-sparse experts or a parameter count without knowing the serving hardware.
-Those are architecture hypotheses, not recovered internals.</p>
-<p>Our tests have not independently established the claimed twofold cost of
-question text.</p>
+existing answers, reproducing Archer&rsquo;s scenario. These findings support
+shared context, isolated question processing, and joint consideration of options.</p>
+<p>A causal decoder remains a sensible premise. A block-masked encoder can also
+encode the state once and let isolated questions reuse it. Likewise, fast
+inference alone does not choose dense versus sparse experts or determine a
+parameter count without knowing the serving hardware. These architectural
+features do not select a particular Qwen checkpoint.</p>
 <p>The practical conclusion survives: Jev is an inexpensive judgment service,
-not a frontier reasoner. We now have a clearer account of its behavior than of
-its family tree.</p>"""
+not a frontier reasoner. Its measured behavior differs substantially from the
+Qwen testcase we compared.</p>"""
 
 
 def main() -> None:

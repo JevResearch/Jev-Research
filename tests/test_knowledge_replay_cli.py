@@ -370,3 +370,34 @@ def test_invalid_state_and_jev_reasoning_rejected_before_transport(tmp_path):
     with pytest.raises(SystemExit):
         rk.run(["--provider", "jev", "--reasoning", "off", "--output", str(tmp_path / "y")],
                http_transport=_mock(lambda request: pytest.fail("transport called")))
+
+
+def test_openrouter_explicit_temperature_preserves_reasoning_control(tmp_path):
+    seen = []
+    body = json.dumps({
+        'model': 'qwen/qwen3.5-9b',
+        'choices': [{'finish_reason': 'stop', 'message': {'content': 'o0'}}],
+        'usage': {'prompt_tokens': 10, 'completion_tokens': 1}}).encode()
+    out = tmp_path / 'temperature.jsonl'
+    rc = rk.run(['--provider', 'openrouter', '--model', 'qwen/qwen3.5-9b',
+                 '--reasoning', 'off', '--temperature', '0', '--limit', '1',
+                 '--output', str(out)], or_transport=_FakeOR(body, seen))
+    assert rc == 0 and len(seen) == 1
+    payload = seen[0][1]
+    assert payload['temperature'] == 0
+    assert payload['reasoning'] == {'enabled': False}
+    row = _rows(out)[0]
+    assert row['temperature_requested'] == 0
+    assert row['wire_payload']['temperature'] == 0
+
+
+@pytest.mark.parametrize('provider,value', [
+    ('jev', '0'), ('openrouter', 'nan'), ('openrouter', 'inf'),
+    ('openrouter', '-1'), ('openrouter', '3')])
+def test_invalid_or_native_temperature_refused_before_transport(tmp_path, provider, value):
+    seen = []
+    out = tmp_path / 'never-created.jsonl'
+    with pytest.raises(SystemExit):
+        rk.run(['--provider', provider, '--temperature', value,
+                '--output', str(out)], or_transport=_FakeOR(b'{}', seen))
+    assert seen == [] and not out.exists()

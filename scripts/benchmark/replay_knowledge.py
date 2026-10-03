@@ -28,6 +28,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import os
 import re
 import sys
@@ -180,6 +181,8 @@ def run(argv: list[str] | None = None, *,
                    help=f"output budget per call (default {OUT_CAP_DEFAULT})")
     p.add_argument("--reasoning", choices=("default", "off", "on"), default="default",
                    help="OpenRouter reasoning wire mode (default leaves payload unchanged)")
+    p.add_argument("--temperature", type=float, default=None,
+                   help="Optional OpenRouter temperature 0..2; omitted preserves provider defaults")
     args = p.parse_args(argv)
 
     if args.limit < 0:
@@ -189,6 +192,11 @@ def run(argv: list[str] | None = None, *,
     provider = args.provider
     if provider == "jev" and args.reasoning != "default":
         p.error("--reasoning off/on is only supported for OpenRouter; Jev wire is frozen")
+    if args.temperature is not None:
+        if not math.isfinite(args.temperature) or not 0 <= args.temperature <= 2:
+            p.error("--temperature must be a finite number from 0 to 2")
+        if provider == "jev":
+            p.error("--temperature is only supported for OpenRouter; Jev wire is frozen")
     model = args.model or MODELS[provider]
     calls = load_calls(Path(args.questions), model)
     if args.limit:
@@ -240,6 +248,9 @@ def run(argv: list[str] | None = None, *,
                 else:
                     extra_body = None if args.reasoning == "default" else {
                         "reasoning": {"enabled": args.reasoning == "on"}}
+                    if args.temperature is not None:
+                        extra_body = dict(extra_body or {})
+                        extra_body["temperature"] = args.temperature
                     payload = build_chat_payload(
                         call["request"],
                         WireConfig(model=model,
@@ -254,6 +265,7 @@ def run(argv: list[str] | None = None, *,
                     "provider": provider, "request_model": model,
                     "request_sha256": call["request"].request_sha256(),
                     "reasoning_requested": args.reasoning,
+                    "temperature_requested": args.temperature,
                     "wire_payload": red.obj(payload),
                     "http_status": resp.status_code,
                     "error": resp.error or (None if resp.status_code == 200

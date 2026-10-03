@@ -56,10 +56,10 @@ The default file contains **24 distinct questions, each in two recorded option o
 
 # Qwen 3.5 9B: same file, explicitly non-thinking
 .venv/bin/python scripts/benchmark/replay_knowledge.py --provider openrouter \
-  --model qwen/qwen3.5-9b --reasoning off --limit 4 \
+  --model qwen/qwen3.5-9b --reasoning off --temperature 0 --limit 4 \
   --output /tmp/pekka-qwen35-smoke.jsonl
 .venv/bin/python scripts/benchmark/replay_knowledge.py --provider openrouter \
-  --model qwen/qwen3.5-9b --reasoning off \
+  --model qwen/qwen3.5-9b --reasoning off --temperature 0 \
   --answer-key data_report/followup_20261003/knowledge-answer-key.json \
   --output /tmp/pekka-qwen35-full.jsonl
 ```
@@ -94,7 +94,7 @@ Run the **same file** against both:
 .venv/bin/python scripts/benchmark/replay_knowledge.py --provider jev \
   --questions my-questions.json --output /tmp/pekka-my-jev.jsonl
 .venv/bin/python scripts/benchmark/replay_knowledge.py --provider openrouter \
-  --model qwen/qwen3.5-9b --reasoning off \
+  --model qwen/qwen3.5-9b --reasoning off --temperature 0 \
   --questions my-questions.json --output /tmp/pekka-my-qwen35.jsonl
 ```
 

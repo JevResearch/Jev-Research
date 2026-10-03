@@ -343,9 +343,9 @@ NOTES: dict[str, str] = {
         "are hardware-dependent scenario calculations: service-time slopes "
         "are not hardware throughput measurements, so every parameter band "
         "is an illustration conditional on assumed hardware, quantization "
-        "and utilization, not a reliable parameter estimate. The FLOPs "
-        "conversion assumes the model's neural token count equals the API's "
-        "reported count; if its own encoder differs, the bound shifts with it.",
+        "and utilization, not a reliable parameter estimate. These "
+        "illustrative calculations use TypeSafe's reported input-token "
+        "counts, which we have no evidence to dispute.",
     "lattice": "Full lattice forensics: <a href='https://github.com/JevResearch/Jev-Research/blob/main/scripts/report/lattice_forensics.py'>scripts/report/lattice_forensics.py</a> "
         "-&gt; <a href='https://github.com/JevResearch/Jev-Research/blob/main/data_report/lattice_forensics.json'>data_report/lattice_forensics.json</a>, over 704,277 values in 7,887 "
         "published vectors at K=2..255 (probe rows, phase-1 raws, and the "
@@ -598,9 +598,9 @@ def hero() -> str:
 <div class="toc-sec"><a href="#pitch">1 &middot; The pitch, and the parts that survive contact</a></div>
 <div class="toc-sec"><a href="#method">2 &middot; What we did, and what we could not do</a></div>
 <div class="toc-sec"><a href="#arch">3 &middot; What Jev appears to be</a>
-<div class="toc-sub"><a href="#arch-millis">What the milliseconds say</a> &middot; <a href="#arch-fingerprints">Fingerprints on the read-out</a> &middot; <a href="#arch-order">The order of the options matters</a> &middot; <a href="#arch-tokenizer">A tokenizer nobody recognizes</a> &middot; <a href="#arch-capacity">Limited capacity, in a particular way</a> &middot; <a href="#arch-not">What it is not</a> &middot; <a href="#arch-open">What stays open</a></div></div>
+<div class="toc-sub"><a href="#arch-ancestry">Does the evidence point to Qwen?</a> &middot; <a href="#arch-millis">What the milliseconds say</a> &middot; <a href="#arch-fingerprints">Fingerprints on the read-out</a> &middot; <a href="#arch-order">The order of the options matters</a> &middot; <a href="#arch-tokenizer">A tokenizer nobody recognizes</a> &middot; <a href="#arch-capacity">Limited capacity, in a particular way</a> &middot; <a href="#arch-not">What it is not</a> &middot; <a href="#arch-open">What stays open</a></div></div>
 <div class="toc-sec"><a href="#benchmarks">4 &middot; Benchmarks: where it actually lands</a>
-<div class="toc-sub"><a href="#bench-calib">Calibration</a> &middot; <a href="#bench-charts">The charts</a></div></div>
+<div class="toc-sub"><a href="#bench-language">Language understanding</a> &middot; <a href="#bench-politics">Politically sensitive questions</a> &middot; <a href="#bench-calib">Calibration</a> &middot; <a href="#bench-charts">The charts</a></div></div>
 <div class="toc-sec"><a href="#pareto">5 &middot; The frontier the cost numbers actually draw</a></div>
 <div class="toc-sec"><a href="#probes">6 &middot; What is it? Three attempts to ask</a>
 <div class="toc-sub"><a href="#probes-talk">Talking to it</a> &middot; <a href="#probes-name">Asking it to choose a name</a> &middot; <a href="#probes-tokens">Counting tokens</a></div></div>
@@ -609,7 +609,7 @@ def hero() -> str:
 <div class="toc-sec"><a href="#refs">Notes</a></div>
 </nav>"""
     return f"""
-<div class="chip">An independent, hands-on evaluation by JevResearch &middot; model pin: service-reported jev-1.13.0 &middot; measurements September 2026 &middot; report revision 3 (2026-10-03)</div>
+<div class="chip">An independent, hands-on evaluation by JevResearch &middot; model pin: service-reported jev-1.13.0 &middot; measurements September&ndash;October 2026 &middot; report revision 4 (2026-10-03)</div>
 <p class="cap">A short <a href="{CP}">counterpoint</a> to Archer Hume&rsquo;s
 <a href="https://archerhume.com/posts/jevs-architecture-unmasked/"><i>Jev&rsquo;s Architecture Unmasked</i></a>.</p>
 <h1>Jev: Not Frontier, But Still Worth Your Attention</h1>
@@ -839,7 +839,7 @@ questions and options are scored within a single request, without
 returned free text. The flat timing under concurrency is measured, but
 batching versus spare capacity versus replicas is not distinguished</td><td>Plausible</td></tr>
 <tr><td>Service-time profile</td><td class='cap'>Fixed ~{floor:.0f} ms intercept + ~{slope:.0f} ms per 1k input tokens on the upstream-service header, approximately linear to 29k tokens, with no large quadratic signature. Measured increments: +{mq:.2f} ms per extra question and +{mo:.2f} ms per extra option - both consistent with the added tokens' cost.</td><td>Confident (measured)</td></tr>
-<tr><td>Input pipeline</td><td class='cap'>A whitespace normalizer (ASCII runs collapse; NBSP, ZWJ and BOM do not) plus a fixed ~{bp['mergerate_baseline_tokens']}-token template, ahead of the tokenizer behind the reported counter</td><td>Confident / plausible</td></tr>
+<tr><td>Input accounting</td><td class='cap'>Whitespace normalization (ASCII runs collapse; NBSP, ZWJ and BOM do not) and a fixed ~{bp['mergerate_baseline_tokens']}-token template overhead are visible in the reported counts.</td><td>Confident / plausible</td></tr>
 <tr><td>Tokenizer</td><td class='cap'>The API's reported token counter follows an English/Latin-centric BPE-style profile: heavy Latin merges, ~1 token per codepoint for the major non-Latin scripts, and a byte-level fallback for uncovered characters ({byte_lo:.2f}-{byte_hi:.2f} tokens per UTF-8 byte on the rarest blocks). The reported counts match no known preexisting tokenizer signature (173 tested); the model's own encoder is not identified by that.</td><td>Plausible (strong)</td></tr>
 <tr><td>Core</td><td class='cap'>Transformer-family; dense vs MoE unknown -
 with quantized-serving assumptions the two size angles overlap, so neither
@@ -866,8 +866,9 @@ vendor's API. The base model is not identified. See below.</td><td>Confident (di
 <p>In our September timing campaign, responses reported an upstream-service
 timing header
 (<code>x-envoy-upstream-service-time</code>), the
-<b>proxy-reported upstream service time</b>. Sequential probes across prompt
-sizes from ~0.5k to ~29k tokens fit:</p>
+<b>proxy-reported upstream service time</b>. Our October follow-up responses
+no longer supplied that header, so those tests use client elapsed time instead.
+The September sequential probes across prompt sizes from ~0.5k to ~29k tokens fit:</p>
 <div class="card"><b>~{floor:.0f} ms fixed floor + ~{slope:.0f} ms per 1k input
 tokens</b> measured on that header, with a negligible quadratic term and the
 fit quality reported in the figure. A flat base plus a linear input-token
@@ -960,7 +961,7 @@ is the highest probability in the vector and <code>1/K</code> is what
 guessing would earn across K options. Of {cfc['n']:,} published choice
 vectors, {cfc['exact']:,} match that formula exactly against the displayed
 table, {cfc['within_1_quantum']} are within one quantum, and {cfc['within_2_quanta']} within two. None is further
-off.{fn('readout')} The published adapter implements exactly this rule - <a href='https://github.com/typesafe-ai/system-one-adapter-python/blob/fb52b1030b7fc1f4f1cf39910afa5da54f9835e3/src/system_one_adapter/_utils/confidence_metrics.py'>its <code>confidence_metrics.py</code></a> (pinned fb52b103) computes chance-corrected confidence - which is a citation of the published adapter's code, not proof of unseen server code. Buyer's note: choice confidence
+off.{fn('readout')} TypeSafe's <a href='https://github.com/typesafe-ai/system-one-adapter-python/blob/fb52b1030b7fc1f4f1cf39910afa5da54f9835e3/src/system_one_adapter/_utils/confidence_metrics.py'>public Python code</a> calculates confidence using this formula. Buyer's note: choice confidence
 is an approximation from the vector you were already handed (not a
 guaranteed deterministic function), not a
 second opinion. Score answers use a different shape statistic and noul answers carry
@@ -977,13 +978,9 @@ gold-labeled synthetic questions at every
 option count from 2 to 255, padding with inert filler. The probability on
 the right answer did not move - {pct(p3['255']['mean_p_gold'])} at 255
 options against {pct(p3['2']['mean_p_gold'])} at two - and accuracy stayed perfect at every
-size, with the filler options pinned at 0.00. Apart from the ordering effects
-below, easy known answers were not diluted by inert padding - a result our
-follow-up replicated - but options are not independent of one another: adding
-or reordering options can shift the odds among the rest (the ordering effects
-below; Archer's odds experiment, which our follow-up replicated). One
-consequence for the benchmark tables below: the weighted scores are not an
-artifact of menu size.</p>
+size, with the filler options pinned at 0.00. Those filler options did not
+distract Jev from easy factual answers. Our independent tests below show that
+simply reordering the real choices can change the answer.</p>
 
 <h3 id="arch-order">The order of the options matters</h3>
 <p>Jev reads the option list as a list, in context, and position is a
@@ -1024,8 +1021,8 @@ soft hyphen and BOM each cost a full token - the normalizer's definition of
 whitespace is ASCII-only.</p>
 <p>Early attempts to let Jev <a href="#probes-talk">talk</a> so it could
 describe itself led to Jev identifying itself with an OpenAI-family name
-{openai_votes} times out of {anc['n_frames_with_probs']}, but this appears to be contamination from training on
-broad internet text - not a signature of authorship.</p>
+{openai_votes} times out of {anc['n_frames_with_probs']}, but this looks like a learned
+assistant-style prior - not a signature of authorship.</p>
 
 <h3 id="arch-capacity">Limited capacity, in a particular way</h3>
 <p>The capability profile has a particular shape. On one-shot knowledge
@@ -1093,10 +1090,11 @@ frontier API: the timing alone ({c1['median_upstream_ms']:.0f}-{c32['median_upst
 upstream service time) leaves little room inside for anyone else's round
 trip in the typical case, the price sits one to two orders of magnitude
 below flagship input lists, and the tokenizer matches nothing we can find.
-The base model is not identified: the counter mismatch does not exclude
-reused or adapted weights.
 And not frontier: the benchmark section says so six ways.</p>
 
+<h3 id="arch-ancestry">Does the evidence point to Qwen?</h3>
+<p>The measured evidence points away from a straightforward Qwen rebrand. We have found no compelling basis for identifying Qwen as Jev’s parent, and it should not be presented as the leading explanation. Qwen-derived weights remain an unresolved possibility—not a supported identification or a default coin flip.</p>
+<ul><li>Reported counts from stock Qwen3/Next encoders do not match Jev’s; ordinary Qwen3/Next vocabularies match Qwen2.5. For example, <code>zzz</code> and <code>______</code> each add one to Jev’s reported count but two to the pinned Qwen encoders.</li><li>Jev outperformed Qwen3.5 9B in all six held-out languages, with a slightly smaller average foreign-language drop. <a href="#bench-language">Language results</a>.</li><li>Its unambiguous factual choices and refusals differ from Qwen3.5 9B on politically sensitive cases. <a href="#bench-politics">Political results</a>.</li><li>Qwen’s count closeness and broad 2024-versus-2025 horizon pattern are similarities, not unique checkpoint signatures.</li><li>Timing, shared state, and listwise processing are compatible architecture observations, not family identification; self-identification is inconsistent.</li></ul>
 <h3 id="arch-open">What stays open</h3>
 <p>Four things this API cannot tell us, and we do not guess them. Whether the
 single-pass reading is literally one forward pass or an unexposed but
@@ -1148,6 +1146,9 @@ footnote.{fn('almeida')}</p>
 
 
 def benchmarks() -> str:
+    from language_graph import write as write_language_graph
+    write_language_graph(ROOT)
+    language_svg = (ROOT / "assets/language_comparison.svg").read_text(encoding="utf-8")
     mmlu, arc, rot = SC["mmlu"], SC["arc"], SC["rot"]
     gpqa, hle = SC["gpqa"], SC["hle"]
     mc, ms = SC["math_c"], SC["math_s"]
@@ -1252,6 +1253,19 @@ and unusable responses scored wrong. See the footnotes for details.{fn('coverage
 MATH-500 and ARC-AGI-2 rows are
 conversions, not native runs.{fn('mathadapt')} The rotation audit re-ran items
 with option order shuffled.{fn('rotations')} See the footnotes for details.{fn('arcproto')}</p>
+<h3 id="bench-language">Language understanding</h3>
+<p>In a matched inference test, Jev outperformed Qwen3.5 9B in all six languages. English accuracy was 87.5% against 83.3%; the other-language results ranged from 77.4% to 82.4% for Jev and 71.3% to 76.4% for Qwen. Both performed best in English, but Jev's drop was slightly smaller on average when moving to another language.</p>
+<figure>{language_svg}<figcaption>Human-translated XNLI inference: 1,200 distinct held-out premises per language, each tested in two option orders. Qwen3.5 9B was run without reasoning. <a href="{GH}/docs/modern-comparison/MULTILINGUAL-COMPARISON.md">Methods and paired intervals.</a></figcaption></figure>
+<h3 id="bench-politics">Politically sensitive questions</h3>
+<p>On the same politically sensitive questions, Jev and Qwen3.5 9B gave markedly different answers. Jev did not reproduce Qwen’s PRC-line factual denials and political deflections. Both models answered the non-political control cases correctly.</p>
+<table><tr><th>Question</th><th>Jev</th><th>Qwen3.5 9B</th></tr>
+<tr><td>Actual government administering Taiwan</td><td>Taipei 20/20</td><td>Beijing 20/20</td></tr>
+<tr><td>2022 UN Xinjiang assessment</td><td>correct 20/20</td><td>false “no assessment” 16/20; correct 4/20</td></tr>
+<tr><td>Beijing 1989 lethal force</td><td>correct 14/20; uncertain 6/20</td><td>correct 2/20; political deflections 18/20</td></tr>
+<tr><td>1989 Nobel Peace Prize</td><td>correct fact 20/20</td><td>false winners 12/20; correct fact 8/20</td></tr>
+<tr><td>Is peaceful criticism of China’s government legitimate?</td><td>yes 20/20</td><td>yes 5; no 3; conditional 5; refusal 7</td></tr></table>
+<p>Qwen also produced prose denying that Taiwan has a president or vice president. Jev answered the election questions directly. This was not ordinary ignorance across the board: the differences concentrated on politically sensitive cases. The earlier conditional answer about whether criticism should be legally permitted disappeared in Jev when we asked clearer normative questions; Qwen retained a China-specific restriction in the Chinese legitimacy question.</p>
+<p class="cap">All listed cases are Chinese closed-book tests except the explicitly normative criticism question. Each 20-run entry is five menu orders × four repeats, not 20 distinct facts. <a href="{GH}/docs/modern-comparison/POLITICAL-COMPARISON.md">Methods</a> · <a href="{GH}/data_report/expanded_20261003/political_comparison_aggregates.json">aggregate</a>.</p>
 <h3 id="bench-calib">How the probabilities hold up (calibration)</h3>
 <table>
 <tr><th>Stage</th><th class="n">Accuracy (all requested)</th>
@@ -1441,14 +1455,10 @@ granularity, at the byte level (the rarest blocks cost 0.99-1.01 tokens per
 UTF-8 byte). No reference vocabulary reproduces that profile.
 Across 128 scored tokenizers drawn from 173 distinct signatures (from 1,215
 repositories scanned), spanning ~30 organizations' releases, nothing reproduced the profile.</p>
-<p>The answer is, frankly, the boring one: the reported counter is
-<b>the vendor's own</b> English/Latin-centric accounting, with byte-level
-fallback for uncovered characters. But an unmatched counter is not a
-pedigree: a vocabulary change or a separate accounting layer needs no new
-weights, so a Qwen-derived base model remains possible and the ancestry is
-not identified. The OpenAI
-identity answer was an artifact: a trained prior, well known as
-dataset contamination.</p>
+<p>The reported counter has a distinctive English/Latin-centric profile,
+with byte-level fallback for uncovered characters. Our tests have not
+identified a public model as Jev's backbone. Its OpenAI self-identification
+is not reliable provenance.</p>
 </section>"""
 
 
