@@ -51,7 +51,7 @@ DEFAULT_QUESTIONS = (_ROOT / "data_report" / "followup_20261003"
                      / "knowledge-questions.json")
 STATE_TEXT = "This question is about public events."
 MODELS = {"jev": "jev-1.13.0",
-          "openrouter": "qwen/qwen3.5-9b"}
+          "openrouter": "qwen/qwen3-30b-a3b-instruct-2507"}
 KEY_ENVS = {"jev": "TYPESAFE_API_KEY", "openrouter": "OPENROUTER_API_KEY"}
 SYSTEMONE_PATH = "/v1/systemone"
 TIMEOUT_SECONDS = 120.0

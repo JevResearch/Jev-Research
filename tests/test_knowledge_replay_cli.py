@@ -105,7 +105,7 @@ def test_openrouter_default_model_and_limit4(tmp_path):
     paths = {p for p, _ in seen}
     assert paths == {"/chat/completions"}
     for _, payload in seen:
-        assert payload["model"] == "qwen/qwen3.5-9b"
+        assert payload["model"] == "qwen/qwen3-30b-a3b-instruct-2507"
         assert set(payload) == {"model", "messages", "max_tokens"}
         assert payload["max_tokens"] == 512   # documented default, no sampler
     assert or_t.closed
@@ -316,3 +316,57 @@ def test_help_exits_zero(capsys):
         rk.run(["--help"])
     assert exc.value.code == 0
     assert "--answer-key" in capsys.readouterr().out
+
+# ------------------------------------------------------------- new portable controls
+def _custom_questions(tmp_path, state="custom context"):
+    p = tmp_path / "questions.json"
+    p.write_text(json.dumps({"items": [{"id": "x", "state": state,
+        "question": "Which?", "variants": [
+            {"rotation": 0, "options": ["A", "B"]},
+            {"rotation": 1, "options": ["B", "A"]}]}]}))
+    return p
+
+
+def test_custom_state_both_providers_and_variant_grading(tmp_path):
+    qp = _custom_questions(tmp_path)
+    for provider in ("jev", "openrouter"):
+        seen = []
+        if provider == "jev":
+            transport = _mock(lambda request: (seen.append(json.loads(request.content)) or
+                httpx.Response(200, content=_native_body(choice="o0"))))
+            kwargs = {"http_transport": transport}
+        else:
+            transport = _FakeOR(json.dumps({"choices": [{"message": {"content": "o0"}}]}).encode(), seen)
+            kwargs = {"or_transport": transport}
+        out = tmp_path / f"{provider}.jsonl"
+        assert rk.run(["--provider", provider, "--questions", str(qp),
+                       "--output", str(out)], **kwargs) == 0
+        assert len(_rows(out)) == 2
+        if provider == "jev":
+            assert all(x["state"] == "custom context" for x in seen)
+        else:
+            assert all("custom context" in x[1]["messages"][0]["content"] for x in seen)
+
+
+def test_reasoning_wire_modes_and_row_record(tmp_path):
+    for mode, expected in (("default", None), ("off", False), ("on", True)):
+        seen = []
+        body = json.dumps({"choices": [{"message": {"content": "o0"}}]}).encode()
+        out = tmp_path / f"{mode}.jsonl"
+        assert rk.run(["--provider", "openrouter", "--reasoning", mode,
+                       "--limit", "1", "--output", str(out)],
+                      or_transport=_FakeOR(body, seen)) == 0
+        payload = seen[0][1]
+        assert payload.get("reasoning", {}).get("enabled") is expected if expected is not None else "reasoning" not in payload
+        row = _rows(out)[0]
+        assert row["reasoning_requested"] == mode and row["wire_payload"] == payload
+
+
+def test_invalid_state_and_jev_reasoning_rejected_before_transport(tmp_path):
+    qp = _custom_questions(tmp_path, state=42)
+    with pytest.raises(ValueError):
+        rk.run(["--provider", "jev", "--questions", str(qp), "--output", str(tmp_path / "x")],
+               http_transport=_mock(lambda request: pytest.fail("transport called")))
+    with pytest.raises(SystemExit):
+        rk.run(["--provider", "jev", "--reasoning", "off", "--output", str(tmp_path / "y")],
+               http_transport=_mock(lambda request: pytest.fail("transport called")))
