@@ -70,7 +70,7 @@ must('800-9000 effective' in h, '34 corrected quantized range')
 must('similar-performing models' in h, '35 neighbors')
 must('Distillation is orthogonal' not in h, '36 distillation removed')
 must('What could be tested from the outside' not in h, '37 meta para removed')
-must('reports an upstream-service timing header' in h
+must(re.search(r'reported an upstream-service\s+timing header', h)  # phrase updated: author copyedit "responses reported" (was "reports")
      and 'proxy-reported upstream service time' in h
      and 'strips out network and queueing' not in h, '38 timing phrasing (envoy-labeled)')
 must('raw shape' not in h, '39 raw shape removed')
@@ -217,3 +217,4 @@ must(_gpqa_svg and '(thinking unspecified)&lt;/b&gt;&lt;br&gt;score 93.7%' in _g
      and '(thinking unspecified)&lt;/b&gt;&lt;br&gt;score 88.6%' not in _gpqa_svg.group(0),
      '109 Qwen Max 93.7 renders on the GPQA chart, not as an MMLU score')
 print('FAILS:', len(fails))
+sys.exit(1 if fails else 0)
