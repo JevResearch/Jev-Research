@@ -96,6 +96,7 @@ INCLUDE_FILES = [
     "data_report/followup_20261003/confidence_formula_check.json",
     "data_report/followup_20261003/token_decode_membership.json",
     "data_report/followup_20261003/tokenizer_pins.json",
+    "data_report/followup_20261003/autotokenizer_verification.json",
     "data_report/followup_20261003/knowledge-questions.json",
     "data_report/followup_20261003/knowledge-answer-key.json",
     "data_report/followup_20261003/knowledge-arena-replay.txt",

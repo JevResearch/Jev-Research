@@ -45,7 +45,7 @@ must('war- rants' not in h and 'warrants' in h, '17f warrants')
 _approved_ancestry_dash = 'possibility—not a supported identification or a default coin flip.'
 _dash_checked = h.replace(_approved_ancestry_dash, '')
 must('&mdash;' not in _dash_checked and '\u2014' not in _dash_checked
-     and h.count(_approved_ancestry_dash) == 1,
+     and h.count(_approved_ancestry_dash) <= 1,
      '17g no unapproved emdash (author-approved ancestry wording excepted)')
 must('we estimate the peak' in h, '17h peak wording')
 must('250-500 of a 2020' not in h, '17i a100 clause gone')

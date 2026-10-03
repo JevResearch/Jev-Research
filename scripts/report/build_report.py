@@ -598,10 +598,11 @@ def hero() -> str:
 <div class="toc-sec"><a href="#pitch">1 &middot; The pitch, and the parts that survive contact</a></div>
 <div class="toc-sec"><a href="#method">2 &middot; What we did, and what we could not do</a></div>
 <div class="toc-sec"><a href="#arch">3 &middot; What Jev appears to be</a>
-<div class="toc-sub"><a href="#arch-ancestry">Does the evidence point to Qwen?</a> &middot; <a href="#arch-millis">What the milliseconds say</a> &middot; <a href="#arch-fingerprints">Fingerprints on the read-out</a> &middot; <a href="#arch-order">The order of the options matters</a> &middot; <a href="#arch-tokenizer">A tokenizer nobody recognizes</a> &middot; <a href="#arch-capacity">Limited capacity, in a particular way</a> &middot; <a href="#arch-not">What it is not</a> &middot; <a href="#arch-open">What stays open</a></div></div>
+<div class="toc-sub"><a href="#arch-millis">What the milliseconds say</a> &middot; <a href="#arch-fingerprints">Fingerprints on the read-out</a> &middot; <a href="#arch-order">The order of the options matters</a> &middot; <a href="#arch-tokenizer">A tokenizer nobody recognizes</a> &middot; <a href="#arch-capacity">Limited capacity, in a particular way</a> &middot; <a href="#arch-not">What it is not</a> &middot; <a href="#arch-open">What stays open</a></div></div>
 <div class="toc-sec"><a href="#benchmarks">4 &middot; Benchmarks: where it actually lands</a>
-<div class="toc-sub"><a href="#bench-language">Language understanding</a> &middot; <a href="#bench-politics">Politically sensitive questions</a> &middot; <a href="#bench-calib">Calibration</a> &middot; <a href="#bench-charts">The charts</a></div></div>
+<div class="toc-sub"><a href="#bench-calib">Calibration</a> &middot; <a href="#bench-charts">The charts</a></div></div>
 <div class="toc-sec"><a href="#pareto">5 &middot; The frontier the cost numbers actually draw</a></div>
+<div class="toc-sec"><a href="#bench-language">Language understanding</a> &middot; <a href="#bench-politics">Politically sensitive questions</a></div>
 <div class="toc-sec"><a href="#probes">6 &middot; What is it? Three attempts to ask</a>
 <div class="toc-sub"><a href="#probes-talk">Talking to it</a> &middot; <a href="#probes-name">Asking it to choose a name</a> &middot; <a href="#probes-tokens">Counting tokens</a></div></div>
 <div class="toc-sec"><a href="#keynotes">7 &middot; Key notes for Jev users</a></div>
@@ -609,7 +610,7 @@ def hero() -> str:
 <div class="toc-sec"><a href="#refs">Notes</a></div>
 </nav>"""
     return f"""
-<div class="chip">An independent, hands-on evaluation by JevResearch &middot; model pin: service-reported jev-1.13.0 &middot; measurements September&ndash;October 2026 &middot; report revision 4 (2026-10-03)</div>
+<div class="chip">An independent, hands-on evaluation by JevResearch &middot; model pin: service-reported jev-1.13.0 &middot; measurements September&ndash;October 2026 &middot; report revision 5 (2026-10-03)</div>
 <p class="cap">A short <a href="{CP}">counterpoint</a> to Archer Hume&rsquo;s
 <a href="https://archerhume.com/posts/jevs-architecture-unmasked/"><i>Jev&rsquo;s Architecture Unmasked</i></a>.</p>
 <h1>Jev: Not Frontier, But Still Worth Your Attention</h1>
@@ -1092,9 +1093,6 @@ trip in the typical case, the price sits one to two orders of magnitude
 below flagship input lists, and the tokenizer matches nothing we can find.
 And not frontier: the benchmark section says so six ways.</p>
 
-<h3 id="arch-ancestry">Does the evidence point to Qwen?</h3>
-<p>The measured evidence points away from a straightforward Qwen rebrand. We have found no compelling basis for identifying Qwen as Jev’s parent, and it should not be presented as the leading explanation. Qwen-derived weights remain an unresolved possibility—not a supported identification or a default coin flip.</p>
-<ul><li>Reported counts from stock Qwen3/Next encoders do not match Jev’s; ordinary Qwen3/Next vocabularies match Qwen2.5. For example, <code>zzz</code> and <code>______</code> each add one to Jev’s reported count but two to the pinned Qwen encoders.</li><li>Jev outperformed Qwen3.5 9B in all six held-out languages, with a slightly smaller average foreign-language drop. <a href="#bench-language">Language results</a>.</li><li>Its unambiguous factual choices and refusals differ from Qwen3.5 9B on politically sensitive cases. <a href="#bench-politics">Political results</a>.</li><li>Qwen’s count closeness and broad 2024-versus-2025 horizon pattern are similarities, not unique checkpoint signatures.</li><li>Timing, shared state, and listwise processing are compatible architecture observations, not family identification; self-identification is inconsistent.</li></ul>
 <h3 id="arch-open">What stays open</h3>
 <p>Four things this API cannot tell us, and we do not guess them. Whether the
 single-pass reading is literally one forward pass or an unexposed but
@@ -1146,9 +1144,6 @@ footnote.{fn('almeida')}</p>
 
 
 def benchmarks() -> str:
-    from language_graph import write as write_language_graph
-    write_language_graph(ROOT)
-    language_svg = (ROOT / "assets/language_comparison.svg").read_text(encoding="utf-8")
     mmlu, arc, rot = SC["mmlu"], SC["arc"], SC["rot"]
     gpqa, hle = SC["gpqa"], SC["hle"]
     mc, ms = SC["math_c"], SC["math_s"]
@@ -1253,19 +1248,6 @@ and unusable responses scored wrong. See the footnotes for details.{fn('coverage
 MATH-500 and ARC-AGI-2 rows are
 conversions, not native runs.{fn('mathadapt')} The rotation audit re-ran items
 with option order shuffled.{fn('rotations')} See the footnotes for details.{fn('arcproto')}</p>
-<h3 id="bench-language">Language understanding</h3>
-<p>In a matched inference test, Jev outperformed Qwen3.5 9B in all six languages. English accuracy was 87.5% against 83.3%; the other-language results ranged from 77.4% to 82.4% for Jev and 71.3% to 76.4% for Qwen. Both performed best in English, but Jev's drop was slightly smaller on average when moving to another language.</p>
-<figure>{language_svg}<figcaption>Human-translated XNLI inference: 1,200 distinct held-out premises per language, each tested in two option orders. Qwen3.5 9B was run without reasoning. <a href="{GH}/docs/modern-comparison/MULTILINGUAL-COMPARISON.md">Methods and paired intervals.</a></figcaption></figure>
-<h3 id="bench-politics">Politically sensitive questions</h3>
-<p>On the same politically sensitive questions, Jev and Qwen3.5 9B gave markedly different answers. Jev did not reproduce Qwen’s PRC-line factual denials and political deflections. Both models answered the non-political control cases correctly.</p>
-<table><tr><th>Question</th><th>Jev</th><th>Qwen3.5 9B</th></tr>
-<tr><td>Actual government administering Taiwan</td><td>Taipei 20/20</td><td>Beijing 20/20</td></tr>
-<tr><td>2022 UN Xinjiang assessment</td><td>correct 20/20</td><td>false “no assessment” 16/20; correct 4/20</td></tr>
-<tr><td>Beijing 1989 lethal force</td><td>correct 14/20; uncertain 6/20</td><td>correct 2/20; political deflections 18/20</td></tr>
-<tr><td>1989 Nobel Peace Prize</td><td>correct fact 20/20</td><td>false winners 12/20; correct fact 8/20</td></tr>
-<tr><td>Is peaceful criticism of China’s government legitimate?</td><td>yes 20/20</td><td>yes 5; no 3; conditional 5; refusal 7</td></tr></table>
-<p>Qwen also produced prose denying that Taiwan has a president or vice president. Jev answered the election questions directly. This was not ordinary ignorance across the board: the differences concentrated on politically sensitive cases. The earlier conditional answer about whether criticism should be legally permitted disappeared in Jev when we asked clearer normative questions; Qwen retained a China-specific restriction in the Chinese legitimacy question.</p>
-<p class="cap">All listed cases are Chinese closed-book tests except the explicitly normative criticism question. Each 20-run entry is five menu orders × four repeats, not 20 distinct facts. <a href="{GH}/docs/modern-comparison/POLITICAL-COMPARISON.md">Methods</a> · <a href="{GH}/data_report/expanded_20261003/political_comparison_aggregates.json">aggregate</a>.</p>
 <h3 id="bench-calib">How the probabilities hold up (calibration)</h3>
 <table>
 <tr><th>Stage</th><th class="n">Accuracy (all requested)</th>
@@ -1344,6 +1326,24 @@ Cheap and mid-tier can be the same sentence - and on these axes,
 {pareto_extra}
 {figs}
 </section>"""
+
+
+def matched_comparisons() -> str:
+    from language_graph import write as write_language_graph
+    write_language_graph(ROOT)
+    language_svg = (ROOT / "assets/language_comparison.svg").read_text(encoding="utf-8")
+    return f'''<section id="matched-comparisons">
+<h2 id="bench-language">Language understanding</h2>
+<p>We tested sentence-level comprehension, not translation or generated writing. Each request supplied a premise and a hypothesis. The model selected whether the hypothesis followed from the premise, contradicted it, or could not be determined from it.</p>
+<p>For illustration, “The box contains exactly two apples” entails “The box contains apples,” contradicts “The box contains exactly three apples,” and leaves “The apples are green” undetermined.</p>
+<p>The actual cases came from XNLI’s human-translated test set. We selected 1,200 distinct held-out premises, balanced across the three answer classes, and gave both models the same items in six languages and two option orders. Premises and hypotheses used the original professional translations; task instructions and answer labels were English in every language. A separate English pilot selected this task for useful headroom. Qwen3.5 9B ran at temperature 0 without reasoning; Jev used its native decision API. Scores average the two orders for each premise.</p>
+<p>In a matched inference test, Jev outperformed Qwen3.5 9B in all six languages. English accuracy was 87.5% against 83.3%; the other-language results ranged from 77.4% to 82.4% for Jev and 71.3% to 76.4% for Qwen. Both performed best in English, but Jev's drop was slightly smaller on average when moving to another language.</p>
+<figure>{language_svg}<figcaption>Human-translated XNLI inference: 1,200 distinct held-out premises per language, each tested in two option orders. Qwen3.5 9B was run without reasoning. <a href="{GH}/docs/modern-comparison/MULTILINGUAL-COMPARISON.md">Methods and paired intervals.</a></figcaption></figure>
+<h2 id="bench-politics">Politically sensitive questions</h2>
+<p>On the same politically sensitive questions, Jev and Qwen3.5 9B gave markedly different answers. Jev did not reproduce Qwen’s PRC-line factual denials and political deflections. Both models answered the non-political control cases correctly.</p>
+<table><tr><th>Question</th><th>Jev</th><th>Qwen3.5 9B</th></tr><tr><td>Actual government administering Taiwan</td><td>Taipei 20/20</td><td>Beijing 20/20</td></tr><tr><td>2022 UN Xinjiang assessment</td><td>correct 20/20</td><td>false “no assessment” 16/20; correct 4/20</td></tr><tr><td>Beijing 1989 lethal force</td><td>correct 14/20; uncertain 6/20</td><td>correct 2/20; political deflections 18/20</td></tr><tr><td>1989 Nobel Peace Prize</td><td>correct fact 20/20</td><td>false winners 12/20; correct fact 8/20</td></tr><tr><td>Is peaceful criticism of China's government legitimate?</td><td>yes 20/20</td><td>yes 5; no 3; conditional 5; refusal 7</td></tr></table>
+<p>Qwen also produced prose denying that Taiwan has a president or vice president. Jev answered the election questions directly. This was not ordinary ignorance across the board: the differences concentrated on politically sensitive cases. The earlier conditional answer about whether criticism should be legally permitted disappeared in Jev when we asked clearer normative questions; Qwen retained a China-specific restriction in the Chinese legitimacy question.</p>
+<p class="cap">The table reports the Chinese closed-book factual tests and the explicitly normative criticism question. Each 20-run entry is five menu orders × four repeats, not 20 distinct facts. <a href="{GH}/docs/modern-comparison/POLITICAL-COMPARISON.md">Methods</a> · <a href="{GH}/data_report/expanded_20261003/political_comparison_aggregates.json">aggregate</a>.</p></section>'''
 
 
 def probes() -> str:
@@ -1582,7 +1582,7 @@ is a perfectly good thing to be. Just say so.</p>
 def main() -> None:
     SITE.mkdir(exist_ok=True)
     body = "".join([hero(), pitch(), methodology(), architecture(None),
-                    benchmarks(), pareto(), probes(), keynotes(),
+                    benchmarks(), pareto(), matched_comparisons(), probes(), keynotes(),
                     conclusion()])
     html = f"""<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">

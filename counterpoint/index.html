@@ -74,25 +74,20 @@ additional probes to compare the results and test the remaining architectural cl
 found no compelling basis for identifying Qwen as Jev&rsquo;s parent, and it should
 not be presented as the leading explanation. Qwen-derived weights remain an
 unresolved possibility&mdash;not a supported identification or a default coin flip.</p>
-<p>The current article itself says that the pretrained model is unknown. Our
-comparisons add three important differences: Jev&rsquo;s reported tokenization,
-its language-understanding accuracy, and its political responses. Together,
-these make &ldquo;trivially relabelled Qwen&rdquo; a poor description of the observed
-service. The direct behavioral comparisons below use Qwen3.5 9B; the tokenizer
-audits also cover the proposed Qwen3 and Qwen3-Next encoders.</p>
-<h2 id="counter-tokenizer">A different counting profile</h2>
+
+<h3 id="counter-tokenizer">A different counting profile</h3>
 <p>Jev&rsquo;s reported counts differ from the public Qwen encoders. For example,
 <code>zzz</code> and <code>______</code> each add one token to Jev&rsquo;s
 empty-state counter, while the pinned Qwen encoders split them into two.
 Across our broader audit, none of the 128 scored public tokenizers reproduced
-the full measured profile.</p>
-<h2 id="counter-language">Better matched language understanding</h2>
+the full measured profile. <a href="../data_report/followup_20261003/autotokenizer_verification.json">Pinned AutoTokenizer check.</a></p>
+<h3 id="counter-language">Better matched language understanding</h3>
 <p>On 1,200 held-out human-translated inference cases, Jev outperformed Qwen3.5 9B
 in all six tested languages. English accuracy was 87.5% against 83.3%; the other
 languages ranged from 77.4% to 82.4% for Jev and 71.3% to 76.4% for Qwen. Both
 performed best in English, but Jev&rsquo;s drop was slightly smaller on average
 when moving to another language. <a href="https://jevresearch.github.io/Jev-Research/#bench-language">The main report has the chart and paired results.</a></p>
-<h2 id="counter-politics">A different political profile</h2>
+<h3 id="counter-politics">A different political profile</h3>
 <p>We sent the same politically sensitive questions to both services in English
 and Chinese, rotating the menus and repeating each order. Jev identified the
 government actually administering Taiwan as Taipei in all 40 runs; Qwen chose
