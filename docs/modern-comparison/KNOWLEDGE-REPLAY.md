@@ -1,5 +1,8 @@
 # Replaying the knowledge probe (API instructions)
 
+**Detailed Pekka-specific guide:** [PEKKA-REPLAY.md](PEKKA-REPLAY.md)
+
+
 Replay the 48 public prompts (`data_report/followup_20261003/knowledge-questions.json`:
 24 items × 2 option rotations) with `scripts/benchmark/replay_knowledge.py`.
 Python 3.12+ required. Every API call is billable; nothing runs without the

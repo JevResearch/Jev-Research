@@ -51,7 +51,7 @@ DEFAULT_QUESTIONS = (_ROOT / "data_report" / "followup_20261003"
                      / "knowledge-questions.json")
 STATE_TEXT = "This question is about public events."
 MODELS = {"jev": "jev-1.13.0",
-          "openrouter": "qwen/qwen3-30b-a3b-instruct-2507"}
+          "openrouter": "qwen/qwen3.5-9b"}
 KEY_ENVS = {"jev": "TYPESAFE_API_KEY", "openrouter": "OPENROUTER_API_KEY"}
 SYSTEMONE_PATH = "/v1/systemone"
 TIMEOUT_SECONDS = 120.0
@@ -93,14 +93,17 @@ def recover_reply(content: str | None, keys: list[str],
 
 
 def load_calls(questions_path: Path, model: str) -> list[dict[str, Any]]:
-    """48 stateless calls: items in file order, each item's variants in order."""
+    """Stateless calls: items in file order, each item's variants in order."""
     doc = json.loads(questions_path.read_text(encoding="utf-8"))
     calls: list[dict[str, Any]] = []
     for item in doc["items"]:
         for variant in item["variants"]:
             criteria = {f"o{i}": t for i, t in enumerate(variant["options"])}
+            state = item.get("state", STATE_TEXT)
+            if not isinstance(state, str):
+                raise ValueError(f"item {item.get('id', '<unknown>')} state must be a string")
             request = SystemOneRequest(
-                state=STATE_TEXT, model=model,
+                state=state, model=model,
                 questions={"q0": ChoiceQuestion(instructions=item["question"],
                                                 criteria=criteria)})
             calls.append({"item_id": item["id"], "rotation": variant["rotation"],
@@ -175,6 +178,8 @@ def run(argv: list[str] | None = None, *,
                         "existing files are refused (no overwrite, no resume)")
     p.add_argument("--max-output-tokens", type=int, default=OUT_CAP_DEFAULT,
                    help=f"output budget per call (default {OUT_CAP_DEFAULT})")
+    p.add_argument("--reasoning", choices=("default", "off", "on"), default="default",
+                   help="OpenRouter reasoning wire mode (default leaves payload unchanged)")
     args = p.parse_args(argv)
 
     if args.limit < 0:
@@ -182,6 +187,8 @@ def run(argv: list[str] | None = None, *,
     if args.max_output_tokens < 1:
         p.error("--max-output-tokens must be >= 1")
     provider = args.provider
+    if provider == "jev" and args.reasoning != "default":
+        p.error("--reasoning off/on is only supported for OpenRouter; Jev wire is frozen")
     model = args.model or MODELS[provider]
     calls = load_calls(Path(args.questions), model)
     if args.limit:
@@ -231,10 +238,13 @@ def run(argv: list[str] | None = None, *,
                 if provider == "jev":
                     payload = call["request"].to_payload()
                 else:
+                    extra_body = None if args.reasoning == "default" else {
+                        "reasoning": {"enabled": args.reasoning == "on"}}
                     payload = build_chat_payload(
                         call["request"],
                         WireConfig(model=model,
-                                   max_output_tokens=args.max_output_tokens))
+                                   max_output_tokens=args.max_output_tokens,
+                                   extra_body=extra_body))
                 resp = transport.post(post_path, payload)
                 counts["attempted"] += 1
                 body, body_error = _parse_body(resp.body)
@@ -243,6 +253,8 @@ def run(argv: list[str] | None = None, *,
                     "item_id": call["item_id"], "rotation": call["rotation"],
                     "provider": provider, "request_model": model,
                     "request_sha256": call["request"].request_sha256(),
+                    "reasoning_requested": args.reasoning,
+                    "wire_payload": red.obj(payload),
                     "http_status": resp.status_code,
                     "error": resp.error or (None if resp.status_code == 200
                                             else f"http_{resp.status_code}"),

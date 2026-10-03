@@ -105,7 +105,7 @@ def test_openrouter_default_model_and_limit4(tmp_path):
     paths = {p for p, _ in seen}
     assert paths == {"/chat/completions"}
     for _, payload in seen:
-        assert payload["model"] == "qwen/qwen3-30b-a3b-instruct-2507"
+        assert payload["model"] == "qwen/qwen3.5-9b"
         assert set(payload) == {"model", "messages", "max_tokens"}
         assert payload["max_tokens"] == 512   # documented default, no sampler
     assert or_t.closed
