@@ -1,0 +1,675 @@
+{
+  "schema": "jev-knowledge-questions.v2",
+  "version": "followup-20261003.v1",
+  "use": "factual recall probe (model-facing; no gold answers included)",
+  "note": "Factual-recall probe items about dated public events (recent-news recall). This is NOT a known-pretraining-cutoff test: no cutoff is asserted. Each item was run under two option rotations as repeated measures on the same item (48 rows total, 24 unique facts).",
+  "n_unique_items": 24,
+  "rotations_per_item": 2,
+  "n_variants": 48,
+  "items": [
+    {
+      "id": "q01",
+      "question": "Which team won the 2024 World Series?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Los Angeles Dodgers",
+            "New York Yankees",
+            "Boston Red Sox",
+            "Toronto Blue Jays",
+            "it did not occur",
+            "cannot determine from what I know"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Toronto Blue Jays",
+            "it did not occur",
+            "cannot determine from what I know",
+            "Los Angeles Dodgers",
+            "New York Yankees",
+            "Boston Red Sox"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q02",
+      "question": "Who won the men's Ballon d'Or in 2024?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Rodri",
+            "Jude Bellingham",
+            "Vinicius Junior",
+            "Erling Haaland",
+            "it did not occur",
+            "cannot determine from what I know"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Erling Haaland",
+            "it did not occur",
+            "cannot determine from what I know",
+            "Rodri",
+            "Jude Bellingham",
+            "Vinicius Junior"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q03",
+      "question": "Which organization received the 2024 Nobel Peace Prize?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Nihon Hidankyo",
+            "World Food Programme",
+            "UNHCR",
+            "Memorial (human rights centre)",
+            "it did not occur",
+            "cannot determine from what I know"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Memorial (human rights centre)",
+            "it did not occur",
+            "cannot determine from what I know",
+            "Nihon Hidankyo",
+            "World Food Programme",
+            "UNHCR"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q04",
+      "question": "Who won the 2024 Heisman Trophy?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Travis Hunter",
+            "Ashton Jeanty",
+            "Cam Ward",
+            "Dillon Gabriel",
+            "it did not occur",
+            "cannot determine from what I know"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Dillon Gabriel",
+            "it did not occur",
+            "cannot determine from what I know",
+            "Travis Hunter",
+            "Ashton Jeanty",
+            "Cam Ward"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q05",
+      "question": "Which team won Super Bowl LIX?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Philadelphia Eagles",
+            "Kansas City Chiefs",
+            "Buffalo Bills",
+            "Washington Commanders",
+            "it did not occur",
+            "cannot determine from what I know"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Washington Commanders",
+            "it did not occur",
+            "cannot determine from what I know",
+            "Philadelphia Eagles",
+            "Kansas City Chiefs",
+            "Buffalo Bills"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q06",
+      "question": "Who won the women's singles title at the 2025 Australian Open?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Madison Keys",
+            "Aryna Sabalenka",
+            "Iga Swiatek",
+            "Coco Gauff",
+            "it did not occur",
+            "cannot determine from what I know"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Coco Gauff",
+            "it did not occur",
+            "cannot determine from what I know",
+            "Madison Keys",
+            "Aryna Sabalenka",
+            "Iga Swiatek"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q07",
+      "question": "Which team won the 2025 Six Nations Championship?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "France",
+            "England",
+            "Ireland",
+            "Scotland",
+            "it did not occur",
+            "cannot determine from what I know"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Scotland",
+            "it did not occur",
+            "cannot determine from what I know",
+            "France",
+            "England",
+            "Ireland"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q08",
+      "question": "Which film won Best Picture at the Academy Awards ceremony held in March 2025?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Anora",
+            "The Brutalist",
+            "Conclave",
+            "Dune: Part Two",
+            "it did not occur",
+            "cannot determine from what I know"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Dune: Part Two",
+            "it did not occur",
+            "cannot determine from what I know",
+            "Anora",
+            "The Brutalist",
+            "Conclave"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q09",
+      "question": "Who was elected pope in May 2025?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Robert Prevost (Leo XIV)",
+            "Pietro Parolin",
+            "Luis Antonio Tagle",
+            "Matteo Zuppi",
+            "it did not occur",
+            "cannot determine from what I know"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Matteo Zuppi",
+            "it did not occur",
+            "cannot determine from what I know",
+            "Robert Prevost (Leo XIV)",
+            "Pietro Parolin",
+            "Luis Antonio Tagle"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q10",
+      "question": "Which song won the Eurovision Song Contest 2025?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "\u201cWasted Love\u201d by JJ (Austria)",
+            "\u201cBara bada bastu\u201d by KAJ (Sweden)",
+            "\u201cMaman\u201d by Louane (France)",
+            "\u201cGaja\u201d by Justyna Steczkowska (Poland)",
+            "it did not occur",
+            "cannot determine from what I know"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "\u201cGaja\u201d by Justyna Steczkowska (Poland)",
+            "it did not occur",
+            "cannot determine from what I know",
+            "\u201cWasted Love\u201d by JJ (Austria)",
+            "\u201cBara bada bastu\u201d by KAJ (Sweden)",
+            "\u201cMaman\u201d by Louane (France)"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q11",
+      "question": "Which film won the Palme d'Or at the 2025 Cannes Film Festival?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "\u201cIt Was Just an Accident\u201d (Jafar Panahi)",
+            "\u201cSound of Falling\u201d",
+            "\u201cThe Secret Agent\u201d",
+            "\u201cSentimental Value\u201d",
+            "it did not occur",
+            "cannot determine from what I know"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "\u201cSentimental Value\u201d",
+            "it did not occur",
+            "cannot determine from what I know",
+            "\u201cIt Was Just an Accident\u201d (Jafar Panahi)",
+            "\u201cSound of Falling\u201d",
+            "\u201cThe Secret Agent\u201d"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q12",
+      "question": "Which team won the 2025 NBA Finals?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Oklahoma City Thunder",
+            "Indiana Pacers",
+            "Denver Nuggets",
+            "Boston Celtics",
+            "it did not occur",
+            "cannot determine from what I know"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Boston Celtics",
+            "it did not occur",
+            "cannot determine from what I know",
+            "Oklahoma City Thunder",
+            "Indiana Pacers",
+            "Denver Nuggets"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q13",
+      "question": "Who won the 2025 U.S. Open in golf?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "J.J. Spaun",
+            "Rory McIlroy",
+            "Scottie Scheffler",
+            "Viktor Hovland",
+            "it did not occur",
+            "cannot determine from what I know"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Viktor Hovland",
+            "it did not occur",
+            "cannot determine from what I know",
+            "J.J. Spaun",
+            "Rory McIlroy",
+            "Scottie Scheffler"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q14",
+      "question": "Who won the women's singles title at the 2025 Wimbledon Championships?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Iga Swiatek",
+            "Amanda Anisimova",
+            "Coco Gauff",
+            "Aryna Sabalenka",
+            "it did not occur",
+            "cannot determine from what I know"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Aryna Sabalenka",
+            "it did not occur",
+            "cannot determine from what I know",
+            "Iga Swiatek",
+            "Amanda Anisimova",
+            "Coco Gauff"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q15",
+      "question": "Which team won the 2025 FIFA Club World Cup final?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Chelsea",
+            "Paris Saint-Germain",
+            "Real Madrid",
+            "Fluminense",
+            "it did not occur",
+            "cannot determine from what I know"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Fluminense",
+            "it did not occur",
+            "cannot determine from what I know",
+            "Chelsea",
+            "Paris Saint-Germain",
+            "Real Madrid"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q16",
+      "question": "In which month did the United States\u2013Russia leaders' summit in Anchorage, Alaska take place in 2025?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "in 2025-08",
+            "in 2025-05",
+            "in 2025-06",
+            "in 2025-07",
+            "it did not occur",
+            "cannot determine from what I know"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "in 2025-07",
+            "it did not occur",
+            "cannot determine from what I know",
+            "in 2025-08",
+            "in 2025-05",
+            "in 2025-06"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q17",
+      "question": "Which team won the 2022 FIFA World Cup?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Argentina",
+            "France",
+            "Croatia",
+            "Brazil",
+            "it did not occur",
+            "cannot determine from what I know"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Brazil",
+            "it did not occur",
+            "cannot determine from what I know",
+            "Argentina",
+            "France",
+            "Croatia"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q18",
+      "question": "Which team won Super Bowl LVIII in February 2024?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Kansas City Chiefs",
+            "San Francisco 49ers",
+            "Baltimore Ravens",
+            "Detroit Lions",
+            "it did not occur",
+            "cannot determine from what I know"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Detroit Lions",
+            "it did not occur",
+            "cannot determine from what I know",
+            "Kansas City Chiefs",
+            "San Francisco 49ers",
+            "Baltimore Ravens"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q19",
+      "question": "Who won the men's singles title at the 2023 Wimbledon Championships?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "Carlos Alcaraz",
+            "Novak Djokovic",
+            "Daniil Medvedev",
+            "Jannik Sinner",
+            "it did not occur",
+            "cannot determine from what I know"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "Jannik Sinner",
+            "it did not occur",
+            "cannot determine from what I know",
+            "Carlos Alcaraz",
+            "Novak Djokovic",
+            "Daniil Medvedev"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q20",
+      "question": "What happened when Boeing's Starliner spacecraft returned from its crewed flight test in September 2024?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "it landed without its crew, who returned later on Crew Dragon",
+            "it landed with its two-person crew aboard",
+            "it burned up during re-entry and was lost",
+            "its return was repeatedly postponed into 2025 with the crew aboard",
+            "it did not occur",
+            "cannot determine from what I know"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "its return was repeatedly postponed into 2025 with the crew aboard",
+            "it did not occur",
+            "cannot determine from what I know",
+            "it landed without its crew, who returned later on Crew Dragon",
+            "it landed with its two-person crew aboard",
+            "it burned up during re-entry and was lost"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q21",
+      "question": "When did the 2024 Winter Olympic Games take place?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "in 2024-11",
+            "in 2024-12",
+            "in 2025-01",
+            "it did not occur",
+            "cannot determine from what I know"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "it did not occur",
+            "cannot determine from what I know",
+            "in 2024-11",
+            "in 2024-12",
+            "in 2025-01"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q22",
+      "question": "When did the United Nations announce its permanent relocation from New York to Geneva?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "in 2025-04",
+            "in 2025-05",
+            "in 2025-06",
+            "it did not occur",
+            "cannot determine from what I know"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "it did not occur",
+            "cannot determine from what I know",
+            "in 2025-04",
+            "in 2025-05",
+            "in 2025-06"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q23",
+      "question": "When did NASA announce the discovery of definitive fossil evidence of life on Mars?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "in 2025-05",
+            "in 2025-06",
+            "in 2025-07",
+            "it did not occur",
+            "cannot determine from what I know"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "it did not occur",
+            "cannot determine from what I know",
+            "in 2025-05",
+            "in 2025-06",
+            "in 2025-07"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q24",
+      "question": "When did the total solar eclipse that was visible across all of Europe take place?",
+      "variants": [
+        {
+          "rotation": 0,
+          "options": [
+            "in 2025-07",
+            "in 2025-08",
+            "in 2025-09",
+            "it did not occur",
+            "cannot determine from what I know"
+          ]
+        },
+        {
+          "rotation": 3,
+          "options": [
+            "it did not occur",
+            "cannot determine from what I know",
+            "in 2025-07",
+            "in 2025-08",
+            "in 2025-09"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -195,13 +195,13 @@ def build_svg() -> str:
     p.append(box(24, yb, 424, 118, stroke=AMBER, dash="6 4"))
     p.append(txt(36, yb + 20, "WHAT MADE THE WEIGHTS (inferred - plausible)", AMBER,
                  10.8, anchor="start", weight="700"))
-    p.append(txt(36, yb + 42, "English-dominant pretraining; knowledge horizon",
+    p.append(txt(36, yb + 42, "Pretraining corpus not identified; knowledge horizon",
                  INK, 11, anchor="start"))
-    p.append(txt(36, yb + 58, "solid to late 2024, partial to May 2025",
+    p.append(txt(36, yb + 58, "strongest on 2024-era facts, weak on 2025 news",
                  INK, 11, anchor="start"))
     p.append(txt(36, yb + 76, "Judgement-format post-training (vendor: RLCD);",
                  MUT, 11, anchor="start"))
-    p.append(txt(36, yb + 92, "No discernible preexisting lineage;",
+    p.append(txt(36, yb + 92, "Base model ancestry not identified;",
                  MUT, 11, anchor="start"))
     p.append(txt(36, yb + 108, "Frontier-teacher contribution: none identifiable, not excluded",
                  MUT, 11, anchor="start"))

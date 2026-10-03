@@ -1,0 +1,356 @@
+{
+ "schema": "jev-followup-decode-membership.v1",
+ "method": "tokenizers.Tokenizer.encode -> len(ids); literal vocab-key lookup reported ONLY as the artifact contrast",
+ "candidates": {
+  "Qwen/Qwen3-30B-A3B-Instruct-2507": {
+   "empty": {
+    "encode_tokens": 0,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "frame_x": {
+    "encode_tokens": 1,
+    "literal_key_hit": false,
+    "agrees": false
+   },
+   "zzz": {
+    "encode_tokens": 2,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "usc6": {
+    "encode_tokens": 2,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "heart2": {
+    "encode_tokens": 2,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "heart1": {
+    "encode_tokens": 1,
+    "literal_key_hit": false,
+    "agrees": false
+   },
+   "ctrl_hello": {
+    "encode_tokens": 1,
+    "literal_key_hit": false,
+    "agrees": false
+   },
+   "ctrl_word_the": {
+    "encode_tokens": 1,
+    "literal_key_hit": false,
+    "agrees": false
+   },
+   "ctrl_num": {
+    "encode_tokens": 7,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "latin_run": {
+    "encode_tokens": 8,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "latin_rare": {
+    "encode_tokens": 20,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "cyrillic_run": {
+    "encode_tokens": 6,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "greek_run": {
+    "encode_tokens": 16,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "cjk_run": {
+    "encode_tokens": 8,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "hangul_run": {
+    "encode_tokens": 15,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "rare_astral": {
+    "encode_tokens": 6,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "combining_run": {
+    "encode_tokens": 8,
+    "literal_key_hit": false,
+    "agrees": true
+   }
+  },
+  "Qwen/Qwen3-Next-80B-A3B-Instruct": {
+   "empty": {
+    "encode_tokens": 0,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "frame_x": {
+    "encode_tokens": 1,
+    "literal_key_hit": false,
+    "agrees": false
+   },
+   "zzz": {
+    "encode_tokens": 2,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "usc6": {
+    "encode_tokens": 2,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "heart2": {
+    "encode_tokens": 2,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "heart1": {
+    "encode_tokens": 1,
+    "literal_key_hit": false,
+    "agrees": false
+   },
+   "ctrl_hello": {
+    "encode_tokens": 1,
+    "literal_key_hit": false,
+    "agrees": false
+   },
+   "ctrl_word_the": {
+    "encode_tokens": 1,
+    "literal_key_hit": false,
+    "agrees": false
+   },
+   "ctrl_num": {
+    "encode_tokens": 7,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "latin_run": {
+    "encode_tokens": 8,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "latin_rare": {
+    "encode_tokens": 20,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "cyrillic_run": {
+    "encode_tokens": 6,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "greek_run": {
+    "encode_tokens": 16,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "cjk_run": {
+    "encode_tokens": 8,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "hangul_run": {
+    "encode_tokens": 15,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "rare_astral": {
+    "encode_tokens": 6,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "combining_run": {
+    "encode_tokens": 8,
+    "literal_key_hit": false,
+    "agrees": true
+   }
+  },
+  "Qwen/Qwen2.5-7B-Instruct": {
+   "empty": {
+    "encode_tokens": 0,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "frame_x": {
+    "encode_tokens": 1,
+    "literal_key_hit": false,
+    "agrees": false
+   },
+   "zzz": {
+    "encode_tokens": 2,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "usc6": {
+    "encode_tokens": 2,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "heart2": {
+    "encode_tokens": 2,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "heart1": {
+    "encode_tokens": 1,
+    "literal_key_hit": false,
+    "agrees": false
+   },
+   "ctrl_hello": {
+    "encode_tokens": 1,
+    "literal_key_hit": false,
+    "agrees": false
+   },
+   "ctrl_word_the": {
+    "encode_tokens": 1,
+    "literal_key_hit": false,
+    "agrees": false
+   },
+   "ctrl_num": {
+    "encode_tokens": 7,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "latin_run": {
+    "encode_tokens": 8,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "latin_rare": {
+    "encode_tokens": 20,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "cyrillic_run": {
+    "encode_tokens": 6,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "greek_run": {
+    "encode_tokens": 16,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "cjk_run": {
+    "encode_tokens": 8,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "hangul_run": {
+    "encode_tokens": 15,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "rare_astral": {
+    "encode_tokens": 6,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "combining_run": {
+    "encode_tokens": 8,
+    "literal_key_hit": false,
+    "agrees": true
+   }
+  },
+  "Qwen/Qwen3.5-9B": {
+   "empty": {
+    "encode_tokens": 0,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "frame_x": {
+    "encode_tokens": 1,
+    "literal_key_hit": false,
+    "agrees": false
+   },
+   "zzz": {
+    "encode_tokens": 2,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "usc6": {
+    "encode_tokens": 2,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "heart2": {
+    "encode_tokens": 1,
+    "literal_key_hit": false,
+    "agrees": false
+   },
+   "heart1": {
+    "encode_tokens": 1,
+    "literal_key_hit": false,
+    "agrees": false
+   },
+   "ctrl_hello": {
+    "encode_tokens": 1,
+    "literal_key_hit": false,
+    "agrees": false
+   },
+   "ctrl_word_the": {
+    "encode_tokens": 1,
+    "literal_key_hit": false,
+    "agrees": false
+   },
+   "ctrl_num": {
+    "encode_tokens": 7,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "latin_run": {
+    "encode_tokens": 8,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "latin_rare": {
+    "encode_tokens": 20,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "cyrillic_run": {
+    "encode_tokens": 6,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "greek_run": {
+    "encode_tokens": 6,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "cjk_run": {
+    "encode_tokens": 8,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "hangul_run": {
+    "encode_tokens": 10,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "rare_astral": {
+    "encode_tokens": 18,
+    "literal_key_hit": false,
+    "agrees": true
+   },
+   "combining_run": {
+    "encode_tokens": 8,
+    "literal_key_hit": false,
+    "agrees": true
+   }
+  }
+ },
+ "jev_one_token_rederived": 234,
+ "jev_one_token_note": "re-derived from Archer's own fingerprint rows via fresh-empty marginals (in_tok == 267 + 1); count parity with the parent's 234 result is the cross-check"
+}

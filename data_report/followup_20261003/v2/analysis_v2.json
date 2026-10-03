@@ -1,0 +1,1205 @@
+{
+ "schema": "jev-followup-analysis.v2",
+ "version": "followup-20261003.v2",
+ "counts_reported_separately": {
+  "by_family": {
+   "fu_vocab": 124,
+   "fu_place": 192,
+   "fu_odds": 122,
+   "fu_refcard": 40,
+   "fu_horizon": 48,
+   "fu_reference": 144,
+   "fu_calib": 12,
+   "fu_relational": 96,
+   "fu_isolation": 64,
+   "fu_timing": 64
+  },
+  "n_total": 906
+ },
+ "v1_invalidations": {
+  "fu_refcard": "v1 family INVALID for isolation inference: the card appeared in state for BOTH 'present' placements and the reference-only criterion always repeated the card, so its 24/24 was not a meaningful control; raw v1 rows retained unchanged"
+ },
+ "fu_relational": {
+  "cells": {
+   "option:west": {
+    "n": 12,
+    "gold_hits": 9,
+    "gold_rate": 0.75
+   },
+   "option:amber": {
+    "n": 12,
+    "gold_hits": 10,
+    "gold_rate": 0.833
+   },
+   "option:east": {
+    "n": 12,
+    "gold_hits": 10,
+    "gold_rate": 0.833
+   },
+   "state:east": {
+    "n": 12,
+    "gold_hits": 12,
+    "gold_rate": 1.0
+   },
+   "option:indigo": {
+    "n": 12,
+    "gold_hits": 10,
+    "gold_rate": 0.833
+   },
+   "state:indigo": {
+    "n": 12,
+    "gold_hits": 12,
+    "gold_rate": 1.0
+   },
+   "state:west": {
+    "n": 12,
+    "gold_hits": 12,
+    "gold_rate": 1.0
+   },
+   "state:amber": {
+    "n": 12,
+    "gold_hits": 12,
+    "gold_rate": 1.0
+   }
+  },
+  "by_placement": {
+   "option": {
+    "n": 48,
+    "gold_rate": 0.812
+   },
+   "state": {
+    "n": 48,
+    "gold_rate": 1.0
+   }
+  },
+  "gold_key_distribution": {
+   "gamma": 48,
+   "beta": 48
+  },
+  "chance_note": "two selectable conditions + a never-select reference option: guessing among conditions is 1/2; no absent arm and no 1/3 chance claim",
+  "n_rows": 96,
+  "replication_note": "exact published payloads (96 relational trials), model pin changed only; v1 fu_refcard rows remain raw evidence but are INVALID for isolation inference (card leaked into state/ref criteria)"
+ },
+ "fu_isolation": {
+  "cells": {
+   "state:target_first": {
+    "n": 8,
+    "gold_selected": 8,
+    "no_code_selected": 0,
+    "p_gold": 1.0
+   },
+   "state:target_second": {
+    "n": 8,
+    "gold_selected": 8,
+    "no_code_selected": 0,
+    "p_gold": 1.0
+   },
+   "target_instr:target_first": {
+    "n": 8,
+    "gold_selected": 8,
+    "no_code_selected": 0,
+    "p_gold": 1.0
+   },
+   "target_instr:target_second": {
+    "n": 8,
+    "gold_selected": 8,
+    "no_code_selected": 0,
+    "p_gold": 1.0
+   },
+   "sibling_instr:target_first": {
+    "n": 8,
+    "gold_selected": 0,
+    "no_code_selected": 8,
+    "p_gold": 0.0
+   },
+   "sibling_instr:target_second": {
+    "n": 8,
+    "gold_selected": 0,
+    "no_code_selected": 8,
+    "p_gold": 0.0
+   },
+   "absent:target_first": {
+    "n": 8,
+    "gold_selected": 0,
+    "no_code_selected": 8,
+    "p_gold": 0.0
+   },
+   "absent:target_second": {
+    "n": 8,
+    "gold_selected": 0,
+    "no_code_selected": 8,
+    "p_gold": 0.0
+   }
+  },
+  "by_location": {
+   "state": {
+    "n": 16,
+    "p_gold": 1.0
+   },
+   "target_instr": {
+    "n": 16,
+    "p_gold": 1.0
+   },
+   "sibling_instr": {
+    "n": 16,
+    "p_gold": 0.0
+   },
+   "absent": {
+    "n": 16,
+    "p_gold": 0.0
+   }
+  },
+  "primary": "P(selected code): sibling_instr vs absent (paired by block); state/target_instr are positive controls; sibling success is NOT assumed and correctness is not assumed",
+  "n_rows": 64
+ },
+ "fu_timing": {
+  "n_rows": 64,
+  "primary_q1_state_vs_question_ratio": 0.9891,
+  "ratio_block_bootstrap_ci95": [
+   0.9152,
+   1.0452
+  ],
+  "primary_note": "paired per-block ratio of elapsed times for identical text in question vs state at fixed question count; phrase as 'no double penalty observed in elapsed time' — elapsed time does not conclusively contradict a physical-compute 2x",
+  "holdout_whole_script_rmse_ms": {
+   "reported": {
+    "holdout_latin": 69.2,
+    "holdout_digits": 37.78,
+    "holdout_cjk": 44.17
+   },
+   "encode_qwen3": {
+    "holdout_latin": 64.52,
+    "holdout_digits": 48.82,
+    "holdout_cjk": 25.15
+   },
+   "reported_plus_bytes": {
+    "holdout_latin": 80.29,
+    "holdout_digits": 48.19,
+    "holdout_cjk": 31.89
+   }
+  },
+  "joint_coefficients_ms_per_1k": {
+   "reported": -6.1276,
+   "encode_qwen3": 9.2228,
+   "payload_bytes": 1.176
+  },
+  "counter_note": "cross-script strings (Latin/CJK/digits) diverge strongly between the Jev counter and Qwen encoders; if elapsed time tracks one count family on held-out scripts that is evidence about what is actually processed, not about weights",
+  "latency_measure": "client wall + first_byte (no upstream header in this deployment; header names verified absent, none invented)",
+  "primary_note_superseded_by": "data_report/followup_20261003/v2/placement_ratio_derived.json",
+  "correction_note": "the 0.989 total-time ratio is baseline-dominated and is NOT an added-token-cost statement; the incremental per-1k ratio is 1.112 with whole-block bootstrap CI [0.589, 4.155] (includes 2) — label 'elapsed times similar; incremental ratio unresolved'; the 2x per-token question cost is neither contradicted nor ruled out. Both definitions are preserved in the derived file."
+ },
+ "odds_primary": {
+  "definition": "primary = log P(customer)/P(unknown); duplicates pooled within block before logs (author protocol)",
+  "per_arm_mean_primary": {
+   "base_pooled": 0.3753,
+   "append_pooled": 0.1171,
+   "replace5": 0.1725
+  },
+  "per_block_primary": {
+   "base_pooled": [
+    0.4972,
+    0.4158,
+    0.2348,
+    0.3321,
+    0.1353,
+    0.2995,
+    0.4678,
+    0.443,
+    0.47,
+    0.4578
+   ],
+   "append_pooled": [
+    0.18,
+    0.1967,
+    0.2059,
+    0.0397,
+    0.079,
+    0.0,
+    0.0387,
+    0.2401,
+    0.052,
+    0.1386
+   ],
+   "replace5": [
+    0.1872,
+    0.0274,
+    0.0267,
+    0.3037,
+    0.1823,
+    0.08,
+    0.4162,
+    0.2113,
+    0.1027,
+    0.1872
+   ]
+  },
+  "append_minus_base_per_block": [
+   -0.3172,
+   -0.2191,
+   -0.029,
+   -0.2924,
+   -0.0564,
+   -0.2995,
+   -0.4291,
+   -0.2029,
+   -0.418,
+   -0.3192
+  ],
+  "append_minus_base_mean": -0.2583,
+  "append_minus_base_block_bootstrap_ci95": [
+   -0.3338,
+   -0.1775
+  ],
+  "replace_minus_append_mean": 0.0554,
+  "replace_minus_append_ci95": [
+   -0.0413,
+   0.159
+  ],
+  "rounding_sensitivity_primary": {
+   "base_pooled": {
+    "1.0": {
+     "logodds": 0.37588510797368974,
+     "band": [
+      0.3225076962708405,
+      0.4297972087676951
+     ],
+     "at_display_floor": false
+    },
+    "1.5": {
+     "logodds": 0.37588510797368974,
+     "band": [
+      0.2959934161025738,
+      0.45698097093642903
+     ],
+     "at_display_floor": false
+    }
+   },
+   "append_pooled": {
+    "1.0": {
+     "logodds": 0.11763060824964071,
+     "band": [
+      0.06587274415070775,
+      0.16954636530523173
+     ],
+     "at_display_floor": false
+    },
+    "1.5": {
+     "logodds": 0.11763060824964071,
+     "band": [
+      0.0400311680654371,
+      0.19558560725055193
+     ],
+     "at_display_floor": false
+    }
+   },
+   "replace5": {
+    "1.0": {
+     "logodds": 0.1726127426669935,
+     "band": [
+      0.11934675763256604,
+      0.22612417945234742
+     ],
+     "at_display_floor": false
+    },
+    "1.5": {
+     "logodds": 0.1726127426669935,
+     "band": [
+      0.09278173345096608,
+      0.2529965144638909
+     ],
+     "at_display_floor": false
+    }
+   }
+  },
+  "v1_secondary_pairs_note": "v1 reported customer/provider and unknown/provider; their difference is this primary (v1 means 0.7949-0.3821=0.4128)",
+  "reproduces_archer": "pooled base~0.3753 -> append~0.1171 gives delta ~-0.26, matching the author's published ~-0.28 direction and size"
+ },
+ "own_rescale": {
+  "amb_support": {
+   "pairs": {
+    "the firmware update changed display behavior~a power-saving setting changed": {
+     "ln_K4_mean": -0.8088,
+     "scales": {
+      "K5": {
+       "point": 0.9579,
+       "block_bootstrap_ci95": [
+        0.7733,
+        1.2298
+       ],
+       "at_display_floor": false
+      },
+      "K6": {
+       "point": 0.9104,
+       "block_bootstrap_ci95": [
+        0.7358,
+        1.1495
+       ],
+       "at_display_floor": false
+      }
+     }
+    },
+    "the firmware update changed display behavior~the network wiring causes interference": {
+     "ln_K4_mean": 0.886,
+     "scales": {
+      "K5": {
+       "point": 0.9748,
+       "block_bootstrap_ci95": [
+        0.7768,
+        1.2242
+       ],
+       "at_display_floor": false
+      },
+      "K6": {
+       "point": 1.0265,
+       "block_bootstrap_ci95": [
+        0.7522,
+        1.3125
+       ],
+       "at_display_floor": false
+      }
+     }
+    },
+    "the firmware update changed display behavior~the reports are coincidence": {
+     "ln_K4_mean": 3.2956,
+     "scales": {
+      "K5": {
+       "point": 1.0029,
+       "block_bootstrap_ci95": [
+        0.9623,
+        1.0423
+       ],
+       "at_display_floor": false
+      },
+      "K6": {
+       "point": 0.9426,
+       "block_bootstrap_ci95": [
+        0.9426,
+        0.9426
+       ],
+       "at_display_floor": false
+      }
+     }
+    },
+    "a power-saving setting changed~the network wiring causes interference": {
+     "ln_K4_mean": 1.6948,
+     "scales": {
+      "K5": {
+       "point": 0.9668,
+       "block_bootstrap_ci95": [
+        0.9254,
+        1.0041
+       ],
+       "at_display_floor": false
+      },
+      "K6": {
+       "point": 0.9711,
+       "block_bootstrap_ci95": [
+        0.8875,
+        1.0496
+       ],
+       "at_display_floor": false
+      }
+     }
+    },
+    "a power-saving setting changed~the reports are coincidence": {
+     "ln_K4_mean": 4.1044,
+     "scales": {
+      "K5": {
+       "point": 0.994,
+       "block_bootstrap_ci95": [
+        0.9819,
+        1.0078
+       ],
+       "at_display_floor": false
+      },
+      "K6": {
+       "point": 1.0044,
+       "block_bootstrap_ci95": [
+        1.0044,
+        1.0044
+       ],
+       "at_display_floor": false
+      }
+     }
+    },
+    "the network wiring causes interference~the reports are coincidence": {
+     "ln_K4_mean": 2.4096,
+     "scales": {
+      "K5": {
+       "point": 1.0132,
+       "block_bootstrap_ci95": [
+        0.9824,
+        1.0465
+       ],
+       "at_display_floor": false
+      },
+      "K6": {
+       "point": 1.1461,
+       "block_bootstrap_ci95": [
+        1.1461,
+        1.1461
+       ],
+       "at_display_floor": false
+      }
+     }
+    }
+   },
+   "verdicts": {
+    "K5": {
+     "scale_intervals_intersect": true,
+     "intersection": [
+      0.9824,
+      1.0041
+     ],
+     "common_scale_beta_point": 0.9849,
+     "verdict": "compatible with common rescaling; the common-temperature mechanism is NOT rejected (beta near 1 is consistent with it)"
+    },
+    "K6": {
+     "scale_intervals_intersect": false,
+     "intersection": [
+      1.1461,
+      0.9426
+     ],
+     "common_scale_beta_point": 1.0002,
+     "verdict": "evidence of option interaction beyond a single common rescaling (per-pair scale intervals disjoint)"
+    }
+   }
+  },
+  "amb_logistics": {
+   "pairs": {
+    "short-packing at origin~the origin scanner undercounted": {
+     "ln_K4_mean": 1.5824,
+     "scales": {
+      "K5": {
+       "point": 0.9282,
+       "block_bootstrap_ci95": [
+        0.6713,
+        1.2692
+       ],
+       "at_display_floor": false
+      },
+      "K6": {
+       "point": 0.7327,
+       "block_bootstrap_ci95": [
+        0.5407,
+        0.9449
+       ],
+       "at_display_floor": false
+      }
+     }
+    },
+    "short-packing at origin~in-transit theft despite intact seals": {
+     "ln_K4_mean": -1.9984,
+     "scales": {
+      "K5": {
+       "point": 1.1852,
+       "block_bootstrap_ci95": [
+        1.0533,
+        1.3417
+       ],
+       "at_display_floor": false
+      },
+      "K6": {
+       "point": 1.198,
+       "block_bootstrap_ci95": [
+        1.1111,
+        1.3122
+       ],
+       "at_display_floor": false
+      }
+     }
+    },
+    "short-packing at origin~receiving miscount at the depot": {
+     "ln_K4_mean": -0.5052,
+     "scales": {
+      "K5": {
+       "point": 1.8561,
+       "block_bootstrap_ci95": [
+        1.2512,
+        3.1694
+       ],
+       "at_display_floor": false
+      },
+      "K6": {
+       "point": 1.9911,
+       "block_bootstrap_ci95": [
+        1.5266,
+        3.2393
+       ],
+       "at_display_floor": false
+      }
+     }
+    },
+    "the origin scanner undercounted~in-transit theft despite intact seals": {
+     "ln_K4_mean": -3.5808,
+     "scales": {
+      "K5": {
+       "point": 1.0716,
+       "block_bootstrap_ci95": [
+        1.0103,
+        1.133
+       ],
+       "at_display_floor": false
+      },
+      "K6": {
+       "point": 0.9924,
+       "block_bootstrap_ci95": [
+        0.9203,
+        1.0804
+       ],
+       "at_display_floor": false
+      }
+     }
+    },
+    "the origin scanner undercounted~receiving miscount at the depot": {
+     "ln_K4_mean": -2.0877,
+     "scales": {
+      "K5": {
+       "point": 1.1527,
+       "block_bootstrap_ci95": [
+        1.0237,
+        1.2923
+       ],
+       "at_display_floor": false
+      },
+      "K6": {
+       "point": 1.0372,
+       "block_bootstrap_ci95": [
+        0.936,
+        1.1694
+       ],
+       "at_display_floor": false
+      }
+     }
+    },
+    "in-transit theft despite intact seals~receiving miscount at the depot": {
+     "ln_K4_mean": 1.4932,
+     "scales": {
+      "K5": {
+       "point": 0.9582,
+       "block_bootstrap_ci95": [
+        0.8964,
+        1.0227
+       ],
+       "at_display_floor": false
+      },
+      "K6": {
+       "point": 0.9297,
+       "block_bootstrap_ci95": [
+        0.8914,
+        0.9678
+       ],
+       "at_display_floor": false
+      }
+     }
+    }
+   },
+   "verdicts": {
+    "K5": {
+     "scale_intervals_intersect": false,
+     "intersection": [
+      1.2512,
+      1.0227
+     ],
+     "common_scale_beta_point": 1.192,
+     "verdict": "evidence of option interaction beyond a single common rescaling (per-pair scale intervals disjoint)"
+    },
+    "K6": {
+     "scale_intervals_intersect": false,
+     "intersection": [
+      1.5266,
+      0.9449
+     ],
+     "common_scale_beta_point": 1.1468,
+     "verdict": "evidence of option interaction beyond a single common rescaling (per-pair scale intervals disjoint)"
+    }
+   }
+  },
+  "amb_research": {
+   "pairs": {
+    "buffer lot contamination~incubator temperature drift without an alarm": {
+     "ln_K4_mean": 0.8891,
+     "scales": {
+      "K5": {
+       "point": 1.4469,
+       "block_bootstrap_ci95": [
+        1.2025,
+        1.7913
+       ],
+       "at_display_floor": false
+      },
+      "K6": {
+       "point": 1.4221,
+       "block_bootstrap_ci95": [
+        1.2091,
+        1.6967
+       ],
+       "at_display_floor": false
+      }
+     }
+    },
+    "buffer lot contamination~plate reader calibration drift": {
+     "ln_K4_mean": 3.332,
+     "scales": {
+      "K5": {
+       "point": 1.0821,
+       "block_bootstrap_ci95": [
+        0.9725,
+        1.2415
+       ],
+       "at_display_floor": false
+      },
+      "K6": {
+       "point": 1.0692,
+       "block_bootstrap_ci95": [
+        0.9785,
+        1.1552
+       ],
+       "at_display_floor": false
+      }
+     }
+    },
+    "buffer lot contamination~operator handling differences": {
+     "ln_K4_mean": 4.1987,
+     "scales": {
+      "K5": {
+       "point": 1.0178,
+       "block_bootstrap_ci95": [
+        1.0178,
+        1.0178
+       ],
+       "at_display_floor": false
+      },
+      "K6": null
+     }
+    },
+    "incubator temperature drift without an alarm~plate reader calibration drift": {
+     "ln_K4_mean": 2.4429,
+     "scales": {
+      "K5": {
+       "point": 0.9493,
+       "block_bootstrap_ci95": [
+        0.8394,
+        1.0801
+       ],
+       "at_display_floor": false
+      },
+      "K6": {
+       "point": 0.9407,
+       "block_bootstrap_ci95": [
+        0.8615,
+        1.0332
+       ],
+       "at_display_floor": false
+      }
+     }
+    },
+    "incubator temperature drift without an alarm~operator handling differences": {
+     "ln_K4_mean": 3.3859,
+     "scales": {
+      "K5": {
+       "point": 0.9488,
+       "block_bootstrap_ci95": [
+        0.9488,
+        0.9488
+       ],
+       "at_display_floor": false
+      },
+      "K6": null
+     }
+    },
+    "plate reader calibration drift~operator handling differences": {
+     "ln_K4_mean": 0.9635,
+     "scales": {
+      "K5": {
+       "point": 0.6309,
+       "block_bootstrap_ci95": [
+        0.6309,
+        0.6309
+       ],
+       "at_display_floor": false
+      },
+      "K6": null
+     }
+    }
+   },
+   "verdicts": {
+    "K5": {
+     "scale_intervals_intersect": false,
+     "intersection": [
+      1.2025,
+      0.6309
+     ],
+     "common_scale_beta_point": 1.0126,
+     "verdict": "evidence of option interaction beyond a single common rescaling (per-pair scale intervals disjoint)"
+    },
+    "K6": {
+     "scale_intervals_intersect": false,
+     "intersection": [
+      1.2091,
+      1.0332
+     ],
+     "common_scale_beta_point": 1.144,
+     "verdict": "evidence of option interaction beyond a single common rescaling (per-pair scale intervals disjoint)"
+    }
+   }
+  },
+  "claim_limits": "rank preservation and beta near 1 do not establish K-invariance or independent logits; only disjoint per-pair scale intervals are evidence of interaction"
+ },
+ "reference_recovery": {
+  "schema": "jev-ref-recovery-overrides.v1",
+  "version": "followup-20261003.v2",
+  "rows": {
+   "526:hs_ws2024:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+    "recovered_key": "o4",
+    "stage": "echo_exact_text"
+   },
+   "535:hs_heisman2024:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+    "recovered_key": "o5",
+    "stage": "echo_exact_text"
+   },
+   "541:hs_ao2025w:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+    "recovered_key": "o5",
+    "stage": "echo_exact_text"
+   },
+   "544:hs_sixnations2025:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+    "recovered_key": "o5",
+    "stage": "echo_exact_text"
+   },
+   "547:hs_oscar2025:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+    "recovered_key": "o5",
+    "stage": "echo_exact_text"
+   },
+   "550:hs_pope2025:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+    "recovered_key": "o5",
+    "stage": "echo_exact_text"
+   },
+   "553:hs_eurovision2025:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+    "recovered_key": "o5",
+    "stage": "echo_exact_text"
+   },
+   "556:hs_cannes2025:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+    "recovered_key": "o5",
+    "stage": "echo_exact_text"
+   },
+   "559:hs_nba2025:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+    "recovered_key": "o5",
+    "stage": "echo_exact_text"
+   },
+   "562:hs_usopen2025:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+    "recovered_key": "o5",
+    "stage": "echo_exact_text"
+   },
+   "565:hs_wimb2025w:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+    "recovered_key": "o5",
+    "stage": "echo_exact_text"
+   },
+   "568:hs_cwc2025:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+    "recovered_key": "o4",
+    "stage": "echo_exact_text"
+   },
+   "571:hs_anchorage:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+    "recovered_key": "o5",
+    "stage": "echo_exact_text"
+   },
+   "586:hs_fake_winter:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+    "recovered_key": "o3",
+    "stage": "echo_exact_text"
+   },
+   "589:hs_fake_un:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+    "recovered_key": "o3",
+    "stage": "echo_exact_text"
+   },
+   "592:hs_fake_mars:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+    "recovered_key": "o3",
+    "stage": "echo_exact_text"
+   },
+   "595:hs_fake_eclipse:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+    "recovered_key": "o3",
+    "stage": "echo_exact_text"
+   },
+   "613:hs_ao2025w:qwen/qwen3-30b-a3b-instruct-2507:rot3": {
+    "recovered_key": "o2",
+    "stage": "echo_exact_text"
+   },
+   "616:hs_sixnations2025:qwen/qwen3-30b-a3b-instruct-2507:rot3": {
+    "recovered_key": "o2",
+    "stage": "echo_exact_text"
+   },
+   "625:hs_eurovision2025:qwen/qwen3-30b-a3b-instruct-2507:rot3": {
+    "recovered_key": "o1",
+    "stage": "echo_exact_text"
+   },
+   "631:hs_nba2025:qwen/qwen3-30b-a3b-instruct-2507:rot3": {
+    "recovered_key": "o2",
+    "stage": "echo_exact_text"
+   },
+   "637:hs_wimb2025w:qwen/qwen3-30b-a3b-instruct-2507:rot3": {
+    "recovered_key": "o2",
+    "stage": "echo_exact_text"
+   },
+   "640:hs_cwc2025:qwen/qwen3-30b-a3b-instruct-2507:rot3": {
+    "recovered_key": "o1",
+    "stage": "echo_exact_text"
+   },
+   "643:hs_anchorage:qwen/qwen3-30b-a3b-instruct-2507:rot3": {
+    "recovered_key": "o1",
+    "stage": "echo_exact_text"
+   }
+  },
+  "per_model_recomputed": {
+   "qwen/qwen3-30b-a3b-instruct-2507": {
+    "n": 48,
+    "gold_hits": 25,
+    "unrecovered": 0,
+    "echo_recovered": 24,
+    "per_kind": {
+     "post": {
+      "n": 32,
+      "gold_hits": 9,
+      "gold_rate": 0.281
+     },
+     "pre": {
+      "n": 8,
+      "gold_hits": 8,
+      "gold_rate": 1.0
+     },
+     "fictional": {
+      "n": 8,
+      "gold_hits": 8,
+      "gold_rate": 1.0
+     }
+    },
+    "gold_rate": 0.521
+   },
+   "qwen/qwen3-next-80b-a3b-instruct": {
+    "n": 48,
+    "gold_hits": 21,
+    "unrecovered": 0,
+    "echo_recovered": 0,
+    "per_kind": {
+     "post": {
+      "n": 32,
+      "gold_hits": 6,
+      "gold_rate": 0.188
+     },
+     "pre": {
+      "n": 8,
+      "gold_hits": 7,
+      "gold_rate": 0.875
+     },
+     "fictional": {
+      "n": 8,
+      "gold_hits": 8,
+      "gold_rate": 1.0
+     }
+    },
+    "gold_rate": 0.438
+   },
+   "mistralai/mistral-small-3.2-24b-instruct": {
+    "n": 48,
+    "gold_hits": 12,
+    "unrecovered": 0,
+    "echo_recovered": 0,
+    "per_kind": {
+     "post": {
+      "n": 32,
+      "gold_hits": 0,
+      "gold_rate": 0.0
+     },
+     "pre": {
+      "n": 8,
+      "gold_hits": 4,
+      "gold_rate": 0.5
+     },
+     "fictional": {
+      "n": 8,
+      "gold_hits": 8,
+      "gold_rate": 1.0
+     }
+    },
+    "gold_rate": 0.25
+   }
+  },
+  "note": "echo recovery accepts ONLY '<key><punct><exact option text>' (case-flex text) with key/text agreement; no blind first-character guessing; future runs store full sanitized raw bodies, not 400-char excerpts"
+ },
+ "horizon_items": {
+  "n_unique_items": 24,
+  "n_rows": 48,
+  "rotations_are_repeated_measures": true,
+  "cohort_labels": "kind 'post' means RECENT facts (late-2024..Aug-2025 outcomes); it does NOT assert a known model cutoff (cutoff remains unverified)",
+  "per_item": {
+   "hs_anchorage": {
+    "kind": "post",
+    "event_date": "2025-08",
+    "by_rotation": {
+     "0": false,
+     "3": false
+    },
+    "n": 2,
+    "gold_hits": 0,
+    "both_rotations_correct": false
+   },
+   "hs_ao2025w": {
+    "kind": "post",
+    "event_date": "2025-01",
+    "by_rotation": {
+     "0": false,
+     "3": false
+    },
+    "n": 2,
+    "gold_hits": 0,
+    "both_rotations_correct": false
+   },
+   "hs_ballon2024": {
+    "kind": "post",
+    "event_date": "2024-10",
+    "by_rotation": {
+     "0": true,
+     "3": true
+    },
+    "n": 2,
+    "gold_hits": 2,
+    "both_rotations_correct": true
+   },
+   "hs_cannes2025": {
+    "kind": "post",
+    "event_date": "2025-05",
+    "by_rotation": {
+     "0": false,
+     "3": false
+    },
+    "n": 2,
+    "gold_hits": 0,
+    "both_rotations_correct": false
+   },
+   "hs_cwc2025": {
+    "kind": "post",
+    "event_date": "2025-07",
+    "by_rotation": {
+     "0": false,
+     "3": false
+    },
+    "n": 2,
+    "gold_hits": 0,
+    "both_rotations_correct": false
+   },
+   "hs_eurovision2025": {
+    "kind": "post",
+    "event_date": "2025-05",
+    "by_rotation": {
+     "0": false,
+     "3": false
+    },
+    "n": 2,
+    "gold_hits": 0,
+    "both_rotations_correct": false
+   },
+   "hs_fake_eclipse": {
+    "kind": "fictional",
+    "event_date": "2025-08",
+    "by_rotation": {
+     "0": true,
+     "3": true
+    },
+    "n": 2,
+    "gold_hits": 2,
+    "both_rotations_correct": true
+   },
+   "hs_fake_mars": {
+    "kind": "fictional",
+    "event_date": "2025-06",
+    "by_rotation": {
+     "0": true,
+     "3": true
+    },
+    "n": 2,
+    "gold_hits": 2,
+    "both_rotations_correct": true
+   },
+   "hs_fake_un": {
+    "kind": "fictional",
+    "event_date": "2025-05",
+    "by_rotation": {
+     "0": true,
+     "3": true
+    },
+    "n": 2,
+    "gold_hits": 2,
+    "both_rotations_correct": true
+   },
+   "hs_fake_winter": {
+    "kind": "fictional",
+    "event_date": "2024-12",
+    "by_rotation": {
+     "0": true,
+     "3": true
+    },
+    "n": 2,
+    "gold_hits": 2,
+    "both_rotations_correct": true
+   },
+   "hs_heisman2024": {
+    "kind": "post",
+    "event_date": "2024-12",
+    "by_rotation": {
+     "0": false,
+     "3": false
+    },
+    "n": 2,
+    "gold_hits": 0,
+    "both_rotations_correct": false
+   },
+   "hs_nba2025": {
+    "kind": "post",
+    "event_date": "2025-06",
+    "by_rotation": {
+     "0": false,
+     "3": false
+    },
+    "n": 2,
+    "gold_hits": 0,
+    "both_rotations_correct": false
+   },
+   "hs_nobelpeace2024": {
+    "kind": "post",
+    "event_date": "2024-10",
+    "by_rotation": {
+     "0": true,
+     "3": true
+    },
+    "n": 2,
+    "gold_hits": 2,
+    "both_rotations_correct": true
+   },
+   "hs_oscar2025": {
+    "kind": "post",
+    "event_date": "2025-03",
+    "by_rotation": {
+     "0": true,
+     "3": true
+    },
+    "n": 2,
+    "gold_hits": 2,
+    "both_rotations_correct": true
+   },
+   "hs_pope2025": {
+    "kind": "post",
+    "event_date": "2025-05",
+    "by_rotation": {
+     "0": false,
+     "3": false
+    },
+    "n": 2,
+    "gold_hits": 0,
+    "both_rotations_correct": false
+   },
+   "hs_sblviii": {
+    "kind": "pre",
+    "event_date": "2024-02",
+    "by_rotation": {
+     "0": true,
+     "3": true
+    },
+    "n": 2,
+    "gold_hits": 2,
+    "both_rotations_correct": true
+   },
+   "hs_sblx": {
+    "kind": "post",
+    "event_date": "2025-02",
+    "by_rotation": {
+     "0": false,
+     "3": false
+    },
+    "n": 2,
+    "gold_hits": 0,
+    "both_rotations_correct": false
+   },
+   "hs_sixnations2025": {
+    "kind": "post",
+    "event_date": "2025-03",
+    "by_rotation": {
+     "0": false,
+     "3": false
+    },
+    "n": 2,
+    "gold_hits": 0,
+    "both_rotations_correct": false
+   },
+   "hs_starliner": {
+    "kind": "pre",
+    "event_date": "2024-09",
+    "by_rotation": {
+     "0": false,
+     "3": false
+    },
+    "n": 2,
+    "gold_hits": 0,
+    "both_rotations_correct": false
+   },
+   "hs_usopen2025": {
+    "kind": "post",
+    "event_date": "2025-06",
+    "by_rotation": {
+     "0": false,
+     "3": false
+    },
+    "n": 2,
+    "gold_hits": 0,
+    "both_rotations_correct": false
+   },
+   "hs_wc2022": {
+    "kind": "pre",
+    "event_date": "2022-12",
+    "by_rotation": {
+     "0": true,
+     "3": true
+    },
+    "n": 2,
+    "gold_hits": 2,
+    "both_rotations_correct": true
+   },
+   "hs_wimb2023m": {
+    "kind": "pre",
+    "event_date": "2023-07",
+    "by_rotation": {
+     "0": true,
+     "3": true
+    },
+    "n": 2,
+    "gold_hits": 2,
+    "both_rotations_correct": true
+   },
+   "hs_wimb2025w": {
+    "kind": "post",
+    "event_date": "2025-07",
+    "by_rotation": {
+     "0": false,
+     "3": false
+    },
+    "n": 2,
+    "gold_hits": 0,
+    "both_rotations_correct": false
+   },
+   "hs_ws2024": {
+    "kind": "post",
+    "event_date": "2024-10",
+    "by_rotation": {
+     "0": true,
+     "3": true
+    },
+    "n": 2,
+    "gold_hits": 2,
+    "both_rotations_correct": true
+   }
+  },
+  "cohorts": {
+   "recent_facts": 16,
+   "recent_correct": 4,
+   "pre_controls": 4,
+   "pre_correct": 3,
+   "constructed_false": 4,
+   "false_correct": 4
+  }
+ }
+}

@@ -1,0 +1,516 @@
+{
+  "schema": "jev-knowledge-answer-key.v2",
+  "version": "followup-20261003.v1",
+  "use": "grader-facing answer key with source provenance (URL + SHA-256 of the fetched page)",
+  "note": "Factual-recall probe items about dated public events (recent-news recall). This is NOT a known-pretraining-cutoff test: no cutoff is asserted. Each item was run under two option rotations as repeated measures on the same item (48 rows total, 24 unique facts).",
+  "items": [
+    {
+      "id": "q01",
+      "source_id": "hs_ws2024",
+      "date": "2024-10",
+      "answer": "Los Angeles Dodgers",
+      "source": [
+        {
+          "url": "https://en.wikipedia.org/wiki/2024_World_Series",
+          "sha256": "162484e8fb19d93ae085f9f76eac686157193210c4ccb52312edacfde708bf82"
+        }
+      ],
+      "variants": [
+        {
+          "rotation": 0,
+          "choice": "o0"
+        },
+        {
+          "rotation": 3,
+          "choice": "o3"
+        }
+      ]
+    },
+    {
+      "id": "q02",
+      "source_id": "hs_ballon2024",
+      "date": "2024-10",
+      "answer": "Rodri",
+      "source": [
+        {
+          "url": "https://en.wikipedia.org/wiki/2024_Ballon_d%27Or",
+          "sha256": "b41ba233d139780224e167162bdf5bfd487359e6fa00b82d68d83bfb07bb6844"
+        }
+      ],
+      "variants": [
+        {
+          "rotation": 0,
+          "choice": "o0"
+        },
+        {
+          "rotation": 3,
+          "choice": "o3"
+        }
+      ]
+    },
+    {
+      "id": "q03",
+      "source_id": "hs_nobelpeace2024",
+      "date": "2024-10",
+      "answer": "Nihon Hidankyo",
+      "source": [
+        {
+          "url": "https://www.nobelprize.org/prizes/peace/2024/summary/",
+          "sha256": "0a02f31d4605d4f1b3e84361abec9305b6c5a2f161fcec3ebc9d322bb948f2e4"
+        }
+      ],
+      "variants": [
+        {
+          "rotation": 0,
+          "choice": "o0"
+        },
+        {
+          "rotation": 3,
+          "choice": "o3"
+        }
+      ]
+    },
+    {
+      "id": "q04",
+      "source_id": "hs_heisman2024",
+      "date": "2024-12",
+      "answer": "Travis Hunter",
+      "source": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Heisman_Trophy",
+          "sha256": "bef55b6e1850f4f7778b6a81eca03743b2f47dcb45c7cb4277ad0ecc49e9b3f2"
+        }
+      ],
+      "variants": [
+        {
+          "rotation": 0,
+          "choice": "o0"
+        },
+        {
+          "rotation": 3,
+          "choice": "o3"
+        }
+      ]
+    },
+    {
+      "id": "q05",
+      "source_id": "hs_sblx",
+      "date": "2025-02",
+      "answer": "Philadelphia Eagles",
+      "source": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Super_Bowl_LIX",
+          "sha256": "0198db4500f28a38673a14c4586120808adfee09bfb7742ddb497d4a2e55ccc7"
+        }
+      ],
+      "variants": [
+        {
+          "rotation": 0,
+          "choice": "o0"
+        },
+        {
+          "rotation": 3,
+          "choice": "o3"
+        }
+      ]
+    },
+    {
+      "id": "q06",
+      "source_id": "hs_ao2025w",
+      "date": "2025-01",
+      "answer": "Madison Keys",
+      "source": [
+        {
+          "url": "https://en.wikipedia.org/wiki/2025_Australian_Open_%E2%80%93_Women%27s_singles",
+          "sha256": "a42b1c6a04c2d93264990d8410c8d1d96e4683601affdb551b2112e63994a6d5"
+        }
+      ],
+      "variants": [
+        {
+          "rotation": 0,
+          "choice": "o0"
+        },
+        {
+          "rotation": 3,
+          "choice": "o3"
+        }
+      ]
+    },
+    {
+      "id": "q07",
+      "source_id": "hs_sixnations2025",
+      "date": "2025-03",
+      "answer": "France",
+      "source": [
+        {
+          "url": "https://en.wikipedia.org/wiki/2025_Six_Nations_Championship",
+          "sha256": "bc97e6abc5f6d038f5a8fe8e2abe29140d5adf6fee3ead828f42297e461e5fd4"
+        }
+      ],
+      "variants": [
+        {
+          "rotation": 0,
+          "choice": "o0"
+        },
+        {
+          "rotation": 3,
+          "choice": "o3"
+        }
+      ]
+    },
+    {
+      "id": "q08",
+      "source_id": "hs_oscar2025",
+      "date": "2025-03",
+      "answer": "Anora",
+      "source": [
+        {
+          "url": "https://en.wikipedia.org/wiki/97th_Academy_Awards",
+          "sha256": "acb76af4a5d7a1aa5d5cc733fe1339a075dc35d3566027bf8497cadf19c90763"
+        }
+      ],
+      "variants": [
+        {
+          "rotation": 0,
+          "choice": "o0"
+        },
+        {
+          "rotation": 3,
+          "choice": "o3"
+        }
+      ]
+    },
+    {
+      "id": "q09",
+      "source_id": "hs_pope2025",
+      "date": "2025-05",
+      "answer": "Robert Prevost (Leo XIV)",
+      "source": [
+        {
+          "url": "https://en.wikipedia.org/wiki/2025_papal_conclave",
+          "sha256": "669ecf5ab8982f3c9a2624da86372dc26a2a811c7cbc40d0d493045dd59ee4f7"
+        }
+      ],
+      "variants": [
+        {
+          "rotation": 0,
+          "choice": "o0"
+        },
+        {
+          "rotation": 3,
+          "choice": "o3"
+        }
+      ]
+    },
+    {
+      "id": "q10",
+      "source_id": "hs_eurovision2025",
+      "date": "2025-05",
+      "answer": "\u201cWasted Love\u201d by JJ (Austria)",
+      "source": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Eurovision_Song_Contest_2025",
+          "sha256": "e45591247a0cac347dfb766b6bb2b02290053493506a4156997faf2b46888a1a"
+        }
+      ],
+      "variants": [
+        {
+          "rotation": 0,
+          "choice": "o0"
+        },
+        {
+          "rotation": 3,
+          "choice": "o3"
+        }
+      ]
+    },
+    {
+      "id": "q11",
+      "source_id": "hs_cannes2025",
+      "date": "2025-05",
+      "answer": "\u201cIt Was Just an Accident\u201d (Jafar Panahi)",
+      "source": [
+        {
+          "url": "https://en.wikipedia.org/wiki/2025_Cannes_Film_Festival",
+          "sha256": "0824ad4eff6512a096b8f088d0bc7ddec97b469c34eb672abc5d08499d617645"
+        }
+      ],
+      "variants": [
+        {
+          "rotation": 0,
+          "choice": "o0"
+        },
+        {
+          "rotation": 3,
+          "choice": "o3"
+        }
+      ]
+    },
+    {
+      "id": "q12",
+      "source_id": "hs_nba2025",
+      "date": "2025-06",
+      "answer": "Oklahoma City Thunder",
+      "source": [
+        {
+          "url": "https://en.wikipedia.org/wiki/2025_NBA_Finals",
+          "sha256": "e4f1148b656b1bf5ef7ee426cc4fbc29dda0affa2e5c633b381f28ccb253ae80"
+        }
+      ],
+      "variants": [
+        {
+          "rotation": 0,
+          "choice": "o0"
+        },
+        {
+          "rotation": 3,
+          "choice": "o3"
+        }
+      ]
+    },
+    {
+      "id": "q13",
+      "source_id": "hs_usopen2025",
+      "date": "2025-06",
+      "answer": "J.J. Spaun",
+      "source": [
+        {
+          "url": "https://en.wikipedia.org/wiki/2025_U.S._Open_(golf)",
+          "sha256": "519d62a264af0221040e6d2f55932f59c9acfb8db798218eaf49ea287e63e119"
+        }
+      ],
+      "variants": [
+        {
+          "rotation": 0,
+          "choice": "o0"
+        },
+        {
+          "rotation": 3,
+          "choice": "o3"
+        }
+      ]
+    },
+    {
+      "id": "q14",
+      "source_id": "hs_wimb2025w",
+      "date": "2025-07",
+      "answer": "Iga Swiatek",
+      "source": [
+        {
+          "url": "https://en.wikipedia.org/wiki/2025_Wimbledon_Championships",
+          "sha256": "fafd228f3d7b6e95dec4e13c046e310e29e6f3896851acae3f078b1e3fe502ad"
+        }
+      ],
+      "variants": [
+        {
+          "rotation": 0,
+          "choice": "o0"
+        },
+        {
+          "rotation": 3,
+          "choice": "o3"
+        }
+      ]
+    },
+    {
+      "id": "q15",
+      "source_id": "hs_cwc2025",
+      "date": "2025-07",
+      "answer": "Chelsea",
+      "source": [
+        {
+          "url": "https://en.wikipedia.org/wiki/2025_FIFA_Club_World_Cup_final",
+          "sha256": "9cb313be323f1981906be684d82693648edf19838fbed470fa060c77aba63018"
+        }
+      ],
+      "variants": [
+        {
+          "rotation": 0,
+          "choice": "o0"
+        },
+        {
+          "rotation": 3,
+          "choice": "o3"
+        }
+      ]
+    },
+    {
+      "id": "q16",
+      "source_id": "hs_anchorage",
+      "date": "2025-08",
+      "answer": "in 2025-08",
+      "source": [
+        {
+          "url": "https://en.wikipedia.org/wiki/2025_Russia%E2%80%93United_States_summit",
+          "sha256": "9c5daa4a04696655c433bf055a68afe7dc4221a726f617d03d3ca2f959f7cbb6"
+        }
+      ],
+      "variants": [
+        {
+          "rotation": 0,
+          "choice": "o0"
+        },
+        {
+          "rotation": 3,
+          "choice": "o3"
+        }
+      ]
+    },
+    {
+      "id": "q17",
+      "source_id": "hs_wc2022",
+      "date": "2022-12",
+      "answer": "Argentina",
+      "source": [
+        {
+          "url": "https://en.wikipedia.org/wiki/2022_FIFA_World_Cup_final",
+          "sha256": "bb2509592a3099a818cc7c79b6ee7e1077d02cda6b4eac1e713b12bb1cc30678"
+        }
+      ],
+      "variants": [
+        {
+          "rotation": 0,
+          "choice": "o0"
+        },
+        {
+          "rotation": 3,
+          "choice": "o3"
+        }
+      ]
+    },
+    {
+      "id": "q18",
+      "source_id": "hs_sblviii",
+      "date": "2024-02",
+      "answer": "Kansas City Chiefs",
+      "source": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Super_Bowl_LVIII",
+          "sha256": "efa2030b5aaa8d2e87b3fc9d6c413d7386057f9ad543b86f375e5d28474ed30e"
+        }
+      ],
+      "variants": [
+        {
+          "rotation": 0,
+          "choice": "o0"
+        },
+        {
+          "rotation": 3,
+          "choice": "o3"
+        }
+      ]
+    },
+    {
+      "id": "q19",
+      "source_id": "hs_wimb2023m",
+      "date": "2023-07",
+      "answer": "Carlos Alcaraz",
+      "source": [
+        {
+          "url": "https://en.wikipedia.org/wiki/2023_Wimbledon_Championships",
+          "sha256": "33e9e37e69a437f455560065d149475ce001fcb101b5bdbf139cdc3843c231a6"
+        }
+      ],
+      "variants": [
+        {
+          "rotation": 0,
+          "choice": "o0"
+        },
+        {
+          "rotation": 3,
+          "choice": "o3"
+        }
+      ]
+    },
+    {
+      "id": "q20",
+      "source_id": "hs_starliner",
+      "date": "2024-09",
+      "answer": "it landed without its crew, who returned later on Crew Dragon",
+      "source": [
+        {
+          "url": "https://www.nasa.gov/news-release/nasa-boeing-welcome-starliner-spacecraft-to-earth-close-mission/",
+          "sha256": "f7ab1c4a4ca38e9598413723ccd871713f7babba0b3ac53c693f7d5b7953995c"
+        }
+      ],
+      "variants": [
+        {
+          "rotation": 0,
+          "choice": "o0"
+        },
+        {
+          "rotation": 3,
+          "choice": "o3"
+        }
+      ]
+    },
+    {
+      "id": "q21",
+      "source_id": "hs_fake_winter",
+      "date": "2024-12",
+      "answer": "it did not occur",
+      "source": [],
+      "variants": [
+        {
+          "rotation": 0,
+          "choice": "o3"
+        },
+        {
+          "rotation": 3,
+          "choice": "o0"
+        }
+      ]
+    },
+    {
+      "id": "q22",
+      "source_id": "hs_fake_un",
+      "date": "2025-05",
+      "answer": "it did not occur",
+      "source": [],
+      "variants": [
+        {
+          "rotation": 0,
+          "choice": "o3"
+        },
+        {
+          "rotation": 3,
+          "choice": "o0"
+        }
+      ]
+    },
+    {
+      "id": "q23",
+      "source_id": "hs_fake_mars",
+      "date": "2025-06",
+      "answer": "it did not occur",
+      "source": [],
+      "variants": [
+        {
+          "rotation": 0,
+          "choice": "o3"
+        },
+        {
+          "rotation": 3,
+          "choice": "o0"
+        }
+      ]
+    },
+    {
+      "id": "q24",
+      "source_id": "hs_fake_eclipse",
+      "date": "2025-08",
+      "answer": "it did not occur",
+      "source": [],
+      "variants": [
+        {
+          "rotation": 0,
+          "choice": "o3"
+        },
+        {
+          "rotation": 3,
+          "choice": "o0"
+        }
+      ]
+    }
+  ]
+}

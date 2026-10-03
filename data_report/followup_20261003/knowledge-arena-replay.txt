@@ -1,0 +1,478 @@
+Jev knowledge probe - plaintext Arena-style replay
+24 unique items x 2 option rotations (repeated measures).
+Factual recall probe; NOT a known pretraining-cutoff test.
+No answers are included here - see knowledge-answer-key.json.
+
+Copy each variant separately; reply with only the option key.
+
+q01 / rotation 0
+Context: This question is about public events.
+Which team won the 2024 World Series?
+   o0. Los Angeles Dodgers
+   o1. New York Yankees
+   o2. Boston Red Sox
+   o3. Toronto Blue Jays
+   o4. it did not occur
+   o5. cannot determine from what I know
+
+q01 / rotation 3
+Context: This question is about public events.
+Which team won the 2024 World Series?
+   o0. Toronto Blue Jays
+   o1. it did not occur
+   o2. cannot determine from what I know
+   o3. Los Angeles Dodgers
+   o4. New York Yankees
+   o5. Boston Red Sox
+
+q02 / rotation 0
+Context: This question is about public events.
+Who won the men's Ballon d'Or in 2024?
+   o0. Rodri
+   o1. Jude Bellingham
+   o2. Vinicius Junior
+   o3. Erling Haaland
+   o4. it did not occur
+   o5. cannot determine from what I know
+
+q02 / rotation 3
+Context: This question is about public events.
+Who won the men's Ballon d'Or in 2024?
+   o0. Erling Haaland
+   o1. it did not occur
+   o2. cannot determine from what I know
+   o3. Rodri
+   o4. Jude Bellingham
+   o5. Vinicius Junior
+
+q03 / rotation 0
+Context: This question is about public events.
+Which organization received the 2024 Nobel Peace Prize?
+   o0. Nihon Hidankyo
+   o1. World Food Programme
+   o2. UNHCR
+   o3. Memorial (human rights centre)
+   o4. it did not occur
+   o5. cannot determine from what I know
+
+q03 / rotation 3
+Context: This question is about public events.
+Which organization received the 2024 Nobel Peace Prize?
+   o0. Memorial (human rights centre)
+   o1. it did not occur
+   o2. cannot determine from what I know
+   o3. Nihon Hidankyo
+   o4. World Food Programme
+   o5. UNHCR
+
+q04 / rotation 0
+Context: This question is about public events.
+Who won the 2024 Heisman Trophy?
+   o0. Travis Hunter
+   o1. Ashton Jeanty
+   o2. Cam Ward
+   o3. Dillon Gabriel
+   o4. it did not occur
+   o5. cannot determine from what I know
+
+q04 / rotation 3
+Context: This question is about public events.
+Who won the 2024 Heisman Trophy?
+   o0. Dillon Gabriel
+   o1. it did not occur
+   o2. cannot determine from what I know
+   o3. Travis Hunter
+   o4. Ashton Jeanty
+   o5. Cam Ward
+
+q05 / rotation 0
+Context: This question is about public events.
+Which team won Super Bowl LIX?
+   o0. Philadelphia Eagles
+   o1. Kansas City Chiefs
+   o2. Buffalo Bills
+   o3. Washington Commanders
+   o4. it did not occur
+   o5. cannot determine from what I know
+
+q05 / rotation 3
+Context: This question is about public events.
+Which team won Super Bowl LIX?
+   o0. Washington Commanders
+   o1. it did not occur
+   o2. cannot determine from what I know
+   o3. Philadelphia Eagles
+   o4. Kansas City Chiefs
+   o5. Buffalo Bills
+
+q06 / rotation 0
+Context: This question is about public events.
+Who won the women's singles title at the 2025 Australian Open?
+   o0. Madison Keys
+   o1. Aryna Sabalenka
+   o2. Iga Swiatek
+   o3. Coco Gauff
+   o4. it did not occur
+   o5. cannot determine from what I know
+
+q06 / rotation 3
+Context: This question is about public events.
+Who won the women's singles title at the 2025 Australian Open?
+   o0. Coco Gauff
+   o1. it did not occur
+   o2. cannot determine from what I know
+   o3. Madison Keys
+   o4. Aryna Sabalenka
+   o5. Iga Swiatek
+
+q07 / rotation 0
+Context: This question is about public events.
+Which team won the 2025 Six Nations Championship?
+   o0. France
+   o1. England
+   o2. Ireland
+   o3. Scotland
+   o4. it did not occur
+   o5. cannot determine from what I know
+
+q07 / rotation 3
+Context: This question is about public events.
+Which team won the 2025 Six Nations Championship?
+   o0. Scotland
+   o1. it did not occur
+   o2. cannot determine from what I know
+   o3. France
+   o4. England
+   o5. Ireland
+
+q08 / rotation 0
+Context: This question is about public events.
+Which film won Best Picture at the Academy Awards ceremony held in March 2025?
+   o0. Anora
+   o1. The Brutalist
+   o2. Conclave
+   o3. Dune: Part Two
+   o4. it did not occur
+   o5. cannot determine from what I know
+
+q08 / rotation 3
+Context: This question is about public events.
+Which film won Best Picture at the Academy Awards ceremony held in March 2025?
+   o0. Dune: Part Two
+   o1. it did not occur
+   o2. cannot determine from what I know
+   o3. Anora
+   o4. The Brutalist
+   o5. Conclave
+
+q09 / rotation 0
+Context: This question is about public events.
+Who was elected pope in May 2025?
+   o0. Robert Prevost (Leo XIV)
+   o1. Pietro Parolin
+   o2. Luis Antonio Tagle
+   o3. Matteo Zuppi
+   o4. it did not occur
+   o5. cannot determine from what I know
+
+q09 / rotation 3
+Context: This question is about public events.
+Who was elected pope in May 2025?
+   o0. Matteo Zuppi
+   o1. it did not occur
+   o2. cannot determine from what I know
+   o3. Robert Prevost (Leo XIV)
+   o4. Pietro Parolin
+   o5. Luis Antonio Tagle
+
+q10 / rotation 0
+Context: This question is about public events.
+Which song won the Eurovision Song Contest 2025?
+   o0. “Wasted Love” by JJ (Austria)
+   o1. “Bara bada bastu” by KAJ (Sweden)
+   o2. “Maman” by Louane (France)
+   o3. “Gaja” by Justyna Steczkowska (Poland)
+   o4. it did not occur
+   o5. cannot determine from what I know
+
+q10 / rotation 3
+Context: This question is about public events.
+Which song won the Eurovision Song Contest 2025?
+   o0. “Gaja” by Justyna Steczkowska (Poland)
+   o1. it did not occur
+   o2. cannot determine from what I know
+   o3. “Wasted Love” by JJ (Austria)
+   o4. “Bara bada bastu” by KAJ (Sweden)
+   o5. “Maman” by Louane (France)
+
+q11 / rotation 0
+Context: This question is about public events.
+Which film won the Palme d'Or at the 2025 Cannes Film Festival?
+   o0. “It Was Just an Accident” (Jafar Panahi)
+   o1. “Sound of Falling”
+   o2. “The Secret Agent”
+   o3. “Sentimental Value”
+   o4. it did not occur
+   o5. cannot determine from what I know
+
+q11 / rotation 3
+Context: This question is about public events.
+Which film won the Palme d'Or at the 2025 Cannes Film Festival?
+   o0. “Sentimental Value”
+   o1. it did not occur
+   o2. cannot determine from what I know
+   o3. “It Was Just an Accident” (Jafar Panahi)
+   o4. “Sound of Falling”
+   o5. “The Secret Agent”
+
+q12 / rotation 0
+Context: This question is about public events.
+Which team won the 2025 NBA Finals?
+   o0. Oklahoma City Thunder
+   o1. Indiana Pacers
+   o2. Denver Nuggets
+   o3. Boston Celtics
+   o4. it did not occur
+   o5. cannot determine from what I know
+
+q12 / rotation 3
+Context: This question is about public events.
+Which team won the 2025 NBA Finals?
+   o0. Boston Celtics
+   o1. it did not occur
+   o2. cannot determine from what I know
+   o3. Oklahoma City Thunder
+   o4. Indiana Pacers
+   o5. Denver Nuggets
+
+q13 / rotation 0
+Context: This question is about public events.
+Who won the 2025 U.S. Open in golf?
+   o0. J.J. Spaun
+   o1. Rory McIlroy
+   o2. Scottie Scheffler
+   o3. Viktor Hovland
+   o4. it did not occur
+   o5. cannot determine from what I know
+
+q13 / rotation 3
+Context: This question is about public events.
+Who won the 2025 U.S. Open in golf?
+   o0. Viktor Hovland
+   o1. it did not occur
+   o2. cannot determine from what I know
+   o3. J.J. Spaun
+   o4. Rory McIlroy
+   o5. Scottie Scheffler
+
+q14 / rotation 0
+Context: This question is about public events.
+Who won the women's singles title at the 2025 Wimbledon Championships?
+   o0. Iga Swiatek
+   o1. Amanda Anisimova
+   o2. Coco Gauff
+   o3. Aryna Sabalenka
+   o4. it did not occur
+   o5. cannot determine from what I know
+
+q14 / rotation 3
+Context: This question is about public events.
+Who won the women's singles title at the 2025 Wimbledon Championships?
+   o0. Aryna Sabalenka
+   o1. it did not occur
+   o2. cannot determine from what I know
+   o3. Iga Swiatek
+   o4. Amanda Anisimova
+   o5. Coco Gauff
+
+q15 / rotation 0
+Context: This question is about public events.
+Which team won the 2025 FIFA Club World Cup final?
+   o0. Chelsea
+   o1. Paris Saint-Germain
+   o2. Real Madrid
+   o3. Fluminense
+   o4. it did not occur
+   o5. cannot determine from what I know
+
+q15 / rotation 3
+Context: This question is about public events.
+Which team won the 2025 FIFA Club World Cup final?
+   o0. Fluminense
+   o1. it did not occur
+   o2. cannot determine from what I know
+   o3. Chelsea
+   o4. Paris Saint-Germain
+   o5. Real Madrid
+
+q16 / rotation 0
+Context: This question is about public events.
+In which month did the United States–Russia leaders' summit in Anchorage, Alaska take place in 2025?
+   o0. in 2025-08
+   o1. in 2025-05
+   o2. in 2025-06
+   o3. in 2025-07
+   o4. it did not occur
+   o5. cannot determine from what I know
+
+q16 / rotation 3
+Context: This question is about public events.
+In which month did the United States–Russia leaders' summit in Anchorage, Alaska take place in 2025?
+   o0. in 2025-07
+   o1. it did not occur
+   o2. cannot determine from what I know
+   o3. in 2025-08
+   o4. in 2025-05
+   o5. in 2025-06
+
+q17 / rotation 0
+Context: This question is about public events.
+Which team won the 2022 FIFA World Cup?
+   o0. Argentina
+   o1. France
+   o2. Croatia
+   o3. Brazil
+   o4. it did not occur
+   o5. cannot determine from what I know
+
+q17 / rotation 3
+Context: This question is about public events.
+Which team won the 2022 FIFA World Cup?
+   o0. Brazil
+   o1. it did not occur
+   o2. cannot determine from what I know
+   o3. Argentina
+   o4. France
+   o5. Croatia
+
+q18 / rotation 0
+Context: This question is about public events.
+Which team won Super Bowl LVIII in February 2024?
+   o0. Kansas City Chiefs
+   o1. San Francisco 49ers
+   o2. Baltimore Ravens
+   o3. Detroit Lions
+   o4. it did not occur
+   o5. cannot determine from what I know
+
+q18 / rotation 3
+Context: This question is about public events.
+Which team won Super Bowl LVIII in February 2024?
+   o0. Detroit Lions
+   o1. it did not occur
+   o2. cannot determine from what I know
+   o3. Kansas City Chiefs
+   o4. San Francisco 49ers
+   o5. Baltimore Ravens
+
+q19 / rotation 0
+Context: This question is about public events.
+Who won the men's singles title at the 2023 Wimbledon Championships?
+   o0. Carlos Alcaraz
+   o1. Novak Djokovic
+   o2. Daniil Medvedev
+   o3. Jannik Sinner
+   o4. it did not occur
+   o5. cannot determine from what I know
+
+q19 / rotation 3
+Context: This question is about public events.
+Who won the men's singles title at the 2023 Wimbledon Championships?
+   o0. Jannik Sinner
+   o1. it did not occur
+   o2. cannot determine from what I know
+   o3. Carlos Alcaraz
+   o4. Novak Djokovic
+   o5. Daniil Medvedev
+
+q20 / rotation 0
+Context: This question is about public events.
+What happened when Boeing's Starliner spacecraft returned from its crewed flight test in September 2024?
+   o0. it landed without its crew, who returned later on Crew Dragon
+   o1. it landed with its two-person crew aboard
+   o2. it burned up during re-entry and was lost
+   o3. its return was repeatedly postponed into 2025 with the crew aboard
+   o4. it did not occur
+   o5. cannot determine from what I know
+
+q20 / rotation 3
+Context: This question is about public events.
+What happened when Boeing's Starliner spacecraft returned from its crewed flight test in September 2024?
+   o0. its return was repeatedly postponed into 2025 with the crew aboard
+   o1. it did not occur
+   o2. cannot determine from what I know
+   o3. it landed without its crew, who returned later on Crew Dragon
+   o4. it landed with its two-person crew aboard
+   o5. it burned up during re-entry and was lost
+
+q21 / rotation 0
+Context: This question is about public events.
+When did the 2024 Winter Olympic Games take place?
+   o0. in 2024-11
+   o1. in 2024-12
+   o2. in 2025-01
+   o3. it did not occur
+   o4. cannot determine from what I know
+
+q21 / rotation 3
+Context: This question is about public events.
+When did the 2024 Winter Olympic Games take place?
+   o0. it did not occur
+   o1. cannot determine from what I know
+   o2. in 2024-11
+   o3. in 2024-12
+   o4. in 2025-01
+
+q22 / rotation 0
+Context: This question is about public events.
+When did the United Nations announce its permanent relocation from New York to Geneva?
+   o0. in 2025-04
+   o1. in 2025-05
+   o2. in 2025-06
+   o3. it did not occur
+   o4. cannot determine from what I know
+
+q22 / rotation 3
+Context: This question is about public events.
+When did the United Nations announce its permanent relocation from New York to Geneva?
+   o0. it did not occur
+   o1. cannot determine from what I know
+   o2. in 2025-04
+   o3. in 2025-05
+   o4. in 2025-06
+
+q23 / rotation 0
+Context: This question is about public events.
+When did NASA announce the discovery of definitive fossil evidence of life on Mars?
+   o0. in 2025-05
+   o1. in 2025-06
+   o2. in 2025-07
+   o3. it did not occur
+   o4. cannot determine from what I know
+
+q23 / rotation 3
+Context: This question is about public events.
+When did NASA announce the discovery of definitive fossil evidence of life on Mars?
+   o0. it did not occur
+   o1. cannot determine from what I know
+   o2. in 2025-05
+   o3. in 2025-06
+   o4. in 2025-07
+
+q24 / rotation 0
+Context: This question is about public events.
+When did the total solar eclipse that was visible across all of Europe take place?
+   o0. in 2025-07
+   o1. in 2025-08
+   o2. in 2025-09
+   o3. it did not occur
+   o4. cannot determine from what I know
+
+q24 / rotation 3
+Context: This question is about public events.
+When did the total solar eclipse that was visible across all of Europe take place?
+   o0. it did not occur
+   o1. cannot determine from what I know
+   o2. in 2025-07
+   o3. in 2025-08
+   o4. in 2025-09

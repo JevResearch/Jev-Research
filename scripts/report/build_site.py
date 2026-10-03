@@ -80,6 +80,24 @@ INCLUDE_FILES = [
     "data_report/raw_recoverability_inventory.json",
     "data_report/baseline_rerun_plan.json",
     "data_report/baseline_rerun_frozen_plan.json",
+    # follow-up round (2026-10-03): corrected derived statistics + the public
+    # knowledge exports (model-facing questions carry no gold; the answer key
+    # with source URL + SHA ships separately)
+    "counterpoint/index.html",
+    "data_report/followup_20261003/analysis.json",
+    "data_report/followup_20261003/offline_summary.json",
+    "data_report/followup_20261003/p5_horizon_corrected.json",
+    "data_report/followup_20261003/confidence_formula_check.json",
+    "data_report/followup_20261003/token_decode_membership.json",
+    "data_report/followup_20261003/tokenizer_pins.json",
+    "data_report/followup_20261003/knowledge-questions.json",
+    "data_report/followup_20261003/knowledge-answer-key.json",
+    "data_report/followup_20261003/knowledge-arena-replay.txt",
+    "data_report/followup_20261003/v2/analysis_v2.json",
+    "data_report/followup_20261003/v2/placement_ratio_derived.json",
+    "data_report/followup_20261003/v2/reference_recovery_overrides.json",
+    "data_report/followup_20261003/v3/analysis_v3.json",
+    "data_report/followup_20261003/v3/reference_cost_reconciliation.json",
     "data_report/baselines/v4r1/public_summary.json",
     "data_report/baselines/v4r1/active_source_map.json",
     # sanitized new-parser override provenance (aggregate counts + SHA-256 of
@@ -120,10 +138,15 @@ INCLUDE_DIRS = [
 ]
 DOCS_ALLOW = {  # only these survive under docs/modern-comparison/
     "ARCHITECTURE-PROBES.md", "COMPARABLE-SCORES.md", "REFERENCE-MATRIX.md",
+    "FOLLOWUP-METHODS.md",
     "comparison-graphs.html", "pareto-frontiers.html", "architecture-evidence.html",
     "architecture-diagram.html",
     "canonical",
 }
+# follow-up probe internals that never ship: fetched source-page excerpts
+# (public export keeps URL + SHA-256 only) and the local spend ledger.
+FOLLOWUP_SKIP = {"sources.json", "sources_v2.json", "BUDGET-followup.json",
+                 "BUDGET-followup.json.lock", "budget_events.jsonl"}
 # Internal synthetic specs the published harness loads at runtime (generator
 # output / public catalog snapshot - NOT gate or handoff prose). The G3
 # licensed-content gate still scans them like everything else.
@@ -165,6 +188,8 @@ def rel(p: Path) -> str:
 
 def banned_path(r: str) -> bool:
     parts = r.split("/")
+    if r.startswith("runs_archprobe/followup_20261003/") and parts[-1] in FOLLOWUP_SKIP:
+        return True                       # own traces + plans ship; see above
     # runs_matched_cheap ledgers carry item ids, answer letters, usage and cost
     # only - never item text - and are explicitly license-scanned via
     # GATED_GLOBS below. The generic name ban targets the benchmark-stage
@@ -583,6 +608,16 @@ def verify_render(bundle: Path) -> str | None:
         return f"builder failed in bundle:\n{out.stdout}\n{out.stderr}"
     if target.read_bytes() != original:
         return "re-render from published aggregates differs from shipped page"
+    # the counterpoint page must re-render byte-identically too
+    ctarget = bundle / "counterpoint" / "index.html"
+    coriginal = ctarget.read_bytes()
+    cout = subprocess.run(
+        [sys.executable, str(bundle / "scripts/report/build_counterpoint.py")],
+        capture_output=True, text=True, env=env, cwd=str(bundle))
+    if cout.returncode != 0:
+        return f"counterpoint builder failed in bundle:\n{cout.stdout}\n{cout.stderr}"
+    if ctarget.read_bytes() != coriginal:
+        return "counterpoint re-render differs from shipped page"
     return None
 
 
@@ -638,12 +673,12 @@ the published aggregates in this repository.
 **The report page: <https://jevresearch.github.io/Jev-Research/report/>**
 (rendered; the source is [`report/index.html`](report/index.html)).
 Measured September 2026 against the service-reported `jev-1.13.0` model
-string; report revision 2 (2026-10-01); an independent evaluation by
+string; report revision 3 (2026-10-03); an independent evaluation by
 JevResearch, unaffiliated with TypeSafe AI.
 Headline (all-requested scoring): MMLU-Pro 82.7%, GPQA Diamond 76.5%,
 ~73 ms fixed + ~6 ms/1k-token proxy-reported upstream service time, ~$0.28 per 12k-question
-MMLU-Pro run - a small, new,
-English-centric model with a probability read-out in place of a generation
+MMLU-Pro run - a small
+model with a probability read-out in place of a generation
 head, not a frontier system.
 
 ## What's here
@@ -651,13 +686,14 @@ head, not a frontier system.
 | path | contents |
 |---|---|
 | [`report/`](report/) | the report (single page, figures embedded); rendered at <https://jevresearch.github.io/Jev-Research/report/> |
+| [`counterpoint/`](counterpoint/) | a short counterpoint on the follow-up probe round (rendered at <https://jevresearch.github.io/Jev-Research/counterpoint/>) |
 | [`assets/`](assets/) | standalone chart pages (same figures, un-embedded) |
 | [`src/`](src/), [`scripts/`](scripts/), [`tests/`](tests/) | the harness that ran everything (public domain) |
 | [`runs_benchmark*/`](runs_benchmark/) | per-stage derived aggregates (scores, weighted scores, calibration, usage) + freeze manifests with SHA-256 of every input |
 | [`runs_archprobe/`](runs_archprobe/) | architecture-probe analysis, per-call rows, tokenizer studies, the probe2 follow-up battery, billing |
 | [`runs_matched_cheap/`](runs_matched_cheap/) | matched cheap-model baselines (OpenRouter): freeze, smoke, per-call results, summaries, spend |
 | [`runs_live/`](runs_live/) | Talk-to-Jev traces (character / vocabulary-menu / token programs), probes, billing, findings |
-| [`data_report/`](data_report/) | cost model, billing roll-up, architecture + lattice audits, size estimate, probe-2 plan, benchmark calibration/paired diagnostics, raw-recoverability inventory and rerun plan, and the v4r1 active baseline summary (complete/partial cell status) |
+| [`data_report/`](data_report/) | cost model, billing roll-up, architecture + lattice audits, size estimate, probe-2 plan, benchmark calibration/paired diagnostics, raw-recoverability inventory and rerun plan, the v4r1 active baseline summary (complete/partial cell status), and the follow-up round's corrected statistics plus the public knowledge exports (questions without gold; answer key with source URL + SHA-256) |
 | [`docs/`](docs/) | research write-ups: architecture probes, comparable scores, the vals.ai leaderboard extract, the Talk program |
 | [`ARCHITECTURE-ANALYSIS.md`](ARCHITECTURE-ANALYSIS.md) | the full architecture reconstruction: card, evidence, alternatives ledger, next probes |
 
@@ -696,6 +732,10 @@ and is **not republished here**. This repository publishes instead:
   item identity against those hashes;
 * our own synthetic prompts verbatim (the Talk traces, the architecture-probe
   rows, the tokenizer samples - none is third-party licensed);
+* short quoted third-party text used for exact replication (e.g., Archer
+  Hume's payout-probe prompt, reproduced in
+  `scripts/benchmark/followup_battery.py`) - such quotes retain their
+  original authorship and are reproduced with attribution, not as our own;
 * the complete cost model and billing roll-up;
 * benchmark calibration and paired diagnostics aggregates
   (`data_report/benchmark_diagnostics/`, no item text) and the v4r1 active

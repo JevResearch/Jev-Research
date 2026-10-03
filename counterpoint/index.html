@@ -1,0 +1,123 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A counterpoint on Jev's architecture</title>
+<style>
+:root{--bg:#0e1117;--panel:#161b27;--ink:#e6e9f2;--mut:#9aa2b6;--line:#242a38;
+--teal:#38e1c8;--amber:#f5b342;--peri:#7d8cff}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);margin:0;font:16px/1.68 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:880px;margin:0 auto;padding:0 1.4rem 6rem}
+h1{font-size:2.3rem;line-height:1.15;margin:3.4rem 0 .35rem;letter-spacing:-.015em}
+h2{font-size:1.45rem;margin:3.6rem 0 .6rem;border-bottom:1px solid var(--line);padding-bottom:.35rem}
+h3{font-size:1.1rem;margin:2rem 0 .4rem}
+p,li{max-width:none}a{color:var(--peri)}
+.sub{color:var(--mut);font-size:1.05rem;max-width:none}
+.chip{display:inline-block;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--teal);border:1px solid var(--teal);border-radius:999px;padding:.1rem .6rem;margin-bottom:1.1rem}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.05rem 1.3rem;margin:1.1rem 0}
+.pitch{font-size:1.16rem;font-style:italic;border-left:3px solid var(--amber);padding-left:1.1rem;margin:1.1rem 0}
+.pitch b{font-style:normal}
+svg{width:100%;height:auto;display:block;margin:1rem 0}
+figure{margin:1.6rem 0;width:100%}
+figure svg{margin:.4rem 0}
+figcaption{color:var(--mut);font-size:.8rem;font-style:italic;margin:.3rem 0 0;line-height:1.45;text-align:center;max-width:100%;margin-left:auto;margin-right:auto}
+@media(min-width:900px){
+figure{width:min(96vw,1120px);margin-left:calc(50% - min(48vw,560px));margin-right:calc(50% - min(48vw,560px))}
+figcaption{max-width:70%}
+}
+table{border-collapse:collapse;width:100%;font-size:.92rem;margin:1rem 0}
+th,td{text-align:left;padding:.45rem .6rem;border-bottom:1px solid var(--line)}
+th{color:var(--mut);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}
+td.n{text-align:right;font-variant-numeric:tabular-nums}
+.cap{color:var(--mut);font-size:.88rem;max-width:none}
+.note{border-left:3px solid var(--amber);background:var(--panel);border-radius:0 12px 12px 0;padding:.9rem 1.1rem;margin:1.2rem 0}
+sup a{text-decoration:none;color:var(--amber);font-weight:600}
+#refs li{margin:.4rem 0;font-size:.88rem;color:var(--mut)}
+footer{color:var(--mut);font-size:.85rem;border-top:1px solid var(--line);margin-top:4rem;padding-top:1.2rem}
+code{background:var(--panel);border-radius:4px;padding:.05rem .35rem;font-size:.86em}
+.scroll{overflow-x:auto}
+.herorot{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.25rem 1.4rem 1rem;margin:1.3rem 0}
+.rot-slide{display:none}
+.rot-slide.active{display:block;animation:rotin .6s cubic-bezier(.4,0,.2,1)}
+@keyframes rotin{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
+.rot-name{color:var(--mut);font-size:.85rem;letter-spacing:.06em;text-transform:uppercase}
+.rot-score{font-size:2.7rem;font-weight:700;color:var(--teal);line-height:1.15;font-variant-numeric:tabular-nums}
+.rot-note{color:var(--mut);font-size:.9rem;max-width:70ch}
+.rot-frontier{color:var(--peri);font-size:.88rem;margin-top:.3rem}
+.rot-ctl{display:flex;gap:.4rem;align-items:center;margin-top:.75rem;opacity:.45;transition:opacity .25s}
+.herorot:hover .rot-ctl{opacity:1}
+.rot-btn{background:none;border:1px solid var(--line);color:var(--mut);border-radius:8px;width:30px;height:26px;cursor:pointer;font-size:.95rem;line-height:1;padding:0}
+.rot-btn:hover{color:var(--ink);border-color:var(--mut)}
+.rot-count{color:var(--mut);font-size:.8rem;margin-left:.35rem;font-variant-numeric:tabular-nums}
+nav.toc{margin:1.5rem 0 .3rem;font-size:.98rem;color:var(--mut);border-top:1px solid var(--line);padding-top:1rem}
+nav.toc a{color:var(--peri);text-decoration:none}
+nav.toc a:hover{text-decoration:underline}
+.toc-h{font-weight:700;color:var(--ink);font-size:1.02rem;margin-bottom:.55rem;letter-spacing:.02em}
+.toc-sec{margin:.42rem 0}
+.toc-sub{font-size:.85rem;color:var(--mut);margin:.15rem 0 .1rem 1.1rem;line-height:1.6}
+.toc-sub a{color:var(--mut)}
+.toc-sub a:hover{color:var(--peri)}
+.tldr{border-left:3px solid var(--teal)}
+table.plain th{text-transform:none;font-size:.82rem;letter-spacing:.01em}
+table.wide{font-size:.78rem;min-width:720px}
+table.wide th{font-size:.66rem}
+@media (prefers-reduced-motion: reduce){.rot-slide.active{animation:none}}
+</style></head><body><main>
+<div class="chip">JevResearch &middot; follow-up probe round 2026-10-03</div>
+<h1>A counterpoint on Jev&rsquo;s architecture</h1>
+<p><a href="https://archerhume.com/posts/jevs-architecture-unmasked/">Archer
+Hume&rsquo;s investigation</a> is worth reading. Our follow-up reproduces its
+strongest behavioral findings: Jev shares state, isolates questions, and lets
+options influence one another. The disagreement is about how much of the
+machinery behind those behaviors we can identify.</p>
+<h2>The tokenizer is not a pedigree</h2>
+<p>Jev&rsquo;s reported counts really differ from the proposed Qwen tokenizers.
+For example, <code>zzz</code> and <code>______</code> each add one token to
+Jev&rsquo;s empty-state counter, whereas the pinned Qwen encoders split them
+into two. The proposed Qwen3-30B-A3B and Qwen3-Next candidates also share
+their ordinary-text vocabulary with Qwen2.5; a missing Qwen3 vocabulary
+expansion does not explain the mismatch.</p>
+<p>Simple vocabulary pruning does not reproduce that counter. But changing the
+vocabulary or the accounting layer does not require training new weights from
+scratch. A Qwen-derived model remains possible. Archer explicitly leaves
+public-model ancestry open; our earlier preference for a new foundation was
+too strong.</p>
+<p>We also tested timing with equally sized uploads but different token
+counts. The reported counts and Qwen counts predicted elapsed time similarly.
+That experiment did not settle which tokenizer the neural network uses. A
+count&ndash;latency relationship is not a weight fingerprint.</p>
+<p>TypeSafe&rsquo;s own <a
+href="https://docs.typesafe.ai/introduction/machine-learning-primer">primer</a>
+describes RLCD as adapting pretrained language models. It does not name
+Jev&rsquo;s base.</p>
+<h2>Shared computation does not identify the backbone</h2>
+<p>A reference code supplied in the state or a question&rsquo;s own
+instructions was read correctly; the same code hidden in another question was
+unavailable. Adding an irrelevant option also shifted the odds between
+existing answers, reproducing Archer&rsquo;s result. These findings support
+shared context, isolated question processing, and joint consideration of
+options.</p>
+<p>A causal decoder remains a sensible premise. However, shared-state caching
+is not exclusive to it: a block-masked encoder can encode the state once and
+let isolated questions reuse it. Likewise, fast inference does not identify
+sparse experts or a parameter count without knowing the serving hardware.
+Those are architecture hypotheses, not recovered internals.</p>
+<p>We have not resolved the claimed twofold cost of question tokens. Our
+current endpoint no longer exposes the service-time header, and elapsed-time
+measurements were too noisy to settle the incremental ratio.</p>
+<h2>The knowledge horizon needed another look</h2>
+<p>Our earlier &ldquo;partial through May 2025&rdquo; reading was overstated.
+Questions about actual outcomes, rather than event dates, found good recall on
+selected October 2024 facts but little reliable recall of 2025 results. The
+candidate Qwens also struggled with recent facts; that resemblance does not
+identify Jev&rsquo;s parent model.</p>
+<p><a href="../data_report/followup_20261003/knowledge-questions.json">Try the same questions</a>, or inspect
+the <a href="../data_report/followup_20261003/knowledge-answer-key.json">answer key and sources</a>. The <a
+href="../docs/modern-comparison/FOLLOWUP-METHODS.md">methods and recorded evidence</a> contain the detailed
+comparisons.</p>
+<p>The practical conclusion survives: Jev is an inexpensive judgment service,
+not a frontier reasoner. We now have a clearer account of its behavior than of
+its family tree.</p>
+<footer><a href="https://jevresearch.github.io/Jev-Research/report/">&larr; back to the main report</a> &middot;
+<a href="https://archerhume.com/posts/jevs-architecture-unmasked/">Archer
+Hume&rsquo;s article</a></footer>
+</main></body></html>

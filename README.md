@@ -10,12 +10,12 @@ the published aggregates in this repository.
 **The report page: <https://jevresearch.github.io/Jev-Research/report/>**
 (rendered; the source is [`report/index.html`](report/index.html)).
 Measured September 2026 against the service-reported `jev-1.13.0` model
-string; report revision 2 (2026-10-01); an independent evaluation by
+string; report revision 3 (2026-10-03); an independent evaluation by
 JevResearch, unaffiliated with TypeSafe AI.
 Headline (all-requested scoring): MMLU-Pro 82.7%, GPQA Diamond 76.5%,
 ~73 ms fixed + ~6 ms/1k-token proxy-reported upstream service time, ~$0.28 per 12k-question
-MMLU-Pro run - a small, new,
-English-centric model with a probability read-out in place of a generation
+MMLU-Pro run - a small
+model with a probability read-out in place of a generation
 head, not a frontier system.
 
 ## What's here
@@ -23,13 +23,14 @@ head, not a frontier system.
 | path | contents |
 |---|---|
 | [`report/`](report/) | the report (single page, figures embedded); rendered at <https://jevresearch.github.io/Jev-Research/report/> |
+| [`counterpoint/`](counterpoint/) | a short counterpoint on the follow-up probe round (rendered at <https://jevresearch.github.io/Jev-Research/counterpoint/>) |
 | [`assets/`](assets/) | standalone chart pages (same figures, un-embedded) |
 | [`src/`](src/), [`scripts/`](scripts/), [`tests/`](tests/) | the harness that ran everything (public domain) |
 | [`runs_benchmark*/`](runs_benchmark/) | per-stage derived aggregates (scores, weighted scores, calibration, usage) + freeze manifests with SHA-256 of every input |
 | [`runs_archprobe/`](runs_archprobe/) | architecture-probe analysis, per-call rows, tokenizer studies, the probe2 follow-up battery, billing |
 | [`runs_matched_cheap/`](runs_matched_cheap/) | matched cheap-model baselines (OpenRouter): freeze, smoke, per-call results, summaries, spend |
 | [`runs_live/`](runs_live/) | Talk-to-Jev traces (character / vocabulary-menu / token programs), probes, billing, findings |
-| [`data_report/`](data_report/) | cost model, billing roll-up, architecture + lattice audits, size estimate, probe-2 plan, benchmark calibration/paired diagnostics, raw-recoverability inventory and rerun plan, and the v4r1 active baseline summary (complete/partial cell status) |
+| [`data_report/`](data_report/) | cost model, billing roll-up, architecture + lattice audits, size estimate, probe-2 plan, benchmark calibration/paired diagnostics, raw-recoverability inventory and rerun plan, the v4r1 active baseline summary (complete/partial cell status), and the follow-up round's corrected statistics plus the public knowledge exports (questions without gold; answer key with source URL + SHA-256) |
 | [`docs/`](docs/) | research write-ups: architecture probes, comparable scores, the vals.ai leaderboard extract, the Talk program |
 | [`ARCHITECTURE-ANALYSIS.md`](ARCHITECTURE-ANALYSIS.md) | the full architecture reconstruction: card, evidence, alternatives ledger, next probes |
 
@@ -68,6 +69,10 @@ and is **not republished here**. This repository publishes instead:
   item identity against those hashes;
 * our own synthetic prompts verbatim (the Talk traces, the architecture-probe
   rows, the tokenizer samples - none is third-party licensed);
+* short quoted third-party text used for exact replication (e.g., Archer
+  Hume's payout-probe prompt, reproduced in
+  `scripts/benchmark/followup_battery.py`) - such quotes retain their
+  original authorship and are reproduced with attribution, not as our own;
 * the complete cost model and billing roll-up;
 * benchmark calibration and paired diagnostics aggregates
   (`data_report/benchmark_diagnostics/`, no item text) and the v4r1 active

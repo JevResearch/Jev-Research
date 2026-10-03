@@ -1,0 +1,94 @@
+{
+ "schema": "jev-followup-plan.v3",
+ "version": "followup-20261003.v3",
+ "model_pin": "jev-1.13.0",
+ "v1_v2_immutable": true,
+ "counts": {
+  "fu_counter_calib": 8,
+  "fu_counter_v3": 64,
+  "jev_total_after_v3": 846
+ },
+ "byte_volumes": [
+  6000,
+  24000
+ ],
+ "styles": [
+  "latin",
+  "letters",
+  "digits",
+  "cjk"
+ ],
+ "stimuli_chars": {
+  "latin:6000": 6000,
+  "latin:24000": 24000,
+  "letters:6000": 6000,
+  "letters:24000": 24000,
+  "digits:6000": 6000,
+  "digits:24000": 24000,
+  "cjk:6000": 2000,
+  "cjk:24000": 8000
+ },
+ "calib_v3": {
+  "fu_counter_calib:cjk:6000": {
+   "reported": 2279,
+   "encode_qwen3": 1334,
+   "encode_o200k": 1334,
+   "filler_bytes": 6000,
+   "style": "cjk"
+  },
+  "fu_counter_calib:cjk:24000": {
+   "reported": 8313,
+   "encode_qwen3": 5334,
+   "encode_o200k": 5334,
+   "filler_bytes": 24000,
+   "style": "cjk"
+  },
+  "fu_counter_calib:digits:6000": {
+   "reported": 6267,
+   "encode_qwen3": 6001,
+   "encode_o200k": 2001,
+   "filler_bytes": 6000,
+   "style": "digits"
+  },
+  "fu_counter_calib:digits:24000": {
+   "reported": 24267,
+   "encode_qwen3": 24001,
+   "encode_o200k": 8001,
+   "filler_bytes": 24000,
+   "style": "digits"
+  },
+  "fu_counter_calib:latin:6000": {
+   "reported": 1221,
+   "encode_qwen3": 955,
+   "encode_o200k": 955,
+   "filler_bytes": 6000,
+   "style": "latin"
+  },
+  "fu_counter_calib:latin:24000": {
+   "reported": 4081,
+   "encode_qwen3": 3815,
+   "encode_o200k": 3815,
+   "filler_bytes": 24000,
+   "style": "latin"
+  },
+  "fu_counter_calib:letters:6000": {
+   "reported": 3371,
+   "encode_qwen3": 3219,
+   "encode_o200k": 3093,
+   "filler_bytes": 6000,
+   "style": "letters"
+  },
+  "fu_counter_calib:letters:24000": {
+   "reported": 12749,
+   "encode_qwen3": 12934,
+   "encode_o200k": 12451,
+   "filler_bytes": 24000,
+   "style": "letters"
+  }
+ },
+ "hypotheses": {
+  "primary": "runtime vs count-family: if processing scales with an o200k-like tokenizer, digit runs (o200k 1/3, Jev 1/1) finish FASTER per Jev-reported token than byte-matched Latin/CJK; if it scales with the reported counter, byte-matched styles track reported counts instead",
+  "rules": "whole-style holdout RMSE + paired whole-block contrasts with block bootstrap (8 blocks = sample unit); predictor advantage is a processing proxy, never weight ancestry; indistinguishable predictors => 'inconclusive', never a positive Qwen-base classification"
+ },
+ "wire": "exact HTTP content bytes serialized ensure_ascii=False and recorded per call; byte-match across styles verified at freeze"
+}

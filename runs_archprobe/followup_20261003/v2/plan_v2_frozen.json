@@ -1,0 +1,335 @@
+{
+ "schema": "jev-followup-plan.v2",
+ "version": "followup-20261003.v2",
+ "model_pin": "jev-1.13.0",
+ "v1_immutable": [
+  "runs_archprobe/followup_20261003/rows.jsonl",
+  "runs_archprobe/followup_20261003/plan_frozen.json"
+ ],
+ "counts": {
+  "fu_relational": 96,
+  "fu_isolation": 64,
+  "fu_timing": 64,
+  "fu_calib": 12,
+  "global_extra_cap": 374,
+  "total_requests_after_v2": 762
+ },
+ "calib_fit": {
+  "latin": {
+   "per_char": 0.165,
+   "intercept": 267.0,
+   "counts": {
+    "1000": 432,
+    "4000": 927
+   }
+  },
+  "digits": {
+   "per_char": 1.0,
+   "intercept": 267.0,
+   "counts": {
+    "1000": 1267,
+    "4000": 4267
+   }
+  },
+  "cjk": {
+   "per_char": 1.006,
+   "intercept": 267.0,
+   "counts": {
+    "1000": 1273,
+    "4000": 4291
+   }
+  }
+ },
+ "timing_stimuli_chars": {
+  "fu_timing:latin:t3k:question:b0": 16564,
+  "fu_timing:digits:t3k:state:b0": 2733,
+  "fu_timing:digits:t12k:state:b0": 11733,
+  "fu_timing:latin:t12k:state:b0": 71109,
+  "fu_timing:latin:t3k:state:b0": 16564,
+  "fu_timing:cjk:t12k:state:b0": 11663,
+  "fu_timing:cjk:t3k:state:b0": 2717,
+  "fu_timing:latin:t12k:question:b0": 71109,
+  "fu_timing:cjk:t12k:state:b1": 11663,
+  "fu_timing:latin:t12k:question:b1": 71109,
+  "fu_timing:latin:t3k:state:b1": 16564,
+  "fu_timing:latin:t3k:question:b1": 16564,
+  "fu_timing:digits:t3k:state:b1": 2733,
+  "fu_timing:cjk:t3k:state:b1": 2717,
+  "fu_timing:latin:t12k:state:b1": 71109,
+  "fu_timing:digits:t12k:state:b1": 11733,
+  "fu_timing:latin:t12k:state:b2": 71109,
+  "fu_timing:latin:t12k:question:b2": 71109,
+  "fu_timing:digits:t3k:state:b2": 2733,
+  "fu_timing:latin:t3k:state:b2": 16564,
+  "fu_timing:latin:t3k:question:b2": 16564,
+  "fu_timing:cjk:t3k:state:b2": 2717,
+  "fu_timing:cjk:t12k:state:b2": 11663,
+  "fu_timing:digits:t12k:state:b2": 11733,
+  "fu_timing:digits:t12k:state:b3": 11733,
+  "fu_timing:cjk:t3k:state:b3": 2717,
+  "fu_timing:digits:t3k:state:b3": 2733,
+  "fu_timing:cjk:t12k:state:b3": 11663,
+  "fu_timing:latin:t12k:state:b3": 71109,
+  "fu_timing:latin:t3k:question:b3": 16564,
+  "fu_timing:latin:t12k:question:b3": 71109,
+  "fu_timing:latin:t3k:state:b3": 16564,
+  "fu_timing:latin:t3k:question:b4": 16564,
+  "fu_timing:digits:t12k:state:b4": 11733,
+  "fu_timing:latin:t12k:question:b4": 71109,
+  "fu_timing:latin:t3k:state:b4": 16564,
+  "fu_timing:cjk:t12k:state:b4": 11663,
+  "fu_timing:cjk:t3k:state:b4": 2717,
+  "fu_timing:latin:t12k:state:b4": 71109,
+  "fu_timing:digits:t3k:state:b4": 2733,
+  "fu_timing:digits:t3k:state:b5": 2733,
+  "fu_timing:latin:t12k:question:b5": 71109,
+  "fu_timing:latin:t3k:question:b5": 16564,
+  "fu_timing:digits:t12k:state:b5": 11733,
+  "fu_timing:latin:t3k:state:b5": 16564,
+  "fu_timing:latin:t12k:state:b5": 71109,
+  "fu_timing:cjk:t3k:state:b5": 2717,
+  "fu_timing:cjk:t12k:state:b5": 11663,
+  "fu_timing:digits:t3k:state:b6": 2733,
+  "fu_timing:latin:t3k:question:b6": 16564,
+  "fu_timing:cjk:t3k:state:b6": 2717,
+  "fu_timing:cjk:t12k:state:b6": 11663,
+  "fu_timing:digits:t12k:state:b6": 11733,
+  "fu_timing:latin:t12k:state:b6": 71109,
+  "fu_timing:latin:t12k:question:b6": 71109,
+  "fu_timing:latin:t3k:state:b6": 16564,
+  "fu_timing:latin:t3k:question:b7": 16564,
+  "fu_timing:digits:t3k:state:b7": 2733,
+  "fu_timing:cjk:t12k:state:b7": 11663,
+  "fu_timing:latin:t12k:question:b7": 71109,
+  "fu_timing:cjk:t3k:state:b7": 2717,
+  "fu_timing:latin:t3k:state:b7": 16564,
+  "fu_timing:digits:t12k:state:b7": 11733,
+  "fu_timing:latin:t12k:state:b7": 71109
+ },
+ "timing_encode_counts": {
+  "fu_timing:latin:t3k:question:b0": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:digits:t3k:state:b0": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:digits:t12k:state:b0": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:latin:t12k:state:b0": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:latin:t3k:state:b0": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:cjk:t12k:state:b0": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:cjk:t3k:state:b0": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:latin:t12k:question:b0": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:cjk:t12k:state:b1": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:latin:t12k:question:b1": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:latin:t3k:state:b1": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:latin:t3k:question:b1": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:digits:t3k:state:b1": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:cjk:t3k:state:b1": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:latin:t12k:state:b1": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:digits:t12k:state:b1": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:latin:t12k:state:b2": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:latin:t12k:question:b2": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:digits:t3k:state:b2": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:latin:t3k:state:b2": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:latin:t3k:question:b2": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:cjk:t3k:state:b2": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:cjk:t12k:state:b2": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:digits:t12k:state:b2": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:digits:t12k:state:b3": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:cjk:t3k:state:b3": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:digits:t3k:state:b3": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:cjk:t12k:state:b3": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:latin:t12k:state:b3": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:latin:t3k:question:b3": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:latin:t12k:question:b3": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:latin:t3k:state:b3": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:latin:t3k:question:b4": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:digits:t12k:state:b4": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:latin:t12k:question:b4": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:latin:t3k:state:b4": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:cjk:t12k:state:b4": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:cjk:t3k:state:b4": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:latin:t12k:state:b4": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:digits:t3k:state:b4": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:digits:t3k:state:b5": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:latin:t12k:question:b5": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:latin:t3k:question:b5": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:digits:t12k:state:b5": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:latin:t3k:state:b5": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:latin:t12k:state:b5": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:cjk:t3k:state:b5": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:cjk:t12k:state:b5": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:digits:t3k:state:b6": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:latin:t3k:question:b6": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:cjk:t3k:state:b6": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:cjk:t12k:state:b6": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:digits:t12k:state:b6": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:latin:t12k:state:b6": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:latin:t12k:question:b6": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:latin:t3k:state:b6": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:latin:t3k:question:b7": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:digits:t3k:state:b7": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:cjk:t12k:state:b7": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:latin:t12k:question:b7": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:cjk:t3k:state:b7": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:latin:t3k:state:b7": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:digits:t12k:state:b7": {
+   "encode_qwen3_tokens": null
+  },
+  "fu_timing:latin:t12k:state:b7": {
+   "encode_qwen3_tokens": null
+  }
+ },
+ "hypotheses": {
+  "fu_relational": "exact published payloads: state placement near ceiling, option placement lower (card reachable only through a sibling option); condition-guess baseline 1/2, gold key varies with value x order",
+  "fu_isolation": "P(selected code) in sibling vs absent is the question-isolation test with both questions always present; state/target-instruction channels are positive controls; sibling success and correctness are NOT assumed",
+  "fu_timing": "PRIMARY: paired whole-block bootstrap of the Q1 state-vs-question elapsed-time ratio (expect ~1: 'no double penalty observed in elapsed time', NOT a conclusive refutation of physical 2x compute). Cross-script: digit runs (Jev ~1/char vs Qwen ~1/3) separate reported-count from Qwen-count timing models on whole-script holdout; payload bytes included so Unicode upload size is not ignored"
+ },
+ "budget": {
+  "jev_per_call_worst_usd": 0.00550502,
+  "reference_per_call_worst_usd": {
+   "qwen30b": 0.00049,
+   "qwen_next": 0.00073,
+   "mistral_small": 0.00045
+  },
+  "counts": {
+   "fu_vocab": 124,
+   "fu_place": 192,
+   "fu_odds": 122,
+   "fu_refcard": 40,
+   "fu_horizon": 48,
+   "ref_qwen": 48,
+   "ref_nonqwen": 24
+  },
+  "total_worst_usd": 2.9357,
+  "cap_usd": 5.0,
+  "fits_cap": true,
+  "prior_exposure_note": "prior conservative exposure 43.9576 + ARC 2.09 + this 5.00 cap = 51.05 < 80 combined authorization; old unknown holds untouched"
+ },
+ "method": {
+  "nonce": "fresh 8-hex marker at the VERY BEGINNING of state (before all filler): no common prompt prefix across requests (v1 end-of-state nonce did NOT break prefix caching — v1 code comment was wrong)",
+  "target_qid": "two-question rows parse answers[target_qid] from the full body (never first answer)",
+  "raw_capture": "full sanitized raw bodies stored (no truncation)",
+  "ledger": "SAME persistent $5 ledger (cap unchanged, spent 0.0473 carried)"
+ }
+}

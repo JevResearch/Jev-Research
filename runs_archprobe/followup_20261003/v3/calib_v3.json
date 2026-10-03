@@ -1,0 +1,58 @@
+{
+ "fu_counter_calib:cjk:6000": {
+  "reported": 2279,
+  "encode_qwen3": 1334,
+  "encode_o200k": 1334,
+  "filler_bytes": 6000,
+  "style": "cjk"
+ },
+ "fu_counter_calib:cjk:24000": {
+  "reported": 8313,
+  "encode_qwen3": 5334,
+  "encode_o200k": 5334,
+  "filler_bytes": 24000,
+  "style": "cjk"
+ },
+ "fu_counter_calib:digits:6000": {
+  "reported": 6267,
+  "encode_qwen3": 6001,
+  "encode_o200k": 2001,
+  "filler_bytes": 6000,
+  "style": "digits"
+ },
+ "fu_counter_calib:digits:24000": {
+  "reported": 24267,
+  "encode_qwen3": 24001,
+  "encode_o200k": 8001,
+  "filler_bytes": 24000,
+  "style": "digits"
+ },
+ "fu_counter_calib:latin:6000": {
+  "reported": 1221,
+  "encode_qwen3": 955,
+  "encode_o200k": 955,
+  "filler_bytes": 6000,
+  "style": "latin"
+ },
+ "fu_counter_calib:latin:24000": {
+  "reported": 4081,
+  "encode_qwen3": 3815,
+  "encode_o200k": 3815,
+  "filler_bytes": 24000,
+  "style": "latin"
+ },
+ "fu_counter_calib:letters:6000": {
+  "reported": 3371,
+  "encode_qwen3": 3219,
+  "encode_o200k": 3093,
+  "filler_bytes": 6000,
+  "style": "letters"
+ },
+ "fu_counter_calib:letters:24000": {
+  "reported": 12749,
+  "encode_qwen3": 12934,
+  "encode_o200k": 12451,
+  "filler_bytes": 24000,
+  "style": "letters"
+ }
+}

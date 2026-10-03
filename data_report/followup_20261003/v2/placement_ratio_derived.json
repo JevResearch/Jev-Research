@@ -1,0 +1,57 @@
+{
+ "definition_total_ratio": "paired question/state ratio of TOTAL wall times at matched length; baseline-dominated",
+ "total_ratio_mean": 0.9891,
+ "total_ratio_note": "v2 reported 0.989 with whole-block CI [0.915, 1.045]; this is total elapsed time, NOT added token cost",
+ "definition_incremental_ratio": "per-block (wall_long - wall_short) / (reported_tokens_long - reported_tokens_short)/1k, Q1 Latin only; question vs state",
+ "incremental_ms_per_1k": {
+  "state": 9.371,
+  "question": 10.422
+ },
+ "incremental_ratio": 1.112,
+ "incremental_ratio_block_bootstrap_ci95": [
+  0.589,
+  4.155
+ ],
+ "incremental_ratio_parent_ci95": [
+  0.615,
+  4.135
+ ],
+ "per_block_increment_ms_per_1k": {
+  "state": {
+   "0": 4.74,
+   "1": 13.46,
+   "2": 10.88,
+   "3": 23.26,
+   "4": 11.82,
+   "5": -11.9,
+   "6": 11.07,
+   "7": 11.63
+  },
+  "question": {
+   "0": -3.51,
+   "1": 10.77,
+   "2": 9.69,
+   "3": 11.98,
+   "4": 15.69,
+   "5": 10.49,
+   "6": 12.11,
+   "7": 16.14
+  }
+ },
+ "network_outliers": {
+  "block0_query_increment": -3.51,
+  "block5_state_increment": -11.9
+ },
+ "label": "elapsed times similar; incremental ratio unresolved — the 2x per-token question cost is neither contradicted nor ruled out (bootstrap interval includes 2)",
+ "sample_unit": "8 randomized blocks (whole-block bootstrap)",
+ "blocks_used": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7
+ ]
+}

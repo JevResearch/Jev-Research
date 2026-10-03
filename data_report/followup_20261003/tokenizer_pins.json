@@ -1,0 +1,110 @@
+{
+ "schema": "jev-followup-tokenizer-pins.v1",
+ "hf_api": "https://huggingface.co/api/models/",
+ "repos": {
+  "Qwen/Qwen3-30B-A3B-Instruct-2507": {
+   "hf_commit_sha": "0d7cf23991f47feeb3a57ecb4c9cee8ea4a17bfe",
+   "files": {
+    "tokenizer.json": {
+     "pinned_url": "https://huggingface.co/Qwen/Qwen3-30B-A3B-Instruct-2507/resolve/0d7cf23991f47feeb3a57ecb4c9cee8ea4a17bfe/tokenizer.json",
+     "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+     "bytes": 11422654,
+     "prior_download_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+     "matches_prior_download": true
+    },
+    "tokenizer_config.json": {
+     "pinned_url": "https://huggingface.co/Qwen/Qwen3-30B-A3B-Instruct-2507/resolve/0d7cf23991f47feeb3a57ecb4c9cee8ea4a17bfe/tokenizer_config.json",
+     "sha256": "a62ff0a2472a0fa1b8eaabcb57c59b58afa42a22831dc141400b6e0cf2b65ce3",
+     "bytes": 9377,
+     "prior_download_sha256": "a62ff0a2472a0fa1b8eaabcb57c59b58afa42a22831dc141400b6e0cf2b65ce3",
+     "matches_prior_download": true
+    },
+    "config.json": {
+     "pinned_url": "https://huggingface.co/Qwen/Qwen3-30B-A3B-Instruct-2507/resolve/0d7cf23991f47feeb3a57ecb4c9cee8ea4a17bfe/config.json",
+     "sha256": "a1ee086a68d0cbfc87316da00ba4b8507bd1292978108e2496201a30a450f438",
+     "bytes": 963,
+     "prior_download_sha256": "a1ee086a68d0cbfc87316da00ba4b8507bd1292978108e2496201a30a450f438",
+     "matches_prior_download": true
+    }
+   }
+  },
+  "Qwen/Qwen3-Next-80B-A3B-Instruct": {
+   "hf_commit_sha": "9c7f2fbe84465e40164a94cc16cd30b6999b0cc7",
+   "files": {
+    "tokenizer.json": {
+     "pinned_url": "https://huggingface.co/Qwen/Qwen3-Next-80B-A3B-Instruct/resolve/9c7f2fbe84465e40164a94cc16cd30b6999b0cc7/tokenizer.json",
+     "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+     "bytes": 11422654,
+     "prior_download_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+     "matches_prior_download": true
+    },
+    "tokenizer_config.json": {
+     "pinned_url": "https://huggingface.co/Qwen/Qwen3-Next-80B-A3B-Instruct/resolve/9c7f2fbe84465e40164a94cc16cd30b6999b0cc7/tokenizer_config.json",
+     "sha256": "a62ff0a2472a0fa1b8eaabcb57c59b58afa42a22831dc141400b6e0cf2b65ce3",
+     "bytes": 9377,
+     "prior_download_sha256": "a62ff0a2472a0fa1b8eaabcb57c59b58afa42a22831dc141400b6e0cf2b65ce3",
+     "matches_prior_download": true
+    },
+    "config.json": {
+     "pinned_url": "https://huggingface.co/Qwen/Qwen3-Next-80B-A3B-Instruct/resolve/9c7f2fbe84465e40164a94cc16cd30b6999b0cc7/config.json",
+     "sha256": "2d483c7cabad7c8704478ed4038fa7e7b2eff840bc00a118eccbe38e2b488303",
+     "bytes": 1154,
+     "prior_download_sha256": "2d483c7cabad7c8704478ed4038fa7e7b2eff840bc00a118eccbe38e2b488303",
+     "matches_prior_download": true
+    }
+   }
+  },
+  "Qwen/Qwen2.5-7B-Instruct": {
+   "hf_commit_sha": "a09a35458c702b33eeacc393d103063234e8bc28",
+   "files": {
+    "tokenizer.json": {
+     "pinned_url": "https://huggingface.co/Qwen/Qwen2.5-7B-Instruct/resolve/a09a35458c702b33eeacc393d103063234e8bc28/tokenizer.json",
+     "sha256": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539",
+     "bytes": 7031645,
+     "prior_download_sha256": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539",
+     "matches_prior_download": true
+    },
+    "tokenizer_config.json": {
+     "pinned_url": "https://huggingface.co/Qwen/Qwen2.5-7B-Instruct/resolve/a09a35458c702b33eeacc393d103063234e8bc28/tokenizer_config.json",
+     "sha256": "5b5d4f65d0acd3b2d56a35b56d374a36cbc1c8fa5cf3b3febbbfabf22f359583",
+     "bytes": 7305,
+     "prior_download_sha256": "5b5d4f65d0acd3b2d56a35b56d374a36cbc1c8fa5cf3b3febbbfabf22f359583",
+     "matches_prior_download": true
+    },
+    "config.json": {
+     "pinned_url": "https://huggingface.co/Qwen/Qwen2.5-7B-Instruct/resolve/a09a35458c702b33eeacc393d103063234e8bc28/config.json",
+     "sha256": "7463bb0ea78315365e6c6b74de4e73bbcc8359dfb0c5a737584e077d42c0b03c",
+     "bytes": 663,
+     "prior_download_sha256": "7463bb0ea78315365e6c6b74de4e73bbcc8359dfb0c5a737584e077d42c0b03c",
+     "matches_prior_download": true
+    }
+   }
+  },
+  "Qwen/Qwen3.5-9B": {
+   "hf_commit_sha": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+   "files": {
+    "tokenizer.json": {
+     "pinned_url": "https://huggingface.co/Qwen/Qwen3.5-9B/resolve/c202236235762e1c871ad0ccb60c8ee5ba337b9a/tokenizer.json",
+     "sha256": "5f9e4d4901a92b997e463c1f46055088b6cca5ca61a6522d1b9f64c4bb81cb42",
+     "bytes": 12807982,
+     "prior_download_sha256": "5f9e4d4901a92b997e463c1f46055088b6cca5ca61a6522d1b9f64c4bb81cb42",
+     "matches_prior_download": true
+    },
+    "tokenizer_config.json": {
+     "pinned_url": "https://huggingface.co/Qwen/Qwen3.5-9B/resolve/c202236235762e1c871ad0ccb60c8ee5ba337b9a/tokenizer_config.json",
+     "sha256": "316230d6a809701f4db5ea8f8fc862bc3a6f3229c937c174e674ff3ca0a64ac8",
+     "bytes": 16710,
+     "prior_download_sha256": "316230d6a809701f4db5ea8f8fc862bc3a6f3229c937c174e674ff3ca0a64ac8",
+     "matches_prior_download": true
+    },
+    "config.json": {
+     "pinned_url": "https://huggingface.co/Qwen/Qwen3.5-9B/resolve/c202236235762e1c871ad0ccb60c8ee5ba337b9a/config.json",
+     "sha256": "d0883072e01861ed0b2d47be3c16c36a8e81c224c7ffaa310c6558fb3f932b05",
+     "bytes": 3126,
+     "prior_download_sha256": "d0883072e01861ed0b2d47be3c16c36a8e81c224c7ffaa310c6558fb3f932b05",
+     "matches_prior_download": true
+    }
+   }
+  }
+ }
+}

@@ -79,9 +79,9 @@ would force us to abandon or materially rewrite the row.
 | Core model class | Transformer-family decoder LM | plausible | LM-like token behavior in Talk traces; linear prefill; capability profile; the vendor's own primer narrative (`SOURCES.md` S10) - no API signal separates attention variants at ≤29k | - (not falsifiable from this API; see §5) |
 | Dense vs MoE | **Not constrained.** Nothing API-visible separates them; the economics do not require MoE | - | §5 | - |
 | Size | **No point estimate - a two-angle band.** Throughput angle (BF16 nameplate 400–2250 TFLOPS × quantization 2–4×, MFU 0.25–0.45, 1–4 shards): ~0.6–49B *active* - honest but loose, and a hardware-dependent scenario calculation (service-time slopes are not hardware throughput measurements; these bands are conditional illustrations, not reliable parameter estimates). Capability angle: ~4–14B dense-equivalent, which does the narrowing. A quantized dense ~4–9B is the parsimonious joint reading; a MoE (~15–100B total) stays possible. Live P2 grid confirms nothing scales with option count beyond tokens | plausible (band); assumptions stated | §4; `data_report/size_estimate.json`; `runs_archprobe/probe2/ → p2_grid` | Vendor disclosure; a matched-protocol evaluation outside the band |
-| Training history | English-dominant pretraining corpus (the tokenizer's per-script coverage is its fossil record); knowledge horizon **solid to Dec 2024, partial to May 2025, none detected Jun–Aug 2025 (P5)**; assistant-shaped **judgement-format post-training** (schema perfection under load, trained abstention rising exactly where knowledge fades, shape-derived confidence); OpenAI-flavored **brand prior inherited from training text** | plausible | §2F, §2G; `runs_archprobe/probe2/probe2_analysis.json → p5_horizon`; `runs_live/FINDINGS.md` §5; `runs_archprobe/analysis.json → ancestry` | Verifiably post-horizon events answered correctly closed-book beyond the P5 fade; identity answers that track deployment facts rather than internet priors |
+| Training history | Pretraining corpus **not identified** (the counter's per-script profile is token accounting, not corpus proof); knowledge horizon **strongest on 2024-era facts, unreliable on 2025 news (corrected P5 + 24-item follow-up cohort)**; assistant-shaped **judgement-format post-training** (schema perfection under load, trained abstention rising exactly where knowledge fades, shape-derived confidence); OpenAI-flavored **brand prior inherited from training text** | plausible | §2F, §2G; `data_report/followup_20261003/p5_horizon_corrected.json`, `data_report/followup_20261003/v2/analysis_v2.json → horizon_items`; `runs_live/FINDINGS.md` §5; `runs_archprobe/analysis.json → ancestry` | Verifiably post-horizon events answered correctly closed-book beyond the sampled fade; identity answers that track deployment facts rather than internet priors |
 | Frontier-teacher distillation | Possible contributor to post-training; **not identifiable** from any API-visible signal we can construct | speculative | §6 | - (under-determined; §6 lists the weak discriminators and their power) |
-| What it is not | Not a frontier model; not retrieval- or cache-assisted; not a wrapper around another vendor's API; not a relabeled *open* model (each a measurement-weighted leading reading; timing alone does not categorically exclude a wrapper, and an altered tokenizer does not exclude reused/adapted weights) | confident on each direction, not proof of exclusion | §7 | One clean counter-instance each (e.g., a post-cutoff fact closed-book; a cache-flat latency component; an upstream round-trip signature; an exact open-tokenizer match) |
+| What it is not | Not a frontier model; not retrieval- or cache-assisted; not a wrapper around another vendor's API; base model **not identified** - an unmatched reported counter does not exclude reused/adapted weights, and no new-weights claim is made | confident on each direction, not proof of exclusion | §7 | One clean counter-instance each (e.g., a post-cutoff fact closed-book; a cache-flat latency component; an upstream round-trip signature; an exact open-tokenizer match) |
 | Interface limits | ≤255 options/question; score rubrics 2–10 levels; noul = bare scalar with no confidence field; state ≤32k, total ≤64k tokens (vendor-documented) | confident (documented + exercised) | `src/jev_observatory/schema.py`; `SOURCES.md` S4–S6, S9; `runs_live/FINDINGS.md` §2.4 | A served request exceeding a documented limit |
 
 ---
@@ -298,10 +298,13 @@ tokens/codepoint (baseline-subtracted):
 * Read as a corpus fossil: full single-char coverage of the *small* script
   blocks (Cyrillic ~64–1k chars, Greek, Hebrew, Arabic, Thai, Devanagari,
   kana) plus common CJK, but not the 21k-char CJK block; digits unmerged;
-  deep Latin/punctuation merges. That is an **English-dominant training
-  corpus with incidental multilingual exposure** - against a Chinese-lab
+  deep Latin/punctuation merges. Read as token accounting, that is a
+  **Latin-centric reported counter with incidental multilingual exposure** -
+  against a Chinese-lab
   multilingual base specifically (those merge CJK/Cyrillic hard), and against
-  OpenAI's public encodings (digit and Cyrillic columns). **[plausible]**
+  OpenAI's public encodings (digit and Cyrillic columns). It is a counter
+  profile, not proof of the pretraining corpus or of model ancestry.
+  **[plausible]**
 
 ### 2D. Capability profile (band, not parameters)
 
@@ -457,17 +460,18 @@ references with protocol labels:
   (p=0.71)** it answers under forced choice, and refuses the fictional-
   premise control - a trained conservative-abstention behavior, not absent
   knowledge. **[confident]**
-* **Dated bisection, live (P5, P-battery).** 26 dated events (Oct 2024 →
-  Aug 2025) plus pre-cutoff and fictional controls, in forced and abstention
-  frames, 2 reps each (104 calls): gold-rate 1.00 for Oct/Nov/Dec 2024;
-  partial for Jan 2025 (0.58), Feb (post-only ≈0.5), Apr (0.25), May (0.5);
-  **0.00 for Jun, Jul, Aug 2025**; all 16 fictional-event calls correctly
-  answered "did not occur"; abstentions appear exactly in the fade zone.
-  Reading: a parametric horizon with a soft edge - data collection plausibly
-  ran into spring 2025 with decaying coverage; nothing suggests retrieval or
-  a rolling update. Disclosed blemish: one pre-cutoff control ("Starliner
-  crew return", labeled Aug 2024) scored 0.00 because the label was wrong -
-  the return was Sept 11, 2024; Jev's non-answer was arguably correct. The
+* **Dated bisection (P5) and the corrected follow-up.** The old P5 mix had
+  label blemishes; the corrected artifact
+  (`data_report/followup_20261003/p5_horizon_corrected.json`) relabels the
+  Anchorage summit to Aug-2025 and excludes 4 unanswerable Starliner rows
+  (the old 21/16-style mixed false-control count is superseded; the corrected
+  false controls are **16/16** invented events answered "did not occur").
+  A fresh 24-item dated-fact cohort (2 rotations, repeated measures on the
+  same items) reads **strongest on 2024-era facts and unreliable on 2025
+  news**: 4 of 16 recent facts correct in both rotations (three Oct-2024
+  facts plus one Mar-2025 event), 1 of 12 of the 2025 facts. Reading:
+  a weight-like horizon on this limited, news-heavy set - **not a declared
+  training cutoff**; abstentions appear exactly where accuracy falls.
   horizon claim rests on the post-2024 items, which are unaffected
   (`runs_archprobe/probe2/ → p5_horizon`). **[confident measurement;
   month-level precision limited by n=4–12 per month]**
@@ -495,9 +499,9 @@ references with protocol labels:
 ## 3. Synthesis: the model we think Jev is
 
 **[plausible, composite of confident parts]** A decoder-style transformer
-language model of modest 2026 standards - trained on an English-dominant
-corpus with a vendor-own BPE tokenizer whose per-script coverage records that
-diet - post-trained hard for *judgement*: given a state and a menu, emit a
+language model of modest 2026 standards - with a
+vendor-own BPE-style counter whose per-script profile is Latin-centric token
+accounting, not a corpus record - post-trained hard for *judgement*: given a state and a menu, emit a
 calibrated-ish distribution over the menu, in one pass, with no text. The
 post-training shaped both the head (a probability read-out with a
 chance-corrected confidence statistic, a separate decision path, and a
@@ -507,11 +511,9 @@ stopping on short answers, trained abstention, an OpenAI-flavored brand
 prior inherited from assistant text). Serving runs the read-out as prefill:
 one forward pass over state + questions + options, many read-out vectors,
 serialized as the response and billed as free output, continuously batched
-across tenants. The knowledge horizon behaves, on the sampled dated events,
-like a parametric cutoff
-with a soft edge in spring 2025 (P5: solid to Dec 2024, partial to May 2025,
-none detected Jun–Aug 2025) - empirical limits tied to the sampled events,
-not an absolute training cutoff. Whether the post-training signal came substantially from a
+across tenants. The knowledge horizon reads, on the corrected sampled dated
+facts, strongest on 2024-era facts and unreliable on 2025 news -
+a limited, news-heavy sample, not a declared training cutoff. Whether the post-training signal came substantially from a
 frontier teacher (distillation) or from on-policy judgement data is not
 identifiable from anything this API returns; whether the transformer is dense
 or MoE is not identifiable either, and the economics do not need MoE.
@@ -713,9 +715,9 @@ upgrade it on any current artifact.
   question content. (b) Novel content is answered, not looked up: fresh
   generator items (`runs_live/FINDINGS.md` §3c, with its easiness caveat) and
   70,100 ARC-AGI-2 cell decisions at 59.6% (choice encoding, corrected runs). (c) The knowledge horizon
-  *stops with a soft edge*: solid to Dec 2024, fading Jan–May 2025, zero
-  Jun–Aug 2025 (P5 dated bisection, §2G) - a live retriever would not have
-  a date-shaped fade like that, and the abstention pattern
+  is weight-like on the corrected probes: strongest on 2024-era facts,
+  unreliable on 2025 news (corrected P5 + the 24-item cohort, §2G) - a live
+  retriever would not have a dated fade like that, and the abstention pattern
   (knows-then-hedges) is parametric-memory behavior.
   (d) Repeats are not identical (TVD 0.03–0.12; 13 signatures over 30
   identical payloads) - a lookup cache is deterministic. (e) 213
@@ -736,17 +738,17 @@ upgrade it on any current artifact.
   (~30–240×, `data_report/costs.json`), with output free while flagships
   bill output at 4–5× input: reselling frontier inference on those terms
   does not survive.
-* **Not a relabeled open model [confident within the scanned set].** The
+* **Not an unmodified scanned open model; base model not identified.** The
   whitespace-free per-script profile matches none of 173 open tokenizer
-  signatures (128 scored), so no unmodified open model is Jev; an altered or
-  retrained tokenizer does not by itself exclude reused or adapted weights,
-  and this API cannot prove trained-from-scratch (1,215 repos scanned, §2C).
+  signatures (128 scored), so no unmodified open model is Jev; but an altered
+  or retrained tokenizer (or a separate accounting layer) does not exclude
+  reused or adapted weights, and this API cannot prove trained-from-scratch
+  (1,215 repos scanned, §2C). A Qwen-derived base remains possible.
   Both historical "leads" dissolved as
   template artifacts (Qwen: §5b of ARCHITECTURE-PROBES; the broadscan's
   sub-token LOO residuals: §2B battery-power caveat). Scope note, stated
   once: a *private* base from another lab cannot be excluded by token
-  counts - but such a hypothesis does no explanatory work that "vendor's own
-  new foundation" doesn't, and it inherits the same tokenizer problem.
+  counts; ancestry is simply **not assigned** by these measurements.
 * **Not "cannot hallucinate" in the content sense [confident].** The
   guarantee is the envelope: schema-valid, in-menu, quantized. The content
   is wrong 23.5% of the time on GPQA Diamond and puts exact 0.00 on the
@@ -811,8 +813,9 @@ byte-level fallback at ~1.0 tok/byte for rare blocks with UTF-8 validation
 and NFC normalization (P1); option-count cost indistinguishable from zero
 beyond the options' own tokens (P2); zero mass dilution from K=2→255 with
 inert padding (P3); sums exactly 1.000 at K≤12 with identical options scoring
-by position, not content (P4); knowledge horizon solid to Dec 2024, fading
-Jan–May 2025, zero Jun–Aug 2025, all 16 fictional events refused (P5).
+by position, not content (P4); knowledge horizon strongest on 2024-era
+facts and unreliable on 2025 news on the corrected probes, all 16 fictional
+events refused (corrected P5 + follow-up).
 Actual tokens ran 2.35× the plan-mode estimate (chars/4 under-counted the
 digit-string payloads; §11.21). P6 (teacher error-sharing) was **not
 staged**: it needs external teacher APIs this environment does not hold, and

@@ -1,0 +1,155 @@
+{
+ "schema": "jev-p5-horizon-corrected.v1",
+ "version": "followup-20261003.v1",
+ "original_rows_preserved": true,
+ "n_original_rows": 104,
+ "corrections": {
+  "15": {
+   "field": "month",
+   "from": "2025-07",
+   "to": "2025-08",
+   "event": "Anchorage US-Russia summit",
+   "reason": "summit occurred 2025-08-15; old label 2025-07 wrong",
+   "source": "independent published photography coverage (Reuters pictures 2025-08-15; content behind bot wall) + Wikipedia 2025 Russia-United States summit in Anchorage"
+  },
+  "21": {
+   "field": "row",
+   "action": "exclude",
+   "event": "Boeing Starliner crewed flight test 'returning its crew'",
+   "reason": "mislabeled 2024-08: crew returned 2025-03-18 on Crew Dragon and Starliner landed uncrewed 2024-09-06; the correct month was never an offered option",
+   "source": "https://www.nasa.gov/news-release/welcome-home-nasas-spacex-crew-9-back-on-earth-after-science-mission/ (2025-03-18) and https://www.nasa.gov/news-release/nasa-boeing-welcome-starliner-spacecraft-to-earth-close-mission/ (2024-09-06 US time)"
+  }
+ },
+ "excluded_rows": [
+  {
+   "config_id": "p5:pre:21:abstain:r1",
+   "event_i": 21,
+   "month": "2024-08",
+   "choice": "cannot determine from what I know"
+  },
+  {
+   "config_id": "p5:pre:21:abstain:r0",
+   "event_i": 21,
+   "month": "2024-08",
+   "choice": "cannot determine from what I know"
+  },
+  {
+   "config_id": "p5:pre:21:forced:r1",
+   "event_i": 21,
+   "month": "2024-08",
+   "choice": "in 2025-06"
+  },
+  {
+   "config_id": "p5:pre:21:forced:r0",
+   "event_i": 21,
+   "month": "2024-08",
+   "choice": "in 2024-09"
+  }
+ ],
+ "corrected_rows": [
+  {
+   "config_id": "p5:post:15:abstain:r1",
+   "event_i": 15,
+   "month_from": "2025-07",
+   "month_to": "2025-08",
+   "gold_recoded": "in 2025-08",
+   "choice": "it did not occur",
+   "was_gold_under_old_label": false
+  },
+  {
+   "config_id": "p5:post:15:forced:r0",
+   "event_i": 15,
+   "month_from": "2025-07",
+   "month_to": "2025-08",
+   "gold_recoded": "in 2025-08",
+   "choice": "it did not occur",
+   "was_gold_under_old_label": false
+  },
+  {
+   "config_id": "p5:post:15:forced:r1",
+   "event_i": 15,
+   "month_from": "2025-07",
+   "month_to": "2025-08",
+   "gold_recoded": "in 2025-08",
+   "choice": "it did not occur",
+   "was_gold_under_old_label": false
+  },
+  {
+   "config_id": "p5:post:15:abstain:r0",
+   "event_i": 15,
+   "month_from": "2025-07",
+   "month_to": "2025-08",
+   "gold_recoded": "in 2025-08",
+   "choice": "it did not occur",
+   "was_gold_under_old_label": false
+  }
+ ],
+ "per_kind": {
+  "fictional": {
+   "n": 16,
+   "gold_hits": 16,
+   "gold_rate": 1.0
+  },
+  "post": {
+   "n": 68,
+   "gold_hits": 33,
+   "gold_rate": 0.485
+  },
+  "pre": {
+   "n": 16,
+   "gold_hits": 16,
+   "gold_rate": 1.0
+  }
+ },
+ "corrected_monthly_post": {
+  "2024-10": {
+   "n": 8,
+   "gold_hits": 8,
+   "kind": "post",
+   "gold_rate": 1.0
+  },
+  "2024-11": {
+   "n": 4,
+   "gold_hits": 4,
+   "kind": "post",
+   "gold_rate": 1.0
+  },
+  "2024-12": {
+   "n": 12,
+   "gold_hits": 12,
+   "kind": "post",
+   "gold_rate": 1.0
+  },
+  "2025-01": {
+   "n": 12,
+   "gold_hits": 7,
+   "kind": "post",
+   "gold_rate": 0.583
+  },
+  "2025-04": {
+   "n": 8,
+   "gold_hits": 2,
+   "kind": "post",
+   "gold_rate": 0.25
+  },
+  "2025-05": {
+   "n": 8,
+   "gold_hits": 4,
+   "kind": "post",
+   "gold_rate": 0.5
+  },
+  "2025-06": {
+   "n": 8,
+   "gold_hits": 0,
+   "kind": "post",
+   "gold_rate": 0.0
+  },
+  "2025-08": {
+   "n": 8,
+   "gold_hits": 0,
+   "kind": "post",
+   "gold_rate": 0.0
+  }
+ },
+ "reading": "real/pre/fictional pooled gold_rate is invalid: fictional controls are not real events. Corrected real post-events degrade gradually from 2025-01 and floor by 2025-05; no one-month cliff and no 'May 2025 cutoff' claim. The 2025-05 'papal conclave electing Pope Leo XIV' style stems leak the answer and are diagnostic history only."
+}

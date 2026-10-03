@@ -1,0 +1,62 @@
+{
+ "schema": "jev-followup-provenance.v1",
+ "version": "followup-20261003.v1",
+ "model_pin": "jev-1.13.0",
+ "reference_models": {
+  "qwen30b": "qwen/qwen3-30b-a3b-instruct-2507",
+  "qwen_next": "qwen/qwen3-next-80b-a3b-instruct",
+  "mistral_small": "mistralai/mistral-small-3.2-24b-instruct"
+ },
+ "reference_rates_usd_per_token": {
+  "qwen30b": {
+   "in": 1e-07,
+   "out": 3e-07
+  },
+  "qwen_next": {
+   "in": 1e-07,
+   "out": 1.1e-06
+  },
+  "mistral_small": {
+   "in": 9.375e-08,
+   "out": 2.5e-07
+  }
+ },
+ "recovery_spec": {
+  "version": "answer-recovery-2.1.0",
+  "stages": [
+   "exact",
+   "stripped",
+   "final_line_key",
+   "answer_pattern",
+   "isolated_key",
+   "reasoning_channel",
+   "unrecovered"
+  ],
+  "key_matching": "token boundaries only; multi-character keys case-insensitive, single-character keys exact (case-insensitive only inside explicit answer statements)",
+  "explicit_preference": "the LAST unambiguous explicit answer statement wins; negated and disjunctive statements never recover",
+  "final_line_key": "the FULL final non-empty line stripped of markdown wrappers/punctuation is EXACTLY one allowed key: recognised before the ambiguity check and outranking earlier explicit statements; never a final-word/last-letter guess",
+  "ambiguity": "two or more distinct isolated key mentions recover nothing",
+  "excluded_heuristics": [
+   "first_character_guessing",
+   "substring_matching",
+   "case_folded_single_letter",
+   "gold_access"
+  ],
+  "reasoning_channel": "only when content is empty; explicit statements over full reasoning, else unique isolated key in the trailing 40 chars"
+ },
+ "confidence_source_pin": {
+  "repo": "typesafe-ai/system-one-adapter-python",
+  "commit": "fb52b1030b7fc1f4f1cf39910afa5da54f9835e3",
+  "path": "src/system_one_adapter/_utils/confidence_metrics.py",
+  "sha256_prefix": "141db0963ce08d98"
+ },
+ "hf_pins": {
+  "Qwen/Qwen3-30B-A3B-Instruct-2507": "0d7cf23991f47feeb3a57ecb4c9cee8ea4a17bfe",
+  "Qwen/Qwen3-Next-80B-A3B-Instruct": "9c7f2fbe84465e40164a94cc16cd30b6999b0cc7",
+  "Qwen/Qwen2.5-7B-Instruct": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "Qwen/Qwen3.5-9B": "c202236235762e1c871ad0ccb60c8ee5ba337b9a"
+ },
+ "ledger": "/home/meme/kóði/vibe/jev/runs_archprobe/followup_20261003/BUDGET-followup.json",
+ "cap_usd": 5.0,
+ "max_transport_attempts": 2
+}

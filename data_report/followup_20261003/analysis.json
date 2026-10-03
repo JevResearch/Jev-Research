@@ -1,0 +1,2079 @@
+{
+ "claim_level": "exploratory_architecture_evidence",
+ "version": "followup-20261003.v1",
+ "counts_reported_separately": {
+  "n_rows": 670,
+  "n_errors": 0,
+  "by_family": {
+   "fu_vocab": 124,
+   "fu_place": 192,
+   "fu_odds": 122,
+   "fu_refcard": 40,
+   "fu_horizon": 48,
+   "fu_reference": 144
+  }
+ },
+ "fu_vocab": {
+  "n_rows": 670,
+  "baseline_tokens": 267.0,
+  "controls": {
+   "bare": 267.0,
+   "wordctx": 271.0,
+   "delim2": 268.0,
+   "delim3": 268.0,
+   "delim5": 268.0,
+   "delim8": 270.0
+  },
+  "per_sample": {
+   "empty_baseline": {
+    "role": "control",
+    "context": "control",
+    "repeats": 1,
+    "median_input_tokens": 267.0,
+    "marginal_tokens": null,
+    "per_repeat_marginal": null
+   },
+   "empty_wordctx": {
+    "role": "control",
+    "context": "control",
+    "repeats": 1,
+    "median_input_tokens": 271.0,
+    "marginal_tokens": null,
+    "per_repeat_marginal": null
+   },
+   "empty_delim2": {
+    "role": "control",
+    "context": "control",
+    "repeats": 2,
+    "median_input_tokens": 268.0,
+    "marginal_tokens": null,
+    "per_repeat_marginal": null
+   },
+   "empty_delim3": {
+    "role": "control",
+    "context": "control",
+    "repeats": 3,
+    "median_input_tokens": 268.0,
+    "marginal_tokens": null,
+    "per_repeat_marginal": null
+   },
+   "empty_delim5": {
+    "role": "control",
+    "context": "control",
+    "repeats": 5,
+    "median_input_tokens": 268.0,
+    "marginal_tokens": null,
+    "per_repeat_marginal": null
+   },
+   "empty_delim8": {
+    "role": "control",
+    "context": "control",
+    "repeats": 8,
+    "median_input_tokens": 270.0,
+    "marginal_tokens": null,
+    "per_repeat_marginal": null
+   },
+   "frame_x:bare": {
+    "role": "target",
+    "context": "bare",
+    "repeats": 1,
+    "median_input_tokens": 268.0,
+    "marginal_tokens": 1.0,
+    "per_repeat_marginal": 1.0
+   },
+   "frame_x:wordctx": {
+    "role": "target",
+    "context": "wordctx",
+    "repeats": 1,
+    "median_input_tokens": 271.0,
+    "marginal_tokens": 0.0,
+    "per_repeat_marginal": 0.0
+   },
+   "frame_x:delim2": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 2,
+    "median_input_tokens": 270.0,
+    "marginal_tokens": 2.0,
+    "per_repeat_marginal": 1.0
+   },
+   "frame_x:delim3": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 3,
+    "median_input_tokens": 272.0,
+    "marginal_tokens": 4.0,
+    "per_repeat_marginal": 1.333
+   },
+   "frame_x:delim5": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 5,
+    "median_input_tokens": 276.0,
+    "marginal_tokens": 8.0,
+    "per_repeat_marginal": 1.6
+   },
+   "frame_x:delim8": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 8,
+    "median_input_tokens": 282.0,
+    "marginal_tokens": 12.0,
+    "per_repeat_marginal": 1.5
+   },
+   "zzz:bare": {
+    "role": "target",
+    "context": "bare",
+    "repeats": 1,
+    "median_input_tokens": 268.0,
+    "marginal_tokens": 1.0,
+    "per_repeat_marginal": 1.0
+   },
+   "zzz:wordctx": {
+    "role": "target",
+    "context": "wordctx",
+    "repeats": 1,
+    "median_input_tokens": 272.0,
+    "marginal_tokens": 1.0,
+    "per_repeat_marginal": 1.0
+   },
+   "zzz:delim2": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 2,
+    "median_input_tokens": 270.0,
+    "marginal_tokens": 2.0,
+    "per_repeat_marginal": 1.0
+   },
+   "zzz:delim3": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 3,
+    "median_input_tokens": 272.0,
+    "marginal_tokens": 4.0,
+    "per_repeat_marginal": 1.333
+   },
+   "zzz:delim5": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 5,
+    "median_input_tokens": 276.0,
+    "marginal_tokens": 8.0,
+    "per_repeat_marginal": 1.6
+   },
+   "zzz:delim8": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 8,
+    "median_input_tokens": 282.0,
+    "marginal_tokens": 12.0,
+    "per_repeat_marginal": 1.5
+   },
+   "usc6:bare": {
+    "role": "target",
+    "context": "bare",
+    "repeats": 1,
+    "median_input_tokens": 268.0,
+    "marginal_tokens": 1.0,
+    "per_repeat_marginal": 1.0
+   },
+   "usc6:wordctx": {
+    "role": "target",
+    "context": "wordctx",
+    "repeats": 1,
+    "median_input_tokens": 271.0,
+    "marginal_tokens": 0.0,
+    "per_repeat_marginal": 0.0
+   },
+   "usc6:delim2": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 2,
+    "median_input_tokens": 270.0,
+    "marginal_tokens": 2.0,
+    "per_repeat_marginal": 1.0
+   },
+   "usc6:delim3": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 3,
+    "median_input_tokens": 272.0,
+    "marginal_tokens": 4.0,
+    "per_repeat_marginal": 1.333
+   },
+   "usc6:delim5": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 5,
+    "median_input_tokens": 276.0,
+    "marginal_tokens": 8.0,
+    "per_repeat_marginal": 1.6
+   },
+   "usc6:delim8": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 8,
+    "median_input_tokens": 282.0,
+    "marginal_tokens": 12.0,
+    "per_repeat_marginal": 1.5
+   },
+   "heart2:bare": {
+    "role": "target",
+    "context": "bare",
+    "repeats": 1,
+    "median_input_tokens": 268.0,
+    "marginal_tokens": 1.0,
+    "per_repeat_marginal": 1.0
+   },
+   "heart2:wordctx": {
+    "role": "target",
+    "context": "wordctx",
+    "repeats": 1,
+    "median_input_tokens": 272.0,
+    "marginal_tokens": 1.0,
+    "per_repeat_marginal": 1.0
+   },
+   "heart2:delim2": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 2,
+    "median_input_tokens": 271.0,
+    "marginal_tokens": 3.0,
+    "per_repeat_marginal": 1.5
+   },
+   "heart2:delim3": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 3,
+    "median_input_tokens": 274.0,
+    "marginal_tokens": 6.0,
+    "per_repeat_marginal": 2.0
+   },
+   "heart2:delim5": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 5,
+    "median_input_tokens": 280.0,
+    "marginal_tokens": 12.0,
+    "per_repeat_marginal": 2.4
+   },
+   "heart2:delim8": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 8,
+    "median_input_tokens": 289.0,
+    "marginal_tokens": 19.0,
+    "per_repeat_marginal": 2.375
+   },
+   "heart1:bare": {
+    "role": "target",
+    "context": "bare",
+    "repeats": 1,
+    "median_input_tokens": 268.0,
+    "marginal_tokens": 1.0,
+    "per_repeat_marginal": 1.0
+   },
+   "heart1:wordctx": {
+    "role": "target",
+    "context": "wordctx",
+    "repeats": 1,
+    "median_input_tokens": 271.0,
+    "marginal_tokens": 0.0,
+    "per_repeat_marginal": 0.0
+   },
+   "heart1:delim2": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 2,
+    "median_input_tokens": 270.0,
+    "marginal_tokens": 2.0,
+    "per_repeat_marginal": 1.0
+   },
+   "heart1:delim3": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 3,
+    "median_input_tokens": 272.0,
+    "marginal_tokens": 4.0,
+    "per_repeat_marginal": 1.333
+   },
+   "heart1:delim5": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 5,
+    "median_input_tokens": 276.0,
+    "marginal_tokens": 8.0,
+    "per_repeat_marginal": 1.6
+   },
+   "heart1:delim8": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 8,
+    "median_input_tokens": 282.0,
+    "marginal_tokens": 12.0,
+    "per_repeat_marginal": 1.5
+   },
+   "ctrl_hello:bare": {
+    "role": "target",
+    "context": "bare",
+    "repeats": 1,
+    "median_input_tokens": 268.0,
+    "marginal_tokens": 1.0,
+    "per_repeat_marginal": 1.0
+   },
+   "ctrl_hello:wordctx": {
+    "role": "target",
+    "context": "wordctx",
+    "repeats": 1,
+    "median_input_tokens": 271.0,
+    "marginal_tokens": 0.0,
+    "per_repeat_marginal": 0.0
+   },
+   "ctrl_hello:delim2": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 2,
+    "median_input_tokens": 270.0,
+    "marginal_tokens": 2.0,
+    "per_repeat_marginal": 1.0
+   },
+   "ctrl_hello:delim3": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 3,
+    "median_input_tokens": 272.0,
+    "marginal_tokens": 4.0,
+    "per_repeat_marginal": 1.333
+   },
+   "ctrl_hello:delim5": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 5,
+    "median_input_tokens": 276.0,
+    "marginal_tokens": 8.0,
+    "per_repeat_marginal": 1.6
+   },
+   "ctrl_hello:delim8": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 8,
+    "median_input_tokens": 282.0,
+    "marginal_tokens": 12.0,
+    "per_repeat_marginal": 1.5
+   },
+   "ctrl_word_the:bare": {
+    "role": "target",
+    "context": "bare",
+    "repeats": 1,
+    "median_input_tokens": 268.0,
+    "marginal_tokens": 1.0,
+    "per_repeat_marginal": 1.0
+   },
+   "ctrl_word_the:wordctx": {
+    "role": "target",
+    "context": "wordctx",
+    "repeats": 1,
+    "median_input_tokens": 271.0,
+    "marginal_tokens": 0.0,
+    "per_repeat_marginal": 0.0
+   },
+   "ctrl_word_the:delim2": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 2,
+    "median_input_tokens": 270.0,
+    "marginal_tokens": 2.0,
+    "per_repeat_marginal": 1.0
+   },
+   "ctrl_word_the:delim3": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 3,
+    "median_input_tokens": 272.0,
+    "marginal_tokens": 4.0,
+    "per_repeat_marginal": 1.333
+   },
+   "ctrl_word_the:delim5": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 5,
+    "median_input_tokens": 276.0,
+    "marginal_tokens": 8.0,
+    "per_repeat_marginal": 1.6
+   },
+   "ctrl_word_the:delim8": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 8,
+    "median_input_tokens": 282.0,
+    "marginal_tokens": 12.0,
+    "per_repeat_marginal": 1.5
+   },
+   "ctrl_num:bare": {
+    "role": "target",
+    "context": "bare",
+    "repeats": 1,
+    "median_input_tokens": 274.0,
+    "marginal_tokens": 7.0,
+    "per_repeat_marginal": 7.0
+   },
+   "ctrl_num:wordctx": {
+    "role": "target",
+    "context": "wordctx",
+    "repeats": 1,
+    "median_input_tokens": 278.0,
+    "marginal_tokens": 7.0,
+    "per_repeat_marginal": 7.0
+   },
+   "ctrl_num:delim2": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 2,
+    "median_input_tokens": 282.0,
+    "marginal_tokens": 14.0,
+    "per_repeat_marginal": 7.0
+   },
+   "ctrl_num:delim3": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 3,
+    "median_input_tokens": 290.0,
+    "marginal_tokens": 22.0,
+    "per_repeat_marginal": 7.333
+   },
+   "ctrl_num:delim5": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 5,
+    "median_input_tokens": 306.0,
+    "marginal_tokens": 38.0,
+    "per_repeat_marginal": 7.6
+   },
+   "ctrl_num:delim8": {
+    "role": "target",
+    "context": "delim",
+    "repeats": 8,
+    "median_input_tokens": 330.0,
+    "marginal_tokens": 60.0,
+    "per_repeat_marginal": 7.5
+   },
+   "merge:latin_run": {
+    "role": "mergerate",
+    "context": "bare",
+    "repeats": 1,
+    "median_input_tokens": 275.0,
+    "marginal_tokens": 8.0,
+    "per_repeat_marginal": 8.0
+   },
+   "merge:latin_rare": {
+    "role": "mergerate",
+    "context": "bare",
+    "repeats": 1,
+    "median_input_tokens": 287.0,
+    "marginal_tokens": 20.0,
+    "per_repeat_marginal": 20.0
+   },
+   "merge:cyrillic_run": {
+    "role": "mergerate",
+    "context": "bare",
+    "repeats": 1,
+    "median_input_tokens": 288.0,
+    "marginal_tokens": 21.0,
+    "per_repeat_marginal": 21.0
+   },
+   "merge:greek_run": {
+    "role": "mergerate",
+    "context": "bare",
+    "repeats": 1,
+    "median_input_tokens": 283.0,
+    "marginal_tokens": 16.0,
+    "per_repeat_marginal": 16.0
+   },
+   "merge:cjk_run": {
+    "role": "mergerate",
+    "context": "bare",
+    "repeats": 1,
+    "median_input_tokens": 283.0,
+    "marginal_tokens": 16.0,
+    "per_repeat_marginal": 16.0
+   },
+   "merge:hangul_run": {
+    "role": "mergerate",
+    "context": "bare",
+    "repeats": 1,
+    "median_input_tokens": 282.0,
+    "marginal_tokens": 15.0,
+    "per_repeat_marginal": 15.0
+   },
+   "merge:rare_astral": {
+    "role": "mergerate",
+    "context": "bare",
+    "repeats": 1,
+    "median_input_tokens": 281.0,
+    "marginal_tokens": 14.0,
+    "per_repeat_marginal": 14.0
+   },
+   "merge:combining_run": {
+    "role": "mergerate",
+    "context": "bare",
+    "repeats": 1,
+    "median_input_tokens": 275.0,
+    "marginal_tokens": 8.0,
+    "per_repeat_marginal": 8.0
+   }
+  },
+  "cores": {
+   "frame_x": {
+    "bare_one_token": 1.0,
+    "repeat_curve": [
+     1.0,
+     1.333,
+     1.6,
+     1.5
+    ]
+   },
+   "zzz": {
+    "bare_one_token": 1.0,
+    "repeat_curve": [
+     1.0,
+     1.333,
+     1.6,
+     1.5
+    ]
+   },
+   "usc6": {
+    "bare_one_token": 1.0,
+    "repeat_curve": [
+     1.0,
+     1.333,
+     1.6,
+     1.5
+    ]
+   },
+   "heart2": {
+    "bare_one_token": 1.0,
+    "repeat_curve": [
+     1.5,
+     2.0,
+     2.4,
+     2.375
+    ]
+   },
+   "heart1": {
+    "bare_one_token": 1.0,
+    "repeat_curve": [
+     1.0,
+     1.333,
+     1.6,
+     1.5
+    ]
+   },
+   "ctrl_hello": {
+    "bare_one_token": 1.0,
+    "repeat_curve": [
+     1.0,
+     1.333,
+     1.6,
+     1.5
+    ]
+   },
+   "ctrl_word_the": {
+    "bare_one_token": 1.0,
+    "repeat_curve": [
+     1.0,
+     1.333,
+     1.6,
+     1.5
+    ]
+   },
+   "ctrl_num": {
+    "bare_one_token": 7.0,
+    "repeat_curve": [
+     7.0,
+     7.333,
+     7.6,
+     7.5
+    ]
+   }
+  },
+  "candidate_counts": {
+   "schema": "jev-followup-decode-membership.v1",
+   "method": "tokenizers.Tokenizer.encode -> len(ids); literal vocab-key lookup reported ONLY as the artifact contrast",
+   "candidates": {
+    "Qwen/Qwen3-30B-A3B-Instruct-2507": {
+     "empty": {
+      "encode_tokens": 0,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "frame_x": {
+      "encode_tokens": 1,
+      "literal_key_hit": false,
+      "agrees": false
+     },
+     "zzz": {
+      "encode_tokens": 2,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "usc6": {
+      "encode_tokens": 2,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "heart2": {
+      "encode_tokens": 2,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "heart1": {
+      "encode_tokens": 1,
+      "literal_key_hit": false,
+      "agrees": false
+     },
+     "ctrl_hello": {
+      "encode_tokens": 1,
+      "literal_key_hit": false,
+      "agrees": false
+     },
+     "ctrl_word_the": {
+      "encode_tokens": 1,
+      "literal_key_hit": false,
+      "agrees": false
+     },
+     "ctrl_num": {
+      "encode_tokens": 7,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "latin_run": {
+      "encode_tokens": 8,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "latin_rare": {
+      "encode_tokens": 20,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "cyrillic_run": {
+      "encode_tokens": 6,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "greek_run": {
+      "encode_tokens": 16,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "cjk_run": {
+      "encode_tokens": 8,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "hangul_run": {
+      "encode_tokens": 15,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "rare_astral": {
+      "encode_tokens": 6,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "combining_run": {
+      "encode_tokens": 8,
+      "literal_key_hit": false,
+      "agrees": true
+     }
+    },
+    "Qwen/Qwen3-Next-80B-A3B-Instruct": {
+     "empty": {
+      "encode_tokens": 0,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "frame_x": {
+      "encode_tokens": 1,
+      "literal_key_hit": false,
+      "agrees": false
+     },
+     "zzz": {
+      "encode_tokens": 2,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "usc6": {
+      "encode_tokens": 2,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "heart2": {
+      "encode_tokens": 2,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "heart1": {
+      "encode_tokens": 1,
+      "literal_key_hit": false,
+      "agrees": false
+     },
+     "ctrl_hello": {
+      "encode_tokens": 1,
+      "literal_key_hit": false,
+      "agrees": false
+     },
+     "ctrl_word_the": {
+      "encode_tokens": 1,
+      "literal_key_hit": false,
+      "agrees": false
+     },
+     "ctrl_num": {
+      "encode_tokens": 7,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "latin_run": {
+      "encode_tokens": 8,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "latin_rare": {
+      "encode_tokens": 20,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "cyrillic_run": {
+      "encode_tokens": 6,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "greek_run": {
+      "encode_tokens": 16,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "cjk_run": {
+      "encode_tokens": 8,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "hangul_run": {
+      "encode_tokens": 15,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "rare_astral": {
+      "encode_tokens": 6,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "combining_run": {
+      "encode_tokens": 8,
+      "literal_key_hit": false,
+      "agrees": true
+     }
+    },
+    "Qwen/Qwen2.5-7B-Instruct": {
+     "empty": {
+      "encode_tokens": 0,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "frame_x": {
+      "encode_tokens": 1,
+      "literal_key_hit": false,
+      "agrees": false
+     },
+     "zzz": {
+      "encode_tokens": 2,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "usc6": {
+      "encode_tokens": 2,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "heart2": {
+      "encode_tokens": 2,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "heart1": {
+      "encode_tokens": 1,
+      "literal_key_hit": false,
+      "agrees": false
+     },
+     "ctrl_hello": {
+      "encode_tokens": 1,
+      "literal_key_hit": false,
+      "agrees": false
+     },
+     "ctrl_word_the": {
+      "encode_tokens": 1,
+      "literal_key_hit": false,
+      "agrees": false
+     },
+     "ctrl_num": {
+      "encode_tokens": 7,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "latin_run": {
+      "encode_tokens": 8,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "latin_rare": {
+      "encode_tokens": 20,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "cyrillic_run": {
+      "encode_tokens": 6,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "greek_run": {
+      "encode_tokens": 16,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "cjk_run": {
+      "encode_tokens": 8,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "hangul_run": {
+      "encode_tokens": 15,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "rare_astral": {
+      "encode_tokens": 6,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "combining_run": {
+      "encode_tokens": 8,
+      "literal_key_hit": false,
+      "agrees": true
+     }
+    },
+    "Qwen/Qwen3.5-9B": {
+     "empty": {
+      "encode_tokens": 0,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "frame_x": {
+      "encode_tokens": 1,
+      "literal_key_hit": false,
+      "agrees": false
+     },
+     "zzz": {
+      "encode_tokens": 2,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "usc6": {
+      "encode_tokens": 2,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "heart2": {
+      "encode_tokens": 1,
+      "literal_key_hit": false,
+      "agrees": false
+     },
+     "heart1": {
+      "encode_tokens": 1,
+      "literal_key_hit": false,
+      "agrees": false
+     },
+     "ctrl_hello": {
+      "encode_tokens": 1,
+      "literal_key_hit": false,
+      "agrees": false
+     },
+     "ctrl_word_the": {
+      "encode_tokens": 1,
+      "literal_key_hit": false,
+      "agrees": false
+     },
+     "ctrl_num": {
+      "encode_tokens": 7,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "latin_run": {
+      "encode_tokens": 8,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "latin_rare": {
+      "encode_tokens": 20,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "cyrillic_run": {
+      "encode_tokens": 6,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "greek_run": {
+      "encode_tokens": 6,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "cjk_run": {
+      "encode_tokens": 8,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "hangul_run": {
+      "encode_tokens": 10,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "rare_astral": {
+      "encode_tokens": 18,
+      "literal_key_hit": false,
+      "agrees": true
+     },
+     "combining_run": {
+      "encode_tokens": 8,
+      "literal_key_hit": false,
+      "agrees": true
+     }
+    }
+   },
+   "jev_one_token_rederived": 234,
+   "jev_one_token_note": "re-derived from Archer's own fingerprint rows via fresh-empty marginals (in_tok == 267 + 1); count parity with the parent's 234 result is the cross-check"
+  },
+  "reading": "marginal 1.0 for zzz/______/heart at bare context with a linear repeat curve means the counter sees one token per copy; >=2 marginals mean multi-token splits. Candidate columns come from ACTUAL encoders (encode/decode round trip), never literal byte-encoded vocab key lookup — the 94 'missing' scout strings were exactly that artifact."
+ },
+ "fu_place": {
+  "latency": {
+   "n_rows": 192,
+   "blocks": 8,
+   "models": {
+    "reported_total": {
+     "coefficients": {
+      "block0": 230.6485,
+      "block1": 227.9021,
+      "block2": 247.4726,
+      "block3": 240.7291,
+      "block4": 234.9065,
+      "block5": 235.6796,
+      "block6": 246.3277,
+      "block7": 240.2824,
+      "rep_total": 10.0836
+     },
+     "in_sample_rmse_ms": 29.27,
+     "heldout_stimulus_rmse_ms": {
+      "holdout_fillerA": 32.18,
+      "holdout_fillerB": 31.85
+     },
+     "question_vs_state_cost_ratio": null
+    },
+    "reported_role_split": {
+     "coefficients": {
+      "block0": 230.6362,
+      "block1": 227.8899,
+      "block2": 247.4604,
+      "block3": 240.7169,
+      "block4": 234.8942,
+      "block5": 235.6674,
+      "block6": 246.3155,
+      "block7": 240.2701,
+      "rep_state": 9.9194,
+      "rep_question": 10.2486
+     },
+     "in_sample_rmse_ms": 29.25,
+     "heldout_stimulus_rmse_ms": {
+      "holdout_fillerA": 70.86,
+      "holdout_fillerB": 47.49
+     },
+     "question_vs_state_cost_ratio": 1.033
+    },
+    "candidate_char_roles": {
+     "coefficients": {
+      "block0": 234.9276,
+      "block1": 232.1799,
+      "block2": 251.7505,
+      "block3": 245.0065,
+      "block4": 239.1869,
+      "block5": 239.9612,
+      "block6": 250.6085,
+      "block7": 244.5619,
+      "chars_state": 1.6431,
+      "chars_question": 1.7095
+     },
+     "in_sample_rmse_ms": 28.8,
+     "heldout_stimulus_rmse_ms": {
+      "holdout_fillerA": 56.59,
+      "holdout_fillerB": 57.34
+     },
+     "question_vs_state_cost_ratio": 1.04
+    }
+   },
+   "latency_measure": "x-envoy-upstream-service-time/serviceMs not reported by this deployment; client wall_ms used with block intercepts (network jitter is a limit)",
+   "reading": "role coefficients come from the SAME total volume of text; a question/state ratio near 1.0 (band across blocks) contradicts a fixed 2x question-token cost. Held-out whole-stimulus RMSE (not repeat rows) is the predictive claim; block intercepts absorb time-cluster drift."
+  },
+  "cell_median_upstream_ms": {
+   "q1_question:s0500": 234.9,
+   "q1_question:s16000": 345.3,
+   "q1_question:s4000": 258.2,
+   "q1_state:s0500": 241.3,
+   "q1_state:s16000": 337.7,
+   "q1_state:s4000": 256.8,
+   "q8_questions:s0500": 250.9,
+   "q8_questions:s16000": 336.7,
+   "q8_questions:s4000": 260.6,
+   "q8_state:s0500": 241.7,
+   "q8_state:s16000": 341.9,
+   "q8_state:s4000": 267.7
+  },
+  "shared_state_cost": {
+   "s0500": {
+    "q1_state_ms": 241.3,
+    "q8_state_ms": 241.7,
+    "delta_8q_ms": 0.4
+   },
+   "s4000": {
+    "q1_state_ms": 256.8,
+    "q8_state_ms": 267.7,
+    "delta_8q_ms": 10.9
+   },
+   "s16000": {
+    "q1_state_ms": 337.7,
+    "q8_state_ms": 341.9,
+    "delta_8q_ms": 4.2
+   }
+  },
+  "counts": {
+   "n_rows": 670
+  }
+ },
+ "fu_odds": {
+  "archer_variants": {
+   "base4": {
+    "The customer~The payment ": {
+     "mean_logodds": 0.7949,
+     "n_blocks": 10
+    },
+    "Cannot tell~The payment ": {
+     "mean_logodds": 0.3821,
+     "n_blocks": 10
+    }
+   },
+   "null4": {
+    "The customer~The payment ": {
+     "mean_logodds": 0.8511,
+     "n_blocks": 10
+    },
+    "Cannot tell~The payment ": {
+     "mean_logodds": 0.3851,
+     "n_blocks": 10
+    }
+   },
+   "append5": {
+    "The customer~The payment ": {
+     "mean_logodds": 0.7049,
+     "n_blocks": 10
+    },
+    "Cannot tell~The payment ": {
+     "mean_logodds": 0.5592,
+     "n_blocks": 10
+    }
+   },
+   "null5": {
+    "The customer~The payment ": {
+     "mean_logodds": 0.7049,
+     "n_blocks": 10
+    },
+    "Cannot tell~The payment ": {
+     "mean_logodds": 0.6187,
+     "n_blocks": 10
+    }
+   },
+   "replace5": {
+    "The customer~The payment ": {
+     "mean_logodds": 0.5781,
+     "n_blocks": 10
+    },
+    "Cannot tell~The payment ": {
+     "mean_logodds": 0.4131,
+     "n_blocks": 10
+    }
+   }
+  },
+  "archer_contrasts": {
+   "noise_floor_null4_minus_base4": {
+    "The customer~The payment ": 0.0562,
+    "Cannot tell~The payment ": 0.003
+   },
+   "noise_floor_null5_minus_append5": {
+    "The customer~The payment ": 0.0,
+    "Cannot tell~The payment ": 0.0595
+   },
+   "real_append5_minus_base4": {
+    "The customer~The payment ": -0.09,
+    "Cannot tell~The payment ": 0.1771
+   },
+   "real_replace5_minus_append5": {
+    "The customer~The payment ": -0.1268,
+    "Cannot tell~The payment ": -0.1461
+   }
+  },
+  "archer_note": "null arms are intentional duplicate noise controls; real contrasts must exceed the repeat noise floor before any option-interaction claim",
+  "own_scenarios": {
+   "amb_support": {
+    "pairwise_by_K": {
+     "K4": {
+      "the firmware update changed display behavior~a power-saving setting changed": {
+       "logodds": -0.8418924418202957,
+       "band": [
+        -0.8964881045779752,
+        -0.78845736036427
+       ],
+       "at_display_floor": false
+      },
+      "the firmware update changed display behavior~the network wiring causes interference": {
+       "logodds": 0.8347976976229723,
+       "band": [
+        0.7129498078561253,
+        0.962810747509048
+       ],
+       "at_display_floor": false
+      },
+      "the firmware update changed display behavior~the reports are coincidence": {
+       "logodds": 3.2771447329921766,
+       "band": [
+        2.545531271604435,
+        19.432281655630845
+       ],
+       "at_display_floor": true
+      },
+      "a power-saving setting changed~the network wiring causes interference": {
+       "logodds": 1.6766901394432678,
+       "band": [
+        1.5769147207285406,
+        1.783791299578878
+       ],
+       "at_display_floor": false
+      },
+      "a power-saving setting changed~the reports are coincidence": {
+       "logodds": 4.119037174812473,
+       "band": [
+        3.4094961844768505,
+        20.253262207700676
+       ],
+       "at_display_floor": true
+      },
+      "the network wiring causes interference~the reports are coincidence": {
+       "logodds": 2.4423470353692043,
+       "band": [
+        1.6582280766035324,
+        18.643824295266576
+       ],
+       "at_display_floor": true
+      }
+     },
+     "K5": {
+      "the firmware update changed display behavior~a power-saving setting changed": {
+       "logodds": -0.7901394465472549,
+       "band": [
+        -0.8445468270153137,
+        -0.7368222440626068
+       ],
+       "at_display_floor": false
+      },
+      "the firmware update changed display behavior~the network wiring causes interference": {
+       "logodds": 0.8534898306351247,
+       "band": [
+        0.7323678937132269,
+        0.9808292530117263
+       ],
+       "at_display_floor": false
+      },
+      "the firmware update changed display behavior~the reports are coincidence": {
+       "logodds": 3.295836866004329,
+       "band": [
+        2.5649493574615367,
+        19.450300161133523
+       ],
+       "at_display_floor": true
+      },
+      "a power-saving setting changed~the network wiring causes interference": {
+       "logodds": 1.6436292771823797,
+       "band": [
+        1.5432981099295555,
+        1.751268107873318
+       ],
+       "at_display_floor": false
+      },
+      "a power-saving setting changed~the reports are coincidence": {
+       "logodds": 4.085976312551584,
+       "band": [
+        3.3758795736778655,
+        20.220739015995115
+       ],
+       "at_display_floor": true
+      },
+      "the network wiring causes interference~the reports are coincidence": {
+       "logodds": 2.4423470353692043,
+       "band": [
+        1.6582280766035324,
+        18.643824295266576
+       ],
+       "at_display_floor": true
+      }
+     },
+     "K6": {
+      "the firmware update changed display behavior~a power-saving setting changed": {
+       "logodds": -0.7731898882334816,
+       "band": [
+        -0.8278797745301019,
+        -0.7195804376281006
+       ],
+       "at_display_floor": false
+      },
+      "the firmware update changed display behavior~the network wiring causes interference": {
+       "logodds": 0.8534898306351247,
+       "band": [
+        0.7323678937132269,
+        0.9808292530117263
+       ],
+       "at_display_floor": false
+      },
+      "the firmware update changed display behavior~the reports are coincidence": {
+       "logodds": null,
+       "band": [
+        3.258096538021482,
+        19.450300161133523
+       ],
+       "at_display_floor": true
+      },
+      "a power-saving setting changed~the network wiring causes interference": {
+       "logodds": 1.6266797188686064,
+       "band": [
+        1.5260563034950494,
+        1.7346010553881064
+       ],
+       "at_display_floor": false
+      },
+      "a power-saving setting changed~the reports are coincidence": {
+       "logodds": null,
+       "band": [
+        4.051784947803305,
+        20.204071963509904
+       ],
+       "at_display_floor": true
+      },
+      "the network wiring causes interference~the reports are coincidence": {
+       "logodds": null,
+       "band": [
+        2.3513752571634776,
+        18.643824295266576
+       ],
+       "at_display_floor": true
+      }
+     }
+    },
+    "scale_vs_K4": {
+     "K5": 0.9958,
+     "K6": 0.9701
+    },
+    "rank_preserved": {
+     "K5": true,
+     "K6": true
+    },
+    "floor_exclusions": [
+     "the firmware update changed display behavior~the reports are coincidence",
+     "a power-saving setting changed~the reports are coincidence",
+     "the network wiring causes interference~the reports are coincidence"
+    ]
+   },
+   "amb_logistics": {
+    "pairwise_by_K": {
+     "K4": {
+      "short-packing at origin~the origin scanner undercounted": {
+       "logodds": 1.55814461804655,
+       "band": [
+        1.0414538748281612,
+        2.3513752571634776
+       ],
+       "at_display_floor": false
+      },
+      "short-packing at origin~in-transit theft despite intact seals": {
+       "logodds": -2.032294763254134,
+       "band": [
+        -2.1572192427225203,
+        -1.9183221925364844
+       ],
+       "at_display_floor": false
+      },
+      "short-packing at origin~receiving miscount at the depot": {
+       "logodds": -0.5212969236332861,
+       "band": [
+        -0.6931471805599453,
+        -0.35667494393873245
+       ],
+       "at_display_floor": false
+      },
+      "the origin scanner undercounted~in-transit theft despite intact seals": {
+       "logodds": -3.590439381300684,
+       "band": [
+        -4.297285406218791,
+        -3.1710851610318525
+       ],
+       "at_display_floor": false
+      },
+      "the origin scanner undercounted~receiving miscount at the depot": {
+       "logodds": -2.0794415416798357,
+       "band": [
+        -2.833213344056216,
+        -1.6094379124341003
+       ],
+       "at_display_floor": false
+      },
+      "in-transit theft despite intact seals~receiving miscount at the depot": {
+       "logodds": 1.5109978396208479,
+       "band": [
+        1.4364841056437456,
+        1.589235205116581
+       ],
+       "at_display_floor": false
+      }
+     },
+     "K5": {
+      "short-packing at origin~the origin scanner undercounted": {
+       "logodds": 1.3217558399823195,
+       "band": [
+        0.7731898882334821,
+        2.1400661634962708
+       ],
+       "at_display_floor": false
+      },
+      "short-packing at origin~in-transit theft despite intact seals": {
+       "logodds": -2.282382385676526,
+       "band": [
+        -2.438996948483922,
+        -2.143520398364358
+       ],
+       "at_display_floor": false
+      },
+      "short-packing at origin~receiving miscount at the depot": {
+       "logodds": -0.8754687373538997,
+       "band": [
+        -1.072636802264849,
+        -0.6931471805599451
+       ],
+       "at_display_floor": false
+      },
+      "the origin scanner undercounted~in-transit theft despite intact seals": {
+       "logodds": -3.6041382256588457,
+       "band": [
+        -4.310799125385514,
+        -3.1849742731925192
+       ],
+       "at_display_floor": false
+      },
+      "the origin scanner undercounted~receiving miscount at the depot": {
+       "logodds": -2.197224577336219,
+       "band": [
+        -2.9444389791664407,
+        -1.7346010553881064
+       ],
+       "at_display_floor": false
+      },
+      "in-transit theft despite intact seals~receiving miscount at the depot": {
+       "logodds": 1.4069136483226263,
+       "band": [
+        1.3391475826941885,
+        1.4775857813292979
+       ],
+       "at_display_floor": false
+      }
+     },
+     "K6": {
+      "short-packing at origin~the origin scanner undercounted": {
+       "logodds": 1.0986122886681098,
+       "band": [
+        0.5108256237659906,
+        1.9459101490553132
+       ],
+       "at_display_floor": false
+      },
+      "short-packing at origin~in-transit theft despite intact seals": {
+       "logodds": -2.4054424784337534,
+       "band": [
+        -2.6026896854443837,
+        -2.236139993585893
+       ],
+       "at_display_floor": false
+      },
+      "short-packing at origin~receiving miscount at the depot": {
+       "logodds": -1.0414538748281612,
+       "band": [
+        -1.2809338454620645,
+        -0.826678573184468
+       ],
+       "at_display_floor": false
+      },
+      "the origin scanner undercounted~in-transit theft despite intact seals": {
+       "logodds": -3.5040547671018634,
+       "band": [
+        -4.212127597878484,
+        -3.0834378539730967
+       ],
+       "at_display_floor": false
+      },
+      "the origin scanner undercounted~receiving miscount at the depot": {
+       "logodds": -2.1400661634962708,
+       "band": [
+        -2.890371757896165,
+        -1.6739764335716716
+       ],
+       "at_display_floor": false
+      },
+      "in-transit theft despite intact seals~receiving miscount at the depot": {
+       "logodds": 1.3639886036055924,
+       "band": [
+        1.2916783847450415,
+        1.4395388756387029
+       ],
+       "at_display_floor": false
+      }
+     }
+    },
+    "scale_vs_K4": {
+     "K5": 1.0175,
+     "K6": 0.9965
+    },
+    "rank_preserved": {
+     "K5": true,
+     "K6": true
+    },
+    "floor_exclusions": []
+   },
+   "amb_research": {
+    "pairwise_by_K": {
+     "K4": {
+      "buffer lot contamination~incubator temperature drift without an alarm": {
+       "logodds": 0.8842024173226544,
+       "band": [
+        0.8351174418303324,
+        0.9343092373768331
+       ],
+       "at_display_floor": false
+      },
+      "buffer lot contamination~plate reader calibration drift": {
+       "logodds": 3.317815772723104,
+       "band": [
+        2.9667447366807385,
+        3.8430301339411943
+       ],
+       "at_display_floor": false
+      },
+      "buffer lot contamination~operator handling differences": {
+       "logodds": 4.927253685157205,
+       "band": [
+        3.8140425970679424,
+        20.36659089300768
+       ],
+       "at_display_floor": true
+      },
+      "incubator temperature drift without an alarm~plate reader calibration drift": {
+       "logodds": 2.4336133554004498,
+       "band": [
+        2.0614230361771577,
+        2.9789251552376097
+       ],
+       "at_display_floor": false
+      },
+      "incubator temperature drift without an alarm~operator handling differences": {
+       "logodds": 4.04305126783455,
+       "band": [
+        2.908720896564361,
+        19.502485914304096
+       ],
+       "at_display_floor": true
+      },
+      "plate reader calibration drift~operator handling differences": {
+       "logodds": 1.6094379124341003,
+       "band": [
+        2.2204460492503128e-16,
+        17.37085861945369
+       ],
+       "at_display_floor": true
+      }
+     },
+     "K5": {
+      "buffer lot contamination~incubator temperature drift without an alarm": {
+       "logodds": 1.2360121580705525,
+       "band": [
+        1.1769441319380167,
+        1.297063227391948
+       ],
+       "at_display_floor": false
+      },
+      "buffer lot contamination~plate reader calibration drift": {
+       "logodds": 3.6109179126442243,
+       "band": [
+        3.1918471524802814,
+        4.31748811353631
+       ],
+       "at_display_floor": false
+      },
+      "buffer lot contamination~operator handling differences": {
+       "logodds": 4.30406509320417,
+       "band": [
+        3.597312260588446,
+        20.43558376449463
+       ],
+       "at_display_floor": true
+      },
+      "incubator temperature drift without an alarm~plate reader calibration drift": {
+       "logodds": 2.3749057545736716,
+       "band": [
+        1.9218125974762528,
+        3.1135153092103742
+       ],
+       "at_display_floor": false
+      },
+      "incubator temperature drift without an alarm~operator handling differences": {
+       "logodds": 3.068052935133617,
+       "band": [
+        2.327277705584417,
+        19.231610960168695
+       ],
+       "at_display_floor": true
+      },
+      "plate reader calibration drift~operator handling differences": {
+       "logodds": 0.6931471805599453,
+       "band": [
+        -0.6931471805599453,
+        17.216707939626428
+       ],
+       "at_display_floor": true
+      }
+     },
+     "K6": {
+      "buffer lot contamination~incubator temperature drift without an alarm": {
+       "logodds": 1.2796102185315559,
+       "band": [
+        1.2197566720271977,
+        1.341558467278499
+       ],
+       "at_display_floor": false
+      },
+      "buffer lot contamination~plate reader calibration drift": {
+       "logodds": 3.6309854756950335,
+       "band": [
+        3.2121868367174042,
+        4.33729074083249
+       ],
+       "at_display_floor": false
+      },
+      "buffer lot contamination~operator handling differences": {
+       "logodds": null,
+       "band": [
+        4.310799125385514,
+        20.45538639179081
+       ],
+       "at_display_floor": true
+      },
+      "incubator temperature drift without an alarm~plate reader calibration drift": {
+       "logodds": 2.3513752571634776,
+       "band": [
+        1.8971199848858813,
+        3.091042453358316
+       ],
+       "at_display_floor": false
+      },
+      "incubator temperature drift without an alarm~operator handling differences": {
+       "logodds": null,
+       "band": [
+        2.995732273553991,
+        19.209138104316636
+       ],
+       "at_display_floor": true
+      },
+      "plate reader calibration drift~operator handling differences": {
+       "logodds": null,
+       "band": [
+        0.0,
+        17.216707939626428
+       ],
+       "at_display_floor": true
+      }
+     }
+    },
+    "scale_vs_K4": {
+     "K5": 0.8794,
+     "K6": 1.0671
+    },
+    "rank_preserved": {
+     "K5": true,
+     "K6": true
+    },
+    "floor_exclusions": [
+     "buffer lot contamination~operator handling differences",
+     "incubator temperature drift without an alarm~operator handling differences",
+     "plate reader calibration drift~operator handling differences"
+    ]
+   }
+  },
+  "reading": "independent fixed logits + fixed temperature: K-invariant pairwise log-odds within 1-1.5 display quanta; common-scale temperature: one scale factor per K with preserved pair ranks; neither: pair-specific changes or rank flips. Displayed 0.01 rounding gives the band; pairs at the display floor are excluded, never logged."
+ },
+ "fu_refcard": {
+  "cells": {
+   "own:sibling:present:named": {
+    "n": 2,
+    "expected": 2,
+    "ref_only_chosen": 0,
+    "expected_rate": 1.0
+   },
+   "corrected:sibling:present:opaque": {
+    "n": 2,
+    "expected": 2,
+    "ref_only_chosen": 0,
+    "expected_rate": 1.0
+   },
+   "archer:sibling:present:opaque": {
+    "n": 2,
+    "expected": 2,
+    "ref_only_chosen": 0,
+    "expected_rate": 1.0
+   },
+   "corrected:state:present:named": {
+    "n": 2,
+    "expected": 2,
+    "ref_only_chosen": 0,
+    "expected_rate": 1.0
+   },
+   "corrected:sibling:present:named": {
+    "n": 2,
+    "expected": 2,
+    "ref_only_chosen": 0,
+    "expected_rate": 1.0
+   },
+   "archer:sibling:present:named": {
+    "n": 2,
+    "expected": 2,
+    "ref_only_chosen": 0,
+    "expected_rate": 1.0
+   },
+   "own:state:present:opaque": {
+    "n": 2,
+    "expected": 2,
+    "ref_only_chosen": 0,
+    "expected_rate": 1.0
+   },
+   "own:sibling:absent:named": {
+    "n": 2,
+    "expected": 1,
+    "ref_only_chosen": 1,
+    "expected_rate": 0.5
+   },
+   "archer:state:present:named": {
+    "n": 2,
+    "expected": 2,
+    "ref_only_chosen": 0,
+    "expected_rate": 1.0
+   },
+   "corrected:sibling:absent:named": {
+    "n": 2,
+    "expected": 2,
+    "ref_only_chosen": 0,
+    "expected_rate": 1.0
+   },
+   "own:state:present:named": {
+    "n": 2,
+    "expected": 2,
+    "ref_only_chosen": 0,
+    "expected_rate": 1.0
+   },
+   "corrected:state:absent:named": {
+    "n": 2,
+    "expected": 2,
+    "ref_only_chosen": 0,
+    "expected_rate": 1.0
+   },
+   "own:sibling:present:opaque": {
+    "n": 2,
+    "expected": 2,
+    "ref_only_chosen": 0,
+    "expected_rate": 1.0
+   },
+   "own:sibling:absent:opaque": {
+    "n": 2,
+    "expected": 1,
+    "ref_only_chosen": 1,
+    "expected_rate": 0.5
+   },
+   "own:state:absent:opaque": {
+    "n": 2,
+    "expected": 1,
+    "ref_only_chosen": 1,
+    "expected_rate": 0.5
+   },
+   "own:state:absent:named": {
+    "n": 2,
+    "expected": 0,
+    "ref_only_chosen": 2,
+    "expected_rate": 0.0
+   },
+   "corrected:sibling:absent:opaque": {
+    "n": 2,
+    "expected": 2,
+    "ref_only_chosen": 0,
+    "expected_rate": 1.0
+   },
+   "archer:state:present:opaque": {
+    "n": 2,
+    "expected": 2,
+    "ref_only_chosen": 0,
+    "expected_rate": 1.0
+   },
+   "corrected:state:absent:opaque": {
+    "n": 2,
+    "expected": 2,
+    "ref_only_chosen": 0,
+    "expected_rate": 1.0
+   },
+   "corrected:state:present:opaque": {
+    "n": 2,
+    "expected": 2,
+    "ref_only_chosen": 0,
+    "expected_rate": 1.0
+   }
+  },
+  "pooled_by_absence": {
+   "present": {
+    "n": 24,
+    "expected": 24,
+    "expected_rate": 1.0
+   },
+   "absent": {
+    "n": 16,
+    "expected": 11,
+    "expected_rate": 0.688
+   }
+  },
+  "reading": "sensitivity to where the reference card sits (state vs sibling option), to option IDs and order supports joint option access; it does not by itself distinguish causal from bidirectional attention or slot from pointer read-out. Absent controls should fall to chance."
+ },
+ "fu_horizon": {
+  "per_kind": {
+   "post": {
+    "n": 32,
+    "gold_hits": 8,
+    "cannot": 21,
+    "did_not_occur": 1,
+    "gold_rate": 0.25
+   },
+   "pre": {
+    "n": 8,
+    "gold_hits": 6,
+    "cannot": 0,
+    "did_not_occur": 0,
+    "gold_rate": 0.75
+   },
+   "fictional": {
+    "n": 8,
+    "gold_hits": 8,
+    "cannot": 0,
+    "did_not_occur": 8,
+    "gold_rate": 1.0
+   }
+  },
+  "per_item": {
+   "hs_anchorage": {
+    "kind": "post",
+    "event_date": "2025-08",
+    "n": 2,
+    "gold_hits": 0,
+    "gold_rate": 0.0
+   },
+   "hs_ao2025w": {
+    "kind": "post",
+    "event_date": "2025-01",
+    "n": 2,
+    "gold_hits": 0,
+    "gold_rate": 0.0
+   },
+   "hs_ballon2024": {
+    "kind": "post",
+    "event_date": "2024-10",
+    "n": 2,
+    "gold_hits": 2,
+    "gold_rate": 1.0
+   },
+   "hs_cannes2025": {
+    "kind": "post",
+    "event_date": "2025-05",
+    "n": 2,
+    "gold_hits": 0,
+    "gold_rate": 0.0
+   },
+   "hs_cwc2025": {
+    "kind": "post",
+    "event_date": "2025-07",
+    "n": 2,
+    "gold_hits": 0,
+    "gold_rate": 0.0
+   },
+   "hs_eurovision2025": {
+    "kind": "post",
+    "event_date": "2025-05",
+    "n": 2,
+    "gold_hits": 0,
+    "gold_rate": 0.0
+   },
+   "hs_fake_eclipse": {
+    "kind": "fictional",
+    "event_date": "2025-08",
+    "n": 2,
+    "gold_hits": 2,
+    "gold_rate": 1.0
+   },
+   "hs_fake_mars": {
+    "kind": "fictional",
+    "event_date": "2025-06",
+    "n": 2,
+    "gold_hits": 2,
+    "gold_rate": 1.0
+   },
+   "hs_fake_un": {
+    "kind": "fictional",
+    "event_date": "2025-05",
+    "n": 2,
+    "gold_hits": 2,
+    "gold_rate": 1.0
+   },
+   "hs_fake_winter": {
+    "kind": "fictional",
+    "event_date": "2024-12",
+    "n": 2,
+    "gold_hits": 2,
+    "gold_rate": 1.0
+   },
+   "hs_heisman2024": {
+    "kind": "post",
+    "event_date": "2024-12",
+    "n": 2,
+    "gold_hits": 0,
+    "gold_rate": 0.0
+   },
+   "hs_nba2025": {
+    "kind": "post",
+    "event_date": "2025-06",
+    "n": 2,
+    "gold_hits": 0,
+    "gold_rate": 0.0
+   },
+   "hs_nobelpeace2024": {
+    "kind": "post",
+    "event_date": "2024-10",
+    "n": 2,
+    "gold_hits": 2,
+    "gold_rate": 1.0
+   },
+   "hs_oscar2025": {
+    "kind": "post",
+    "event_date": "2025-03",
+    "n": 2,
+    "gold_hits": 2,
+    "gold_rate": 1.0
+   },
+   "hs_pope2025": {
+    "kind": "post",
+    "event_date": "2025-05",
+    "n": 2,
+    "gold_hits": 0,
+    "gold_rate": 0.0
+   },
+   "hs_sblviii": {
+    "kind": "pre",
+    "event_date": "2024-02",
+    "n": 2,
+    "gold_hits": 2,
+    "gold_rate": 1.0
+   },
+   "hs_sblx": {
+    "kind": "post",
+    "event_date": "2025-02",
+    "n": 2,
+    "gold_hits": 0,
+    "gold_rate": 0.0
+   },
+   "hs_sixnations2025": {
+    "kind": "post",
+    "event_date": "2025-03",
+    "n": 2,
+    "gold_hits": 0,
+    "gold_rate": 0.0
+   },
+   "hs_starliner": {
+    "kind": "pre",
+    "event_date": "2024-09",
+    "n": 2,
+    "gold_hits": 0,
+    "gold_rate": 0.0
+   },
+   "hs_usopen2025": {
+    "kind": "post",
+    "event_date": "2025-06",
+    "n": 2,
+    "gold_hits": 0,
+    "gold_rate": 0.0
+   },
+   "hs_wc2022": {
+    "kind": "pre",
+    "event_date": "2022-12",
+    "n": 2,
+    "gold_hits": 2,
+    "gold_rate": 1.0
+   },
+   "hs_wimb2023m": {
+    "kind": "pre",
+    "event_date": "2023-07",
+    "n": 2,
+    "gold_hits": 2,
+    "gold_rate": 1.0
+   },
+   "hs_wimb2025w": {
+    "kind": "post",
+    "event_date": "2025-07",
+    "n": 2,
+    "gold_hits": 0,
+    "gold_rate": 0.0
+   },
+   "hs_ws2024": {
+    "kind": "post",
+    "event_date": "2024-10",
+    "n": 2,
+    "gold_hits": 2,
+    "gold_rate": 1.0
+   }
+  },
+  "counts": {
+   "n_rows": 48
+  },
+  "reading": "real post-cutoff items are scored apart from controls; gradual decay across late-2024..Aug-2025 is a rolling horizon, a floor after one month is a hard cutoff. Rank/model agreement is behavioral similarity, never unique-lineage identification."
+ },
+ "fu_reference": {
+  "per_model": {
+   "qwen/qwen3-30b-a3b-instruct-2507": {
+    "n": 48,
+    "strict_hits": 11,
+    "recovered_hits": 21,
+    "unrecovered": 24,
+    "finish_reasons": {
+     "stop": 48
+    },
+    "per_kind": {
+     "post": {
+      "n": 32,
+      "gold_hits": 9,
+      "gold_rate": 0.281
+     },
+     "pre": {
+      "n": 8,
+      "gold_hits": 8,
+      "gold_rate": 1.0
+     },
+     "fictional": {
+      "n": 8,
+      "gold_hits": 4,
+      "gold_rate": 0.5
+     }
+    },
+    "diagnostic_key_prefix_hits": 4,
+    "diagnostic_key_prefix_n": 24,
+    "strict_rate": 0.229,
+    "recovered_rate": 0.438
+   },
+   "qwen/qwen3-next-80b-a3b-instruct": {
+    "n": 48,
+    "strict_hits": 21,
+    "recovered_hits": 21,
+    "unrecovered": 0,
+    "finish_reasons": {
+     "stop": 48
+    },
+    "per_kind": {
+     "post": {
+      "n": 32,
+      "gold_hits": 6,
+      "gold_rate": 0.188
+     },
+     "pre": {
+      "n": 8,
+      "gold_hits": 7,
+      "gold_rate": 0.875
+     },
+     "fictional": {
+      "n": 8,
+      "gold_hits": 8,
+      "gold_rate": 1.0
+     }
+    },
+    "diagnostic_key_prefix_hits": 0,
+    "diagnostic_key_prefix_n": 0,
+    "strict_rate": 0.438,
+    "recovered_rate": 0.438
+   },
+   "mistralai/mistral-small-3.2-24b-instruct": {
+    "n": 48,
+    "strict_hits": 12,
+    "recovered_hits": 12,
+    "unrecovered": 0,
+    "finish_reasons": {
+     "stop": 48
+    },
+    "per_kind": {
+     "post": {
+      "n": 32,
+      "gold_hits": 0,
+      "gold_rate": 0.0
+     },
+     "pre": {
+      "n": 8,
+      "gold_hits": 4,
+      "gold_rate": 0.5
+     },
+     "fictional": {
+      "n": 8,
+      "gold_hits": 8,
+      "gold_rate": 1.0
+     }
+    },
+    "diagnostic_key_prefix_hits": 0,
+    "diagnostic_key_prefix_n": 0,
+    "strict_rate": 0.25,
+    "recovered_rate": 0.25
+   }
+  },
+  "counts": {
+   "n_rows": 144
+  },
+  "reading": "strict (exact key) and recovered (answer-recovery 2.1.0 final_line_key) are reported apart; these reference models bound generic shared knowledge on the same items and cannot identify weights."
+ },
+ "confidence_formula": {
+  "source_pin": {
+   "repo": "typesafe-ai/system-one-adapter-python",
+   "commit": "fb52b1030b7fc1f4f1cf39910afa5da54f9835e3",
+   "path": "src/system_one_adapter/_utils/confidence_metrics.py",
+   "sha256_prefix": "141db0963ce08d98"
+  },
+  "n_vectors": 162,
+  "corr_choice_confidence_vs_max_p": 0.9905,
+  "mean_choice_confidence": 0.5309,
+  "reading": "the pinned formulae reproduce our rounded-vector recovery as an official closed form; correlation with max-p on observed vectors is a consistency check, not independent calibration proof. Saturated padding confidence 1.0 remains saturation evidence only."
+ }
+}

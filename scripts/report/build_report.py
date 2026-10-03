@@ -25,6 +25,8 @@ from pathlib import Path
 ROOT = Path(os.environ.get("JEVO_ROOT") or Path(__file__).resolve().parents[2])
 SITE = ROOT / "report"
 GH = "https://github.com/JevResearch/Jev-Research/blob/main"
+PAGES = "https://jevresearch.github.io/Jev-Research"
+CP = f"{PAGES}/counterpoint/"
 
 
 def jload(rel: str):
@@ -131,6 +133,7 @@ except FileNotFoundError:
     raise SystemExit("data_report/probe2_plan.json missing - run "
                      "scripts/benchmark/run_probe_battery2.py --plan first")
 P2RUN = jload("runs_archprobe/probe2/probe2_analysis.json")
+P5C = jload("data_report/followup_20261003/p5_horizon_corrected.json")
 P2BILL = jload("runs_archprobe/probe2/BILLING-probe2.json")
 JEVBOT = jload("data_report/jevbot_examples.json")
 try:
@@ -340,7 +343,9 @@ NOTES: dict[str, str] = {
         "are hardware-dependent scenario calculations: service-time slopes "
         "are not hardware throughput measurements, so every parameter band "
         "is an illustration conditional on assumed hardware, quantization "
-        "and utilization, not a reliable parameter estimate.",
+        "and utilization, not a reliable parameter estimate. The FLOPs "
+        "conversion assumes the model's neural token count equals the API's "
+        "reported count; if its own encoder differs, the bound shifts with it.",
     "lattice": "Full lattice forensics: <a href='https://github.com/JevResearch/Jev-Research/blob/main/scripts/report/lattice_forensics.py'>scripts/report/lattice_forensics.py</a> "
         "-&gt; <a href='https://github.com/JevResearch/Jev-Research/blob/main/data_report/lattice_forensics.json'>data_report/lattice_forensics.json</a>, over 704,277 values in 7,887 "
         "published vectors at K=2..255 (probe rows, phase-1 raws, and the "
@@ -360,8 +365,8 @@ NOTES: dict[str, str] = {
         "apportionment rule at the boundaries remains open.",
     "notwrapper": "Each negation is a measurement, not a vibe. Compute grows "
         "linearly with prompt tokens - a cache would not prefill - and the "
-        "knowledge horizon on the sampled dated-event probes stops at "
-        "mid-2025, which a live retriever would "
+        "knowledge horizon on the sampled dated-fact probes reads "
+        "2024-era strong and 2025 weak, which a live retriever would "
         "not. Repeats of identical payloads differ (TVD 0.03-0.12), which a "
         "lookup would not. The proxy-reported upstream service time stays "
         "73-86 ms from concurrency "
@@ -378,7 +383,8 @@ NOTES: dict[str, str] = {
         "frontier inference on those terms is disfavored. Paths: "
         "<a href='https://github.com/JevResearch/Jev-Research/blob/main/runs_archprobe'>runs_archprobe/</a>, runs_live/FINDINGS.md, "
         "data_report/costs.json.",
-    "envoy": "Latency header: the timing quoted throughout is "
+    "envoy": "Latency header (September 2026 campaign): the timing quoted "
+        "throughout is "
         "<code>x-envoy-upstream-service-time</code>, which Envoy documents as "
         "the upstream service time: it includes upstream processing and the "
         "Envoy-to-upstream network hop, and it does not certify the exclusion "
@@ -603,7 +609,9 @@ def hero() -> str:
 <div class="toc-sec"><a href="#refs">Notes</a></div>
 </nav>"""
     return f"""
-<div class="chip">An independent, hands-on evaluation by JevResearch &middot; model pin: service-reported jev-1.13.0 &middot; measurements September 2026 &middot; report revision 2 (2026-10-01)</div>
+<div class="chip">An independent, hands-on evaluation by JevResearch &middot; model pin: service-reported jev-1.13.0 &middot; measurements September 2026 &middot; report revision 3 (2026-10-03)</div>
+<p class="cap">A short <a href="{CP}">counterpoint</a> covers the follow-up
+probe round and the public architecture debate.</p>
 <h1>Jev: Not Frontier, But Still Worth Your Attention</h1>
 <p class="sub">TypeSafe AI sells Jev as a frontier-class reasoner that cannot
 hallucinate, built by the co-inventor of ChatGPT - fast, and almost free. We ran it
@@ -776,9 +784,11 @@ def architecture(v: dict) -> str:
                if b["kinds"].get("post") and 0.05 < b["gold_rate"] < 0.99]
     zero = [m for m, b in p5.items()
             if b["kinds"].get("post") and b["gold_rate"] <= 0.05 and m >= "2025-06"]
-    fic = [b for m, b in p5.items() if b["kinds"].get("fictional")]
-    fic_ok = sum(b["did_not_occur"] for b in fic)
-    fic_n = sum(b["kinds"]["fictional"] for b in fic)
+    # corrected artifact: the old P5 false-control count mixed rows; the
+    # corrected per-kind counts are 16/16 (Anchorage relabeled Aug-2025,
+    # 4 unanswerable Starliner rows excluded - see the methods appendix).
+    fic_ok = P5C["per_kind"]["fictional"]["gold_hits"]
+    fic_n = P5C["per_kind"]["fictional"]["n"]
     k2, k255 = p3["2"], p3["255"]
     byte_classes = [c for c in ("cjk_ext_a", "cherokee", "yi_syllables", "cjk_ext_b")
                     if c in p1 and p1[c].get("tokens_per_utf8_byte")]
@@ -807,8 +817,8 @@ def architecture(v: dict) -> str:
 Jev's behavior through the model stated here. The full ledger - alternative
 hypotheses with probabilities and a falsifier per load-bearing claim - lives
 in <a href="{GH}/ARCHITECTURE-ANALYSIS.md"><code>ARCHITECTURE-ANALYSIS.md</code></a>.</p>
-<div class="card">Leading theory, in one sentence: Jev looks like a <b>small,
-English-centric transformer language model</b>, post-trained for judgement
+<div class="card">Leading theory, in one sentence: Jev looks like a <b>small
+transformer language model</b>, post-trained for judgement
 rather than conversation, served with its <b>generation head replaced by a
 probability read-out</b> over caller-supplied options - every question in a
 request scored from <b>one batched prefill pass</b>, which is why it is fast,
@@ -829,8 +839,8 @@ questions and options are scored within a single request, without
 returned free text. The flat timing under concurrency is measured, but
 batching versus spare capacity versus replicas is not distinguished</td><td>Plausible</td></tr>
 <tr><td>Service-time profile</td><td class='cap'>Fixed ~{floor:.0f} ms intercept + ~{slope:.0f} ms per 1k input tokens on the upstream-service header, approximately linear to 29k tokens, with no large quadratic signature. Measured increments: +{mq:.2f} ms per extra question and +{mo:.2f} ms per extra option - both consistent with the added tokens' cost.</td><td>Confident (measured)</td></tr>
-<tr><td>Input pipeline</td><td class='cap'>A whitespace normalizer (ASCII runs collapse; NBSP, ZWJ and BOM do not) plus a fixed ~{bp['mergerate_baseline_tokens']}-token template, ahead of the model's own tokenizer</td><td>Confident / plausible</td></tr>
-<tr><td>Tokenizer</td><td class='cap'>The vendor's own English/Latin-centric BPE: heavy Latin merges, ~1 token per codepoint for the major non-Latin scripts, and a byte-level fallback for uncovered characters ({byte_lo:.2f}-{byte_hi:.2f} tokens per UTF-8 byte on the rarest blocks). It matches no known preexisting tokenizer signature (173 tested) and appears to be new.</td><td>Plausible (strong)</td></tr>
+<tr><td>Input pipeline</td><td class='cap'>A whitespace normalizer (ASCII runs collapse; NBSP, ZWJ and BOM do not) plus a fixed ~{bp['mergerate_baseline_tokens']}-token template, ahead of the tokenizer behind the reported counter</td><td>Confident / plausible</td></tr>
+<tr><td>Tokenizer</td><td class='cap'>The API's reported token counter follows an English/Latin-centric BPE-style profile: heavy Latin merges, ~1 token per codepoint for the major non-Latin scripts, and a byte-level fallback for uncovered characters ({byte_lo:.2f}-{byte_hi:.2f} tokens per UTF-8 byte on the rarest blocks). The reported counts match no known preexisting tokenizer signature (173 tested); the model's own encoder is not identified by that.</td><td>Plausible (strong)</td></tr>
 <tr><td>Core</td><td class='cap'>Transformer-family; dense vs MoE unknown -
 with quantized-serving assumptions the two size angles overlap, so neither
 is forced and MoE stays possible; decoder versus other transformer shapes is
@@ -839,21 +849,22 @@ not identified at these context lengths, and the attention variant is unknowable
 read through hardware-dependent scenarios (assumed hardware, quantization,
 utilization), spans ~{sz_lo:.1f} to {sz_hi:.0f}B active parameters. Capability positioning suggests
 {szc_lo:.0f} to {szc_hi:.0f}B dense-equivalent. A quantized dense ~{szc_lo:.0f} to {sz_dense_hi:.0f}B is the parsimonious joint reading; a MoE (~{sz_moe_lo:.0f} to {sz_moe_hi:.0f}B total) stays possible</td><td>Plausible</td></tr>
-<tr><td>Training</td><td class='cap'>English-dominant pretraining; on the
-sampled dated-event probes the knowledge horizon reads solid to late 2024,
-partial to ~{hz_solid}, gone by {hz_gone}; judgement-format assistant
+<tr><td>Training</td><td class='cap'>Pretraining corpus not identified; on the
+sampled dated-fact probes the knowledge horizon reads strongest on 2024-era
+facts and unreliable on 2025 news; judgement-format assistant
 post-training; OpenAI-flavored brand prior inherited from training text;
 frontier-teacher contribution: none identifiable, not excluded</td><td>Confident / Plausible</td></tr>
 <tr><td>What the evidence weighs against</td><td class='cap'>Not frontier
-(measured). Against retrieval/cache assistance, a thin wrapper around another
-vendor's API, and a trivially relabeled open model. See below.</td><td>Confident (directionally)</td></tr>
+(measured). Against retrieval/cache assistance and a thin wrapper around another
+vendor's API. The base model is not identified. See below.</td><td>Confident (directionally)</td></tr>
 </table>
 <p class="cap">See <a href="{GH}/ARCHITECTURE-ANALYSIS.md">ARCHITECTURE-ANALYSIS.md</a>
 &sect;1 for details.</p>
 
 <span id="latency"></span><span id="arch-onepass"></span>
 <h3 id="arch-millis">What the milliseconds say</h3>
-<p>Every response reports an upstream-service timing header
+<p>In our September timing campaign, responses reported an upstream-service
+timing header
 (<code>x-envoy-upstream-service-time</code>), the
 <b>proxy-reported upstream service time</b>. Sequential probes across prompt
 sizes from ~0.5k to ~29k tokens fit:</p>
@@ -949,7 +960,7 @@ is the highest probability in the vector and <code>1/K</code> is what
 guessing would earn across K options. Of {cfc['n']:,} published choice
 vectors, {cfc['exact']:,} match that formula exactly against the displayed
 table, {cfc['within_1_quantum']} are within one quantum, and {cfc['within_2_quanta']} within two. None is further
-off.{fn('readout')} Buyer's note: choice confidence
+off.{fn('readout')} The published adapter implements exactly this rule - <a href='https://github.com/typesafe-ai/system-one-adapter-python/blob/fb52b1030b7fc1f4f1cf39910afa5da54f9835e3/src/system_one_adapter/_utils/confidence_metrics.py'>its <code>confidence_metrics.py</code></a> (pinned fb52b103) computes chance-corrected confidence - which is a citation of the published adapter's code, not proof of unseen server code. Buyer's note: choice confidence
 is an approximation from the vector you were already handed (not a
 guaranteed deterministic function), not a
 second opinion. Score answers use a different shape statistic and noul answers carry
@@ -967,9 +978,12 @@ option count from 2 to 255, padding with inert filler. The probability on
 the right answer did not move - {pct(p3['255']['mean_p_gold'])} at 255
 options against {pct(p3['2']['mean_p_gold'])} at two - and accuracy stayed perfect at every
 size, with the filler options pinned at 0.00. Apart from the ordering effects
-below, options are scored on their content, essentially absolutely; the vector is then normalized over the set.
-One consequence for the benchmark tables below: the weighted scores are not
-an artifact of menu size.</p>
+below, easy known answers were not diluted by inert padding - a result our
+follow-up replicated - but options are not independent of one another: adding
+or reordering options can shift the odds among the rest (the ordering effects
+below; Archer's odds experiment, which our follow-up replicated). One
+consequence for the benchmark tables below: the weighted scores are not an
+artifact of menu size.</p>
 
 <h3 id="arch-order">The order of the options matters</h3>
 <p>Jev reads the option list as a list, in context, and position is a
@@ -1010,8 +1024,8 @@ soft hyphen and BOM each cost a full token - the normalizer's definition of
 whitespace is ASCII-only.</p>
 <p>Early attempts to let Jev <a href="#probes-talk">talk</a> so it could
 describe itself led to Jev identifying itself with an OpenAI-family name
-{openai_votes} times out of {anc['n_frames_with_probs']}, but this appears to be contamination from training on a
-broad, English-dominated vocabulary - not a signature of authorship.</p>
+{openai_votes} times out of {anc['n_frames_with_probs']}, but this appears to be contamination from training on
+broad internet text - not a signature of authorship.</p>
 
 <h3 id="arch-capacity">Limited capacity, in a particular way</h3>
 <p>The capability profile has a particular shape. On one-shot knowledge
@@ -1071,15 +1085,16 @@ linearly in prompt tokens, and a cache would not prefill. Repeats of
 identical payloads differ, and {SC['mmlu']['zero_probability_gold']}
 zero-probability gold answers on <i>public</i> benchmark text is not what a
 lookup produces. The knowledge horizon also behaves like weights rather than
-like a live query: on the sampled dated events ({p5_n} live calls) answers read
-solid through late 2024, partial through {hz_solid}, and none by {hz_gone}, with
+like a live query: on the corrected dated-fact probes ({p5_n} live calls) answers read
+strongest on 2024-era facts and unreliable on 2025 news, with
 {fic_ok}/{fic_n} invented events correctly called &ldquo;did not occur&rdquo; and
 abstention rising exactly where accuracy falls. Not a thin wrapper around a
 frontier API: the timing alone ({c1['median_upstream_ms']:.0f}-{c32['median_upstream_ms']:.0f} ms, proxy-reported
 upstream service time) leaves little room inside for anyone else's round
 trip in the typical case, the price sits one to two orders of magnitude
 below flagship input lists, and the tokenizer matches nothing we can find.
-Not a lightly relabeled open model: the tokenizer is the strong signal here.
+The base model is not identified: the counter mismatch does not exclude
+reused or adapted weights.
 And not frontier: the benchmark section says so six ways.</p>
 
 <h3 id="arch-open">What stays open</h3>
@@ -1426,16 +1441,14 @@ granularity, at the byte level (the rarest blocks cost 0.99-1.01 tokens per
 UTF-8 byte). No reference vocabulary reproduces that profile.
 Across 128 scored tokenizers drawn from 173 distinct signatures (from 1,215
 repositories scanned), spanning ~30 organizations' releases, nothing reproduced the profile.</p>
-<p>The answer is, frankly, the boring one: the tokenizer, and most plausibly
-the model, is <b>the vendor's own</b> English/Latin-centric one, with byte-level
-fallback for uncovered characters - consistent with a new foundation rather
-than a relabel. The OpenAI
+<p>The answer is, frankly, the boring one: the reported counter is
+<b>the vendor's own</b> English/Latin-centric accounting, with byte-level
+fallback for uncovered characters. But an unmatched counter is not a
+pedigree: a vocabulary change or a separate accounting layer needs no new
+weights, so a Qwen-derived base model remains possible and the ancestry is
+not identified. The OpenAI
 identity answer was an artifact: a trained prior, well known as
-dataset contamination. It is also not at all unreasonable that a startup like
-TypeSafe would be capable of training a model of this small size with limited
-compute. If you came here looking for a scandal relating to a stolen model
-being frankensteined into becoming Jev, we're sorry to have to
-disappoint!</p>
+dataset contamination.</p>
 </section>"""
 
 
@@ -1499,10 +1512,10 @@ market (our baseline stage recovered hundreds of strict-format failures from
 other models' outputs). Limits: 255 options, 2-10
 levels, 32k-token state, 64k total; oversized requests fail with
 <code>max_tokens_exceeded</code>.</li>
-<li><b>Its knowledge reads stale.</b> On the sampled dated events: solid to
-late 2024, partial to ~May 2025, nothing after June 2025 in our dated
-bisection. Treat that as an empirical limit tied to those sampled events, not
-a guaranteed training cutoff - and do not ask it about last week. If you want
+<li><b>Its knowledge reads stale.</b> On the corrected dated-fact probes it is
+strongest on 2024-era facts and unreliable on 2025 news. That is the
+practical limit of this limited, news-heavy sample - not a declared training
+cutoff - and do not ask it about last week. If you want
 its abstention, offer an explicit
 &ldquo;cannot say&rdquo; option; it uses one.</li>
 <li><b>It knows nothing about who it is.</b> Ask its origin and
@@ -1525,8 +1538,8 @@ def conclusion() -> str:
     return f"""
 <section id="conclusion">
 <h2>So, is it worth your attention?</h2>
-<p>It is not what the landing page says. TL/DR, our leading theory is a small,
-English-centric transformer with a probability read-out where a language head
+<p>It is not what the landing page says. TL/DR, our leading theory is a small
+transformer with a probability read-out where a language head
 usually goes. What we measured is respectable
 general knowledge ({mmlu} on MMLU-Pro, {gpqa} on GPQA Diamond, {arc} on the
 saturated ARC-Challenge), no chance against a 2026 frontier model, and a

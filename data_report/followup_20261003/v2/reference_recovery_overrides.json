@@ -1,0 +1,177 @@
+{
+ "schema": "jev-ref-recovery-overrides.v1",
+ "version": "followup-20261003.v2",
+ "rows": {
+  "526:hs_ws2024:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+   "recovered_key": "o4",
+   "stage": "echo_exact_text"
+  },
+  "535:hs_heisman2024:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+   "recovered_key": "o5",
+   "stage": "echo_exact_text"
+  },
+  "541:hs_ao2025w:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+   "recovered_key": "o5",
+   "stage": "echo_exact_text"
+  },
+  "544:hs_sixnations2025:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+   "recovered_key": "o5",
+   "stage": "echo_exact_text"
+  },
+  "547:hs_oscar2025:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+   "recovered_key": "o5",
+   "stage": "echo_exact_text"
+  },
+  "550:hs_pope2025:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+   "recovered_key": "o5",
+   "stage": "echo_exact_text"
+  },
+  "553:hs_eurovision2025:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+   "recovered_key": "o5",
+   "stage": "echo_exact_text"
+  },
+  "556:hs_cannes2025:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+   "recovered_key": "o5",
+   "stage": "echo_exact_text"
+  },
+  "559:hs_nba2025:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+   "recovered_key": "o5",
+   "stage": "echo_exact_text"
+  },
+  "562:hs_usopen2025:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+   "recovered_key": "o5",
+   "stage": "echo_exact_text"
+  },
+  "565:hs_wimb2025w:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+   "recovered_key": "o5",
+   "stage": "echo_exact_text"
+  },
+  "568:hs_cwc2025:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+   "recovered_key": "o4",
+   "stage": "echo_exact_text"
+  },
+  "571:hs_anchorage:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+   "recovered_key": "o5",
+   "stage": "echo_exact_text"
+  },
+  "586:hs_fake_winter:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+   "recovered_key": "o3",
+   "stage": "echo_exact_text"
+  },
+  "589:hs_fake_un:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+   "recovered_key": "o3",
+   "stage": "echo_exact_text"
+  },
+  "592:hs_fake_mars:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+   "recovered_key": "o3",
+   "stage": "echo_exact_text"
+  },
+  "595:hs_fake_eclipse:qwen/qwen3-30b-a3b-instruct-2507:rot0": {
+   "recovered_key": "o3",
+   "stage": "echo_exact_text"
+  },
+  "613:hs_ao2025w:qwen/qwen3-30b-a3b-instruct-2507:rot3": {
+   "recovered_key": "o2",
+   "stage": "echo_exact_text"
+  },
+  "616:hs_sixnations2025:qwen/qwen3-30b-a3b-instruct-2507:rot3": {
+   "recovered_key": "o2",
+   "stage": "echo_exact_text"
+  },
+  "625:hs_eurovision2025:qwen/qwen3-30b-a3b-instruct-2507:rot3": {
+   "recovered_key": "o1",
+   "stage": "echo_exact_text"
+  },
+  "631:hs_nba2025:qwen/qwen3-30b-a3b-instruct-2507:rot3": {
+   "recovered_key": "o2",
+   "stage": "echo_exact_text"
+  },
+  "637:hs_wimb2025w:qwen/qwen3-30b-a3b-instruct-2507:rot3": {
+   "recovered_key": "o2",
+   "stage": "echo_exact_text"
+  },
+  "640:hs_cwc2025:qwen/qwen3-30b-a3b-instruct-2507:rot3": {
+   "recovered_key": "o1",
+   "stage": "echo_exact_text"
+  },
+  "643:hs_anchorage:qwen/qwen3-30b-a3b-instruct-2507:rot3": {
+   "recovered_key": "o1",
+   "stage": "echo_exact_text"
+  }
+ },
+ "per_model_recomputed": {
+  "qwen/qwen3-30b-a3b-instruct-2507": {
+   "n": 48,
+   "gold_hits": 25,
+   "unrecovered": 0,
+   "echo_recovered": 24,
+   "per_kind": {
+    "post": {
+     "n": 32,
+     "gold_hits": 9,
+     "gold_rate": 0.281
+    },
+    "pre": {
+     "n": 8,
+     "gold_hits": 8,
+     "gold_rate": 1.0
+    },
+    "fictional": {
+     "n": 8,
+     "gold_hits": 8,
+     "gold_rate": 1.0
+    }
+   },
+   "gold_rate": 0.521
+  },
+  "qwen/qwen3-next-80b-a3b-instruct": {
+   "n": 48,
+   "gold_hits": 21,
+   "unrecovered": 0,
+   "echo_recovered": 0,
+   "per_kind": {
+    "post": {
+     "n": 32,
+     "gold_hits": 6,
+     "gold_rate": 0.188
+    },
+    "pre": {
+     "n": 8,
+     "gold_hits": 7,
+     "gold_rate": 0.875
+    },
+    "fictional": {
+     "n": 8,
+     "gold_hits": 8,
+     "gold_rate": 1.0
+    }
+   },
+   "gold_rate": 0.438
+  },
+  "mistralai/mistral-small-3.2-24b-instruct": {
+   "n": 48,
+   "gold_hits": 12,
+   "unrecovered": 0,
+   "echo_recovered": 0,
+   "per_kind": {
+    "post": {
+     "n": 32,
+     "gold_hits": 0,
+     "gold_rate": 0.0
+    },
+    "pre": {
+     "n": 8,
+     "gold_hits": 4,
+     "gold_rate": 0.5
+    },
+    "fictional": {
+     "n": 8,
+     "gold_hits": 8,
+     "gold_rate": 1.0
+    }
+   },
+   "gold_rate": 0.25
+  }
+ },
+ "note": "echo recovery accepts ONLY '<key><punct><exact option text>' (case-flex text) with key/text agreement; no blind first-character guessing; future runs store full sanitized raw bodies, not 400-char excerpts"
+}

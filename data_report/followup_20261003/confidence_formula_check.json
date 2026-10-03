@@ -1,0 +1,44 @@
+{
+ "source_pin": {
+  "repo": "typesafe-ai/system-one-adapter-python",
+  "commit": "fb52b1030b7fc1f4f1cf39910afa5da54f9835e3",
+  "path": "src/system_one_adapter/_utils/confidence_metrics.py",
+  "sha256_prefix": "141db0963ce08d98"
+ },
+ "recovery_spec": {
+  "version": "answer-recovery-2.1.0",
+  "stages": [
+   "exact",
+   "stripped",
+   "final_line_key",
+   "answer_pattern",
+   "isolated_key",
+   "reasoning_channel",
+   "unrecovered"
+  ],
+  "key_matching": "token boundaries only; multi-character keys case-insensitive, single-character keys exact (case-insensitive only inside explicit answer statements)",
+  "explicit_preference": "the LAST unambiguous explicit answer statement wins; negated and disjunctive statements never recover",
+  "final_line_key": "the FULL final non-empty line stripped of markdown wrappers/punctuation is EXACTLY one allowed key: recognised before the ambiguity check and outranking earlier explicit statements; never a final-word/last-letter guess",
+  "ambiguity": "two or more distinct isolated key mentions recover nothing",
+  "excluded_heuristics": [
+   "first_character_guessing",
+   "substring_matching",
+   "case_folded_single_letter",
+   "gold_access"
+  ],
+  "reasoning_channel": "only when content is empty; explicit statements over full reasoning, else unique isolated key in the trailing 40 chars"
+ },
+ "synthetic_vectors": {
+  "uniform_K4": 0.0,
+  "onehot_K4": 1.0,
+  "two_thirds_K3": 0.25,
+  "uniform_score_K3": 0.0,
+  "K1": 1.0
+ },
+ "expected": {
+  "uniform_K4": 0.0,
+  "onehot_K4": 1.0,
+  "K1": 1.0,
+  "uniform_score_K3": 0.0
+ }
+}

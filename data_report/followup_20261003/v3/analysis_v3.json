@@ -1,0 +1,113 @@
+{
+ "n_rows": 64,
+ "n_blocks": 8,
+ "sample_unit": "8 randomized blocks (whole-block bootstrap), not 64 tasks",
+ "byte_match_verified": true,
+ "holdout_whole_style_rmse_ms": {
+  "reported": {
+   "holdout_latin": 22.75,
+   "holdout_letters": 76.22,
+   "holdout_digits": 39.75,
+   "holdout_cjk": 21.16,
+   "mean_holdout_rmse": 39.97
+  },
+  "chars": {
+   "holdout_latin": 60.29,
+   "holdout_letters": 72.76,
+   "holdout_digits": 47.72,
+   "holdout_cjk": 20.59,
+   "mean_holdout_rmse": 50.34
+  },
+  "utf8_bytes": {
+   "holdout_latin": 41.49,
+   "holdout_letters": 76.06,
+   "holdout_digits": 56.16,
+   "holdout_cjk": 44.66,
+   "mean_holdout_rmse": 54.59
+  },
+  "wire_bytes": {
+   "holdout_latin": 41.49,
+   "holdout_letters": 76.06,
+   "holdout_digits": 56.16,
+   "holdout_cjk": 44.66,
+   "mean_holdout_rmse": 54.59
+  },
+  "encode_qwen3": {
+   "holdout_latin": 20.93,
+   "holdout_letters": 74.99,
+   "holdout_digits": 48.18,
+   "holdout_cjk": 16.71,
+   "mean_holdout_rmse": 40.2
+  },
+  "encode_qwen35": {
+   "holdout_latin": 19.96,
+   "holdout_letters": 75.12,
+   "holdout_digits": 52.9,
+   "holdout_cjk": 17.26,
+   "mean_holdout_rmse": 41.31
+  },
+  "encode_o200k": {
+   "holdout_latin": 17.91,
+   "holdout_letters": 91.55,
+   "holdout_digits": 51.99,
+   "holdout_cjk": 23.16,
+   "mean_holdout_rmse": 46.15
+  }
+ },
+ "best_predictor": "reported",
+ "runner_up": "encode_qwen3",
+ "predictor_spread_ms": 0.23,
+ "joint_ms_per_1k": {
+  "reported": 3.831,
+  "encode_o200k": 3.621,
+  "wire_bytes": -0.786,
+  "chars": 1.588
+ },
+ "per_block_contrasts": {
+  "digits_minus_latin@6000B": {
+   "mean_ms": 7.2,
+   "block_bootstrap_ci95": [
+    -6.8703,
+    19.0123
+   ]
+  },
+  "digits_minus_cjk@6000B": {
+   "mean_ms": 5.0,
+   "block_bootstrap_ci95": [
+    -10.2891,
+    22.2861
+   ]
+  },
+  "cjk_minus_latin@6000B": {
+   "mean_ms": 2.19,
+   "block_bootstrap_ci95": [
+    -10.0202,
+    16.5254
+   ]
+  },
+  "digits_minus_latin@24000B": {
+   "mean_ms": 96.5,
+   "block_bootstrap_ci95": [
+    76.3234,
+    114.9981
+   ]
+  },
+  "digits_minus_cjk@24000B": {
+   "mean_ms": 100.96,
+   "block_bootstrap_ci95": [
+    94.0226,
+    110.4029
+   ]
+  },
+  "cjk_minus_latin@24000B": {
+   "mean_ms": -4.46,
+   "block_bootstrap_ci95": [
+    -25.0345,
+    13.6726
+   ]
+  }
+ },
+ "verdict_rule": "a predictor advantage is a PROCESSING proxy only; if two count families are within block-bootstrap noise the result is 'inconclusive' and never a positive Qwen-base classification",
+ "encoder_facts": "o200k groups digits to ~1 token per 3 digits while Qwen3/3.5 (and Jev) count ~1 per digit; CJK common mix: Jev ~1/char vs Qwen3 ~0.66/char — the four styles separate the candidate counters pairwise",
+ "latency_measure": "client wall + first_byte (warm, concurrency 1; no upstream header in this deployment)"
+}

@@ -1,0 +1,1497 @@
+{
+ "schema": "jev-followup-plan.v1",
+ "version": "followup-20261003.v1",
+ "model_pin": "jev-1.13.0",
+ "families": {
+  "fu_token": 124,
+  "fu_place": 192,
+  "fu_odds": 122,
+  "fu_refcard": 40,
+  "fu_horizon": 48,
+  "ref_qwen": 48,
+  "ref_nonqwen": 24
+ },
+ "stimuli": {
+  "fu_token": {
+   "cores": {
+    "frame_x": "x",
+    "zzz": "zzz",
+    "usc6": "______",
+    "heart2": "❤️",
+    "heart1": "❤",
+    "ctrl_hello": "hello",
+    "ctrl_word_the": "the",
+    "ctrl_num": "1000000"
+   },
+   "mergerate": {
+    "latin_run": "abcabcabcabcabcabcabcabc",
+    "latin_rare": "QxzWjvQxzWjvQxzWjvQxzWjv",
+    "cyrillic_run": "русскийрусскийрусский",
+    "greek_run": "ελληνικάελληνικά",
+    "cjk_run": "你好世界你好世界你好世界你好世界",
+    "hangul_run": "한국어한국어한국어한국어한국어",
+    "rare_astral": "𝐶𝐳𝑊𝐾𝑋𝐿",
+    "combining_run": "éééééééé"
+   },
+   "contexts": [
+    "bare",
+    "wordctx",
+    "delim:2,3,5,8"
+   ],
+   "frame": {
+    "questions": {
+     "n1": {
+      "type": "noul",
+      "instructions": "x"
+     }
+    },
+    "marginal": "tokens(S) = input_tokens(S) - input_tokens(empty) fresh"
+   }
+  },
+  "fu_place": {
+   "texts": {
+    "fillerA": {
+     "chars": 64,
+     "stimulus_id": "fillerA"
+    },
+    "fillerB": {
+     "chars": 64,
+     "stimulus_id": "fillerB"
+    }
+   },
+   "sizes_chars": {
+    "s0500": 2000,
+    "s4000": 16000,
+    "s16000": 64000
+   },
+   "cells": [
+    [
+     "q1_state",
+     1,
+     "state"
+    ],
+    [
+     "q1_question",
+     1,
+     "question"
+    ],
+    [
+     "q8_state",
+     8,
+     "state"
+    ],
+    [
+     "q8_questions",
+     8,
+     "question"
+    ]
+   ],
+   "blocks": 8,
+   "block_condition_orders": [
+    [
+     "q8_questions:fillerB:s0500",
+     "q1_question:fillerA:s16000",
+     "q8_state:fillerB:s0500",
+     "q8_questions:fillerB:s16000",
+     "q1_question:fillerA:s0500",
+     "q8_questions:fillerA:s16000",
+     "q1_question:fillerB:s4000",
+     "q1_question:fillerA:s4000",
+     "q8_state:fillerB:s16000",
+     "q8_state:fillerB:s4000",
+     "q1_state:fillerA:s16000",
+     "q8_questions:fillerA:s4000",
+     "q1_state:fillerA:s4000",
+     "q8_state:fillerA:s0500",
+     "q1_state:fillerA:s0500",
+     "q8_state:fillerA:s4000",
+     "q1_state:fillerB:s4000",
+     "q1_question:fillerB:s16000",
+     "q8_questions:fillerB:s4000",
+     "q1_state:fillerB:s0500",
+     "q8_questions:fillerA:s0500",
+     "q1_state:fillerB:s16000",
+     "q1_question:fillerB:s0500",
+     "q8_state:fillerA:s16000"
+    ],
+    [
+     "q8_questions:fillerB:s16000",
+     "q1_question:fillerA:s0500",
+     "q1_state:fillerB:s4000",
+     "q8_state:fillerB:s4000",
+     "q1_question:fillerB:s16000",
+     "q8_state:fillerB:s0500",
+     "q1_state:fillerA:s4000",
+     "q8_state:fillerA:s16000",
+     "q1_state:fillerA:s16000",
+     "q8_questions:fillerA:s16000",
+     "q8_state:fillerB:s16000",
+     "q1_state:fillerB:s16000",
+     "q8_questions:fillerA:s4000",
+     "q8_questions:fillerB:s4000",
+     "q8_questions:fillerA:s0500",
+     "q1_question:fillerA:s16000",
+     "q1_state:fillerB:s0500",
+     "q8_questions:fillerB:s0500",
+     "q8_state:fillerA:s4000",
+     "q1_question:fillerA:s4000",
+     "q1_question:fillerB:s4000",
+     "q1_state:fillerA:s0500",
+     "q1_question:fillerB:s0500",
+     "q8_state:fillerA:s0500"
+    ],
+    [
+     "q8_questions:fillerB:s0500",
+     "q1_question:fillerB:s4000",
+     "q1_state:fillerA:s16000",
+     "q1_question:fillerA:s4000",
+     "q1_question:fillerA:s16000",
+     "q8_questions:fillerB:s16000",
+     "q8_state:fillerB:s0500",
+     "q1_state:fillerB:s16000",
+     "q1_state:fillerB:s0500",
+     "q1_question:fillerB:s16000",
+     "q1_question:fillerA:s0500",
+     "q1_state:fillerA:s0500",
+     "q8_questions:fillerA:s0500",
+     "q1_state:fillerA:s4000",
+     "q8_questions:fillerA:s16000",
+     "q8_state:fillerB:s16000",
+     "q8_questions:fillerB:s4000",
+     "q1_question:fillerB:s0500",
+     "q8_state:fillerA:s4000",
+     "q1_state:fillerB:s4000",
+     "q8_state:fillerB:s4000",
+     "q8_questions:fillerA:s4000",
+     "q8_state:fillerA:s16000",
+     "q8_state:fillerA:s0500"
+    ],
+    [
+     "q8_questions:fillerB:s16000",
+     "q1_state:fillerA:s0500",
+     "q1_question:fillerA:s0500",
+     "q8_state:fillerB:s16000",
+     "q1_state:fillerB:s4000",
+     "q8_state:fillerB:s4000",
+     "q8_questions:fillerA:s4000",
+     "q1_question:fillerB:s4000",
+     "q1_question:fillerA:s4000",
+     "q1_question:fillerB:s16000",
+     "q8_state:fillerA:s0500",
+     "q8_state:fillerB:s0500",
+     "q8_questions:fillerA:s16000",
+     "q1_state:fillerB:s16000",
+     "q1_question:fillerB:s0500",
+     "q1_state:fillerB:s0500",
+     "q1_question:fillerA:s16000",
+     "q1_state:fillerA:s16000",
+     "q8_state:fillerA:s16000",
+     "q8_questions:fillerB:s4000",
+     "q1_state:fillerA:s4000",
+     "q8_state:fillerA:s4000",
+     "q8_questions:fillerA:s0500",
+     "q8_questions:fillerB:s0500"
+    ],
+    [
+     "q8_questions:fillerA:s0500",
+     "q1_state:fillerA:s4000",
+     "q8_state:fillerB:s16000",
+     "q1_question:fillerB:s4000",
+     "q8_questions:fillerB:s0500",
+     "q1_state:fillerA:s0500",
+     "q8_state:fillerB:s4000",
+     "q1_question:fillerA:s16000",
+     "q8_questions:fillerB:s16000",
+     "q8_questions:fillerB:s4000",
+     "q8_questions:fillerA:s4000",
+     "q8_state:fillerA:s16000",
+     "q1_question:fillerA:s0500",
+     "q8_state:fillerA:s4000",
+     "q8_questions:fillerA:s16000",
+     "q8_state:fillerB:s0500",
+     "q1_question:fillerA:s4000",
+     "q1_question:fillerB:s0500",
+     "q1_state:fillerB:s0500",
+     "q8_state:fillerA:s0500",
+     "q1_question:fillerB:s16000",
+     "q1_state:fillerB:s4000",
+     "q1_state:fillerA:s16000",
+     "q1_state:fillerB:s16000"
+    ],
+    [
+     "q8_questions:fillerA:s4000",
+     "q1_state:fillerB:s4000",
+     "q1_state:fillerA:s0500",
+     "q1_question:fillerB:s4000",
+     "q1_question:fillerA:s0500",
+     "q8_state:fillerA:s16000",
+     "q8_state:fillerB:s4000",
+     "q1_question:fillerA:s16000",
+     "q1_state:fillerB:s0500",
+     "q8_state:fillerA:s4000",
+     "q8_questions:fillerB:s4000",
+     "q8_state:fillerB:s16000",
+     "q8_state:fillerA:s0500",
+     "q1_question:fillerA:s4000",
+     "q8_questions:fillerA:s0500",
+     "q8_state:fillerB:s0500",
+     "q1_question:fillerB:s16000",
+     "q8_questions:fillerA:s16000",
+     "q1_state:fillerA:s4000",
+     "q1_state:fillerB:s16000",
+     "q8_questions:fillerB:s16000",
+     "q1_state:fillerA:s16000",
+     "q1_question:fillerB:s0500",
+     "q8_questions:fillerB:s0500"
+    ],
+    [
+     "q8_state:fillerB:s16000",
+     "q8_questions:fillerA:s4000",
+     "q1_question:fillerB:s0500",
+     "q1_question:fillerA:s4000",
+     "q1_state:fillerB:s16000",
+     "q8_questions:fillerB:s0500",
+     "q8_state:fillerB:s0500",
+     "q1_question:fillerB:s4000",
+     "q8_questions:fillerA:s0500",
+     "q1_state:fillerA:s0500",
+     "q8_questions:fillerB:s16000",
+     "q1_question:fillerA:s0500",
+     "q8_questions:fillerA:s16000",
+     "q8_state:fillerB:s4000",
+     "q1_state:fillerA:s16000",
+     "q1_state:fillerB:s4000",
+     "q1_question:fillerB:s16000",
+     "q8_state:fillerA:s0500",
+     "q8_state:fillerA:s4000",
+     "q8_questions:fillerB:s4000",
+     "q8_state:fillerA:s16000",
+     "q1_question:fillerA:s16000",
+     "q1_state:fillerA:s4000",
+     "q1_state:fillerB:s0500"
+    ],
+    [
+     "q1_state:fillerB:s4000",
+     "q8_questions:fillerB:s0500",
+     "q1_question:fillerB:s0500",
+     "q8_state:fillerA:s16000",
+     "q8_questions:fillerA:s16000",
+     "q8_questions:fillerB:s16000",
+     "q8_state:fillerA:s4000",
+     "q1_question:fillerB:s16000",
+     "q8_state:fillerB:s0500",
+     "q8_state:fillerA:s0500",
+     "q8_questions:fillerA:s0500",
+     "q1_question:fillerB:s4000",
+     "q1_state:fillerB:s16000",
+     "q1_state:fillerA:s16000",
+     "q1_state:fillerA:s4000",
+     "q1_question:fillerA:s16000",
+     "q8_questions:fillerB:s4000",
+     "q1_state:fillerB:s0500",
+     "q1_question:fillerA:s0500",
+     "q1_state:fillerA:s0500",
+     "q1_question:fillerA:s4000",
+     "q8_state:fillerB:s16000",
+     "q8_state:fillerB:s4000",
+     "q8_questions:fillerA:s4000"
+    ]
+   ],
+   "nonce": "fresh 8-hex run marker appended to state per call",
+   "latency_model": "upstream_ms ~ block intercepts + counts; held-out evaluation by WHOLE stimuli (fillerA<->fillerB), never per-repeat rows"
+  },
+  "fu_odds": {
+   "archer_variants": {
+    "base4": {
+     "bank": "The bank caused it",
+     "provider": "The payment provider caused it",
+     "customer": "The customer caused it",
+     "unknown": "Cannot tell"
+    },
+    "null4": {
+     "bank": "The bank caused it",
+     "provider": "The payment provider caused it",
+     "customer": "The customer caused it",
+     "unknown": "Cannot tell"
+    },
+    "append5": {
+     "bank": "The bank caused it",
+     "provider": "The payment provider caused it",
+     "customer": "The customer caused it",
+     "unknown": "Cannot tell",
+     "weather": "Bad weather caused it"
+    },
+    "null5": {
+     "bank": "The bank caused it",
+     "provider": "The payment provider caused it",
+     "customer": "The customer caused it",
+     "unknown": "Cannot tell",
+     "weather": "Bad weather caused it"
+    },
+    "replace5": {
+     "bank": "The bank caused it",
+     "provider": "The payment provider caused it",
+     "customer": "The customer caused it",
+     "unknown": "Cannot tell",
+     "weather": "Wild birds caused it"
+    }
+   },
+   "archer_note": "base4==null4 and append5==null5 are intentional duplicate noise controls (Archer pools them as such); real contrasts are append5-base4 and replace5-append5",
+   "own_scenarios": [
+    {
+     "scenario_id": "amb_support",
+     "state": "Ticket from Priya: Since Tuesday's firmware update the display dims randomly. Two colleagues saw it too, but only on the network side of the building. The vendor says the update only changed fonts.",
+     "instructions": "What most likely explains the dimming displays?",
+     "original": [
+      [
+       "firmware",
+       "the firmware update changed display behavior"
+      ],
+      [
+       "power",
+       "a power-saving setting changed"
+      ],
+      [
+       "wiring",
+       "the network wiring causes interference"
+      ],
+      [
+       "coincidence",
+       "the reports are coincidence"
+      ]
+     ],
+     "extra": [
+      "building maintenance cut the power briefly",
+      "a construction crane causes vibration"
+     ],
+     "filler_option": "zzq filler option text"
+    },
+    {
+     "scenario_id": "amb_logistics",
+     "state": "Freight note: three pallets arrived at the depot with seals intact but one carton in each was short. Scanner logs show normal counts at origin. The same driver ran all three loads.",
+     "instructions": "What most likely explains the short cartons?",
+     "original": [
+      [
+       "origin_pack",
+       "short-packing at origin"
+      ],
+      [
+       "origin_scan",
+       "the origin scanner undercounted"
+      ],
+      [
+       "theft",
+       "in-transit theft despite intact seals"
+      ],
+      [
+       "receiving",
+       "receiving miscount at the depot"
+      ]
+     ],
+     "extra": [
+      "the pallets were re-weighed incorrectly",
+      "labels were swapped between cartons"
+     ],
+     "filler_option": "zzq filler option text"
+    },
+    {
+     "scenario_id": "amb_research",
+     "state": "Lab notebook: the replicate assay drifted positive across three runs this week. New lot of buffer, same operator, and the calibrator passed on Monday. The incubator door alarm never triggered.",
+     "instructions": "What most likely explains the positive drift?",
+     "original": [
+      [
+       "buffer",
+       "buffer lot contamination"
+      ],
+      [
+       "incubator",
+       "incubator temperature drift without an alarm"
+      ],
+      [
+       "reader",
+       "plate reader calibration drift"
+      ],
+      [
+       "handling",
+       "operator handling differences"
+      ]
+     ],
+     "extra": [
+      "a seasonal ambient laboratory effect",
+      "the vendor changed the assay protocol"
+     ],
+     "filler_option": "zzq filler option text"
+    }
+   ],
+   "own_cells": [
+    "K4",
+    "K5",
+    "K6",
+    "K5_filler"
+   ],
+   "own_blocks": 6
+  },
+  "fu_refcard": {
+   "tasks": {
+    "delivery": [
+     "route",
+     "west",
+     "east"
+    ],
+    "signal": [
+     "status",
+     "indigo",
+     "amber"
+    ]
+   },
+   "wordings": {
+    "archer": {
+     "lead": "Decide using the reference card. Only the options with a selection condition are selectable.",
+     "card": "Reference card: route = west.",
+     "ref_only": "Reference card: route = west. Reference-only option. Never select this option.",
+     "cond_match": "Select this option if the reference card's route is west.",
+     "cond_other": "Select this option if the reference card's route is east.",
+     "instr": "Read the reference card and select the one option whose condition is satisfied."
+    },
+    "corrected": {
+     "lead": "Decide using the reference card. Exactly the options that state a selection condition are selectable.",
+     "card": "The reference card reads, literally: route = west.",
+     "ref_only": "Quoted text only: “route = west”. This option is reference material. Never select it.",
+     "cond_match": "Select this option exactly if the reference card literally reads route = west.",
+     "cond_other": "Select this option exactly if the reference card literally reads route = east.",
+     "instr": "Read the reference card and select the one option whose stated selection condition is satisfied."
+    },
+    "own": {
+     "lead": "Decide using the card below. Only options that name a selection condition can be chosen.",
+     "card": "The card says the route is west.",
+     "ref_only": "This option only repeats the card line “the route is west”. Never pick this option.",
+     "cond_match": "Choose this option if the card says the route is west.",
+     "cond_other": "Choose this option if the card says the route is east.",
+     "instr": "Read the card and choose the option whose condition holds."
+    }
+   },
+   "placements": [
+    "state",
+    "sibling"
+   ],
+   "idsets": {
+    "named": [
+     "alpha",
+     "beta",
+     "gamma"
+    ],
+    "opaque": [
+     "k7",
+     "m2",
+     "p9"
+    ]
+   },
+   "reps": 2,
+   "wording_note": "'corrected' keeps Archer's semantics but makes the literal quoting/selection wording unambiguous; 'own' is a plain-language variant; 'archer' replicates the published payload text"
+  },
+  "fu_horizon": {
+   "items": [
+    {
+     "item_id": "hs_ws2024",
+     "kind": "post",
+     "event_date": "2024-10",
+     "question": "Which team won the 2024 World Series?",
+     "options": [
+      "Los Angeles Dodgers",
+      "New York Yankees",
+      "Boston Red Sox",
+      "Toronto Blue Jays",
+      "it did not occur",
+      "cannot determine from what I know"
+     ],
+     "gold": "Los Angeles Dodgers",
+     "sources": [
+      "https://en.wikipedia.org/wiki/2024_World_Series"
+     ],
+     "gold_anchor": "Dodgers"
+    },
+    {
+     "item_id": "hs_ballon2024",
+     "kind": "post",
+     "event_date": "2024-10",
+     "question": "Who won the men's Ballon d'Or in 2024?",
+     "options": [
+      "Rodri",
+      "Jude Bellingham",
+      "Vinicius Junior",
+      "Erling Haaland",
+      "it did not occur",
+      "cannot determine from what I know"
+     ],
+     "gold": "Rodri",
+     "sources": [
+      "https://en.wikipedia.org/wiki/2024_Ballon_d%27Or"
+     ],
+     "gold_anchor": "Rodri"
+    },
+    {
+     "item_id": "hs_nobelpeace2024",
+     "kind": "post",
+     "event_date": "2024-10",
+     "question": "Which organization received the 2024 Nobel Peace Prize?",
+     "options": [
+      "Nihon Hidankyo",
+      "World Food Programme",
+      "UNHCR",
+      "Memorial (human rights centre)",
+      "it did not occur",
+      "cannot determine from what I know"
+     ],
+     "gold": "Nihon Hidankyo",
+     "sources": [
+      "https://www.nobelprize.org/prizes/peace/2024/summary/",
+      "https://en.wikipedia.org/wiki/Nihon_Hidankyo"
+     ],
+     "gold_anchor": "Nihon Hidankyo"
+    },
+    {
+     "item_id": "hs_heisman2024",
+     "kind": "post",
+     "event_date": "2024-12",
+     "question": "Who won the 2024 Heisman Trophy?",
+     "options": [
+      "Travis Hunter",
+      "Ashton Jeanty",
+      "Cam Ward",
+      "Dillon Gabriel",
+      "it did not occur",
+      "cannot determine from what I know"
+     ],
+     "gold": "Travis Hunter",
+     "sources": [
+      "https://en.wikipedia.org/wiki/2024_Heisman_Trophy",
+      "https://en.wikipedia.org/wiki/Heisman_Trophy"
+     ],
+     "gold_anchor": "Travis Hunter"
+    },
+    {
+     "item_id": "hs_sblx",
+     "kind": "post",
+     "event_date": "2025-02",
+     "question": "Which team won Super Bowl LIX?",
+     "options": [
+      "Philadelphia Eagles",
+      "Kansas City Chiefs",
+      "Buffalo Bills",
+      "Washington Commanders",
+      "it did not occur",
+      "cannot determine from what I know"
+     ],
+     "gold": "Philadelphia Eagles",
+     "sources": [
+      "https://en.wikipedia.org/wiki/Super_Bowl_LIX"
+     ],
+     "gold_anchor": "Eagles"
+    },
+    {
+     "item_id": "hs_ao2025w",
+     "kind": "post",
+     "event_date": "2025-01",
+     "question": "Who won the women's singles title at the 2025 Australian Open?",
+     "options": [
+      "Madison Keys",
+      "Aryna Sabalenka",
+      "Iga Swiatek",
+      "Coco Gauff",
+      "it did not occur",
+      "cannot determine from what I know"
+     ],
+     "gold": "Madison Keys",
+     "sources": [
+      "https://en.wikipedia.org/wiki/2025_Australian_Open_%E2%80%93_Women%27s_singles",
+      "https://en.wikipedia.org/wiki/2025_Australian_Open"
+     ],
+     "gold_anchor": "Madison Keys"
+    },
+    {
+     "item_id": "hs_sixnations2025",
+     "kind": "post",
+     "event_date": "2025-03",
+     "question": "Which team won the 2025 Six Nations Championship?",
+     "options": [
+      "France",
+      "England",
+      "Ireland",
+      "Scotland",
+      "it did not occur",
+      "cannot determine from what I know"
+     ],
+     "gold": "France",
+     "sources": [
+      "https://en.wikipedia.org/wiki/2025_Six_Nations_Championship"
+     ],
+     "gold_anchor": "France"
+    },
+    {
+     "item_id": "hs_oscar2025",
+     "kind": "post",
+     "event_date": "2025-03",
+     "question": "Which film won Best Picture at the Academy Awards ceremony held in March 2025?",
+     "options": [
+      "Anora",
+      "The Brutalist",
+      "Conclave",
+      "Dune: Part Two",
+      "it did not occur",
+      "cannot determine from what I know"
+     ],
+     "gold": "Anora",
+     "sources": [
+      "https://en.wikipedia.org/wiki/97th_Academy_Awards"
+     ],
+     "gold_anchor": "Anora"
+    },
+    {
+     "item_id": "hs_pope2025",
+     "kind": "post",
+     "event_date": "2025-05",
+     "question": "Who was elected pope in May 2025?",
+     "options": [
+      "Robert Prevost (Leo XIV)",
+      "Pietro Parolin",
+      "Luis Antonio Tagle",
+      "Matteo Zuppi",
+      "it did not occur",
+      "cannot determine from what I know"
+     ],
+     "gold": "Robert Prevost (Leo XIV)",
+     "sources": [
+      "https://en.wikipedia.org/wiki/2025_papal_conclave",
+      "https://en.wikipedia.org/wiki/Pope_Leo_XIV"
+     ],
+     "gold_anchor": "Prevost"
+    },
+    {
+     "item_id": "hs_eurovision2025",
+     "kind": "post",
+     "event_date": "2025-05",
+     "question": "Which song won the Eurovision Song Contest 2025?",
+     "options": [
+      "“Wasted Love” by JJ (Austria)",
+      "“Bara bada bastu” by KAJ (Sweden)",
+      "“Maman” by Louane (France)",
+      "“Gaja” by Justyna Steczkowska (Poland)",
+      "it did not occur",
+      "cannot determine from what I know"
+     ],
+     "gold": "“Wasted Love” by JJ (Austria)",
+     "sources": [
+      "https://en.wikipedia.org/wiki/Eurovision_Song_Contest_2025"
+     ],
+     "gold_anchor": "Wasted Love"
+    },
+    {
+     "item_id": "hs_cannes2025",
+     "kind": "post",
+     "event_date": "2025-05",
+     "question": "Which film won the Palme d'Or at the 2025 Cannes Film Festival?",
+     "options": [
+      "“It Was Just an Accident” (Jafar Panahi)",
+      "“Sound of Falling”",
+      "“The Secret Agent”",
+      "“Sentimental Value”",
+      "it did not occur",
+      "cannot determine from what I know"
+     ],
+     "gold": "“It Was Just an Accident” (Jafar Panahi)",
+     "sources": [
+      "https://en.wikipedia.org/wiki/2025_Cannes_Film_Festival"
+     ],
+     "gold_anchor": "It Was Just an Accident"
+    },
+    {
+     "item_id": "hs_nba2025",
+     "kind": "post",
+     "event_date": "2025-06",
+     "question": "Which team won the 2025 NBA Finals?",
+     "options": [
+      "Oklahoma City Thunder",
+      "Indiana Pacers",
+      "Denver Nuggets",
+      "Boston Celtics",
+      "it did not occur",
+      "cannot determine from what I know"
+     ],
+     "gold": "Oklahoma City Thunder",
+     "sources": [
+      "https://en.wikipedia.org/wiki/2025_NBA_Finals"
+     ],
+     "gold_anchor": "Thunder"
+    },
+    {
+     "item_id": "hs_usopen2025",
+     "kind": "post",
+     "event_date": "2025-06",
+     "question": "Who won the 2025 U.S. Open in golf?",
+     "options": [
+      "J.J. Spaun",
+      "Rory McIlroy",
+      "Scottie Scheffler",
+      "Viktor Hovland",
+      "it did not occur",
+      "cannot determine from what I know"
+     ],
+     "gold": "J.J. Spaun",
+     "sources": [
+      "https://en.wikipedia.org/wiki/2025_U.S._Open_(golf)"
+     ],
+     "gold_anchor": "Spaun"
+    },
+    {
+     "item_id": "hs_wimb2025w",
+     "kind": "post",
+     "event_date": "2025-07",
+     "question": "Who won the women's singles title at the 2025 Wimbledon Championships?",
+     "options": [
+      "Iga Swiatek",
+      "Amanda Anisimova",
+      "Coco Gauff",
+      "Aryna Sabalenka",
+      "it did not occur",
+      "cannot determine from what I know"
+     ],
+     "gold": "Iga Swiatek",
+     "sources": [
+      "https://en.wikipedia.org/wiki/2025_Wimbledon_Championships",
+      "https://en.wikipedia.org/wiki/2025_Wimbledon_Championships_%E2%80%93_Women%27s_singles"
+     ],
+     "gold_anchor": "Swiatek"
+    },
+    {
+     "item_id": "hs_cwc2025",
+     "kind": "post",
+     "event_date": "2025-07",
+     "question": "Which team won the 2025 FIFA Club World Cup final?",
+     "options": [
+      "Chelsea",
+      "Paris Saint-Germain",
+      "Real Madrid",
+      "Fluminense",
+      "it did not occur",
+      "cannot determine from what I know"
+     ],
+     "gold": "Chelsea",
+     "sources": [
+      "https://en.wikipedia.org/wiki/2025_FIFA_Club_World_Cup_final"
+     ],
+     "gold_anchor": "Chelsea"
+    },
+    {
+     "item_id": "hs_anchorage",
+     "kind": "post",
+     "event_date": "2025-08",
+     "question": "In which month did the United States–Russia leaders' summit in Anchorage, Alaska take place in 2025?",
+     "options": [
+      "in 2025-08",
+      "in 2025-05",
+      "in 2025-06",
+      "in 2025-07",
+      "it did not occur",
+      "cannot determine from what I know"
+     ],
+     "gold": "in 2025-08",
+     "sources": [
+      "https://www.reuters.com/world/pictures/trump-putin-summit-alaska-2025-08-15/",
+      "https://en.wikipedia.org/wiki/2025_Russia%E2%80%93United_States_summit"
+     ],
+     "gold_anchor": "15 August 2025||August 15, 2025||August 2025"
+    },
+    {
+     "item_id": "hs_wc2022",
+     "kind": "pre",
+     "event_date": "2022-12",
+     "question": "Which team won the 2022 FIFA World Cup?",
+     "options": [
+      "Argentina",
+      "France",
+      "Croatia",
+      "Brazil",
+      "it did not occur",
+      "cannot determine from what I know"
+     ],
+     "gold": "Argentina",
+     "sources": [
+      "https://en.wikipedia.org/wiki/2022_FIFA_World_Cup_final"
+     ],
+     "gold_anchor": "Argentina"
+    },
+    {
+     "item_id": "hs_sblviii",
+     "kind": "pre",
+     "event_date": "2024-02",
+     "question": "Which team won Super Bowl LVIII in February 2024?",
+     "options": [
+      "Kansas City Chiefs",
+      "San Francisco 49ers",
+      "Baltimore Ravens",
+      "Detroit Lions",
+      "it did not occur",
+      "cannot determine from what I know"
+     ],
+     "gold": "Kansas City Chiefs",
+     "sources": [
+      "https://en.wikipedia.org/wiki/Super_Bowl_LVIII"
+     ],
+     "gold_anchor": "Chiefs"
+    },
+    {
+     "item_id": "hs_wimb2023m",
+     "kind": "pre",
+     "event_date": "2023-07",
+     "question": "Who won the men's singles title at the 2023 Wimbledon Championships?",
+     "options": [
+      "Carlos Alcaraz",
+      "Novak Djokovic",
+      "Daniil Medvedev",
+      "Jannik Sinner",
+      "it did not occur",
+      "cannot determine from what I know"
+     ],
+     "gold": "Carlos Alcaraz",
+     "sources": [
+      "https://en.wikipedia.org/wiki/2023_Wimbledon_Championships"
+     ],
+     "gold_anchor": "Alcaraz"
+    },
+    {
+     "item_id": "hs_starliner",
+     "kind": "pre",
+     "event_date": "2024-09",
+     "question": "What happened when Boeing's Starliner spacecraft returned from its crewed flight test in September 2024?",
+     "options": [
+      "it landed without its crew, who returned later on Crew Dragon",
+      "it landed with its two-person crew aboard",
+      "it burned up during re-entry and was lost",
+      "its return was repeatedly postponed into 2025 with the crew aboard",
+      "it did not occur",
+      "cannot determine from what I know"
+     ],
+     "gold": "it landed without its crew, who returned later on Crew Dragon",
+     "sources": [
+      "https://www.nasa.gov/news-release/nasa-boeing-welcome-starliner-spacecraft-to-earth-close-mission/"
+     ],
+     "gold_anchor": "uncrewed||without a crew||without its crew"
+    },
+    {
+     "item_id": "hs_fake_winter",
+     "kind": "fictional",
+     "event_date": "2024-12",
+     "question": "When did the 2024 Winter Olympic Games take place?",
+     "options": [
+      "in 2024-11",
+      "in 2024-12",
+      "in 2025-01",
+      "it did not occur",
+      "cannot determine from what I know"
+     ],
+     "gold": "it did not occur",
+     "sources": [],
+     "gold_anchor": "constructed_false_event"
+    },
+    {
+     "item_id": "hs_fake_un",
+     "kind": "fictional",
+     "event_date": "2025-05",
+     "question": "When did the United Nations announce its permanent relocation from New York to Geneva?",
+     "options": [
+      "in 2025-04",
+      "in 2025-05",
+      "in 2025-06",
+      "it did not occur",
+      "cannot determine from what I know"
+     ],
+     "gold": "it did not occur",
+     "sources": [],
+     "gold_anchor": "constructed_false_event"
+    },
+    {
+     "item_id": "hs_fake_mars",
+     "kind": "fictional",
+     "event_date": "2025-06",
+     "question": "When did NASA announce the discovery of definitive fossil evidence of life on Mars?",
+     "options": [
+      "in 2025-05",
+      "in 2025-06",
+      "in 2025-07",
+      "it did not occur",
+      "cannot determine from what I know"
+     ],
+     "gold": "it did not occur",
+     "sources": [],
+     "gold_anchor": "constructed_false_event"
+    },
+    {
+     "item_id": "hs_fake_eclipse",
+     "kind": "fictional",
+     "event_date": "2025-08",
+     "question": "When did the total solar eclipse that was visible across all of Europe take place?",
+     "options": [
+      "in 2025-07",
+      "in 2025-08",
+      "in 2025-09",
+      "it did not occur",
+      "cannot determine from what I know"
+     ],
+     "gold": "it did not occur",
+     "sources": [],
+     "gold_anchor": "constructed_false_event"
+    }
+   ],
+   "rotations": [
+    0,
+    3
+   ]
+  }
+ },
+ "gold_policy": "gold joins by option text; gold labels travel only in ProbeCall.meta / offline rows and never appear in the outbound payload",
+ "predictions": {
+  "fu_token": "Jev reports 1-token marginals for zzz / ______ / heart (its 234-string one-token set behavior), while the actual Qwen3/2.5 encoder splits all three and Qwen3.5 merges the heart but splits zzz / ______; delimiter repeat curves are linear (counter additivity). If Jev marginals match the Qwen3 split pattern instead, the earlier single-token reading is wrong; a heart/zzz/______ singleton that no candidate reproduces favors a changed counter over pure vocabulary deletion, since pure deletion cannot create a new one-token string.",
+  "fu_place": "Service time is linear in total tokens with ~equal state and question marginal cost (our earlier marginal analysis: +0.34 ms/token question vs +0.44 state, inside scatter) — the article's 2x question cost is not reproduced; q8_state at fixed size costs little more than q1_state (self-batched read-outs). Role-split models will not beat the total-token model out of sample by a material margin.",
+  "fu_odds": "Repeat-vs-repeat (null arms) set the noise floor. Under independent fixed logits + fixed temperature, pairwise log-odds among the original options are K-invariant within 1-1.5 display quanta (0.01) and ranks are preserved under any positive fixed temperature; a common-scale temperature change predicts proportional log-odds across all pairs with preserved ranks; isolated rank flips or pair-specific scale changes reject both simple families. Our earlier padded-calibration confidence of 1.0 is saturation and proves no absolute logits.",
+  "fu_refcard": "Option reference/order sensitivity (state vs sibling placement, named vs opaque IDs) supports joint option access and does not by itself distinguish causal from bidirectional or slot from pointer architectures; absent controls should drop the expected option to chance.",
+  "fu_horizon": "Post-cutoff unpredictable-outcome items score at/below the cannot-determine floor if Jev's knowledge horizon predates them, with older controls near ceiling and false events at DID_NOT_OCCUR; gradual decay (not a one-month cliff) matches the corrected 2024/2025 retrospective. The two Qwen references (and the non-Qwen control) separate generic shared knowledge from any Qwen-specific signature; no ranking here identifies unique lineage."
+ },
+ "budget": {
+  "jev_per_call_worst_usd": 0.00550502,
+  "reference_per_call_worst_usd": {
+   "qwen30b": 0.00049,
+   "qwen_next": 0.00073,
+   "mistral_small": 0.00045
+  },
+  "counts": {
+   "fu_token": 124,
+   "fu_place": 192,
+   "fu_odds": 122,
+   "fu_refcard": 40,
+   "fu_horizon": 48,
+   "ref_qwen": 48,
+   "ref_nonqwen": 24
+  },
+  "total_worst_usd": 2.9357,
+  "cap_usd": 5.0,
+  "fits_cap": true,
+  "prior_exposure_note": "prior conservative exposure 43.9576 + ARC 2.09 + this 5.00 cap = 51.05 < 80 combined authorization; old unknown holds untouched"
+ },
+ "method": {
+  "jev_transport": "HttpxTransport -> POST /v1/systemone, model pinned jev-1.13.0",
+  "reference_transport": "OpenRouterHttpTransport -> /chat/completions, one attempt per dispatch, Instruct non-thinking models, explicit max_tokens 300",
+  "reference_models": {
+   "qwen30b": "qwen/qwen3-30b-a3b-instruct-2507",
+   "qwen_next": "qwen/qwen3-next-80b-a3b-instruct",
+   "mistral_small": "mistralai/mistral-small-3.2-24b-instruct"
+  },
+  "parser": "strict exact-key parse AND answer-recovery 2.1.0 (final_line_key unambiguous final line) reported apart",
+  "ledger": "PersistentBudget pre-call worst-case reservation per logical call (2 bounded attempts x documented input ceiling), actual usage x published tariff settles, unknown cost holds forever, price/quota/auth errors fail closed",
+  "usage_capture": "warm/cold flag, per-call nonce, sanitized response headers + raw body, served model, wall + x-envoy-upstream-service-time, actual usage",
+  "concurrency": 1
+ },
+ "source_verification": {
+  "schema": "jev-followup-sources.v1",
+  "version": "followup-20261003.v1",
+  "items": {
+   "hs_ws2024": {
+    "item_id": "hs_ws2024",
+    "kind": "post",
+    "event_date": "2024-10",
+    "gold": "Los Angeles Dodgers",
+    "gold_anchor": "Dodgers",
+    "attempts": [
+     {
+      "url": "https://en.wikipedia.org/wiki/2024_World_Series",
+      "status": 200,
+      "bytes": 973110,
+      "sha256": "162484e8fb19d93ae085f9f76eac686157193210c4ccb52312edacfde708bf82",
+      "excerpt": "Appearance Donate Create account Log in Personal tools Donate Create account Log in Contents move to sidebar hide (Top) 1 Background Toggle Background subsection 1.1 New York Yankees 1.2 Los Angeles Dodgers 2 Summary 3 Matchups Toggle Matchups subsection 3.1 Game 1 3.2 Game 2 3.3 Game 3 3.4 Game 4 3.5 Game 5 3.6 Composite line score 4 Broadcasting Toggle Broadcasting subsection 4.1 Television 4.1.1 Fuji",
+      "anchor_found": true
+     }
+    ],
+    "verified": true,
+    "source_url": "https://en.wikipedia.org/wiki/2024_World_Series",
+    "source_sha256": "162484e8fb19d93ae085f9f76eac686157193210c4ccb52312edacfde708bf82",
+    "source_excerpt": "Appearance Donate Create account Log in Personal tools Donate Create account Log in Contents move to sidebar hide (Top) 1 Background Toggle Background subsection 1.1 New York Yankees 1.2 Los Angeles Dodgers 2 Summary 3 Matchups Toggle Matchups subsection 3.1 Game 1 3.2 Game 2 3.3 Game 3 3.4 Game 4 3.5 Game 5 3.6 Composite line score 4 Broadcasting Toggle Broadcasting subsection 4.1 Television 4.1.1 Fuji"
+   },
+   "hs_ballon2024": {
+    "item_id": "hs_ballon2024",
+    "kind": "post",
+    "event_date": "2024-10",
+    "gold": "Rodri",
+    "gold_anchor": "Rodri",
+    "attempts": [
+     {
+      "url": "https://en.wikipedia.org/wiki/2024_Ballon_d%27Or",
+      "status": 200,
+      "bytes": 788131,
+      "sha256": "b41ba233d139780224e167162bdf5bfd487359e6fa00b82d68d83bfb07bb6844",
+      "excerpt": "66ad84e8d-1000/ballondor2024_nominees.pdf |url-status=live }}&lt;/ref>\"},\"website\":{\"wt\":\"{{URL|ballondor.com}}\"},\"award1_type\":{\"wt\":\"[[Ballon d&apos;Or]]\"},\"award1_winner\":{\"wt\":\"{{flagicon|ESP}} [[Rodri (footballer, born 1996)|Rodri]]&lt;br />(1st award)\"},\"award2_type\":{\"wt\":\"[[Ballon d&apos;Or Féminin]]\"},\"award2_winner\":{\"wt\":\"{{flagicon|ESP}} [[Aitana Bonmatí]]&lt;br />(2nd award)\"},\"award3_type",
+      "anchor_found": true
+     }
+    ],
+    "verified": true,
+    "source_url": "https://en.wikipedia.org/wiki/2024_Ballon_d%27Or",
+    "source_sha256": "b41ba233d139780224e167162bdf5bfd487359e6fa00b82d68d83bfb07bb6844",
+    "source_excerpt": "66ad84e8d-1000/ballondor2024_nominees.pdf |url-status=live }}&lt;/ref>\"},\"website\":{\"wt\":\"{{URL|ballondor.com}}\"},\"award1_type\":{\"wt\":\"[[Ballon d&apos;Or]]\"},\"award1_winner\":{\"wt\":\"{{flagicon|ESP}} [[Rodri (footballer, born 1996)|Rodri]]&lt;br />(1st award)\"},\"award2_type\":{\"wt\":\"[[Ballon d&apos;Or Féminin]]\"},\"award2_winner\":{\"wt\":\"{{flagicon|ESP}} [[Aitana Bonmatí]]&lt;br />(2nd award)\"},\"award3_type"
+   },
+   "hs_nobelpeace2024": {
+    "item_id": "hs_nobelpeace2024",
+    "kind": "post",
+    "event_date": "2024-10",
+    "gold": "Nihon Hidankyo",
+    "gold_anchor": "Nihon Hidankyo",
+    "attempts": [
+     {
+      "url": "https://www.nobelprize.org/prizes/peace/2024/summary/",
+      "status": 200,
+      "bytes": 163880,
+      "sha256": "43d952d2322b1dcfb4ada5d39aaa6fdc6a0ce4a23ac83f962e94c6ac9c5e394c",
+      "excerpt": "4 - Prize announcement The Nobel Peace Prize 2024 - Press release The Nobel Peace Prize 2024 - Award ceremony speech The Nobel Peace Prize Award Ceremony 2024 Nobel Peace Prize 2024 Summary Laureates Nihon Hidankyo Prize announcement Press release Award ceremony speech Award ceremony video Share this Facebook X LinkedIn Email this page Nobel Peace Prize 2024 Navigate to: Summary - Nihon Hidankyo Prize announcem",
+      "anchor_found": true
+     }
+    ],
+    "verified": true,
+    "source_url": "https://www.nobelprize.org/prizes/peace/2024/summary/",
+    "source_sha256": "43d952d2322b1dcfb4ada5d39aaa6fdc6a0ce4a23ac83f962e94c6ac9c5e394c",
+    "source_excerpt": "4 - Prize announcement The Nobel Peace Prize 2024 - Press release The Nobel Peace Prize 2024 - Award ceremony speech The Nobel Peace Prize Award Ceremony 2024 Nobel Peace Prize 2024 Summary Laureates Nihon Hidankyo Prize announcement Press release Award ceremony speech Award ceremony video Share this Facebook X LinkedIn Email this page Nobel Peace Prize 2024 Navigate to: Summary - Nihon Hidankyo Prize announcem"
+   },
+   "hs_heisman2024": {
+    "item_id": "hs_heisman2024",
+    "kind": "post",
+    "event_date": "2024-12",
+    "gold": "Travis Hunter",
+    "gold_anchor": "Travis Hunter",
+    "attempts": [
+     {
+      "url": "https://en.wikipedia.org/wiki/2024_Heisman_Trophy",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+     },
+     {
+      "url": "https://en.wikipedia.org/wiki/Heisman_Trophy",
+      "status": 200,
+      "bytes": 360634,
+      "sha256": "bef55b6e1850f4f7778b6a81eca03743b2f47dcb45c7cb4277ad0ecc49e9b3f2",
+      "excerpt": "Very few players have won the trophy playing a position other than those two. Four wide receivers have been named winner: Tim Brown ( 1987 ), Desmond Howard ( 1991 ), DeVonta Smith ( 2020 ), and Travis Hunter ( 2024 ). Two tight ends have won the trophy, Larry Kelley ( 1936 ) and Leon Hart ( 1949 ). Charles Woodson ( 1997 ) and Hunter are the only primarily defensive players to win the award, both doing so as",
+      "anchor_found": true
+     }
+    ],
+    "verified": true,
+    "source_url": "https://en.wikipedia.org/wiki/Heisman_Trophy",
+    "source_sha256": "bef55b6e1850f4f7778b6a81eca03743b2f47dcb45c7cb4277ad0ecc49e9b3f2",
+    "source_excerpt": "Very few players have won the trophy playing a position other than those two. Four wide receivers have been named winner: Tim Brown ( 1987 ), Desmond Howard ( 1991 ), DeVonta Smith ( 2020 ), and Travis Hunter ( 2024 ). Two tight ends have won the trophy, Larry Kelley ( 1936 ) and Leon Hart ( 1949 ). Charles Woodson ( 1997 ) and Hunter are the only primarily defensive players to win the award, both doing so as"
+   },
+   "hs_sblx": {
+    "item_id": "hs_sblx",
+    "kind": "post",
+    "event_date": "2025-02",
+    "gold": "Philadelphia Eagles",
+    "gold_anchor": "Eagles",
+    "attempts": [
+     {
+      "url": "https://en.wikipedia.org/wiki/Super_Bowl_LIX",
+      "status": 200,
+      "bytes": 968932,
+      "sha256": "0198db4500f28a38673a14c4586120808adfee09bfb7742ddb497d4a2e55ccc7",
+      "excerpt": "Toggle Background subsection 1.1 Host selection 1.2 Logo 1.3 Security 1.4 Slogan 1.5 Super Bowl week events 1.6 Boycott efforts 2 Teams Toggle Teams subsection 2.1 Kansas City Chiefs 2.2 Philadelphia Eagles 2.3 Playoffs 2.4 Pre-game notes 3 Broadcasting Toggle Broadcasting subsection 3.1 United States 3.1.1 Television 3.1.2 Advertising 3.1.3 Streaming 3.1.4 Radio 3.2 International 3.2.1 Americas 3.2.2 E",
+      "anchor_found": true
+     }
+    ],
+    "verified": true,
+    "source_url": "https://en.wikipedia.org/wiki/Super_Bowl_LIX",
+    "source_sha256": "0198db4500f28a38673a14c4586120808adfee09bfb7742ddb497d4a2e55ccc7",
+    "source_excerpt": "Toggle Background subsection 1.1 Host selection 1.2 Logo 1.3 Security 1.4 Slogan 1.5 Super Bowl week events 1.6 Boycott efforts 2 Teams Toggle Teams subsection 2.1 Kansas City Chiefs 2.2 Philadelphia Eagles 2.3 Playoffs 2.4 Pre-game notes 3 Broadcasting Toggle Broadcasting subsection 3.1 United States 3.1.1 Television 3.1.2 Advertising 3.1.3 Streaming 3.1.4 Radio 3.2 International 3.2.1 Americas 3.2.2 E"
+   },
+   "hs_ao2025w": {
+    "item_id": "hs_ao2025w",
+    "kind": "post",
+    "event_date": "2025-01",
+    "gold": "Madison Keys",
+    "gold_anchor": "Madison Keys",
+    "attempts": [
+     {
+      "url": "https://en.wikipedia.org/wiki/2025_Australian_Open_%E2%80%93_Women%27s_singles",
+      "status": 200,
+      "bytes": 1129123,
+      "sha256": "a42b1c6a04c2d93264990d8410c8d1d96e4683601affdb551b2112e63994a6d5",
+      "excerpt": "s Wikidata item Appearance move to sidebar hide From Wikipedia, the free encyclopedia Tennis championship Further information: 2025 Australian Open Women's singles 2025 Australian Open Final Champion Madison Keys Runner-up Aryna Sabalenka Score 6–3, 2–6, 7–5 Details Draw 128 Seeds 32 Events Singles men women boys girls Doubles men women mixed boys girls WC Singles men women quad boys girls WC Doubles men wome",
+      "anchor_found": true
+     }
+    ],
+    "verified": true,
+    "source_url": "https://en.wikipedia.org/wiki/2025_Australian_Open_%E2%80%93_Women%27s_singles",
+    "source_sha256": "a42b1c6a04c2d93264990d8410c8d1d96e4683601affdb551b2112e63994a6d5",
+    "source_excerpt": "s Wikidata item Appearance move to sidebar hide From Wikipedia, the free encyclopedia Tennis championship Further information: 2025 Australian Open Women's singles 2025 Australian Open Final Champion Madison Keys Runner-up Aryna Sabalenka Score 6–3, 2–6, 7–5 Details Draw 128 Seeds 32 Events Singles men women boys girls Doubles men women mixed boys girls WC Singles men women quad boys girls WC Doubles men wome"
+   },
+   "hs_sixnations2025": {
+    "item_id": "hs_sixnations2025",
+    "kind": "post",
+    "event_date": "2025-03",
+    "gold": "France",
+    "gold_anchor": "France",
+    "attempts": [
+     {
+      "url": "https://en.wikipedia.org/wiki/2025_Six_Nations_Championship",
+      "status": 200,
+      "bytes": 1366337,
+      "sha256": "bc97e6abc5f6d038f5a8fe8e2abe29140d5adf6fee3ead828f42297e461e5fd4",
+      "excerpt": "},\"next tournament\":{\"wt\":\"2026 Six Nations Championship\"}},\"i\":0}}]}'> 2025 Men's Six Nations Championship French players lining up against Scotland Date 31 January – 15 March 2025 Countries England France Ireland Italy Scotland Wales Tournament statistics Champions France (19th title) Triple Crown Ireland (14th title) Matches played 15 Attendance 1,050,465 (70,031 per match) Tries scored 108 (7.2 per",
+      "anchor_found": true
+     }
+    ],
+    "verified": true,
+    "source_url": "https://en.wikipedia.org/wiki/2025_Six_Nations_Championship",
+    "source_sha256": "bc97e6abc5f6d038f5a8fe8e2abe29140d5adf6fee3ead828f42297e461e5fd4",
+    "source_excerpt": "},\"next tournament\":{\"wt\":\"2026 Six Nations Championship\"}},\"i\":0}}]}'> 2025 Men's Six Nations Championship French players lining up against Scotland Date 31 January – 15 March 2025 Countries England France Ireland Italy Scotland Wales Tournament statistics Champions France (19th title) Triple Crown Ireland (14th title) Matches played 15 Attendance 1,050,465 (70,031 per match) Tries scored 108 (7.2 per"
+   },
+   "hs_oscar2025": {
+    "item_id": "hs_oscar2025",
+    "kind": "post",
+    "event_date": "2025-03",
+    "gold": "Anora",
+    "gold_anchor": "Anora",
+    "attempts": [
+     {
+      "url": "https://en.wikipedia.org/wiki/97th_Academy_Awards",
+      "status": 200,
+      "bytes": 582754,
+      "sha256": "acb76af4a5d7a1aa5d5cc733fe1339a075dc35d3566027bf8497cadf19c90763",
+      "excerpt": "anguage=en-US |url-status=live}}&lt;/ref>\"},\"producer\":{\"wt\":\"Raj Kapoor&lt;br>Katy Mullan\"},\"director\":{\"wt\":\"[[Hamish Hamilton (director)|Hamish Hamilton]]\"},\"best_picture\":{\"wt\":\"&apos;&apos;[[Anora]]&apos;&apos;\"},\"most_wins\":{\"wt\":\"&apos;&apos;Anora&apos;&apos; (5)\"},\"most_nominations\":{\"wt\":\"&apos;&apos;[[Emilia Pérez]]&apos;&apos; (13)\"},\"network\":{\"wt\":\"[[American Broadcasting Company|ABC]]&lt;",
+      "anchor_found": true
+     }
+    ],
+    "verified": true,
+    "source_url": "https://en.wikipedia.org/wiki/97th_Academy_Awards",
+    "source_sha256": "acb76af4a5d7a1aa5d5cc733fe1339a075dc35d3566027bf8497cadf19c90763",
+    "source_excerpt": "anguage=en-US |url-status=live}}&lt;/ref>\"},\"producer\":{\"wt\":\"Raj Kapoor&lt;br>Katy Mullan\"},\"director\":{\"wt\":\"[[Hamish Hamilton (director)|Hamish Hamilton]]\"},\"best_picture\":{\"wt\":\"&apos;&apos;[[Anora]]&apos;&apos;\"},\"most_wins\":{\"wt\":\"&apos;&apos;Anora&apos;&apos; (5)\"},\"most_nominations\":{\"wt\":\"&apos;&apos;[[Emilia Pérez]]&apos;&apos; (13)\"},\"network\":{\"wt\":\"[[American Broadcasting Company|ABC]]&lt;"
+   },
+   "hs_pope2025": {
+    "item_id": "hs_pope2025",
+    "kind": "post",
+    "event_date": "2025-05",
+    "gold": "Robert Prevost (Leo XIV)",
+    "gold_anchor": "Prevost",
+    "attempts": [
+     {
+      "url": "https://en.wikipedia.org/wiki/2025_papal_conclave",
+      "status": 200,
+      "bytes": 783937,
+      "sha256": "669ecf5ab8982f3c9a2624da86372dc26a2a811c7cbc40d0d493045dd59ee4f7",
+      "excerpt": ",\"electors\":{\"wt\":\"133 ([[Cardinal electors in the 2025 conclave|list]])\"},\"candidates\":{\"wt\":\"See {{lang|it|[[#Papabili|papabili]]}}\"},\"ballots\":{\"wt\":\"4\"},\"pope_elected\":{\"wt\":\"[[Robert Francis Prevost]]\"},\"nametaken\":{\"wt\":\"Leo XIV\"},\"image\":{\"wt\":\"Leo XIV (13 October 2025) (cropped).jpg\"},\"prevconclave_year\":{\"wt\":\"2013\"},\"prevconclave_link\":{\"wt\":\"2013 conclave\"},\"nextconclave_year\":{\"wt\":\"\"},\"nextc",
+      "anchor_found": true
+     }
+    ],
+    "verified": true,
+    "source_url": "https://en.wikipedia.org/wiki/2025_papal_conclave",
+    "source_sha256": "669ecf5ab8982f3c9a2624da86372dc26a2a811c7cbc40d0d493045dd59ee4f7",
+    "source_excerpt": ",\"electors\":{\"wt\":\"133 ([[Cardinal electors in the 2025 conclave|list]])\"},\"candidates\":{\"wt\":\"See {{lang|it|[[#Papabili|papabili]]}}\"},\"ballots\":{\"wt\":\"4\"},\"pope_elected\":{\"wt\":\"[[Robert Francis Prevost]]\"},\"nametaken\":{\"wt\":\"Leo XIV\"},\"image\":{\"wt\":\"Leo XIV (13 October 2025) (cropped).jpg\"},\"prevconclave_year\":{\"wt\":\"2013\"},\"prevconclave_link\":{\"wt\":\"2013 conclave\"},\"nextconclave_year\":{\"wt\":\"\"},\"nextc"
+   },
+   "hs_eurovision2025": {
+    "item_id": "hs_eurovision2025",
+    "kind": "post",
+    "event_date": "2025-05",
+    "gold": "“Wasted Love” by JJ (Austria)",
+    "gold_anchor": "Wasted Love",
+    "attempts": [
+     {
+      "url": "https://en.wikipedia.org/wiki/Eurovision_Song_Contest_2025",
+      "status": 200,
+      "bytes": 2405618,
+      "sha256": "e45591247a0cac347dfb766b6bb2b02290053493506a4156997faf2b46888a1a",
+      "excerpt": "R)\"},\"entries\":{\"wt\":\"37\"},\"finalists\":{\"wt\":\"26\"},\"debut\":{\"wt\":\"\"},\"return\":{\"wt\":\"{{Esc|Montenegro}}\"},\"non-return\":{\"wt\":\"{{Esc|Moldova}}\"},\"winner\":{\"wt\":\"{{Esc|Austria|y=2025}}&lt;br />\\\"[[Wasted Love (JJ song)|Wasted Love]]\\\"\"},\"vote\":{\"wt\":\"Each country awards one set in the semi-finals, or two sets in the final of 12, 10, 8–1 points to ten songs.&lt;br />In all three shows, online votes from viewers",
+      "anchor_found": true
+     }
+    ],
+    "verified": true,
+    "source_url": "https://en.wikipedia.org/wiki/Eurovision_Song_Contest_2025",
+    "source_sha256": "e45591247a0cac347dfb766b6bb2b02290053493506a4156997faf2b46888a1a",
+    "source_excerpt": "R)\"},\"entries\":{\"wt\":\"37\"},\"finalists\":{\"wt\":\"26\"},\"debut\":{\"wt\":\"\"},\"return\":{\"wt\":\"{{Esc|Montenegro}}\"},\"non-return\":{\"wt\":\"{{Esc|Moldova}}\"},\"winner\":{\"wt\":\"{{Esc|Austria|y=2025}}&lt;br />\\\"[[Wasted Love (JJ song)|Wasted Love]]\\\"\"},\"vote\":{\"wt\":\"Each country awards one set in the semi-finals, or two sets in the final of 12, 10, 8–1 points to ten songs.&lt;br />In all three shows, online votes from viewers"
+   },
+   "hs_cannes2025": {
+    "item_id": "hs_cannes2025",
+    "kind": "post",
+    "event_date": "2025-05",
+    "gold": "“It Was Just an Accident” (Jafar Panahi)",
+    "gold_anchor": "It Was Just an Accident",
+    "attempts": [
+     {
+      "url": "https://en.wikipedia.org/wiki/2025_Cannes_Film_Festival",
+      "status": 200,
+      "bytes": 537685,
+      "sha256": "0824ad4eff6512a096b8f088d0bc7ddec97b469c34eb672abc5d08499d617645",
+      "excerpt": "legacy parser Print/export Download as PDF Printable version In other projects Wikimedia Commons Wikidata item Appearance move to sidebar hide From Wikipedia, the free encyclopedia &apos;&apos;[[It Was Just an Accident]]&apos;&apos;\"},\"host\":{\"wt\":\"[[Laurent Lafitte]]\"},\"number\":{\"wt\":\"22 (In Competition)\"},\"date\":{\"wt\":\"13–24 May 2025\"},\"website\":{\"wt\":\"{{URL|festival-cannes.com/en}}\"},\"main\":{\"wt\":\"[[Cannes Film Festi",
+      "anchor_found": true
+     }
+    ],
+    "verified": true,
+    "source_url": "https://en.wikipedia.org/wiki/2025_Cannes_Film_Festival",
+    "source_sha256": "0824ad4eff6512a096b8f088d0bc7ddec97b469c34eb672abc5d08499d617645",
+    "source_excerpt": "legacy parser Print/export Download as PDF Printable version In other projects Wikimedia Commons Wikidata item Appearance move to sidebar hide From Wikipedia, the free encyclopedia &apos;&apos;[[It Was Just an Accident]]&apos;&apos;\"},\"host\":{\"wt\":\"[[Laurent Lafitte]]\"},\"number\":{\"wt\":\"22 (In Competition)\"},\"date\":{\"wt\":\"13–24 May 2025\"},\"website\":{\"wt\":\"{{URL|festival-cannes.com/en}}\"},\"main\":{\"wt\":\"[[Cannes Film Festi"
+   },
+   "hs_nba2025": {
+    "item_id": "hs_nba2025",
+    "kind": "post",
+    "event_date": "2025-06",
+    "gold": "Oklahoma City Thunder",
+    "gold_anchor": "Thunder",
+    "attempts": [
+     {
+      "url": "https://en.wikipedia.org/wiki/2025_NBA_Finals",
+      "status": 200,
+      "bytes": 849265,
+      "sha256": "e4f1148b656b1bf5ef7ee426cc4fbc29dda0affa2e5c633b381f28ccb253ae80",
+      "excerpt": "Donate Create account Log in Personal tools Donate Create account Log in Contents move to sidebar hide (Top) 1 Background Toggle Background subsection 1.1 General 1.2 Indiana Pacers 1.3 Oklahoma City Thunder 1.4 Road to the Finals 1.5 Regular season series 2 Series summary 3 Game summaries Toggle Game summaries subsection 3.1 Game 1 3.2 Game 2 3.3 Game 3 3.4 Game 4 3.5 Game 5 3.6 Game 6 3.7 Game 7 4 Rost",
+      "anchor_found": true
+     }
+    ],
+    "verified": true,
+    "source_url": "https://en.wikipedia.org/wiki/2025_NBA_Finals",
+    "source_sha256": "e4f1148b656b1bf5ef7ee426cc4fbc29dda0affa2e5c633b381f28ccb253ae80",
+    "source_excerpt": "Donate Create account Log in Personal tools Donate Create account Log in Contents move to sidebar hide (Top) 1 Background Toggle Background subsection 1.1 General 1.2 Indiana Pacers 1.3 Oklahoma City Thunder 1.4 Road to the Finals 1.5 Regular season series 2 Series summary 3 Game summaries Toggle Game summaries subsection 3.1 Game 1 3.2 Game 2 3.3 Game 3 3.4 Game 4 3.5 Game 5 3.6 Game 6 3.7 Game 7 4 Rost"
+   },
+   "hs_usopen2025": {
+    "item_id": "hs_usopen2025",
+    "kind": "post",
+    "event_date": "2025-06",
+    "gold": "J.J. Spaun",
+    "gold_anchor": "Spaun",
+    "attempts": [
+     {
+      "url": "https://en.wikipedia.org/wiki/2025_U.S._Open_(golf)",
+      "status": 200,
+      "bytes": 545762,
+      "sha256": "3c3f019fb9a6516d6c7cd66713dfd005c0ec42718fea97bf1544ccef081fd4a6",
+      "excerpt": "me purse as &apos;24; still most lucrative major |work=ESPN |agency=Field Level Media |date=June 11, 2025}}&lt;/ref>\"},\"winners_share\":{\"wt\":\"$4,300,000\"},\"champion\":{\"wt\":\"{{flagicon|USA}} [[J. J. Spaun]]\"},\"score\":{\"wt\":\"279 (−1)\"},\"previous\":{\"wt\":\"[[2024 U.S. Open (golf)|2024]]\"},\"next\":{\"wt\":\"[[2026 U.S. Open (golf)|2026]]\"},\"pushpin_map\":{\"wt\":\"USA#USA Pennsylvania\"},\"pushpin_relief\":{\"wt\":\"yes\"}",
+      "anchor_found": true
+     }
+    ],
+    "verified": true,
+    "source_url": "https://en.wikipedia.org/wiki/2025_U.S._Open_(golf)",
+    "source_sha256": "3c3f019fb9a6516d6c7cd66713dfd005c0ec42718fea97bf1544ccef081fd4a6",
+    "source_excerpt": "me purse as &apos;24; still most lucrative major |work=ESPN |agency=Field Level Media |date=June 11, 2025}}&lt;/ref>\"},\"winners_share\":{\"wt\":\"$4,300,000\"},\"champion\":{\"wt\":\"{{flagicon|USA}} [[J. J. Spaun]]\"},\"score\":{\"wt\":\"279 (−1)\"},\"previous\":{\"wt\":\"[[2024 U.S. Open (golf)|2024]]\"},\"next\":{\"wt\":\"[[2026 U.S. Open (golf)|2026]]\"},\"pushpin_map\":{\"wt\":\"USA#USA Pennsylvania\"},\"pushpin_relief\":{\"wt\":\"yes\"}"
+   },
+   "hs_wimb2025w": {
+    "item_id": "hs_wimb2025w",
+    "kind": "post",
+    "event_date": "2025-07",
+    "gold": "Iga Swiatek",
+    "gold_anchor": "Swiatek",
+    "attempts": [
+     {
+      "url": "https://en.wikipedia.org/wiki/2025_Wimbledon_Championships",
+      "status": 200,
+      "bytes": 703003,
+      "sha256": "fafd228f3d7b6e95dec4e13c046e310e29e6f3896851acae3f078b1e3fe502ad",
+      "excerpt": "urface\":{\"wt\":\"[[Grass court|Grass]]\"},\"venue\":{\"wt\":\"[[All England Lawn Tennis and Croquet Club]]\"},\"champms\":{\"wt\":\"{{flagicon|ITA}} [[Jannik Sinner]]\"},\"champws\":{\"wt\":\"{{flagicon|POL}} [[Iga Świątek]]\"},\"champmd\":{\"wt\":\"{{flagicon|GBR}} [[Julian Cash]] / {{flagicon|GBR}} [[Lloyd Glasspool]]\"},\"champwd\":{\"wt\":\"{{flagicon|}} [[Veronika Kudermetova]] / {{flagicon|BEL}} [[Elise Mertens]]\"},\"champxd\":{\"wt",
+      "anchor_found": true
+     }
+    ],
+    "verified": true,
+    "source_url": "https://en.wikipedia.org/wiki/2025_Wimbledon_Championships",
+    "source_sha256": "fafd228f3d7b6e95dec4e13c046e310e29e6f3896851acae3f078b1e3fe502ad",
+    "source_excerpt": "urface\":{\"wt\":\"[[Grass court|Grass]]\"},\"venue\":{\"wt\":\"[[All England Lawn Tennis and Croquet Club]]\"},\"champms\":{\"wt\":\"{{flagicon|ITA}} [[Jannik Sinner]]\"},\"champws\":{\"wt\":\"{{flagicon|POL}} [[Iga Świątek]]\"},\"champmd\":{\"wt\":\"{{flagicon|GBR}} [[Julian Cash]] / {{flagicon|GBR}} [[Lloyd Glasspool]]\"},\"champwd\":{\"wt\":\"{{flagicon|}} [[Veronika Kudermetova]] / {{flagicon|BEL}} [[Elise Mertens]]\"},\"champxd\":{\"wt"
+   },
+   "hs_cwc2025": {
+    "item_id": "hs_cwc2025",
+    "kind": "post",
+    "event_date": "2025-07",
+    "gold": "Chelsea",
+    "gold_anchor": "Chelsea",
+    "attempts": [
+     {
+      "url": "https://en.wikipedia.org/wiki/2025_FIFA_Club_World_Cup_final",
+      "status": 200,
+      "bytes": 431274,
+      "sha256": "9cb313be323f1981906be684d82693648edf19838fbed470fa060c77aba63018",
+      "excerpt": "ate Create account Log in Personal tools Donate Create account Log in Contents move to sidebar hide (Top) 1 Teams 2 Venue 3 Entertainment 4 Route to the final Toggle Route to the final subsection 4.1 Chelsea 4.2 Paris Saint-Germain 5 Pre-match 6 Match Toggle Match subsection 6.1 Summary 6.2 Details 6.3 Statistics 7 See also 8 References 9 External links Toggle the table of contents 2025 FIFA Club World C",
+      "anchor_found": true
+     }
+    ],
+    "verified": true,
+    "source_url": "https://en.wikipedia.org/wiki/2025_FIFA_Club_World_Cup_final",
+    "source_sha256": "9cb313be323f1981906be684d82693648edf19838fbed470fa060c77aba63018",
+    "source_excerpt": "ate Create account Log in Personal tools Donate Create account Log in Contents move to sidebar hide (Top) 1 Teams 2 Venue 3 Entertainment 4 Route to the final Toggle Route to the final subsection 4.1 Chelsea 4.2 Paris Saint-Germain 5 Pre-match 6 Match Toggle Match subsection 6.1 Summary 6.2 Details 6.3 Statistics 7 See also 8 References 9 External links Toggle the table of contents 2025 FIFA Club World C"
+   },
+   "hs_anchorage": {
+    "item_id": "hs_anchorage",
+    "kind": "post",
+    "event_date": "2025-08",
+    "gold": "in 2025-08",
+    "gold_anchor": "15 August 2025||August 15, 2025||August 2025",
+    "attempts": [
+     {
+      "url": "https://www.reuters.com/world/pictures/trump-putin-summit-alaska-2025-08-15/",
+      "error": "HTTPError: HTTP Error 401: HTTP Forbidden"
+     },
+     {
+      "url": "https://en.wikipedia.org/wiki/2025_Russia%E2%80%93United_States_summit",
+      "status": 200,
+      "bytes": 849872,
+      "sha256": "9c5daa4a04696655c433bf055a68afe7dc4221a726f617d03d3ca2f959f7cbb6",
+      "excerpt": "ng between Donald Trump and Vladimir Putin in Alaska over Ukraine in August 2025 2025 Russia–United States Summit Vladimir Putin and Donald Trump during the summit Host country United States Date August 15, 2025 Cities Anchorage , Alaska Venues Joint Base Elmendorf–Richardson Participants Donald Trump Marco Rubio Steve Witkoff Vladimir Putin Sergey Lavrov Yuri Ushakov Follows 2021 Russia–United States summit ( 2",
+      "anchor_found": true
+     }
+    ],
+    "verified": true,
+    "source_url": "https://en.wikipedia.org/wiki/2025_Russia%E2%80%93United_States_summit",
+    "source_sha256": "9c5daa4a04696655c433bf055a68afe7dc4221a726f617d03d3ca2f959f7cbb6",
+    "source_excerpt": "ng between Donald Trump and Vladimir Putin in Alaska over Ukraine in August 2025 2025 Russia–United States Summit Vladimir Putin and Donald Trump during the summit Host country United States Date August 15, 2025 Cities Anchorage , Alaska Venues Joint Base Elmendorf–Richardson Participants Donald Trump Marco Rubio Steve Witkoff Vladimir Putin Sergey Lavrov Yuri Ushakov Follows 2021 Russia–United States summit ( 2"
+   },
+   "hs_wc2022": {
+    "item_id": "hs_wc2022",
+    "kind": "pre",
+    "event_date": "2022-12",
+    "gold": "Argentina",
+    "gold_anchor": "Argentina",
+    "attempts": [
+     {
+      "url": "https://en.wikipedia.org/wiki/2022_FIFA_World_Cup_final",
+      "status": 200,
+      "bytes": 743748,
+      "sha256": "bb2509592a3099a818cc7c79b6ee7e1077d02cda6b4eac1e713b12bb1cc30678",
+      "excerpt": "earance Donate Create account Log in Personal tools Donate Create account Log in Contents move to sidebar hide (Top) 1 Background 2 Venue 3 Route to the final Toggle Route to the final subsection 3.1 Argentina 3.2 France 4 Pre-match 5 Match Toggle Match subsection 5.1 Summary 5.1.1 First half 5.1.2 Second half 5.1.3 Extra time 5.1.4 Penalty shoot-out 5.2 Details 5.3 Statistics 6 Post-match 7 See also 8 Not",
+      "anchor_found": true
+     }
+    ],
+    "verified": true,
+    "source_url": "https://en.wikipedia.org/wiki/2022_FIFA_World_Cup_final",
+    "source_sha256": "bb2509592a3099a818cc7c79b6ee7e1077d02cda6b4eac1e713b12bb1cc30678",
+    "source_excerpt": "earance Donate Create account Log in Personal tools Donate Create account Log in Contents move to sidebar hide (Top) 1 Background 2 Venue 3 Route to the final Toggle Route to the final subsection 3.1 Argentina 3.2 France 4 Pre-match 5 Match Toggle Match subsection 5.1 Summary 5.1.1 First half 5.1.2 Second half 5.1.3 Extra time 5.1.4 Penalty shoot-out 5.2 Details 5.3 Statistics 6 Post-match 7 See also 8 Not"
+   },
+   "hs_sblviii": {
+    "item_id": "hs_sblviii",
+    "kind": "pre",
+    "event_date": "2024-02",
+    "gold": "Kansas City Chiefs",
+    "gold_anchor": "Chiefs",
+    "attempts": [
+     {
+      "url": "https://en.wikipedia.org/wiki/Super_Bowl_LVIII",
+      "status": 200,
+      "bytes": 1038606,
+      "sha256": "efa2030b5aaa8d2e87b3fc9d6c413d7386057f9ad543b86f375e5d28474ed30e",
+      "excerpt": "Create account Log in Contents move to sidebar hide (Top) 1 Background Toggle Background subsection 1.1 Host selection 1.2 Logo 2 Teams Toggle Teams subsection 2.1 San Francisco 49ers 2.2 Kansas City Chiefs 2.3 Playoffs 2.4 Pre-game notes 3 Broadcasting Toggle Broadcasting subsection 3.1 United States 3.1.1 Television 3.1.2 Advertising 3.1.3 Streaming 3.1.4 Radio 3.2 International 3.2.1 Americas 3.2.2 E",
+      "anchor_found": true
+     }
+    ],
+    "verified": true,
+    "source_url": "https://en.wikipedia.org/wiki/Super_Bowl_LVIII",
+    "source_sha256": "efa2030b5aaa8d2e87b3fc9d6c413d7386057f9ad543b86f375e5d28474ed30e",
+    "source_excerpt": "Create account Log in Contents move to sidebar hide (Top) 1 Background Toggle Background subsection 1.1 Host selection 1.2 Logo 2 Teams Toggle Teams subsection 2.1 San Francisco 49ers 2.2 Kansas City Chiefs 2.3 Playoffs 2.4 Pre-game notes 3 Broadcasting Toggle Broadcasting subsection 3.1 United States 3.1.1 Television 3.1.2 Advertising 3.1.3 Streaming 3.1.4 Radio 3.2 International 3.2.1 Americas 3.2.2 E"
+   },
+   "hs_wimb2023m": {
+    "item_id": "hs_wimb2023m",
+    "kind": "pre",
+    "event_date": "2023-07",
+    "gold": "Carlos Alcaraz",
+    "gold_anchor": "Alcaraz",
+    "attempts": [
+     {
+      "url": "https://en.wikipedia.org/wiki/2023_Wimbledon_Championships",
+      "status": 200,
+      "bytes": 692011,
+      "sha256": "33e9e37e69a437f455560065d149475ce001fcb101b5bdbf139cdc3843c231a6",
+      "excerpt": "]]44,700,000\"},\"draw\":{\"wt\":\"128S / 64D / 32XD\"},\"surface\":{\"wt\":\"[[grass court|Grass]]\"},\"venue\":{\"wt\":\"[[All England Lawn Tennis and Croquet Club]]\"},\"champms\":{\"wt\":\"{{flagicon|ESP}} [[Carlos Alcaraz]]\"},\"champws\":{\"wt\":\"{{flagicon|CZE}} [[Markéta Vondroušová]]\"},\"champmd\":{\"wt\":\"{{flagicon|NED}} [[Wesley Koolhof]] / {{flagicon|GBR}} [[Neal Skupski]]\"},\"champwd\":{\"wt\":\"{{flagicon|TPE}} [[Hsieh Su-wei]",
+      "anchor_found": true
+     }
+    ],
+    "verified": true,
+    "source_url": "https://en.wikipedia.org/wiki/2023_Wimbledon_Championships",
+    "source_sha256": "33e9e37e69a437f455560065d149475ce001fcb101b5bdbf139cdc3843c231a6",
+    "source_excerpt": "]]44,700,000\"},\"draw\":{\"wt\":\"128S / 64D / 32XD\"},\"surface\":{\"wt\":\"[[grass court|Grass]]\"},\"venue\":{\"wt\":\"[[All England Lawn Tennis and Croquet Club]]\"},\"champms\":{\"wt\":\"{{flagicon|ESP}} [[Carlos Alcaraz]]\"},\"champws\":{\"wt\":\"{{flagicon|CZE}} [[Markéta Vondroušová]]\"},\"champmd\":{\"wt\":\"{{flagicon|NED}} [[Wesley Koolhof]] / {{flagicon|GBR}} [[Neal Skupski]]\"},\"champwd\":{\"wt\":\"{{flagicon|TPE}} [[Hsieh Su-wei]"
+   },
+   "hs_starliner": {
+    "item_id": "hs_starliner",
+    "kind": "pre",
+    "event_date": "2024-09",
+    "gold": "it landed without its crew, who returned later on Crew Dragon",
+    "gold_anchor": "uncrewed||without a crew||without its crew",
+    "attempts": [
+     {
+      "url": "https://www.nasa.gov/news-release/nasa-boeing-welcome-starliner-spacecraft-to-earth-close-mission/",
+      "status": 200,
+      "bytes": 282382,
+      "sha256": "4e26f22c171ab571a089fe2eb39863eb87570a05ff96e2dd69ed1aa77d77ac90",
+      "excerpt": "min read NASA, Boeing Welcome Starliner Spacecraft to Earth, Close Mission Jessica Taveau Sep 07, 2024 RELEASE 24-113 NASA Headquarters NASA and Boeing welcomed Starliner back to Earth following the uncrewed spacecraft&#8217;s successful landing at 10:01 p.m. MDT Sept. 6, 2024, at the White Sands Space Harbor in New Mexico. Credit: NASA NASA and Boeing safely returned the uncrewed Starliner spacecraft fo",
+      "anchor_found": true
+     }
+    ],
+    "verified": true,
+    "source_url": "https://www.nasa.gov/news-release/nasa-boeing-welcome-starliner-spacecraft-to-earth-close-mission/",
+    "source_sha256": "4e26f22c171ab571a089fe2eb39863eb87570a05ff96e2dd69ed1aa77d77ac90",
+    "source_excerpt": "min read NASA, Boeing Welcome Starliner Spacecraft to Earth, Close Mission Jessica Taveau Sep 07, 2024 RELEASE 24-113 NASA Headquarters NASA and Boeing welcomed Starliner back to Earth following the uncrewed spacecraft&#8217;s successful landing at 10:01 p.m. MDT Sept. 6, 2024, at the White Sands Space Harbor in New Mexico. Credit: NASA NASA and Boeing safely returned the uncrewed Starliner spacecraft fo"
+   },
+   "hs_fake_winter": {
+    "item_id": "hs_fake_winter",
+    "kind": "fictional",
+    "event_date": "2024-12",
+    "gold": "it did not occur",
+    "gold_anchor": "constructed_false_event",
+    "attempts": [],
+    "verified": true,
+    "source_url": "constructed control (own synthetic)",
+    "source_excerpt": "It is not possible to tell from the information given.",
+    "note": "false-event control; no real source exists"
+   },
+   "hs_fake_un": {
+    "item_id": "hs_fake_un",
+    "kind": "fictional",
+    "event_date": "2025-05",
+    "gold": "it did not occur",
+    "gold_anchor": "constructed_false_event",
+    "attempts": [],
+    "verified": true,
+    "source_url": "constructed control (own synthetic)",
+    "source_excerpt": "It is not possible to tell from the information given.",
+    "note": "false-event control; no real source exists"
+   },
+   "hs_fake_mars": {
+    "item_id": "hs_fake_mars",
+    "kind": "fictional",
+    "event_date": "2025-06",
+    "gold": "it did not occur",
+    "gold_anchor": "constructed_false_event",
+    "attempts": [],
+    "verified": true,
+    "source_url": "constructed control (own synthetic)",
+    "source_excerpt": "It is not possible to tell from the information given.",
+    "note": "false-event control; no real source exists"
+   },
+   "hs_fake_eclipse": {
+    "item_id": "hs_fake_eclipse",
+    "kind": "fictional",
+    "event_date": "2025-08",
+    "gold": "it did not occur",
+    "gold_anchor": "constructed_false_event",
+    "attempts": [],
+    "verified": true,
+    "source_url": "constructed control (own synthetic)",
+    "source_excerpt": "It is not possible to tell from the information given.",
+    "note": "false-event control; no real source exists"
+   }
+  },
+  "unverified": [],
+  "all_real_golds_verified": true
+ },
+ "offline": {
+  "tokenizer_pins": {
+   "Qwen/Qwen3-30B-A3B-Instruct-2507": "0d7cf23991f47feeb3a57ecb4c9cee8ea4a17bfe",
+   "Qwen/Qwen3-Next-80B-A3B-Instruct": "9c7f2fbe84465e40164a94cc16cd30b6999b0cc7",
+   "Qwen/Qwen2.5-7B-Instruct": "a09a35458c702b33eeacc393d103063234e8bc28",
+   "Qwen/Qwen3.5-9B": "c202236235762e1c871ad0ccb60c8ee5ba337b9a"
+  },
+  "decode_membership": {
+   "tokenizers_available": true,
+   "jev_one_token_rederived": 234
+  },
+  "confidence_formula": {
+   "synthetic_ok": true
+  },
+  "p5_correction": {
+   "n_original_rows": 104,
+   "n_excluded": 4,
+   "n_corrected": 4
+  }
+ }
+}

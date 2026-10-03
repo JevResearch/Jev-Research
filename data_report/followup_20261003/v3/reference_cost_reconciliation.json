@@ -1,0 +1,258 @@
+{
+ "n_reference_rows": 144,
+ "mismatches_gt_20pct": [
+  {
+   "item_id": "hs_ws2024",
+   "model": "qwen/qwen3-30b-a3b-instruct-2507",
+   "reported": 6.07005e-06,
+   "computed": 1.19e-05
+  },
+  {
+   "item_id": "hs_nobelpeace2024",
+   "model": "qwen/qwen3-30b-a3b-instruct-2507",
+   "reported": 5.44185e-06,
+   "computed": 1.1099999999999999e-05
+  },
+  {
+   "item_id": "hs_nobelpeace2024",
+   "model": "qwen/qwen3-next-80b-a3b-instruct",
+   "reported": 1.935e-05,
+   "computed": 1.38e-05
+  },
+  {
+   "item_id": "hs_heisman2024",
+   "model": "qwen/qwen3-30b-a3b-instruct-2507",
+   "reported": 6.35985e-06,
+   "computed": 1.2299999999999999e-05
+  },
+  {
+   "item_id": "hs_heisman2024",
+   "model": "qwen/qwen3-next-80b-a3b-instruct",
+   "reported": 1.8e-05,
+   "computed": 1.29e-05
+  },
+  {
+   "item_id": "hs_ao2025w",
+   "model": "qwen/qwen3-30b-a3b-instruct-2507",
+   "reported": 7.0344e-06,
+   "computed": 1.36e-05
+  },
+  {
+   "item_id": "hs_oscar2025",
+   "model": "qwen/qwen3-30b-a3b-instruct-2507",
+   "reported": 6.7932e-06,
+   "computed": 1.3199999999999999e-05
+  },
+  {
+   "item_id": "hs_pope2025",
+   "model": "qwen/qwen3-30b-a3b-instruct-2507",
+   "reported": 6.98625e-06,
+   "computed": 1.35e-05
+  },
+  {
+   "item_id": "hs_pope2025",
+   "model": "qwen/qwen3-next-80b-a3b-instruct",
+   "reported": 1.935e-05,
+   "computed": 1.38e-05
+  },
+  {
+   "item_id": "hs_usopen2025",
+   "model": "qwen/qwen3-30b-a3b-instruct-2507",
+   "reported": 6.8895e-06,
+   "computed": 1.3399999999999999e-05
+  },
+  {
+   "item_id": "hs_anchorage",
+   "model": "qwen/qwen3-30b-a3b-instruct-2507",
+   "reported": 8.28585e-06,
+   "computed": 1.63e-05
+  },
+  {
+   "item_id": "hs_anchorage",
+   "model": "qwen/qwen3-next-80b-a3b-instruct",
+   "reported": 2.4e-05,
+   "computed": 1.6899999999999997e-05
+  },
+  {
+   "item_id": "hs_anchorage",
+   "model": "mistralai/mistral-small-3.2-24b-instruct",
+   "reported": 1.05e-05,
+   "computed": 1.3125e-05
+  },
+  {
+   "item_id": "hs_wc2022",
+   "model": "qwen/qwen3-30b-a3b-instruct-2507",
+   "reported": 4.76775e-06,
+   "computed": 9.699999999999999e-06
+  },
+  {
+   "item_id": "hs_sblviii",
+   "model": "qwen/qwen3-30b-a3b-instruct-2507",
+   "reported": 5.2974e-06,
+   "computed": 1.0799999999999998e-05
+  },
+  {
+   "item_id": "hs_sblviii",
+   "model": "mistralai/mistral-small-3.2-24b-instruct",
+   "reported": 7.875e-06,
+   "computed": 9.84375e-06
+  },
+  {
+   "item_id": "hs_wimb2023m",
+   "model": "qwen/qwen3-30b-a3b-instruct-2507",
+   "reported": 5.87565e-06,
+   "computed": 1.19e-05
+  },
+  {
+   "item_id": "hs_fake_winter",
+   "model": "qwen/qwen3-next-80b-a3b-instruct",
+   "reported": 1.98e-05,
+   "computed": 1.41e-05
+  },
+  {
+   "item_id": "hs_fake_un",
+   "model": "qwen/qwen3-30b-a3b-instruct-2507",
+   "reported": 6.79275e-06,
+   "computed": 1.3299999999999998e-05
+  },
+  {
+   "item_id": "hs_fake_mars",
+   "model": "qwen/qwen3-30b-a3b-instruct-2507",
+   "reported": 6.79275e-06,
+   "computed": 1.3299999999999998e-05
+  },
+  {
+   "item_id": "hs_fake_mars",
+   "model": "mistralai/mistral-small-3.2-24b-instruct",
+   "reported": 8.4e-06,
+   "computed": 1.05e-05
+  },
+  {
+   "item_id": "hs_fake_eclipse",
+   "model": "qwen/qwen3-30b-a3b-instruct-2507",
+   "reported": 6.64785e-06,
+   "computed": 1.31e-05
+  },
+  {
+   "item_id": "hs_ws2024",
+   "model": "qwen/qwen3-30b-a3b-instruct-2507",
+   "reported": 1.586e-05,
+   "computed": 1.1599999999999999e-05
+  },
+  {
+   "item_id": "hs_ballon2024",
+   "model": "qwen/qwen3-30b-a3b-instruct-2507",
+   "reported": 6.021e-06,
+   "computed": 1.2e-05
+  },
+  {
+   "item_id": "hs_nobelpeace2024",
+   "model": "qwen/qwen3-30b-a3b-instruct-2507",
+   "reported": 6.98625e-06,
+   "computed": 1.35e-05
+  },
+  {
+   "item_id": "hs_sblx",
+   "model": "qwen/qwen3-30b-a3b-instruct-2507",
+   "reported": 5.39505e-06,
+   "computed": 1.07e-05
+  },
+  {
+   "item_id": "hs_sblx",
+   "model": "qwen/qwen3-next-80b-a3b-instruct",
+   "reported": 1.74e-05,
+   "computed": 1.25e-05
+  },
+  {
+   "item_id": "hs_ao2025w",
+   "model": "qwen/qwen3-next-80b-a3b-instruct",
+   "reported": 1.95e-05,
+   "computed": 1.39e-05
+  },
+  {
+   "item_id": "hs_sixnations2025",
+   "model": "qwen/qwen3-30b-a3b-instruct-2507",
+   "reported": 6.1191e-06,
+   "computed": 1.1799999999999999e-05
+  },
+  {
+   "item_id": "hs_pope2025",
+   "model": "qwen/qwen3-next-80b-a3b-instruct",
+   "reported": 1.935e-05,
+   "computed": 1.38e-05
+  },
+  {
+   "item_id": "hs_eurovision2025",
+   "model": "qwen/qwen3-30b-a3b-instruct-2507",
+   "reported": 7.80345e-06,
+   "computed": 1.5499999999999997e-05
+  },
+  {
+   "item_id": "hs_cannes2025",
+   "model": "qwen/qwen3-30b-a3b-instruct-2507",
+   "reported": 6.1641e-06,
+   "computed": 1.26e-05
+  },
+  {
+   "item_id": "hs_wimb2025w",
+   "model": "mistralai/mistral-small-3.2-24b-instruct",
+   "reported": 8.4e-06,
+   "computed": 1.05e-05
+  },
+  {
+   "item_id": "hs_cwc2025",
+   "model": "qwen/qwen3-30b-a3b-instruct-2507",
+   "reported": 6.16635e-06,
+   "computed": 1.21e-05
+  },
+  {
+   "item_id": "hs_anchorage",
+   "model": "qwen/qwen3-30b-a3b-instruct-2507",
+   "reported": 2.132e-05,
+   "computed": 1.57e-05
+  },
+  {
+   "item_id": "hs_wc2022",
+   "model": "qwen/qwen3-30b-a3b-instruct-2507",
+   "reported": 5.3469e-06,
+   "computed": 1.06e-05
+  },
+  {
+   "item_id": "hs_fake_un",
+   "model": "qwen/qwen3-30b-a3b-instruct-2507",
+   "reported": 5.8275e-06,
+   "computed": 1.1799999999999999e-05
+  },
+  {
+   "item_id": "hs_fake_un",
+   "model": "mistralai/mistral-small-3.2-24b-instruct",
+   "reported": 8.4e-06,
+   "computed": 1.05e-05
+  },
+  {
+   "item_id": "hs_fake_mars",
+   "model": "qwen/qwen3-30b-a3b-instruct-2507",
+   "reported": 5.8275e-06,
+   "computed": 1.1799999999999999e-05
+  },
+  {
+   "item_id": "hs_fake_mars",
+   "model": "qwen/qwen3-next-80b-a3b-instruct",
+   "reported": 1.995e-05,
+   "computed": 1.42e-05
+  },
+  {
+   "item_id": "hs_fake_mars",
+   "model": "mistralai/mistral-small-3.2-24b-instruct",
+   "reported": 8.4e-06,
+   "computed": 1.05e-05
+  },
+  {
+   "item_id": "hs_fake_eclipse",
+   "model": "qwen/qwen3-30b-a3b-instruct-2507",
+   "reported": 5.87565e-06,
+   "computed": 1.19e-05
+  }
+ ],
+ "note": "report-only; old scores unchanged"
+}
